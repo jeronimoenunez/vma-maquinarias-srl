@@ -1,0 +1,37 @@
+---
+import Container from "@/ui/components/Container.astro";
+
+type Props = {
+  title: string;
+  items: Array<{ title: string; description: string }>;
+};
+
+const { title, items } = Astro.props as Props;
+---
+
+<section>
+  <Container>
+    <div>
+      <div class="kicker">Diferencial</div>
+      <h2 class="sectionTitle">{title}</h2>
+      <p class="sectionSubtitle">Metodología, disponibilidad y foco real en continuidad operativa.</p>
+
+      <div class="grid cards" style="margin-top:18px;">
+        {items.map((it) => (
+          <div class="card cardItem">
+            <h3 style="font-size:18px;">{it.title}</h3>
+            <p style="margin-top:8px;">{it.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+.cards{ grid-template-columns: repeat(3, 1fr); }
+.cardItem{ padding:18px; }
+@media (max-width: 900px){
+  .cards{ grid-template-columns:1fr; }
+}
+</style>

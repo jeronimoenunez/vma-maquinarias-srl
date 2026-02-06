@@ -1,0 +1,192 @@
+---
+import Container from "@/ui/components/Container.astro";
+import Button from "@/ui/components/Button.astro";
+
+const items = [
+  { label: "Inicio", href: "#inicio" },
+  { label: "Nosotros", href: "#nosotros" },
+  { label: "Metodología", href: "#metodologia" },
+  { label: "Servicios", href: "#servicios" },
+  { label: "Novedades", href: "#novedades" },
+];
+---
+
+<header class="topNav" data-topnav>
+  <Container>
+    <div class="pill" role="navigation" aria-label="Navegación principal">
+      <a class="brand" href="/" aria-label="VMA Máquinas">
+        <span class="brandLogo">VMA</span>
+        <span class="brandText">VMA Máquinas</span>
+      </a>
+
+      <div class="tabs" data-tabs>
+        {items.map((it) => (
+          <a class="tab" href={it.href} data-tab>{it.label}</a>
+        ))}
+      </div>
+
+      <div class="right">
+        <Button variant="primary" href="#contacto">Contactanos</Button>
+      </div>
+    </div>
+  </Container>
+</header>
+
+<style>
+.topNav{
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+  padding: 0;
+  pointer-events: none;
+}
+
+.pill{
+  pointer-events: auto;
+
+  height: 54px;
+  width: min(980px, 100%);
+  margin: 10px auto 0;
+
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+
+  border-radius: 999px;
+  border: 1px solid rgba(234,242,247,.14);
+  background: rgba(10, 22, 30, .55);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 18px 60px rgba(0,0,0,.32);
+  padding: 0 10px;
+}
+
+/* brand */
+.brand{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 6px;
+}
+
+.brandLogo{
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: .06em;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(234,242,247,.14);
+  color: rgba(234,242,247,.95);
+}
+
+.brandText{
+  font-weight: 700;
+  font-size: 14px;
+  color: rgba(234,242,247,.92);
+  white-space: nowrap;
+  opacity: .95;
+}
+
+/* tabs */
+.tabs{
+  justify-self: center;
+  display: inline-flex;
+  gap: 6px;
+  padding: 4px;
+  border-radius: 999px;
+}
+
+/* tab base */
+.tab{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+
+  font-weight: 600;
+  font-size: 13px;
+  color: rgba(234,242,247,.74);
+
+  transition: background .18s ease, color .18s ease, box-shadow .18s ease;
+}
+
+/* HOVER (solo visual, NO “active”) */
+.tab:hover{
+  background: rgb(0, 0, 0);
+  color: rgba(234,242,247,.92);
+}
+
+/* ACTIVE estilo “Relats”: pill oscura, bien definida */
+.tab.isActive{
+  background: rgba(0, 0, 0, 0.73);
+  border: 1px solid rgba(234,242,247,.16);
+  color: rgba(234,242,247,.96);
+  box-shadow: 0 10px 30px rgba(0,0,0,.28);
+}
+
+/* derecha */
+.right{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding-right: 6px;
+}
+
+@media (max-width: 980px){
+  .pill{
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+  }
+  .tabs{ display:none; }
+}
+</style>
+
+<script type="module">
+  const root = document.querySelector('[data-topnav]');
+  const tabs = Array.from(root.querySelectorAll('[data-tab]'));
+
+  const sections = tabs
+    .map(a => document.querySelector(a.getAttribute('href')))
+    .filter(Boolean);
+
+  const setActive = (id) => {
+    tabs.forEach(a => {
+      const href = a.getAttribute('href') || '';
+      a.classList.toggle('isActive', href === `#${id}`);
+    });
+  };
+
+  // Click: setea active (pero scroll también lo va a poder cambiar después)
+  tabs.forEach(a => {
+    a.addEventListener('click', () => {
+      const href = a.getAttribute('href') || '';
+      if (href.startsWith('#')) setActive(href.slice(1));
+    });
+  });
+
+  // Scroll automático: sección más “dominante” en viewport
+  const obs = new IntersectionObserver((entries) => {
+    const visible = entries
+      .filter(e => e.isIntersecting)
+      .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+    if (visible?.target?.id) setActive(visible.target.id);
+  }, {
+    rootMargin: "-45% 0px -45% 0px",
+    threshold: [0.1, 0.25, 0.4, 0.6]
+  });
+
+  sections.forEach(s => obs.observe(s));
+
+  // Estado inicial
+  const initial = (window.location.hash || "#inicio").slice(1);
+  setActive(initial);
+</script>

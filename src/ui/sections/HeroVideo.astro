@@ -1,0 +1,134 @@
+---
+import Container from "@/ui/components/Container.astro";
+const { title, subtitle, primaryCta, secondaryCta, video } = Astro.props;
+---
+
+<section id="inicio" class="heroWrap">
+  <!-- Este es el “scroll area” que determina cuánto dura el sticky -->
+  <div class="heroScroll">
+    <!-- STICKY VIEWPORT -->
+    <div class="heroSticky">
+      <video
+        id="hero-video"
+        class="heroVideo"
+        src={video.src}
+        poster={video.poster}
+        preload="auto"
+        playsinline
+        muted
+      ></video>
+
+      <div class="heroOverlay" aria-hidden="true"></div>
+
+      <div class="heroContent">
+        <Container>
+          <div class="copy">
+            <h1>{title}</h1>
+            {subtitle && <p>{subtitle}</p>}
+
+            <div class="cta">
+              {primaryCta && <a class="btn primary" href={primaryCta.href}>{primaryCta.label}</a>}
+              {secondaryCta && <a class="btn secondary" href={secondaryCta.href}>{secondaryCta.label}</a>}
+            </div>
+          </div>
+        </Container>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* Wrapper del hero */
+.heroWrap{
+  padding: 0;
+}
+
+/* ✅ Determina CUÁNTO dura el sticky
+   200svh = 2 pantallas de scroll controlando el video
+   Subí/bajá este número según el “tiempo” del efecto */
+.heroScroll{
+  height: 200svh;
+}
+
+/* ✅ La “pantalla” sticky */
+.heroSticky{
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+
+/* Video full */
+.heroVideo{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:0;
+}
+
+/* Overlay */
+.heroOverlay{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  background:
+    radial-gradient(
+      1100px 520px at 18% 38%,
+      rgba(6,21,29,.78) 0%,
+      rgba(6,21,29,.44) 45%,
+      rgba(6,21,29,.72) 100%
+    );
+}
+
+/* Contenido */
+.heroContent{
+  position:relative;
+  z-index:2;
+  height:100%;
+  display:flex;
+  align-items:center;
+  padding-top:84px;   /* header */
+}
+
+.copy{ max-width: 620px; }
+.copy h1{ margin:0 0 12px; font-size: clamp(32px, 4.2vw, 56px); line-height:1.05; color:#fff; }
+.copy p{ margin:0 0 20px; color: rgba(255,255,255,.85); }
+
+.cta{ display:flex; gap:12px; flex-wrap:wrap; }
+.btn{ padding:12px 16px; border-radius:12px; font-weight:700; text-decoration:none; }
+.btn.primary{ background:#f4b323; color:#06151d; }
+.btn.secondary{ background:rgba(255,255,255,.08); color:#fff; border:1px solid rgba(255,255,255,.16); }
+</style>
+
+<script is:inline>
+  const video = document.getElementById("hero-video");
+  const scrollArea = document.querySelector(".heroScroll");
+
+  if (video && scrollArea) {
+    const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
+
+    const update = () => {
+      if (!video.duration || Number.isNaN(video.duration)) return;
+
+      const rect = scrollArea.getBoundingClientRect();
+      const total = scrollArea.offsetHeight - window.innerHeight;
+
+      // cuanto se scrolleó dentro del área sticky (0..1)
+      const scrolled = clamp(-rect.top / total, 0, 1);
+
+      video.currentTime = scrolled * video.duration;
+    };
+
+    video.addEventListener("loadedmetadata", () => {
+      video.pause();
+      video.currentTime = 0;
+      update();
+    }, { once: true });
+
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    update();
+  }
+</script>

@@ -1,0 +1,359 @@
+---
+import Container from "@/ui/components/Container.astro";
+---
+
+<footer class="spFooter">
+  <!-- ✅ MÁSCARA REAL (tipo Superpower) -->
+  <div class="spMask">
+    <!-- Fondo (imagen) -->
+    <div class="spBg" aria-hidden="true"></div>
+
+    <Container>
+      <!-- CTA (full-bleed dentro del Container) -->
+      <div class="spBleed">
+        <div class="spCta">
+          <div class="spCtaCopy">
+            <h2 class="spCtaTitle">¿Listo para alquilar el equipo correcto?</h2>
+            <p class="spCtaSubtitle">
+              Te respondemos rápido. Contanos altura, zona y fecha y te asesoramos.
+            </p>
+          </div>
+
+          <div class="spCtaActions">
+            <a class="spCtaBtn" href="https://wa.me/549XXXXXXXXXX" target="_blank" rel="noreferrer">
+              Cotizar por WhatsApp <span aria-hidden="true">→</span>
+            </a>
+
+            <div class="spCtaMini" aria-label="Redes">
+              <a class="spMiniLink" href="#" target="_blank" rel="noreferrer" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                  <path
+                    fill="currentColor"
+                    d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 4a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm5.2-.9a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2z"
+                  />
+                </svg>
+              </a>
+
+              <a class="spMiniLink" href="#" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                  <path
+                    fill="currentColor"
+                    d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1-.02-5zM3 9h4v12H3V9zm7 0h3.8v1.7h.1c.5-.9 1.8-1.9 3.7-1.9 4 0 4.7 2.6 4.7 6V21h-4v-5.2c0-1.2 0-2.8-1.7-2.8s-2 1.3-2 2.7V21h-4V9z"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lower area -->
+      <div class="spBleed spLower">
+        <div class="spInner">
+          <div class="spMark" aria-hidden="true">MVA</div>
+
+          <div class="spCols">
+            <div class="spCol">
+              <div class="spColTitle">MVA Máquinas</div>
+              <p class="spDesc">
+                Equipos de elevación para obra e industria. Respuesta rápida, seguridad y continuidad operativa.
+              </p>
+            </div>
+
+            <div class="spCol">
+              <div class="spColTitle">Secciones</div>
+              <div class="spLinks">
+                <a href="#equipos">Equipos</a>
+                <a href="#metodologia">Metodología</a>
+                <a href="#faq">FAQ</a>
+                <a href="#contacto">Contacto</a>
+              </div>
+            </div>
+
+            <div class="spCol">
+              <div class="spColTitle">Contacto</div>
+              <div class="spLinks">
+                <a href="#contacto">Formulario / WhatsApp</a>
+                <a href="#">Ubicación (pendiente)</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="spBottom">
+            <span class="spLegal">© {new Date().getFullYear()} MVA Maquinarias Srl</span>
+            <span class="spSmall">
+              Diseño y desarrollo por
+              <a
+                href="https://jeronimonunez.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="spCreditLink spCreditPersonal"
+              >
+                Jerónimo Núñez
+              </a>
+              ·
+              <a
+                href="https://vantorastudio.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="spCreditLink spCreditStudio"
+              >
+                Vantora Creative Studio
+              </a>
+            </span>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </div>
+</footer>
+
+<style>
+/* ✅ Footer base (fondo del “exterior” del footer) */
+.spFooter{
+  background: #000;
+  border-top: 1px solid rgba(234,242,247,.10);
+}
+
+/* ✅ MÁSCARA REAL: esto es lo que faltaba */
+.spMask{
+  position: relative;
+  overflow: hidden;
+  border-radius: 42px 42px 0 0;
+  margin-top: 120px; /* clave para que se “lea” el recorte */
+}
+
+/* Fondo con imagen */
+.spBg{
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("/videos/20160718_130207.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scale(1.02);
+  filter: saturate(1.05) contrast(1.05);
+}
+
+/* Overlay de legibilidad */
+.spMask::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index: 1;
+  background:
+    radial-gradient(1200px 600px at 20% 20%, rgba(0,0,0,.25), transparent 60%),
+    linear-gradient(180deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.88) 55%, rgba(0,0,0,.96) 100%);
+}
+
+/* Todo el contenido arriba del overlay */
+.spMask :global(.container),
+.spBleed,
+.spCta,
+.spInner{
+  position: relative;
+  z-index: 2;
+}
+
+/* Full-bleed dentro del Container (evita el margin 0 10% del global) */
+.spBleed{
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+/* CTA */
+.spCta{
+  width: min(1120px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: clamp(34px, 5vh, 56px) 0;
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: 22px;
+  align-items: center;
+}
+
+.spCtaTitle{
+  margin: 0;
+  font-size: clamp(26px, 3vw, 40px);
+  letter-spacing: -.02em;
+}
+
+.spCtaSubtitle{
+  margin: 12px 0 0 0;
+  opacity: .78;
+  max-width: 62ch;
+}
+
+.spCtaActions{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.spCtaBtn{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #0b1f2a;
+  font-weight: 800;
+  border: 1px solid transparent;
+  transition: transform .15s ease, filter .15s ease;
+}
+.spCtaBtn:hover{
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+}
+
+.spCtaMini{
+  /* display: inline-flex; */
+  gap: 10px;
+  opacity: .95;
+  display: none;
+}
+
+.spMiniLink{
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(234,242,247,.16);
+  background: rgba(255,255,255,.05);
+}
+.spMiniLink:hover{
+  background: rgba(255,255,255,.10);
+  border-color: rgba(234,242,247,.30);
+}
+
+/* Lower area */
+.spLower{
+  border-top: 1px solid rgba(234,242,247,.10);
+}
+
+.spInner{
+  width: min(1120px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: clamp(34px, 6vh, 70px) 0 24px;
+}
+
+/* Mega wordmark */
+.spMark{
+  font-size: clamp(68px, 12vw, 180px);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  line-height: 0.85;
+  opacity: .14;
+  user-select: none;
+  margin: 0 0 22px 0;
+}
+
+/* Columns */
+.spCols{
+  display: grid;
+  grid-template-columns: 1.2fr .8fr .8fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.spColTitle{
+  font-size: 12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  opacity: .70;
+  margin-bottom: 12px;
+}
+
+.spDesc{
+  margin: 0;
+  opacity: .80;
+  max-width: 60ch;
+}
+
+.spLinks{
+  display: grid;
+  gap: 10px;
+}
+
+.spLinks a{
+  opacity: .95;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+  color: var(--muted);
+  font-weight: 650;
+}
+.spLinks a:hover{
+  color: var(--text);
+  border-bottom-color: rgba(242,178,51,.55);
+}
+
+/* Bottom */
+.spBottom{
+  margin-top: 34px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(234,242,247,.10);
+  display:flex;
+  justify-content:space-between;
+  gap: 12px;
+  flex-wrap:wrap;
+}
+
+.spLegal{
+  opacity: .75;
+  font-size: 12px;
+}
+.spSmall{
+  opacity: .65;
+  font-size: 12px;
+}
+
+/* Base común para ambos links */
+.spCreditLink{
+  font-weight: 700;
+  text-decoration: none;
+  position: relative;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  transition: filter .2s ease, transform .2s ease;
+}
+
+/* Jerónimo Núñez → degradado frío / técnico */
+.spCreditPersonal{
+  background-image: linear-gradient(
+    90deg,
+    #f2b233 0%,
+    #ffcf66 45%,
+    #f2b233 100%
+  );
+}
+
+/* Vantora → degradado más creativo / premium */
+.spCreditStudio{
+  background-image: linear-gradient(
+    90deg,
+    #f2b233 0%,
+    #ffcf66 45%,
+    #fff1c1 100%
+  );
+}
+
+/* Hover elegante */
+.spCreditLink:hover{
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (max-width: 980px){
+  .spCta{ grid-template-columns: 1fr; }
+  .spCols{ grid-template-columns: 1fr; }
+  .spMask{ margin-top: 72px; }
+}
+</style>

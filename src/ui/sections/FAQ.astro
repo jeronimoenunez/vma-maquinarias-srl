@@ -1,0 +1,149 @@
+---
+import Container from "@/ui/components/Container.astro";
+
+type Props = {
+  title: string;
+  items: Array<{ q: string; a: string }>;
+};
+
+const { title, items } = Astro.props as Props;
+---
+
+<section class="faqSection" id="faq">
+  <Container>
+    <div class="faqBleed">
+      <div class="faqInner">
+        <div class="kicker faqKicker">Soporte</div>
+        <h2 class="sectionTitle faqTitle">{title}</h2>
+
+        <div class="faqList">
+          {items.map((it) => (
+            <details class="faqItem">
+              <summary>
+                <span class="question">{it.q}</span>
+                <span class="icon"></span>
+              </summary>
+
+              <div class="answer">
+                <p>{it.a}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+/* 1) Sección full height */
+.faqSection{
+  min-height: 100vh;
+  padding: clamp(56px, 8vh, 110px) 0;
+  display: flex;
+  align-items: flex-start;
+}
+
+/* 2) ✅ “Ignora” el .container global (margin: 0 10%) */
+.faqBleed{
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+/* 3) ✅ Bloque centrado real */
+.faqInner{
+  width: min(880px, calc(100% - 40px));
+  margin: 0 auto; /* centra horizontal */
+}
+
+/* Textos centrados */
+.faqKicker,
+.faqTitle{
+  text-align: center;
+}
+
+/* Lista */
+.faqList{
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Item */
+.faqItem{
+  border-bottom: 1px solid var(--line, rgba(255,255,255,.15));
+  padding: 18px 0;
+}
+
+/* Header */
+.faqItem summary{
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-weight: 500;
+}
+.faqItem summary::-webkit-details-marker{ display:none; }
+
+/* Pregunta */
+.question{
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+/* Icono + / - */
+.icon{
+  width: 18px;
+  height: 18px;
+  position: relative;
+  flex-shrink: 0;
+}
+.icon::before,
+.icon::after{
+  content:"";
+  position:absolute;
+  background: currentColor;
+  transition: transform .2s ease;
+}
+.icon::before{
+  top:50%;
+  left:0; right:0;
+  height:2px;
+  transform: translateY(-50%);
+}
+.icon::after{
+  left:50%;
+  top:0; bottom:0;
+  width:2px;
+  transform: translateX(-50%);
+}
+.faqItem[open] .icon::after{
+  transform: translateX(-50%) scaleY(0);
+}
+
+/* Respuesta */
+.answer{
+  overflow:hidden;
+  animation: fadeIn .25s ease;
+}
+.answer p{
+  margin-top: 12px;
+  max-width: 720px;
+  font-size: 15px;
+  opacity: .85;
+}
+
+/* (opcional) centra el párrafo abierto */
+.faqItem[open] .answer p{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@keyframes fadeIn{
+  from{ opacity:0; transform: translateY(-4px); }
+  to{ opacity:1; transform: translateY(0); }
+}
+</style>

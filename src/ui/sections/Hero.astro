@@ -1,0 +1,60 @@
+---
+import Container from "@/ui/components/Container.astro";
+const { title, subtitle, primaryCta, secondaryCta, image } = Astro.props;
+const bg = image?.src ?? "";
+---
+
+<section id="inicio" class="hero">
+  <div class="heroBg" style={`background-image: url(${bg});`}></div>
+
+  <Container class="heroInner">
+    <h1 class="title">{title}</h1>
+    <p class="subtitle">{subtitle}</p>
+
+    <div class="heroCtas">
+      <a class="btn btn--primary" href={primaryCta.href}>{primaryCta.label}</a>
+      <a class="btn" href={secondaryCta.href}>{secondaryCta.label}</a>
+    </div>
+  </Container>
+</section>
+
+<style>
+/* HERO FULLSCREEN real */
+.hero{
+  position:relative;
+  min-height:100svh;
+  height:100svh;
+  padding:0 !important;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+}
+
+.heroBg{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg, rgba(4,16,24,.95) 0%, rgba(4,16,24,.65) 45%, rgba(4,16,24,.35) 100%),
+    linear-gradient(180deg, rgba(4,16,24,.35) 0%, rgba(4,16,24,.85) 100%),
+    center / cover no-repeat;
+  filter:saturate(1.05) contrast(1.05);
+}
+
+/* El fondo llega a tope; el contenido se corre abajo del nav fijo */
+.heroInner{
+  position:relative;
+  z-index:1;
+  max-width:720px;
+  padding-top: calc(var(--nav-h) + 24px);
+  padding-bottom: 56px;
+}
+
+.heroCtas{ display:flex; gap:12px; margin-top:16px; }
+
+.header, .topNav{
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+}
+
+</style>

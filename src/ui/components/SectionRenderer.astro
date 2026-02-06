@@ -1,0 +1,16 @@
+---
+import type { HomeSection } from "@/domain/home";
+import { sectionRegistry } from "../sections/registry";
+
+const { sections = [] } = Astro.props as { sections?: HomeSection[] };
+---
+{sections.map((section) => {
+  const Component = sectionRegistry[section.type];
+  if (!Component) return null;
+
+  return (
+    <section id={section.id} data-section={section.id}>
+      <Component {...section.props} />
+    </section>
+  );
+})}

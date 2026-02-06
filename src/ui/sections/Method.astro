@@ -1,0 +1,514 @@
+---
+import Container from "@/ui/components/Container.astro";
+
+type Props = {
+  title: string;
+  steps: Array<{ title: string; description: string }>;
+};
+
+const { title, steps } = Astro.props as Props;
+---
+
+<section id="metodologia" class="steps-section">
+  <div class="steps-inner" id="stepsInner">
+    <div class="final-fade-overlay" id="finalFade"></div>
+
+    <Container>
+      <div class="steps-head">
+        <div class="kicker">Pensar antes para no pensar después</div>
+        <h2 class="sectionTitle">{title}</h2>
+        <p class="sectionSubtitle">
+          Análisis · Diseño · Implementación. Menos imprevistos, más previsibilidad.
+        </p>
+      </div>
+    </Container>
+
+    <div class="horizontal-wrapper">
+      <div class="steps-line-container">
+        <div class="steps-line-bg"></div>
+        <div class="steps-line-progress" id="globalLine"></div>
+      </div>
+
+      <div class="steps-track" id="stepsTrack">
+        <div class="steps-container" id="stepsContainer">
+          {steps.map((s, idx) => (
+            <article class="step" data-step={idx}>
+              <div class="step-number-wrapper">
+                <div class="step-number">{idx + 1}</div>
+              </div>
+              <div class="step-card">
+                <div class="step-img-container">
+                  <img src="/videos/MVA-img1.jpg" class="step-img" alt={s.title} />
+                </div>
+                <div class="step-body">
+                  <h3 class="step-title">{s.title}</h3>
+                  <p class="step-desc">{s.description}</p>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <section class="about-panel" id="aboutPanel">
+          <div class="aboutFx" id="aboutFx">
+            <!-- ✅ Fondo SOLO para Nosotros: con marco + border radius (solo la imagen) -->
+            <div class="aboutFx__bg">
+              <div class="aboutFx__bgFrame">
+                <div class="aboutFx__bgImg" data-bg="0"></div>
+                <div class="aboutFx__bgImg" data-bg="1"></div>
+                <div class="aboutFx__bgImg" data-bg="2"></div>
+                <div class="aboutFx__bgImg" data-bg="3"></div>
+                <div class="aboutFx__bgOverlay"></div>
+              </div>
+            </div>
+
+            <aside class="aboutFx__left">
+              <nav class="aboutFx__nav">
+                <button class="aboutFx__item is-active" data-index="0" type="button">Historia</button>
+                <button class="aboutFx__item" data-index="1" type="button">Misión</button>
+                <button class="aboutFx__item" data-index="2" type="button">Visión</button>
+                <button class="aboutFx__item" data-index="3" type="button">Valores</button>
+              </nav>
+            </aside>
+
+            <div class="aboutFx__right">
+              <article class="aboutFx__card is-active" data-index="0">
+                <h4>Nuestra Historia</h4>
+                <p>VMA nació para romper con la inercia del sector. Decidimos ser el socio que no falla.</p>
+              </article>
+              <article class="aboutFx__card" data-index="1">
+                <h4>Misión</h4>
+                <p>Maximizar la eficiencia operativa mediante tecnología de elevación de vanguardia.</p>
+              </article>
+              <article class="aboutFx__card" data-index="2">
+                <h4>Visión</h4>
+                <p>Liderar la transformación digital y técnica del movimiento en la región.</p>
+              </article>
+              <article class="aboutFx__card" data-index="3">
+                <h4>Valores</h4>
+                <p>Agilidad · Honestidad Radical · Seguridad Sin Excusas.</p>
+              </article>
+            </div>
+
+            <div class="aboutFx__anchors">
+              <span class="aboutFx__anchor" data-anchor="0"></span>
+              <span class="aboutFx__anchor" data-anchor="1"></span>
+              <span class="aboutFx__anchor" data-anchor="2"></span>
+              <span class="aboutFx__anchor" data-anchor="3"></span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* =========================
+   BASE 
+   ========================= */
+#metodologia{
+  position: relative;
+  background: #000;
+  overflow: hidden;
+}
+
+#metodologia::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background: #000;
+  /* background:
+    radial-gradient(60% 55% at 50% 12%, rgba(58,150,196,.10), rgba(6,21,29,0) 60%),
+    radial-gradient(70% 70% at 50% 100%, rgba(0,0,0,.55), rgba(0,0,0,0) 55%),
+    linear-gradient(180deg, #06151d 0%, #071c26 55%, #06151d 100%); */
+  opacity:.95;
+}
+
+#metodologia::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+  opacity:.05;
+  mix-blend-mode: overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+}
+
+.steps-inner{
+  height: 100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding: 56px 0;
+  position:relative;
+  z-index:2;
+}
+
+.final-fade-overlay{
+  position:absolute;
+  inset:0;
+  background:#000;
+  z-index:200;
+  opacity:0;
+  pointer-events:none;
+}
+
+.steps-head{ margin-bottom: 0; }
+.horizontal-wrapper{ position:relative; width:100%; padding: 38px 0; }
+
+.steps-track{
+  display:flex;
+  width:max-content;
+  will-change: transform;
+  position: relative;
+  z-index: 3;
+}
+.steps-container{ display:flex; gap:100px; padding-left:10vw; padding-right:15vw; width:max-content; }
+
+/* =========================
+   LINEA
+   ========================= */
+.steps-line-container{
+  position:absolute;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  z-index: 2;
+  pointer-events:none;
+}
+.steps-line-bg{ position:absolute; width:100%; height:100%; background: rgba(255,255,255,0.05); }
+.steps-line-progress{
+  position:absolute;
+  width:0%;
+  height:100%;
+  background: linear-gradient(90deg, transparent, #3a96c4, #fff);
+  box-shadow: 0 0 16px rgba(58,150,196,.28);
+  opacity: 1;
+}
+
+.step{ width:320px; opacity:0; transform: translateY(30px); }
+.step-number{ width:44px; height:44px; background:#071c26; border:2px solid #3a96c4; color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; }
+.step-card{ background: rgba(18,35,44,.4); border:1px solid rgba(255,255,255,.05); border-radius:12px; overflow:hidden; backdrop-filter: blur(10px); }
+.step-img{ width:100%; height:240px; object-fit:cover; }
+.step-body{ padding:24px; }
+.step-title{ color:#fff; font-size:1.5rem; font-weight:700; margin-bottom:12px; }
+.step-desc{ color: rgba(255,255,255,.7); font-size:.95rem; line-height:1.6; }
+
+.kicker{ color:#3a96c4; text-transform:uppercase; letter-spacing:2px; font-weight:600; font-size:.8rem; }
+.sectionTitle{ color:#fff; font-size:3rem; font-weight:800; }
+.sectionSubtitle{ color: rgba(255,255,255,.6); font-size:1.2rem; }
+
+/* =========================
+   NOSOTROS
+   ========================= */
+.about-panel{
+  flex: 0 0 100vw;
+  width: 100vw;
+  display:flex;
+  align-items:center;
+  position: relative;
+  z-index: 10;
+}
+
+.about-panel::before{
+  content:"";
+  position:absolute;
+  left:0; right:0;
+  top:-1px;
+  height: 140px;
+  pointer-events:none;
+  z-index: 2;
+  background: linear-gradient(to bottom, rgba(6,21,29,.85), rgba(6,21,29,0));
+}
+
+.aboutFx{
+  position:relative;
+  width:100%;
+  height: 65vh;
+  display:grid;
+  grid-template-columns: 420px 1fr;
+  gap: 40px;
+   align-items: start;  
+   padding-left: 30px;
+  padding-top: 14px; 
+}
+
+.aboutFx__bg{
+  position:absolute;
+  inset: 0;
+  z-index:0;
+  pointer-events:none;
+}
+
+.aboutFx__bgFrame{
+  position:absolute;
+  left: 1vw;
+  right: 1vw;
+  top: 0;
+  bottom: -9vh;   
+  border-radius: 24px; 
+  overflow:hidden; 
+  box-shadow:
+    0 40px 120px rgba(0,0,0,.45),
+    inset 0 0 0 1px rgba(255,255,255,.04);
+}
+
+.aboutFx__bgImg{
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 500ms ease;
+}
+
+.aboutFx__bgImg[data-bg="0"]{ background-image:url("/videos/MVA-img1.jpg"); }
+.aboutFx__bgImg[data-bg="1"]{ background-image:url("/videos/20220704_121910.jpg"); }
+.aboutFx__bgImg[data-bg="2"]{ background-image:url("/videos/20160718_130231.jpg"); }
+.aboutFx__bgImg[data-bg="3"]{ background-image:url("/videos/gemini-front.png"); }
+
+.aboutFx__bgOverlay{
+  position:absolute;
+  inset:0;
+  background: linear-gradient(to bottom, rgba(6,21,29,0.12), rgba(6,21,29,0.82));
+  opacity: 1;
+}
+
+.aboutFx__nav{
+  display:grid;
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(12px);
+  position: relative;
+  z-index: 2;
+}
+
+.aboutFx__item{
+  text-align:left;
+  padding: 24px;
+  font-size:1.1rem;
+  color: rgba(255,255,255,0.72);
+  background: transparent;
+  border: none;
+  cursor:pointer;
+}
+
+.aboutFx__item.is-active{
+  background: rgba(255,255,255,0.10);
+  color:#fff;
+  padding-left: 32px;
+}
+
+.aboutFx__right{
+  display:flex;
+  justify-content:flex-end;
+  height:100%;
+  position:relative;
+  z-index: 2;
+}
+
+.aboutFx__card{
+  width: min(580px, 100%);
+  border-radius:18px;
+  padding:40px;
+  background: rgba(6,21,29,0.42);
+  border: 1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(15px);
+  opacity:0;
+  transform: translateY(20px);
+  position:absolute;
+  right:0;
+}
+
+.aboutFx__card.is-active{ opacity:1; transform: translateY(0); }
+.aboutFx__card h4{ color:#fff; font-size:2.5rem; margin-bottom:15px; }
+
+.aboutFx__anchors{
+  position:absolute;
+  inset:0;
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  pointer-events:none;
+}
+</style>
+
+<script>
+  import gsap from "gsap";
+  import ScrollTrigger from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
+
+  type HeaderMode = "metodologia" | "nosotros";
+
+  const initMetodologia = () => {
+    const section = document.querySelector<HTMLElement>("#metodologia");
+    if (!section) return;
+
+    const prev = (section as unknown as { __gsapCtx?: gsap.Context }).__gsapCtx;
+    if (prev) prev.revert();
+
+    const ctx = gsap.context(() => {
+      const track = document.querySelector<HTMLElement>("#stepsTrack");
+      const line = document.querySelector<HTMLElement>("#globalLine");
+      const finalFade = document.querySelector<HTMLElement>("#finalFade");
+
+      const steps = gsap.utils.toArray<HTMLElement>(".step");
+
+      const kickerEl = document.querySelector<HTMLElement>(".steps-head .kicker");
+      const titleEl = document.querySelector<HTMLElement>(".steps-head .sectionTitle");
+      const subtitleEl = document.querySelector<HTMLElement>(".steps-head .sectionSubtitle");
+      const aboutPanel = document.querySelector<HTMLElement>("#aboutPanel");
+
+      const items = Array.from(document.querySelectorAll<HTMLButtonElement>(".aboutFx__item"));
+      const cards = Array.from(document.querySelectorAll<HTMLElement>(".aboutFx__card"));
+      const bgs = Array.from(document.querySelectorAll<HTMLElement>(".aboutFx__bgImg"));
+
+      if (!track || !line || !finalFade) return;
+
+      const HEADER_METODOLOGIA = {
+        kicker: "Pensar antes para no pensar después",
+        title: "Metodología",
+        subtitle: "Análisis · Diseño · Implementación. Menos imprevistos, más previsibilidad.",
+      };
+
+      const HEADER_NOSOTROS = {
+        kicker: "El Factor VMA",
+        title: "Nosotros",
+        subtitle: "15 años de experiencia en elevación. Socio que no falla.",
+      };
+
+      const setHeader = (mode: HeaderMode) => {
+        const data = mode === "nosotros" ? HEADER_NOSOTROS : HEADER_METODOLOGIA;
+        if (kickerEl) kickerEl.textContent = data.kicker;
+        if (titleEl) titleEl.textContent = data.title;
+        if (subtitleEl) subtitleEl.textContent = data.subtitle;
+      };
+
+      const setActive = (idx: number) => {
+        items.forEach((btn, i) => btn.classList.toggle("is-active", i === idx));
+        cards.forEach((card, i) => card.classList.toggle("is-active", i === idx));
+        bgs.forEach((bg, i) => {
+          const on = i === idx;
+          bg.style.opacity = on ? "1" : "0";
+          bg.style.transform = on ? "scale(1)" : "scale(1.03)";
+        });
+      };
+
+      setHeader("metodologia");
+      setActive(0);
+
+      const getScrollMax = () => Math.max(0, track.scrollWidth - window.innerWidth);
+      const getHold = () => Math.max(800, window.innerWidth * 1.2);
+
+      let scrollMax = getScrollMax();
+      let hold = getHold();
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: () => {
+            scrollMax = getScrollMax();
+            hold = getHold();
+            return `+=${scrollMax + hold}`;
+          },
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      tl.to(track, { x: () => -getScrollMax(), ease: "none" }, 0);
+      tl.to(line, { width: "100%", ease: "none" }, 0);
+      tl.to({}, { duration: 1 });
+
+      steps.forEach((step) => {
+        gsap.to(step, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: step,
+            containerAnimation: tl,
+            start: "left 85%",
+            toggleActions: "play none none reverse",
+          },
+        });
+      });
+
+      if (aboutPanel) {
+        ScrollTrigger.create({
+          trigger: aboutPanel,
+          containerAnimation: tl,
+          start: "left 60%",
+          end: "right 40%",
+          onEnter: () => setHeader("nosotros"),
+          onEnterBack: () => setHeader("nosotros"),
+          onLeave: () => setHeader("metodologia"),
+          onLeaveBack: () => setHeader("metodologia"),
+        });
+      }
+
+      const mainST = tl.scrollTrigger;
+      if (mainST) {
+        const tabsCount = Math.max(1, items.length);
+        const clampIdx = (n: number) => Math.max(0, Math.min(tabsCount - 1, n));
+
+        const pickIdxFromProgress = (p: number) => {
+          const total = scrollMax + hold;
+          const t = p * total;
+          if (t < scrollMax) return null;
+          const local = (t - scrollMax) / hold;
+          const idx = clampIdx(Math.floor(local * tabsCount));
+          return idx;
+        };
+
+        ScrollTrigger.create({
+          trigger: section,
+          start: mainST.start,
+          end: mainST.end,
+          onUpdate: (self) => {
+            scrollMax = getScrollMax();
+            hold = getHold();
+            const idx = pickIdxFromProgress(self.progress);
+            if (idx !== null) setActive(idx);
+          },
+        });
+
+        items.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            scrollMax = getScrollMax();
+            hold = getHold();
+
+            const tabsCountNow = Math.max(1, items.length);
+            const idx = clampIdx(Number(btn.dataset.index ?? "0"));
+
+            const slice = hold / tabsCountNow;
+            const targetY = mainST.start + scrollMax + idx * slice + 2;
+
+            setActive(idx);
+            window.scrollTo({ top: targetY, behavior: "smooth" });
+          });
+        });
+      }
+
+      tl.to(finalFade, { opacity: 1, ease: "power2.in" }, ">-0.15");
+
+      ScrollTrigger.refresh();
+    }, section);
+
+    (section as unknown as { __gsapCtx?: gsap.Context }).__gsapCtx = ctx;
+  };
+
+  document.addEventListener("DOMContentLoaded", initMetodologia);
+  document.addEventListener("astro:page-load", initMetodologia);
+</script>

@@ -1,0 +1,216 @@
+---
+type Props = {
+  whatsappHref?: string;
+  location?: string;
+  email?: string;
+  socials?: { instagram?: string; linkedin?: string };
+};
+
+const { whatsappHref, location, email, socials } = Astro.props as Props;
+---
+
+<section id="contacto" class="ogContact">
+  <div class="ogWrap">
+    <!-- Columna izquierda: “gráfica” gigante -->
+    <aside class="ogLeft" aria-hidden="true">
+      <div class="ogMark">
+        <span class="ogMarkAt">@</span>
+        <span class="ogMarkWord">VMA</span>
+      </div>
+    </aside>
+
+    <!-- Columna derecha: contenido -->
+    <div class="ogRight">
+      <div class="ogKicker">(CONTACTO)</div>
+      <h2 class="ogTitle">¿Hablamos?</h2>
+      <p class="ogSubtitle">Te respondemos rápido por WhatsApp.</p>
+
+      <form class="ogForm" action={whatsappHref ?? "https://wa.me/549XXXXXXXXXX"} method="GET">
+        <div class="ogRow2">
+          <label class="ogField">
+            <span class="ogLabel">NOMBRE *</span>
+            <input class="ogInput" name="nombre" autocomplete="given-name" placeholder="Tu nombre" required />
+          </label>
+
+          <label class="ogField">
+            <span class="ogLabel">APELLIDO *</span>
+            <input class="ogInput" name="apellido" autocomplete="family-name" placeholder="Tu apellido" required />
+          </label>
+        </div>
+
+        <label class="ogField">
+          <span class="ogLabel">EMAIL *</span>
+          <input class="ogInput" type="email" name="email" autocomplete="email" placeholder="Tu email" required />
+        </label>
+
+        <label class="ogField">
+          <span class="ogLabel">UBICACIÓN</span>
+          <input class="ogInput" name="ubicacion" placeholder="¿Dónde estás ubicado?" />
+        </label>
+
+        <!-- ✅ Mensaje -->
+        <label class="ogField ogFieldTextarea">
+          <span class="ogLabel">MENSAJE</span>
+          <textarea
+            class="ogTextarea"
+            name="mensaje"
+            rows="4"
+            placeholder="Contanos qué necesitás (equipo, altura, zona y fecha)."
+          ></textarea>
+        </label>
+
+        <!-- ✅ Botón con borde rojo -->
+        <button class="ogSend" type="submit">
+          ENVIAR MENSAJE <span aria-hidden="true">→</span>
+        </button>
+
+        <div class="ogMeta">
+          <div class="ogMetaBlock">
+            <span class="ogMetaLabel">REDES</span>
+            <span class="ogMetaValue ogSocials">
+              <a class="ogIconLink" href={socials?.instagram ?? "#"} target="_blank" rel="noreferrer" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                  <path
+                    fill="currentColor"
+                    d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 4a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm5.2-.9a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2z"
+                  />
+                </svg>
+              </a>
+
+              <a class="ogIconLink" href={socials?.linkedin ?? "#"} target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                  <path
+                    fill="currentColor"
+                    d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1-.02-5zM3 9h4v12H3V9zm7 0h3.8v1.7h.1c.5-.9 1.8-1.9 3.7-1.9 4 0 4.7 2.6 4.7 6V21h-4v-5.2c0-1.2 0-2.8-1.7-2.8s-2 1.3-2 2.7V21h-4V9z"
+                  />
+                </svg>
+              </a>
+            </span>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+/* Full-bleed */
+.ogContact{
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  overflow: hidden;
+}
+
+/* Layout */
+.ogWrap{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.05fr 1.15fr;
+}
+
+/* Left */
+.ogLeft{
+  display:flex;
+  align-items:flex-end;
+  padding: clamp(24px, 5vw, 64px);
+}
+.ogMark{ line-height:.9; user-select:none; opacity:.92; }
+.ogMarkAt{ display:block; font-size: clamp(120px, 20vw, 320px); font-weight:800; letter-spacing:-.04em; }
+.ogMarkWord{ display:block; margin-top:-.2em; font-size: clamp(72px, 14vw, 220px); font-weight:800; letter-spacing:-.05em; }
+
+/* Right */
+.ogRight{
+  padding: clamp(28px, 6vw, 90px);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.ogKicker{ font-size:12px; letter-spacing:.16em; opacity:.75; margin-bottom:10px; }
+.ogTitle{ font-size: clamp(42px, 5vw, 76px); line-height:1.02; letter-spacing:-.02em; margin:0 0 10px 0; }
+.ogSubtitle{ margin:0 0 28px 0; opacity:.75; max-width:58ch; }
+
+/* Form */
+.ogForm{ display:flex; flex-direction:column; gap:18px; }
+.ogRow2{ display:grid; grid-template-columns: 1fr 1fr; gap:22px; }
+.ogField{ display:flex; flex-direction:column; gap:8px; }
+.ogLabel{ font-size:11px; letter-spacing:.14em; opacity:.75; }
+
+/* Inputs underline (Safari-proof) */
+.ogInput,
+.ogTextarea{
+  -webkit-appearance:none;
+  appearance:none;
+  font: inherit;
+  color: inherit;
+
+  width: 100%;
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(234,242,247,.22) !important;
+  border-radius: 0 !important;
+
+  padding: 10px 0 12px 0;
+  outline: none;
+}
+.ogTextarea{ resize: vertical; min-height: 120px; }
+.ogInput::placeholder,
+.ogTextarea::placeholder{ color: rgba(234,242,247,.45); }
+.ogInput:focus,
+.ogTextarea:focus{ border-bottom-color: rgba(234,242,247,.55) !important; }
+
+/* Botón (borde rojo) */
+.ogSend{
+  align-self: flex-start;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+
+  padding: 10px 14px;
+  border-radius: 8px;
+
+  border: 1px solid #f4b323; 
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  opacity: 0.95;
+}
+.ogSend:hover{
+  opacity: 1;
+  border-color: #f4b323;
+  background:#ffb109;
+}
+
+/* Redes */
+.ogMeta{ margin-top: 6px; }
+.ogMetaBlock{ display:flex; flex-direction:column; gap:6px; }
+.ogMetaLabel{ font-size:11px; letter-spacing:.14em; opacity:.6; }
+.ogSocials{ display:inline-flex; align-items:center; gap:14px; }
+
+.ogIconLink{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:54px;
+  height:54px;
+  border:1px solid rgba(234,242,247,.18);
+  border-radius:999px;
+  background: rgba(255,255,255,.04);
+  transition: transform .15s ease, background .15s ease, border-color .15s ease;
+}
+.ogIconLink:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.08);
+  border-color: rgba(234,242,247,.32);
+}
+
+/* Responsive */
+@media (max-width: 980px){
+  .ogWrap{ grid-template-columns: 1fr; }
+  .ogLeft{ min-height: 34vh; align-items: flex-end; }
+  .ogRight{ justify-content: flex-start; }
+}
+
+@media (max-width: 640px){
+  .ogRow2{ grid-template-columns: 1fr; gap: 18px; }
+}
+</style>

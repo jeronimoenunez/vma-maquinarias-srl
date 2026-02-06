@@ -1,0 +1,9 @@
+---
+import BaseLayout from "@/ui/layouts/BaseLayout.astro";
+import SectionRenderer from "@/ui/components/SectionRenderer.astro";
+import { homeSections } from "@/data/home";
+---
+
+<BaseLayout>
+  <SectionRenderer sections={homeSections} />
+</BaseLayout>

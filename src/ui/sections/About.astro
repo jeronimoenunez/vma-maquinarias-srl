@@ -1,0 +1,243 @@
+---
+import Container from "@/ui/components/Container.astro";
+---
+
+<section id="nosotros" class="nosotrosFx">
+  <div class="nosotrosFx__spacer" id="nosotrosSpacer">
+    <div class="nosotrosFx__sticky">
+      <div class="nosotrosFx__frame">
+        
+        <div class="nosotrosFx__mosaic" id="nosotrosMosaic">
+          <div class="mosaic__row row--top" id="rowTop">
+            <div class="tile tile--left"><img src="/videos/MVA-img1.jpg" /></div>
+            <div class="tile tile--right"><img src="/videos/MVA-img1.jpg" /></div>
+          </div>
+
+          <div class="mosaic__row row--center" id="rowCenter">
+            <div class="tile tile--side tile--left" id="tileSideL"><img src="/videos/MVA-img1.jpg" /></div>
+            
+            <div class="tile tile--main" id="mainHeroTile">
+              <video 
+                src="/videos/20643876-hd_1920_1080_30fps.mp4" 
+                autoplay 
+                loop 
+                muted 
+                playsinline 
+                class="tile__video"
+              ></video>
+              
+              <div class="nosotrosFx__overlay"></div>
+              
+              <div class="nosotrosFx__text-wrapper">
+                <div class="step-text" id="text1">
+                  <h3>Análisis, Diseño, Implementación</h3>
+                  <p>Entendemos tu operación, optimizamos el espacio y cuidamos tus costos.</p>
+                </div>
+                <div class="step-text" id="text2">
+                  <h3>Asesoramiento comprometido</h3>
+                  <p>Si no lo necesitás, no te lo vendemos. Buscamos rentabilidad real.</p>
+                </div>
+                <div class="step-text" id="text3">
+                  <h3>Proyección 360°</h3>
+                  <p>Evolucionamos hacia flotas inteligentes y procesos sustentables.</p>
+                </div>
+              </div>
+            </div> 
+
+            <div class="tile tile--side tile--right" id="tileSideR"><img src="/videos/MVA-img1.jpg" /></div>
+          </div>
+
+          <div class="mosaic__row row--bottom" id="rowBottom">
+            <div class="tile tile--left"><img src="/videos/MVA-img1.jpg" /></div>
+            <div class="tile tile--right"><img src="/videos/MVA-img1.jpg" /></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .nosotrosFx { background: #000; position: relative; }
+  .nosotrosFx__spacer { height: 1200vh; }
+
+  .nosotrosFx__sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .nosotrosFx__frame {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .nosotrosFx__mosaic {
+    width: 100%; display: flex; flex-direction: column; gap: 1.5vh; will-change: transform;
+  }
+
+  .mosaic__row { display: flex; gap: 1.5vh; width: 100%; flex-shrink: 0; will-change: height, opacity; }
+
+  .tile { overflow: hidden; background: #12232c; position: relative; border-radius: 8px; }
+  
+  .tile img, .tile__video { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    display: block;
+  }
+
+  .tile--main { flex: 1; display: flex; align-items: center; justify-content: center; }
+
+  .nosotrosFx__text-wrapper {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    padding: 3rem;
+  }
+
+  .step-text {
+    position: absolute;
+    text-align: center;
+    color: white;
+    width: fit-content;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    
+    -webkit-mask-image: linear-gradient(to right, 
+      rgba(0,0,0,0) var(--mask-out, 0%), 
+      rgba(0,0,0,1) calc(var(--mask-out, 0%) + 10%), 
+      rgba(0,0,0,1) var(--mask-in, 0%), 
+      rgba(0,0,0,0) calc(var(--mask-in, 0%) + 10%)
+    );
+    mask-image: linear-gradient(to right, 
+      rgba(0,0,0,0) var(--mask-out, 0%), 
+      rgba(0,0,0,1) calc(var(--mask-out, 0%) + 10%), 
+      rgba(0,0,0,1) var(--mask-in, 0%), 
+      rgba(0,0,0,0) calc(var(--mask-in, 0%) + 10%)
+    );
+    will-change: opacity, --mask-in, --mask-out;
+  }
+
+  .step-text h3 {
+    font-size: clamp(1.2rem, 3vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  .step-text p {
+    font-size: clamp(0.9rem, 1.5vw, 1.3rem);
+    font-weight: 400;
+    opacity: 0.9;
+  }
+
+  .nosotrosFx__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    transition: background 0.6s ease;
+  }
+</style>
+
+<script>
+  // El script se mantiene igual ya que maneja las clases y IDs de los contenedores
+  const setupNosotros = () => {
+    const spacer = document.getElementById("nosotrosSpacer");
+    const rowTop = document.getElementById("rowTop");
+    const rowCenter = document.getElementById("rowCenter");
+    const rowBottom = document.getElementById("rowBottom");
+    const texts = [document.getElementById("text1"), document.getElementById("text2"), document.getElementById("text3")];
+    const mainTile = document.getElementById("mainHeroTile");
+    const sides = [document.getElementById('tileSideL'), document.getElementById('tileSideR')];
+
+    if (!spacer || !rowTop || !texts[0]) return;
+
+    const render = () => {
+      const rect = spacer.getBoundingClientRect();
+      const winH = window.innerHeight;
+      const p = Math.max(0, Math.min(1, -rect.top / (rect.height - winH)));
+
+      let h1, h2, h3, opacityTop;
+      const mosaicEnd = 0.75; 
+
+      if (p < mosaicEnd) {
+        const p1 = p / mosaicEnd;
+        if (p1 < 0.5) {
+          const sp1 = p1 / 0.5;
+          h1 = 15 * sp1; h2 = 100 - (35 * sp1); h3 = 20 * sp1; opacityTop = 1;
+        } else {
+          const sp2 = (p1 - 0.5) / 0.5;
+          h1 = 15 * (1 - sp2); h2 = (65 * (1 - sp2)) + (53 * sp2); h3 = (20 * (1 - sp2)) + (44 * sp2); opacityTop = (1 - sp2);
+        }
+      } else {
+        h1 = 0; h2 = 53; h3 = 44; opacityTop = 0;
+      }
+
+      (rowTop as HTMLElement).style.height = `${h1}vh`;
+      (rowCenter as HTMLElement).style.height = `${h2}vh`;
+      (rowBottom as HTMLElement).style.height = `${h3}vh`;
+      (rowTop as HTMLElement).style.opacity = opacityTop.toString();
+
+      const sideProg = Math.min(1, p * 3); 
+      sides.forEach(s => { 
+        if(s){ 
+          (s as HTMLElement).style.flex = (sideProg * 1.5).toString(); 
+          (s as HTMLElement).style.opacity = sideProg.toString(); 
+        }
+      });
+      if(mainTile) (mainTile as HTMLElement).style.flex = (1 + (sideProg * 1.2)).toString();
+
+      const textStart = 0.05;
+      const textEnd = 0.70;
+
+      texts.forEach((txt, i) => {
+        if (!txt) return;
+        const segmentSize = (textEnd - textStart) / 3;
+        const start = textStart + (i * segmentSize);
+        const end = start + segmentSize;
+        
+        let opacity = 0;
+        let maskIn = 0;
+        let maskOut = 0;
+
+        if (p > start && p < end) {
+          const progress = (p - start) / segmentSize;
+          opacity = 1;
+
+          if (progress < 0.3) {
+            maskIn = (progress / 0.3) * 110;
+            maskOut = 0;
+          } else if (progress > 0.7) {
+            maskIn = 110;
+            maskOut = ((progress - 0.7) / 0.3) * 110;
+          } else {
+            maskIn = 110;
+            maskOut = 0;
+          }
+        }
+        
+        (txt as HTMLElement).style.opacity = opacity.toString();
+        (txt as HTMLElement).style.setProperty('--mask-in', `${maskIn}%`);
+        (txt as HTMLElement).style.setProperty('--mask-out', `${maskOut}%`);
+      });
+
+      const overlay = mainTile?.querySelector('.nosotrosFx__overlay') as HTMLElement;
+      if (overlay) {
+        overlay.style.background = p > 0.75 ? `rgba(0,0,0,0.15)` : `rgba(0,0,0,0.5)`;
+      }
+    };
+
+    window.addEventListener("scroll", render, { passive: true });
+    render();
+  };
+
+  document.addEventListener("DOMContentLoaded", setupNosotros);
+  document.addEventListener("astro:page-load", setupNosotros);
+</script>
