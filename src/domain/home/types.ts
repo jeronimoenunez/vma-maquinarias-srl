@@ -19,8 +19,10 @@ export type HeroVideoSection = SectionBase & {
 export type HeroSection = SectionBase & {
   type: "hero";
   props: {
+    kicker?: string;
     title: string;
     subtitle?: string;
+    pullQuote?: string;
     primaryCta?: { label: string; href: string };
     secondaryCta?: { label: string; href: string };
     image?: { src: string; alt: string };
@@ -42,11 +44,9 @@ export type AboutSection = SectionBase & {
   props: {
     kicker?: string;
     title: string;
-    intro?: string;
-    history?: string;
-    mission?: string;
-    vision?: string;
-    values?: Array<{ title: string; description: string }>;
+    subtitle?: string;
+    pullQuote?: string;
+    blocks?: Array<{ title: string; body: string }>;
   };
 };
 
@@ -54,9 +54,10 @@ export type AboutSection = SectionBase & {
 export type MethodSection = SectionBase & {
   type: "method";
   props: {
+    kicker?: string;
     title: string;
+    subtitle?: string;
     steps: Array<{ title: string; description: string }>;
-    principles?: Array<{ title: string; description: string }>;
   };
 };
 
@@ -67,7 +68,15 @@ export type ServicesSection = SectionBase & {
     kicker?: string;
     title: string;
     subtitle?: string;
-    items: Array<{ title: string; bullets: string[] }>;
+    cards?: Array<{
+      eyebrow: string;
+      title: string;
+      body: string;
+      ctaLabel: string;
+      ctaHref: string;
+    }>;
+    bottomCtaLabel?: string;
+    bottomCtaHref?: string;
   };
 };
 
@@ -75,33 +84,65 @@ export type ServicesSection = SectionBase & {
 export type EquipmentShowcaseSection = SectionBase & {
   type: "equipmentShowcase";
   props: {
+    kicker?: string;
     title: string;
     subtitle?: string;
   };
 };
 
-/** 8) ECOSYSTEM */
-export type EcosystemSection = SectionBase & {
-  type: "ecosystem";
+/** 8) INDUSTRY SOLUTIONS (grid editorial sectores) */
+export type IndustryFeatureCard = {
+  id: string;
+  href: string;
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  image: { src: string; alt: string };
+  size: "hero" | "regular";
+};
+
+export type IndustrySolutionsSection = SectionBase & {
+  type: "industrySolutions";
   props: {
-    title: string;
-    items: Array<{ name: string; description?: string }>;
+    kicker?: string;
+    title?: string;
+    cards?: IndustryFeatureCard[];
   };
 };
 
-/** 9) CONTACT */
+/** 9) AI BLOCK */
+export type AIBlockSection = SectionBase & {
+  type: "aiBlock";
+  props: {
+    kicker?: string;
+    title: string;
+    subtitle?: string;
+    callout?: string;
+    ctaLabel?: string;
+    ctaHref?: string;
+  };
+};
+
+/** 10) CONTACT */
 export type ContactSection = SectionBase & {
   type: "contact";
   props: {
+    kicker?: string;
     title: string;
     subtitle?: string;
+    whatsappHref?: string;
+    emailComercial?: string;
+    whatsappLabel?: string;
+    horario?: string;
+    cobertura?: string;
   };
 };
 
-/** 10) FAQ */
+/** 11) FAQ */
 export type FaqSection = SectionBase & {
   type: "faq";
   props: {
+    kicker?: string;
     title: string;
     items: Array<{ q: string; a: string }>;
   };
@@ -109,13 +150,12 @@ export type FaqSection = SectionBase & {
 
 /** UNION */
 export type HomeSection =
-  | HeroVideoSection
   | HeroSection
-  | ValuePropsSection
+  | IndustrySolutionsSection
   | AboutSection
   | MethodSection
   | ServicesSection
   | EquipmentShowcaseSection
-  | EcosystemSection
+  | AIBlockSection
   | ContactSection
   | FaqSection;

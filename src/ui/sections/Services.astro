@@ -1,227 +1,287 @@
 ---
-type StatCard = {
-  value: string | number;   // "24" o 24
-  suffix?: string;          // "h", "%", "+"
-  lead: string;             // línea 1 (gris)
-  emphasis: string;         // línea 2 (negra)
+type ServiceCard = {
+  title: string;
+  subtitle: string;
+  image: { src: string; alt: string };
 };
 
 type Props = {
-  kicker?: string;
-  title?: string;
-  subtitle?: string;
-  ctaLabel?: string;
-  ctaHref?: string;
-  cards?: StatCard[];
+  moduleEyebrow?: string;
+  moduleTitle?: string;
+  heroEyebrow?: string;
+  heroTitle?: string;
+  heroCtaLabel?: string;
+  heroCtaHref?: string;
+  heroImage?: { src: string; alt: string };
+  cards?: ServiceCard[];
 };
 
-const fallbackCards: StatCard[] = [
-  { value: "24", suffix: "h", lead: "respuesta técnica", emphasis: "para minimizar máquina parada" },
-  { value: "+", suffix: "500", lead: "equipos en flota", emphasis: "listos para alquilar o comprar" },
-  { value: "98", suffix: "%", lead: "disponibilidad operativa", emphasis: "planificación sin sorpresas" },
+const fallbackCards: ServiceCard[] = [
+  {
+    title: "Alquiler de equipos",
+    subtitle: "Equipos disponibles cuando los necesitás, con cotización clara",
+    image: {
+      src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&auto=format&fit=crop&q=80",
+      alt: "Equipo de elevación en operación",
+    },
+  },
+  {
+    title: "Venta directa",
+    subtitle: "Compra de equipos nuevos con asesoramiento técnico previo",
+    image: {
+      src: "https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=800&auto=format&fit=crop&q=80",
+      alt: "Maquinaria nueva lista para venta",
+    },
+  },
+  {
+    title: "Soporte técnico",
+    subtitle:
+      "Mantenimiento, repuestos y respuesta en sitio cuando la operación no puede frenar",
+    image: {
+      src: "https://images.unsplash.com/photo-1581092446327-9b52bd1570c2?w=800&auto=format&fit=crop&q=80",
+      alt: "Técnico realizando mantenimiento",
+    },
+  },
 ];
 
 const {
-  kicker = "UNIDADES DE NEGOCIO",
-  title = "Servicios y equipos que mantienen tu operación en movimiento",
-  subtitle = "Alquiler, venta y soporte técnico pensados para trabajar sin interrupciones, con foco en productividad, costos y seguridad operativa.",
-  ctaLabel = "Cómo trabajamos",
-  ctaHref = "#metodologia",
-  cards,
-} = Astro.props as Partial<Props>;
-
-const safeCards = Array.isArray(cards) && cards.length ? cards : fallbackCards;
+  moduleEyebrow = "VMA SERVICE",
+  moduleTitle = "Tres formas de operar",
+  heroEyebrow = "Operación integral para tu obra",
+  heroTitle =
+    "Servicio completo de alquiler, venta y soporte técnico para equipos de elevación",
+  heroCtaLabel = "Conocer más",
+  heroCtaHref = "#metodologia",
+  heroImage = {
+    src: "https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=1600&auto=format&fit=crop&q=80",
+    alt: "Plataforma articulada en obra",
+  },
+  cards = fallbackCards,
+} = Astro.props as Props;
 ---
 
-<section id="servicios" class="spRoot">
-  <div class="spInner">
-    <div class="spKicker">{kicker}</div>
+<section id="servicios" class="serviceSection">
+  <div class="heroBlock">
+    <div class="heroText">
+      <header class="moduleHeader">
+        <p class="moduleEyebrow">{moduleEyebrow}</p>
+        <h2 class="moduleTitle">{moduleTitle}</h2>
+      </header>
 
-    <h2 class="spTitle">{title}</h2>
-
-    {subtitle && <p class="spSubtitle">{subtitle}</p>}
-
-    <a class="spCta" href={ctaHref}>
-      {ctaLabel} <span class="spArrow">→</span>
-    </a>
-
-    <div class="spGrid">
-      {safeCards.map((c) => (
-        <article class="spCard">
-          <div class="spValue">
-            <span class="spNum">{c.value}</span>
-            {c.suffix && <span class="spSuffix">{c.suffix}</span>}
-          </div>
-
-          <p class="spText">
-            <span class="spLead">{c.lead}</span>
-            <br />
-            <span class="spEmphasis">{c.emphasis}</span>
-          </p>
-        </article>
-      ))}
+      <p class="heroEyebrow">{heroEyebrow}</p>
+      <h3 class="heroTitle">{heroTitle}</h3>
+      <a class="heroBtn" href={heroCtaHref}>{heroCtaLabel}</a>
     </div>
+    <div class="heroImage">
+      <img src={heroImage.src} alt={heroImage.alt} loading="lazy" />
+    </div>
+  </div>
+
+  <div class="cardGrid">
+    {
+      cards.map((card) => (
+        <article class="card">
+          <div class="cardImage">
+            <img src={card.image.src} alt={card.image.alt} loading="lazy" />
+          </div>
+          <h4 class="cardTitle">{card.title}</h4>
+          <p class="cardSubtitle">{card.subtitle}</p>
+        </article>
+      ))
+    }
   </div>
 </section>
 
 <style>
-  /* ====== AISLAMIENTO TOTAL (evita que global.css te lo rompa) ====== */
-  .spRoot, .spRoot *{
-    box-sizing: border-box;
-    font-family: inherit;
-  }
-  .spRoot h2, .spRoot p{
-    margin: 0;
-  }
-  .spRoot a{
-    color: inherit;
-    text-decoration: none;
+.serviceSection {
+  background: #f5f5f5;
+  padding: clamp(80px, 10vw, 140px) clamp(40px, 6vw, 120px) clamp(32px, 4vw, 56px);
+  color: #2f2f2f;
+  display: flex;
+  flex-direction: column;
+}
+
+  /* MODULE HEADER */
+.moduleHeader {
+  margin-bottom: clamp(72px, 8vw, 120px);
+}
+
+.moduleEyebrow {
+  color: #ffc400;
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+}
+
+.moduleTitle {
+  color: #ffc400;
+  font-size: clamp(1.4rem, 2vw, 1.8rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+  /* HERO BLOCK 50/50 */
+.heroBlock {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(40px, 6vw, 100px);
+  align-items: center;
+  margin-bottom: clamp(72px, 8vw, 112px);
+  width: 100%;
+}
+
+.heroText {
+  grid-column: 1;
+  max-width: 460px;
+  padding-right: 0;
+}
+  .heroEyebrow {
+    color: #6b6b6b;
+    font-size: 0.95rem;
+    margin: 0 0 24px 0;
+    line-height: 1.4;
   }
 
-  /* ====== SECCIÓN ====== */
-  .spRoot{
-    position: relative;
-    z-index: 2;
-
-    min-height: 90vh;
-    display: flex;
-    align-items: center;
-
-    background: #000000;
-    padding: 120px 0;
-  }
-
-  .spInner{
-    width: min(1120px, calc(100% - 48px));
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  /* ====== HEADER COPY ====== */
-  .spKicker{
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    font-size: 12px;
-    color: rgba(255,255,255,0.60);
-    margin-bottom: 12px;
-  }
-
-  .spTitle{
-    font-size: clamp(28px, 3vw, 44px);
-    line-height: 1.12;
+  .heroTitle {
+    color: #2f2f2f;
+    font-size: clamp(2rem, 3.8vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.15;
     letter-spacing: -0.02em;
-    color: rgba(255,255,255,0.95);
-    font-weight: 600;
-    /* max-width: 980px; */
-    margin-bottom: 12px;
+    margin: 0 0 40px 0;
+    max-width: 18ch;
   }
 
-  .spSubtitle{
-    margin-top: 14px;
-    font-size: 15px;
-    line-height: 1.55;
-    color: rgba(255,255,255,0.72);
-    /* max-width: 880px; */
-    margin-left: auto;
-    margin-right: auto;
+  .heroBtn {
+    display: inline-block;
+    padding: 14px 32px;
+    border: 1px solid #2f2f2f;
+    background: transparent;
+    color: #2f2f2f;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    transition: background 0.3s ease, color 0.3s ease;
   }
 
-  /* ====== CTA ====== */
-  .spCta{
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-
-    margin: 28px auto 0;
-    padding: 12px 18px;
-
-    border: 1px solid rgba(255,255,255,0.55);
-    border-radius: 14px;
-
-    font-size: 14px;
-    font-weight: 500;
-    color: rgba(255,255,255,0.88);
-    background: rgba(255,255,255,0.02);
-  }
-
-  .spCta:hover{
-    background: red;
-    border-color: rgba(255,255,255,0.75);
+  .heroBtn:hover {
+    background: #2f2f2f;
     color: #ffffff;
   }
 
-  .spArrow{
-    display: inline-block;
-    font-size: 18px;
-    line-height: 1;
-    transform: translateY(-1px);
-  }
+.heroImage {
+  grid-column: 2 / 4;
+  aspect-ratio: 16 / 9;
+  min-height: clamp(360px, 34vw, 520px);
+  overflow: hidden;
+  width: 100%;
+}
 
-  /* ====== GRID ====== */
-  .spGrid{
+.heroImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+  /* CARD GRID — mismo gap que heroBlock para alineación perfecta */
+  .cardGrid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 28px;
-    align-items: stretch;
-    margin-top: 64px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(40px, 6vw, 100px);
+    width: 100%;
   }
 
-  /* ====== CARD ====== */
-  .spCard{
-    background: #ffffff;
-    border: 1px solid rgba(0,0,0,.08);
-    border-radius: 16px;
-    padding: 26px 26px 24px;
-    box-shadow:
-      0 20px 50px rgba(0,0,0,.45),
-      0 1px 0 rgba(255,255,255,.04);
-    text-align: center;
-  }
-
-  .spValue{
+  .card {
     display: flex;
-    justify-content: center;
-    align-items: baseline;
-    gap: 6px;
-    margin-bottom: 10px;
+    flex-direction: column;
   }
 
-  .spNum{
-    font-size: 56px;
-    line-height: 1;
-    letter-spacing: -0.04em;
-    color: #111111;
-    font-weight: 600;
+  .cardImage {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    margin-bottom: 24px;
   }
 
-  .spSuffix{
-    font-size: 46px;
-    color: #111111;
-    font-weight: 600;
-    transform: translateY(-6px);
+  .cardImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
   }
 
-  .spText{
-    font-size: 15px;
-    line-height: 1.45;
-    color: #6b7280;
-    text-align: center;
+  .card:hover .cardImage img {
+    transform: scale(1.04);
   }
 
-  .spEmphasis{
-    color: #111111;
-    font-weight: 600;
+  .cardTitle {
+    color: #2f2f2f;
+    font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+    font-weight: 500;
+    line-height: 1.3;
+    margin: 0 0 8px 0;
   }
 
-  @media (max-width: 960px){
-    .spRoot{ padding: 80px 0; }
-    .spGrid{
-      grid-template-columns: 1fr;
-      gap: 16px;
-      margin-top: 32px;
+  .cardSubtitle {
+    color: #6b6b6b;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* ULTRA-WIDE — limitar para que no se estire infinitamente */
+  @media (min-width: 1920px) {
+    .serviceSection {
+      max-width: 1920px;
+      margin-left: auto;
+      margin-right: auto;
     }
-    .spCard{ padding: 22px; }
-    .spNum{ font-size: 52px; }
+  }
+
+  /* TABLET */
+  @media (max-width: 1024px) {
+    .serviceSection {
+      padding: clamp(60px, 8vw, 100px) clamp(24px, 5vw, 48px);
+    }
+
+   .heroBlock {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .heroText,
+  .heroImage {
+    grid-column: 1;
+  }
+
+    .cardGrid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+  }
+
+  /* MOBILE */
+  @media (max-width: 640px) {
+    .serviceSection {
+      padding: 60px 24px;
+    }
+
+    .heroBlock,
+    .cardGrid {
+      gap: 24px;
+    }
+
+    .cardGrid {
+      grid-template-columns: 1fr;
+    }
+
+    .heroTitle {
+      font-size: clamp(1.6rem, 6vw, 2rem);
+    }
   }
 </style>

@@ -1,149 +1,200 @@
 ---
-import Container from "@/ui/components/Container.astro";
-
-type Props = {
-  title: string;
-  items: Array<{ q: string; a: string }>;
+type FAQItemFlexible = {
+  q?: string;
+  question?: string;
+  a?: string;
+  answer?: string;
 };
 
-const { title, items } = Astro.props as Props;
+type Props = {
+  kicker?: string;
+  title?: string;
+  items?: FAQItemFlexible[];
+};
+
+const {
+  kicker = "PREGUNTAS FRECUENTES",
+  title = "Respuestas operativas para decidir con información.",
+  items = [],
+} = Astro.props as Props;
+
+// Normaliza: acepta tanto { q, a } como { question, answer }
+const normalizedItems = items.map((item) => ({
+  question: item.question ?? item.q ?? "",
+  answer: item.answer ?? item.a ?? "",
+}));
 ---
 
-<section class="faqSection" id="faq">
-  <Container>
-    <div class="faqBleed">
-      <div class="faqInner">
-        <div class="kicker faqKicker">Soporte</div>
-        <h2 class="sectionTitle faqTitle">{title}</h2>
+<div class="faqSection">
+  <div class="faqInner">
+    <header class="faqHeader">
+      <p class="faqKicker">{kicker}</p>
+      <h2 class="faqTitle">{title}</h2>
+    </header>
 
-        <div class="faqList">
-          {items.map((it) => (
-            <details class="faqItem">
-              <summary>
-                <span class="question">{it.q}</span>
-                <span class="icon"></span>
-              </summary>
-
-              <div class="answer">
-                <p>{it.a}</p>
-              </div>
-            </details>
-          ))}
-        </div>
-      </div>
+    <div class="faqList">
+      {
+        normalizedItems.map((item) => (
+          <details class="faqItem">
+            <summary class="faqSummary">
+              <span class="faqQuestion">{item.question}</span>
+              <span class="faqIcon" aria-hidden="true" />
+            </summary>
+            <div class="faqAnswer">
+              <p>{item.answer}</p>
+            </div>
+          </details>
+        ))
+      }
     </div>
-  </Container>
-</section>
+  </div>
+</div>
 
 <style>
-/* 1) Sección full height */
-.faqSection{
-  min-height: 100vh;
-  padding: clamp(56px, 8vh, 110px) 0;
-  display: flex;
-  align-items: flex-start;
-}
+  .faqSection {
+    background-color: #070707;
+    min-height: 100vh;
+    width: 100%;
+    padding: 120px 80px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+  }
 
-/* 2) ✅ “Ignora” el .container global (margin: 0 10%) */
-.faqBleed{
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-}
+  .faqInner {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
 
-/* 3) ✅ Bloque centrado real */
-.faqInner{
-  width: min(880px, calc(100% - 40px));
-  margin: 0 auto; /* centra horizontal */
-}
+  .faqHeader {
+    margin-bottom: 80px;
+  }
 
-/* Textos centrados */
-.faqKicker,
-.faqTitle{
-  text-align: center;
-}
+  .faqKicker {
+    color: #ffc400;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin: 0 0 20px 0;
+  }
 
-/* Lista */
-.faqList{
-  margin-top: 28px;
-  display: flex;
-  flex-direction: column;
-}
+  .faqTitle {
+    color: #ffffff;
+    font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+    font-weight: 300;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0;
+    max-width: 22ch;
+  }
 
-/* Item */
-.faqItem{
-  border-bottom: 1px solid var(--line, rgba(255,255,255,.15));
-  padding: 18px 0;
-}
+  .faqList {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
 
-/* Header */
-.faqItem summary{
-  list-style: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  font-weight: 500;
-}
-.faqItem summary::-webkit-details-marker{ display:none; }
+  .faqItem {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background 0.3s ease;
+  }
 
-/* Pregunta */
-.question{
-  font-size: 16px;
-  line-height: 1.4;
-}
+  .faqItem:hover {
+    background: rgba(255, 255, 255, 0.02);
+  }
 
-/* Icono + / - */
-.icon{
-  width: 18px;
-  height: 18px;
-  position: relative;
-  flex-shrink: 0;
-}
-.icon::before,
-.icon::after{
-  content:"";
-  position:absolute;
-  background: currentColor;
-  transition: transform .2s ease;
-}
-.icon::before{
-  top:50%;
-  left:0; right:0;
-  height:2px;
-  transform: translateY(-50%);
-}
-.icon::after{
-  left:50%;
-  top:0; bottom:0;
-  width:2px;
-  transform: translateX(-50%);
-}
-.faqItem[open] .icon::after{
-  transform: translateX(-50%) scaleY(0);
-}
+  .faqItem[open] {
+    background: rgba(255, 196, 0, 0.03);
+  }
 
-/* Respuesta */
-.answer{
-  overflow:hidden;
-  animation: fadeIn .25s ease;
-}
-.answer p{
-  margin-top: 12px;
-  max-width: 720px;
-  font-size: 15px;
-  opacity: .85;
-}
+  .faqSummary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 28px 0;
+    user-select: none;
+  }
 
-/* (opcional) centra el párrafo abierto */
-.faqItem[open] .answer p{
-  margin-left: auto;
-  margin-right: auto;
-}
+  .faqSummary::-webkit-details-marker {
+    display: none;
+  }
 
-@keyframes fadeIn{
-  from{ opacity:0; transform: translateY(-4px); }
-  to{ opacity:1; transform: translateY(0); }
-}
+  .faqQuestion {
+    color: #ffffff;
+    font-size: clamp(1rem, 1.3vw, 1.15rem);
+    font-weight: 400;
+    line-height: 1.4;
+    flex: 1;
+  }
+
+  .faqItem:hover .faqQuestion,
+  .faqItem[open] .faqQuestion {
+    color: #ffc400;
+  }
+
+  .faqIcon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    position: relative;
+  }
+
+  .faqIcon::before,
+  .faqIcon::after {
+    content: "";
+    position: absolute;
+    background: #ffc400;
+    transition: transform 0.3s ease;
+  }
+
+  .faqIcon::before {
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1.5px;
+    transform: translateY(-50%);
+  }
+
+  .faqIcon::after {
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1.5px;
+    transform: translateX(-50%);
+  }
+
+  .faqItem[open] .faqIcon::after {
+    transform: translateX(-50%) scaleY(0);
+  }
+
+  .faqAnswer {
+    padding: 0 0 28px 0;
+    max-width: 78ch;
+  }
+
+  .faqAnswer p {
+    color: #c9c9c9 !important;
+    font-size: 0.98rem;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .faqSection {
+      padding: 80px 32px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .faqSection {
+      padding: 60px 24px;
+      min-height: auto;
+    }
+    .faqTitle {
+      font-size: 1.6rem;
+    }
+  }
 </style>

@@ -1,192 +1,763 @@
 ---
 import Container from "@/ui/components/Container.astro";
-import Button from "@/ui/components/Button.astro";
+import { waCotizarUrl } from "@/config/site";
 
-const items = [
-  { label: "Inicio", href: "#inicio" },
-  { label: "Nosotros", href: "#nosotros" },
-  { label: "Metodología", href: "#metodologia" },
-  { label: "Servicios", href: "#servicios" },
-  { label: "Novedades", href: "#novedades" },
+const navGroups = [
+  {
+    key: "sectores",
+    label: "Sectores",
+    href: "/#sectores",
+    eyebrow: "Sectores",
+    title: "Soluciones por tipo de operación",
+    description:
+      "Obra, industria y mantenimiento requieren decisiones distintas. La lógica es la misma: equipo correcto, disponibilidad real y respaldo técnico.",
+    cards: [
+      {
+        title: "Obra civil",
+        subtitle: "Altura, fachada y montaje",
+        href: "/#sectores",
+        image: "/images/nav/sectores-obra.jpg",
+      },
+      {
+        title: "Industria",
+        subtitle: "Plantas, galpones y operación técnica",
+        href: "/#sectores",
+        image: "/images/nav/sectores-industria.jpg",
+      },
+      {
+        title: "Mantenimiento",
+        subtitle: "Intervenciones rápidas y seguras",
+        href: "/#sectores",
+        image: "/images/nav/sectores-mantenimiento.jpg",
+      },
+    ],
+    links: [
+      { label: "Ver sectores", href: "/#sectores" },
+      { label: "Consultar disponibilidad", href: waCotizarUrl },
+    ],
+  },
+  {
+    key: "servicios",
+    label: "Servicios",
+    href: "/#servicios",
+    eyebrow: "Servicios",
+    title: "Alquiler, venta y soporte técnico",
+    description:
+      "No se trata solo de entregar una máquina. Se trata de resolver una operación con criterio, plazos claros y acompañamiento real.",
+    cards: [
+      {
+        title: "Alquiler",
+        subtitle: "Disponibilidad operativa",
+        href: "/#servicios",
+        image: "/images/nav/servicios-alquiler.jpg",
+      },
+      {
+        title: "Venta",
+        subtitle: "Equipos para inversión",
+        href: "/#servicios",
+        image: "/images/nav/servicios-venta.jpg",
+      },
+      {
+        title: "Soporte técnico",
+        subtitle: "Respaldo durante el proyecto",
+        href: "/#servicios",
+        image: "/images/nav/servicios-soporte.jpg",
+      },
+    ],
+    links: [
+      { label: "Ver servicios", href: "/#servicios" },
+      { label: "Cotizar equipo", href: waCotizarUrl },
+    ],
+  },
+  {
+    key: "metodologia",
+    label: "Cómo trabajamos",
+    href: "/#metodologia",
+    eyebrow: "Método",
+    title: "De la consulta a la operación",
+    description:
+      "Primero entendemos la necesidad real. Después recomendamos el equipo, validamos disponibilidad y coordinamos la entrega.",
+    cards: [
+      {
+        title: "Diagnóstico",
+        subtitle: "Necesidad, altura, acceso y plazo",
+        href: "/#metodologia",
+        image: "/images/nav/metodo-diagnostico.jpg",
+      },
+      {
+        title: "Selección técnica",
+        subtitle: "La máquina correcta",
+        href: "/#metodologia",
+        image: "/images/nav/metodo-seleccion.jpg",
+      },
+      {
+        title: "Entrega",
+        subtitle: "Operación sin improvisación",
+        href: "/#metodologia",
+        image: "/images/nav/metodo-entrega.jpg",
+      },
+    ],
+    links: [
+      { label: "Ver método", href: "/#metodologia" },
+      { label: "Hablar con VMA", href: waCotizarUrl },
+    ],
+  },
+  {
+    key: "equipos",
+    label: "Equipos",
+    href: "/#equipos",
+    eyebrow: "Equipos",
+    title: "Maquinaria para trabajo en altura",
+    description:
+      "Plataformas, manipuladores y equipos para obra, industria y mantenimiento con criterio técnico de selección.",
+    cards: [
+      {
+        title: "Articuladas",
+        subtitle: "Alcance, altura y versatilidad",
+        href: "/#equipos",
+        image: "/images/nav/equipos-articuladas.jpg",
+      },
+      {
+        title: "Tijera",
+        subtitle: "Superficie estable en altura",
+        href: "/#equipos",
+        image: "/images/nav/equipos-tijera.jpg",
+      },
+      {
+        title: "Manipuladores",
+        subtitle: "Carga, alcance y operación industrial",
+        href: "/#equipos",
+        image: "/images/nav/equipos-manipuladores.jpg",
+      },
+    ],
+    links: [
+      { label: "Ver equipos", href: "/#equipos" },
+      { label: "Pedir recomendación", href: waCotizarUrl },
+    ],
+  },
+  {
+    key: "faq",
+    label: "FAQ",
+    href: "/#faq",
+    eyebrow: "Preguntas frecuentes",
+    title: "Antes de cotizar, resolvé lo importante",
+    description:
+      "Disponibilidad, zonas de operación, tiempos de respuesta, condiciones y soporte durante el uso del equipo.",
+    cards: [
+      {
+        title: "Disponibilidad",
+        subtitle: "Equipos sujetos a agenda",
+        href: "/#faq",
+        image: "/images/nav/faq-disponibilidad.jpg",
+      },
+      {
+        title: "Cobertura",
+        subtitle: "AMBA y zonas extendidas",
+        href: "/#faq",
+        image: "/images/nav/faq-cobertura.jpg",
+      },
+      {
+        title: "Soporte",
+        subtitle: "Acompañamiento técnico",
+        href: "/#faq",
+        image: "/images/nav/faq-soporte.jpg",
+      },
+    ],
+    links: [
+      { label: "Ver preguntas", href: "/#faq" },
+      { label: "Consultar por WhatsApp", href: waCotizarUrl },
+    ],
+  },
+  {
+    key: "contacto",
+    label: "Contacto",
+    href: "/#contacto",
+    eyebrow: "Contacto",
+    title: "Cotizá con contexto operativo",
+    description:
+      "Contanos qué necesitás resolver, dónde, cuándo y bajo qué condiciones. Respondemos con criterio, no con una respuesta automática.",
+    cards: [
+      {
+        title: "Cotizar equipo",
+        subtitle: "Consulta directa",
+        href: waCotizarUrl,
+        image: "/images/nav/contacto-cotizar.jpg",
+      },
+      {
+        title: "Disponibilidad",
+        subtitle: "Validación por fecha y zona",
+        href: waCotizarUrl,
+        image: "/images/nav/contacto-disponibilidad.jpg",
+      },
+      {
+        title: "Asesoramiento",
+        subtitle: "Elegir el equipo correcto",
+        href: waCotizarUrl,
+        image: "/images/nav/contacto-asesoramiento.jpg",
+      },
+    ],
+    links: [
+      { label: "Ir a contacto", href: "/#contacto" },
+      { label: "Abrir WhatsApp", href: waCotizarUrl },
+    ],
+  },
 ];
 ---
 
 <header class="topNav" data-topnav>
-  <Container>
-    <div class="pill" role="navigation" aria-label="Navegación principal">
-      <a class="brand" href="/" aria-label="VMA Máquinas">
+  <div class="navBackdrop" data-nav-backdrop hidden></div>
+
+  <div class="navBar">
+    <Container class="navInner">
+      <a class="brand" href="/#inicio" aria-label="VMA Rental">
         <span class="brandLogo">VMA</span>
-        <span class="brandText">VMA Máquinas</span>
+        <span class="brandText">VMA Rental</span>
       </a>
 
-      <div class="tabs" data-tabs>
-        {items.map((it) => (
-          <a class="tab" href={it.href} data-tab>{it.label}</a>
-        ))}
-      </div>
+      <nav class="tabs" aria-label="Navegación principal">
+        {
+          navGroups.map((group) => (
+            <a
+              class="tab"
+              href={group.href}
+              data-tab
+              data-menu-trigger={group.key}
+            >
+              {group.label}
+            </a>
+          ))
+        }
+      </nav>
 
       <div class="right">
-        <Button variant="primary" href="#contacto">Contactanos</Button>
+        <a class="btn btn--primary navCta" href={waCotizarUrl}>
+          Cotizar equipo
+        </a>
       </div>
-    </div>
-  </Container>
+    </Container>
+  </div>
+
+  <div class="megaMenu" data-mega-menu hidden>
+    <Container class="megaInner">
+      {
+        navGroups.map((group) => (
+          <section class="megaPanel" data-mega-panel={group.key} hidden>
+            <div class="megaIntro">
+              <p class="megaEyebrow">{group.eyebrow}</p>
+              <h2 class="megaTitle">{group.title}</h2>
+              <p class="megaDescription">{group.description}</p>
+            </div>
+
+            <div class="megaCards">
+              {group.cards.map((card) => (
+                <a class="megaCard" href={card.href}>
+                  <div
+                    class="megaCardImage"
+                    style={`--nav-card-image: url('${card.image}')`}
+                    aria-hidden="true"
+                  ></div>
+
+                  <div class="megaCardBody">
+                    <strong>{card.title}</strong>
+                    <span>{card.subtitle}</span>
+                  </div>
+                </a>
+              ))}
+            </div>
+
+            <aside class="megaAside">
+              <p class="megaAsideTitle">Acciones</p>
+
+              <div class="megaAsideLinks">
+                {group.links.map((link) => (
+                  <a href={link.href}>{link.label}</a>
+                ))}
+              </div>
+            </aside>
+          </section>
+        ))
+      }
+    </Container>
+  </div>
 </header>
 
 <style>
-.topNav{
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 9999;
-  padding: 0;
-  pointer-events: none;
-}
-
-.pill{
-  pointer-events: auto;
-
-  height: 54px;
-  width: min(980px, 100%);
-  margin: 10px auto 0;
-
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 12px;
-
-  border-radius: 999px;
-  border: 1px solid rgba(234,242,247,.14);
-  background: rgba(10, 22, 30, .55);
-  backdrop-filter: blur(14px);
-  box-shadow: 0 18px 60px rgba(0,0,0,.32);
-  padding: 0 10px;
-}
-
-/* brand */
-.brand{
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding-left: 6px;
-}
-
-.brandLogo{
-  width: 34px;
-  height: 34px;
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-  font-weight: 900;
-  font-size: 12px;
-  letter-spacing: .06em;
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(234,242,247,.14);
-  color: rgba(234,242,247,.95);
-}
-
-.brandText{
-  font-weight: 700;
-  font-size: 14px;
-  color: rgba(234,242,247,.92);
-  white-space: nowrap;
-  opacity: .95;
-}
-
-/* tabs */
-.tabs{
-  justify-self: center;
-  display: inline-flex;
-  gap: 6px;
-  padding: 4px;
-  border-radius: 999px;
-}
-
-/* tab base */
-.tab{
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  height: 34px;
-  padding: 0 14px;
-  border-radius: 999px;
-
-  font-weight: 600;
-  font-size: 13px;
-  color: rgba(234,242,247,.74);
-
-  transition: background .18s ease, color .18s ease, box-shadow .18s ease;
-}
-
-/* HOVER (solo visual, NO “active”) */
-.tab:hover{
-  background: rgb(0, 0, 0);
-  color: rgba(234,242,247,.92);
-}
-
-/* ACTIVE estilo “Relats”: pill oscura, bien definida */
-.tab.isActive{
-  background: rgba(0, 0, 0, 0.73);
-  border: 1px solid rgba(234,242,247,.16);
-  color: rgba(234,242,247,.96);
-  box-shadow: 0 10px 30px rgba(0,0,0,.28);
-}
-
-/* derecha */
-.right{
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding-right: 6px;
-}
-
-@media (max-width: 980px){
-  .pill{
-    grid-template-columns: auto auto;
-    justify-content: space-between;
+  [hidden] {
+    display: none !important;
   }
-  .tabs{ display:none; }
-}
+
+  .topNav {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 9999;
+    pointer-events: none;
+  }
+
+  .navBackdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: auto;
+    opacity: 0;
+    background: rgba(10, 12, 14, 0.18);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    transition: opacity 0.22s ease;
+  }
+
+  .topNav.isMenuOpen .navBackdrop {
+    opacity: 1;
+  }
+
+  .navBar {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    pointer-events: auto;
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition:
+      background 0.24s ease,
+      border-color 0.24s ease,
+      box-shadow 0.24s ease,
+      backdrop-filter 0.24s ease;
+  }
+
+  .topNav.isScrolled .navBar,
+  .topNav.isMenuOpen .navBar {
+    background: rgba(4, 7, 9, 0.94);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .navBar :global(.container.navInner) {
+    min-height: 72px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 24px;
+    width: min(1360px, calc(100vw - 56px));
+    margin: 0 auto;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .brandLogo {
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+
+    font-weight: 900;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: rgba(234, 242, 247, 0.95);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(234, 242, 247, 0.14);
+  }
+
+  .brandText {
+    font-weight: 700;
+    font-size: 15px;
+    color: rgba(234, 242, 247, 0.92);
+    white-space: nowrap;
+  }
+
+  .tabs {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    justify-self: center;
+    min-width: 0;
+  }
+
+  .tab {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    padding: 0 14px;
+    border-radius: 999px;
+    white-space: nowrap;
+
+    font-weight: 600;
+    font-size: 13px;
+    color: rgba(234, 242, 247, 0.72);
+
+    transition:
+      background 0.18s ease,
+      color 0.18s ease,
+      box-shadow 0.18s ease;
+  }
+
+  .tab:hover,
+  .tab.isMenuActive {
+    color: rgba(0, 0, 0, 0.98);
+    background: #ffc400;
+  }
+
+  .tab.isActive {
+    color: rgba(0, 0, 0, 0.98);
+    background: #ffc400;
+  }
+
+  .right {
+    display: inline-flex;
+    align-items: center;
+    justify-self: end;
+  }
+
+  .navCta {
+    padding: 10px 16px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .megaMenu {
+    position: fixed;
+    top: 72px;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    pointer-events: auto;
+
+    background: rgba(246, 245, 241, 0.98);
+    border-bottom: 1px solid rgba(16, 18, 20, 0.08);
+    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.18);
+
+    opacity: 0;
+    transform: translateY(-10px);
+    transition:
+      opacity 0.22s ease,
+      transform 0.22s ease;
+  }
+
+  .topNav.isMenuOpen .megaMenu {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .megaMenu :global(.container.megaInner) {
+    width: min(1360px, calc(100vw - 56px));
+    margin: 0 auto;
+  }
+
+  .megaPanel {
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr) 220px;
+    gap: 40px;
+    padding: 34px 0 38px;
+    align-items: start;
+  }
+
+  .megaPanel.isActive {
+    display: grid !important;
+  }
+
+  .megaIntro {
+    max-width: 300px;
+  }
+
+  .megaEyebrow {
+    margin: 0 0 12px;
+    color: #b58c00;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .megaTitle {
+    margin: 0;
+    color: #101214;
+    font-size: clamp(1.85rem, 2.1vw, 2.5rem);
+    line-height: 1.04;
+    letter-spacing: -0.05em;
+    font-weight: 600;
+  }
+
+  .megaDescription {
+    margin: 16px 0 0;
+    color: rgba(16, 18, 20, 0.62);
+    font-size: 0.96rem;
+    line-height: 1.6;
+  }
+
+  .megaCards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+  }
+
+  .megaCard {
+    display: block;
+    color: #101214;
+  }
+
+  .megaCardImage {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: #d7d2c1;
+    background-image:
+      linear-gradient(
+        135deg,
+        rgba(255, 196, 0, 0.18),
+        rgba(16, 18, 20, 0.12)
+      ),
+      var(--nav-card-image);
+    background-size: cover;
+    background-position: center;
+    border-radius: 2px;
+    transition:
+      transform 0.28s ease,
+      filter 0.28s ease;
+  }
+
+  .megaCard:hover .megaCardImage {
+    transform: scale(1.025);
+    filter: saturate(1.03) contrast(1.03);
+  }
+
+  .megaCardBody {
+    padding-top: 14px;
+  }
+
+  .megaCardBody strong {
+    display: block;
+    color: #101214;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .megaCardBody span {
+    display: block;
+    margin-top: 6px;
+    color: rgba(16, 18, 20, 0.58);
+    font-size: 0.86rem;
+    line-height: 1.42;
+  }
+
+  .megaAside {
+    border-left: 1px solid rgba(16, 18, 20, 0.1);
+    padding-left: 28px;
+  }
+
+  .megaAsideTitle {
+    margin: 0 0 18px;
+    color: #101214;
+    font-size: 0.92rem;
+    font-weight: 800;
+  }
+
+  .megaAsideLinks {
+    display: grid;
+    gap: 16px;
+  }
+
+  .megaAsideLinks a {
+    color: rgba(16, 18, 20, 0.68);
+    font-size: 0.95rem;
+    line-height: 1.35;
+    transition: color 0.18s ease;
+  }
+
+  .megaAsideLinks a:hover {
+    color: #101214;
+  }
+
+  @media (max-width: 1180px) {
+    .megaPanel {
+      grid-template-columns: 280px minmax(0, 1fr);
+    }
+
+    .megaAside {
+      grid-column: 1 / -1;
+      border-left: 0;
+      border-top: 1px solid rgba(16, 18, 20, 0.1);
+      padding-left: 0;
+      padding-top: 20px;
+    }
+  }
+
+  @media (max-width: 980px) {
+    .navBar :global(.container.navInner) {
+      grid-template-columns: auto auto;
+      justify-content: space-between;
+      width: min(100vw - 32px, 1360px);
+      min-height: 64px;
+    }
+
+    .tabs {
+      display: none;
+    }
+
+    .megaMenu,
+    .navBackdrop {
+      display: none !important;
+    }
+  }
 </style>
 
 <script type="module">
-  const root = document.querySelector('[data-topnav]');
-  const tabs = Array.from(root.querySelectorAll('[data-tab]'));
+  const root = document.querySelector("[data-topnav]");
 
-  const sections = tabs
-    .map(a => document.querySelector(a.getAttribute('href')))
-    .filter(Boolean);
+  if (root) {
+    const navBar = root.querySelector(".navBar");
+    const menu = root.querySelector("[data-mega-menu]");
+    const backdrop = root.querySelector("[data-nav-backdrop]");
+    const tabs = Array.from(root.querySelectorAll("[data-tab]"));
+    const triggers = Array.from(root.querySelectorAll("[data-menu-trigger]"));
+    const panels = Array.from(root.querySelectorAll("[data-mega-panel]"));
 
-  const setActive = (id) => {
-    tabs.forEach(a => {
-      const href = a.getAttribute('href') || '';
-      a.classList.toggle('isActive', href === `#${id}`);
+    let closeTimer = null;
+
+    const getHashFromHref = (href) => {
+      if (!href) return "";
+      const hashIndex = href.indexOf("#");
+      return hashIndex >= 0 ? href.slice(hashIndex + 1) : "";
+    };
+
+    const setScrolled = () => {
+      root.classList.toggle("isScrolled", window.scrollY > 18);
+    };
+
+    const clearCloseTimer = () => {
+      if (closeTimer) {
+        window.clearTimeout(closeTimer);
+        closeTimer = null;
+      }
+    };
+
+    const openMenu = (key) => {
+      if (!menu || !backdrop || !key) return;
+
+      clearCloseTimer();
+
+      menu.hidden = false;
+      backdrop.hidden = false;
+      root.classList.add("isMenuOpen");
+
+      panels.forEach((panel) => {
+        const isActive = panel.getAttribute("data-mega-panel") === key;
+        panel.hidden = !isActive;
+        panel.classList.toggle("isActive", isActive);
+      });
+
+      triggers.forEach((trigger) => {
+        trigger.classList.toggle(
+          "isMenuActive",
+          trigger.getAttribute("data-menu-trigger") === key
+        );
+      });
+    };
+
+    const closeMenu = () => {
+      if (!menu || !backdrop) return;
+
+      root.classList.remove("isMenuOpen");
+
+      panels.forEach((panel) => {
+        panel.hidden = true;
+        panel.classList.remove("isActive");
+      });
+
+      triggers.forEach((trigger) => {
+        trigger.classList.remove("isMenuActive");
+      });
+
+      window.setTimeout(() => {
+        if (!root.classList.contains("isMenuOpen")) {
+          menu.hidden = true;
+          backdrop.hidden = true;
+        }
+      }, 220);
+    };
+
+    const scheduleClose = () => {
+      clearCloseTimer();
+      closeTimer = window.setTimeout(closeMenu, 110);
+    };
+
+    const setActive = (id) => {
+      tabs.forEach((tab) => {
+        const href = tab.getAttribute("href") || "";
+        const hash = getHashFromHref(href);
+        tab.classList.toggle("isActive", hash === id);
+      });
+    };
+
+    triggers.forEach((trigger) => {
+      const key = trigger.getAttribute("data-menu-trigger");
+
+      trigger.addEventListener("mouseenter", () => openMenu(key));
+      trigger.addEventListener("focus", () => openMenu(key));
     });
-  };
 
-  // Click: setea active (pero scroll también lo va a poder cambiar después)
-  tabs.forEach(a => {
-    a.addEventListener('click', () => {
-      const href = a.getAttribute('href') || '';
-      if (href.startsWith('#')) setActive(href.slice(1));
+    navBar?.addEventListener("mouseenter", clearCloseTimer);
+    navBar?.addEventListener("mouseleave", scheduleClose);
+    menu?.addEventListener("mouseenter", clearCloseTimer);
+    menu?.addEventListener("mouseleave", scheduleClose);
+    backdrop?.addEventListener("mouseenter", scheduleClose);
+    backdrop?.addEventListener("click", closeMenu);
+
+    root.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeMenu();
     });
-  });
 
-  // Scroll automático: sección más “dominante” en viewport
-  const obs = new IntersectionObserver((entries) => {
-    const visible = entries
-      .filter(e => e.isIntersecting)
-      .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const href = tab.getAttribute("href") || "";
+        const id = getHashFromHref(href);
+        if (id) setActive(id);
+        closeMenu();
+      });
+    });
 
-    if (visible?.target?.id) setActive(visible.target.id);
-  }, {
-    rootMargin: "-45% 0px -45% 0px",
-    threshold: [0.1, 0.25, 0.4, 0.6]
-  });
+    const sectionIds = Array.from(
+      new Set([
+        "inicio",
+        ...tabs.map((tab) => getHashFromHref(tab.getAttribute("href") || "")),
+      ])
+    ).filter(Boolean);
 
-  sections.forEach(s => obs.observe(s));
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
 
-  // Estado inicial
-  const initial = (window.location.hash || "#inicio").slice(1);
-  setActive(initial);
+    if (sections.length > 0) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const visible = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+          if (visible?.target?.id) {
+            setActive(visible.target.id);
+          }
+        },
+        {
+          rootMargin: "-45% 0px -45% 0px",
+          threshold: [0.1, 0.25, 0.4, 0.6],
+        }
+      );
+
+      sections.forEach((section) => observer.observe(section));
+    }
+
+    setScrolled();
+    setActive(window.location.hash?.replace("#", "") || "inicio");
+
+    window.addEventListener("scroll", setScrolled, { passive: true });
+  }
 </script>

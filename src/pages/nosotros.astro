@@ -1,0 +1,569 @@
+---
+import BaseLayout from "@/ui/layouts/BaseLayout.astro";
+
+const values = [
+  {
+    title: "Misión",
+    body:
+      "Resolver la operación de elevación de nuestros clientes con equipos correctos, entregas confiables y respaldo técnico real. No vendemos capacidad que no necesitás ni comprometemos plazos que no podemos cumplir.",
+  },
+  {
+    title: "Visión",
+    body:
+      "Ser el proveedor de referencia en alquiler y venta de maquinaria especializada para empresas que entienden que disponibilidad y respaldo técnico son tan importantes como el equipo en sí.",
+  },
+  {
+    title: "Valores",
+    body:
+      "Criterio técnico antes que volumen. Plazos cumplidos antes que promesas grandes. Respaldo operativo durante todo el ciclo del proyecto, no solo durante la cotización.",
+  },
+];
+
+const heroImage = "https://nationaldispatching.com/wp-content/uploads/2023/08/LIFT-WITH-PLATFORM-WORK-IN-WAREHOUSE-HANGAR-CONSTRUCTION-FIELD..jpg";
+---
+
+<BaseLayout
+  title="Nosotros — VMA Rental"
+  description="Conocé VMA Rental: alquiler y venta de maquinaria especializada para trabajo en altura."
+>
+{/* HERO + FILOSOFÍA — UNA SOLA ESCENA STICKY */}
+<section class="aboutStory" data-about-story>
+  <div class="aboutStorySticky">
+    <img
+      class="aboutStoryMedia"
+      src={heroImage}
+      alt=""
+      loading="eager"
+      decoding="async"
+      aria-hidden="true"
+      data-story-media
+    />
+
+    <div class="aboutStoryOverlay" aria-hidden="true" data-story-overlay></div>
+
+    <div class="aboutHeroContent" data-hero-content>
+      <p class="aboutHeroKicker">QUIÉNES SOMOS</p>
+
+      <h1 class="aboutHeroTitle">
+        VMA Rental: maquinaria especializada,
+        <span>criterio técnico,</span>
+        respaldo operativo.
+      </h1>
+
+      <p class="aboutHeroText">
+        Operamos hace [X AÑOS — CONFIRMAR CON VMA] en el alquiler y venta de
+        equipos de elevación. Trabajamos con clientes de obra civil, industria
+        y servicios técnicos en todo el AMBA y zonas extendidas.
+      </p>
+    </div>
+
+    <div class="aboutPhilosophyContent" data-philosophy-content>
+      <p class="aboutPhilosophyKicker">NUESTRA FILOSOFÍA</p>
+      <h2 class="aboutPhilosophyTitle">
+        Cómo pensamos.<br />
+        Cómo trabajamos.
+      </h2>
+    </div>
+  </div>
+</section>
+
+  <!-- SECUENCIA STICKY -->
+  <section class="philosophySequence">
+    {
+      values.map((value, index) => (
+        <section class="philosophyPanel">
+          <div class="philosophyPanelInner">
+            <span class="philosophyPanelNumber">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+
+            <h2 class="philosophyPanelTitle">{value.title}</h2>
+            <p class="philosophyPanelText">{value.body}</p>
+          </div>
+        </section>
+      ))
+    }
+  </section>
+
+<script is:inline>
+  const story = document.querySelector("[data-about-story]");
+  const media = document.querySelector("[data-story-media]");
+  const overlay = document.querySelector("[data-story-overlay]");
+  const heroContent = document.querySelector("[data-hero-content]");
+  const philosophyContent = document.querySelector("[data-philosophy-content]");
+
+  if (story && media && overlay && heroContent && philosophyContent) {
+    const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+    const updateStory = () => {
+      const rect = story.getBoundingClientRect();
+      const viewport = window.innerHeight || 1;
+      const travel = rect.height - viewport;
+
+      const progress = clamp(-rect.top / travel, 0, 1);
+      const started = progress > 0.01;
+
+      /*
+        Progress:
+        0.00 → hero limpio
+        0.10 → empieza blur fuerte
+        0.30 → hero text desaparece
+        0.45 → filosofía empieza a aparecer
+        1.00 → filosofía consolidada
+      */
+
+      const blur = started ? 8 + progress * 18 : 0;
+      const scale = 1.02 + progress * 0.18;
+      const brightness = 0.78 - progress * 0.1;
+
+      const heroOpacity = clamp(1 - progress / 0.32, 0, 1);
+      const heroY = -progress * 32;
+
+      const philosophyOpacity = clamp((progress - 0.38) / 0.28, 0, 1);
+      const philosophyScale = 0.92 + philosophyOpacity * 0.08;
+
+      media.style.filter = `blur(${blur}px) saturate(0.82) contrast(1.06) brightness(${brightness})`;
+      media.style.transform = `scale(${scale})`;
+
+      overlay.style.opacity = `${0.52 + progress * 0.16}`;
+
+      heroContent.style.opacity = `${heroOpacity}`;
+      heroContent.style.transform = `translateY(${heroY}px)`;
+
+      philosophyContent.style.opacity = `${philosophyOpacity}`;
+      philosophyContent.style.transform = `scale(${philosophyScale})`;
+    };
+
+    updateStory();
+    window.addEventListener("scroll", updateStory, { passive: true });
+    window.addEventListener("resize", updateStory);
+  }
+</script>
+</BaseLayout>
+
+<style>
+  :global(html),
+  :global(body) {
+    overflow-x: clip;
+    background: #070707;
+  }
+
+  /* =========================
+     HERO STICKY
+  ========================= */
+  .cinematicHero {
+    position: sticky;
+    top: 0;
+    min-height: 100svh;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 160px 80px 120px;
+    background: #070707;
+    z-index: 1;
+  }
+
+  .cinematicHeroMedia {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+    filter: saturate(0.82) contrast(1.06) brightness(0.72);
+    transform: scale(1.02);
+  }
+
+  .cinematicHeroOverlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      linear-gradient(
+        90deg,
+        rgba(7, 7, 7, 0.84) 0%,
+        rgba(7, 7, 7, 0.62) 36%,
+        rgba(7, 7, 7, 0.24) 68%,
+        rgba(7, 7, 7, 0.34) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(7, 7, 7, 0.24) 0%,
+        rgba(7, 7, 7, 0.12) 38%,
+        rgba(7, 7, 7, 0.84) 100%
+      );
+  }
+
+  .cinematicHeroContent {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .cinematicHeroKicker {
+    color: #ffc400;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin: 0 0 32px 0;
+  }
+
+  .cinematicHeroTitle {
+    color: #ffffff;
+    font-size: clamp(2.8rem, 5.6vw, 5.2rem);
+    font-weight: 300;
+    line-height: 1.06;
+    letter-spacing: -0.04em;
+    margin: 0 0 38px 0;
+    max-width: 12ch;
+    text-wrap: balance;
+  }
+
+  .cinematicHeroTitle span {
+    color: #ffc400;
+    font-style: italic;
+  }
+
+  .cinematicHeroText {
+    color: rgba(255, 255, 255, 0.84);
+    font-size: clamp(1rem, 1.3vw, 1.15rem);
+    line-height: 1.65;
+    margin: 0;
+    max-width: 62ch;
+  }
+
+  /* =========================
+   HERO + PHILOSOPHY — SINGLE STICKY SCENE
+========================= */
+
+.aboutStory {
+  position: relative;
+  width: 100vw;
+  height: 220svh;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  background: #070707;
+  z-index: 1;
+}
+
+.aboutStorySticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  width: 100%;
+  overflow: hidden;
+  background: #070707;
+}
+
+.aboutStoryMedia {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  filter: blur(0px) saturate(0.82) contrast(1.06) brightness(0.78);
+  transform: scale(1.02);
+  transform-origin: center center;
+  will-change: filter, transform;
+}
+
+.aboutStoryOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.52;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(7, 7, 7, 0.86) 0%,
+      rgba(7, 7, 7, 0.62) 35%,
+      rgba(7, 7, 7, 0.28) 68%,
+      rgba(7, 7, 7, 0.34) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(7, 7, 7, 0.22) 0%,
+      rgba(7, 7, 7, 0.1) 38%,
+      rgba(7, 7, 7, 0.86) 100%
+    );
+  will-change: opacity;
+}
+
+.aboutHeroContent {
+  position: absolute;
+  z-index: 2;
+  left: max(80px, calc((100vw - 1280px) / 2));
+  top: 30%;
+  transform: translateY(-46%);
+  will-change: opacity, transform;
+}
+
+.aboutHeroKicker {
+  color: #ffc400;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin: 0 0 32px 0;
+}
+
+.aboutHeroTitle {
+  color: #ffffff;
+  font-size: clamp(2.8rem, 5.4vw, 5.2rem);
+  font-weight: 300;
+  line-height: 1.06;
+  letter-spacing: -0.04em;
+  margin: 0 0 38px 0;
+  max-width: 30ch;
+  text-wrap: balance;
+}
+
+.aboutHeroTitle span {
+  color: #ffc400;
+  font-style: italic;
+}
+
+.aboutHeroText {
+  color: rgba(255, 255, 255, 0.84);
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  line-height: 1.65;
+  margin: 0;
+  max-width: 62ch;
+}
+
+.aboutPhilosophyContent {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 24px;
+  box-sizing: border-box;
+  opacity: 0;
+  transform: scale(0.92);
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+.aboutPhilosophyKicker {
+  color: rgba(255, 196, 0, 0.96);
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin: 0 0 28px 0;
+}
+
+.aboutPhilosophyTitle {
+  color: rgba(255, 255, 255, 0.96);
+  font-size: clamp(2.8rem, 5.7vw, 5.4rem);
+  font-weight: 300;
+  line-height: 1.06;
+  letter-spacing: -0.05em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+  /* =========================
+     BLUR + ZOOM TRANSITION
+  ========================= */
+.philosophyTransition {
+  position: relative;
+  z-index: 3;
+  min-height: 220svh;
+  width: 100vw;
+  margin-top: 0;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  background: transparent;
+}
+
+  .philosophyTransitionSticky {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 24px;
+    box-sizing: border-box;
+  }
+
+  .philosophyTransitionMedia {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+    filter: blur(0px) saturate(0.8) contrast(1.04) brightness(0.9);
+    transform: scale(1);
+    will-change: transform, filter;
+  }
+
+  .philosophyTransitionOverlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    will-change: background;
+    background: transparent;
+  }
+
+  .philosophyTransitionContent {
+    position: relative;
+    z-index: 2;
+    max-width: 980px;
+    margin: 0 auto;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(40px) scale(0.96);
+    will-change: transform, opacity;
+  }
+
+  .philosophyTransitionKicker {
+    color: rgba(255, 196, 0, 0.95);
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin: 0 0 28px 0;
+  }
+
+  .philosophyTransitionTitle {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: clamp(2.8rem, 5.7vw, 5.4rem);
+    font-weight: 300;
+    line-height: 1.06;
+    letter-spacing: -0.05em;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  /* =========================
+     PANELS STICKY
+  ========================= */
+  .philosophySequence {
+    position: relative;
+    z-index: 5;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    background: #f6f4ef;
+  }
+
+  .philosophyPanel {
+    position: sticky;
+    top: 0;
+    min-height: 100svh;
+    width: 100%;
+    background: #f6f4ef;
+    color: #111111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 140px 80px;
+    border-bottom: 1px solid rgba(17, 17, 17, 0.06);
+  }
+
+  .philosophyPanel:nth-child(1) { z-index: 1; }
+  .philosophyPanel:nth-child(2) { z-index: 2; }
+  .philosophyPanel:nth-child(3) { z-index: 3; }
+
+  .philosophyPanelInner {
+    max-width: 740px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .philosophyPanelNumber {
+    display: inline-block;
+    color: #c49a00;
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    font-weight: 700;
+    margin-bottom: 30px;
+  }
+
+  .philosophyPanelTitle {
+    color: #111111;
+    font-size: clamp(2.8rem, 5vw, 5rem);
+    font-weight: 300;
+    line-height: 1.04;
+    letter-spacing: -0.05em;
+    margin: 0 0 34px 0;
+  }
+
+  .philosophyPanelText {
+    color: rgba(17, 17, 17, 0.68);
+    font-size: clamp(1rem, 1.35vw, 1.18rem);
+    line-height: 1.72;
+    margin: 0 auto;
+    max-width: 64ch;
+  }
+
+  @media (max-width: 640px) {
+    .cinematicHero {
+      min-height: 100svh;
+      padding: 120px 24px 80px;
+      align-items: flex-end;
+    }
+
+    .cinematicHeroTitle {
+      font-size: clamp(2.2rem, 11vw, 3.2rem);
+      max-width: 11ch;
+    }
+
+    .cinematicHeroText {
+      font-size: 0.95rem;
+      max-width: 100%;
+    }
+
+    .philosophyTransition {
+      min-height: 190svh;
+      margin-top: 0;
+    }
+
+    .philosophyTransitionTitle {
+      font-size: clamp(2.2rem, 10vw, 3.5rem);
+    }
+
+    .philosophyPanel {
+      padding: 110px 24px;
+    }
+
+    .philosophyPanelInner {
+      text-align: left;
+      margin: 0;
+    }
+
+    .philosophyPanelTitle {
+      font-size: clamp(2.5rem, 12vw, 3.8rem);
+    }
+
+    .philosophyPanelText {
+      font-size: 1rem;
+    }
+  }
+</style>

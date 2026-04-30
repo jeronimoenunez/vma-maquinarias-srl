@@ -1,0 +1,172 @@
+---
+type Props = {
+  kicker?: string;
+  title?: string;
+  description?: string;
+  callout?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+};
+
+const {
+  kicker = "ATENCIÓN INTELIGENTE",
+  title = "Consultá disponibilidad y especificaciones a cualquier hora.",
+  description = "Implementamos un asistente conversacional especializado en nuestro catálogo. Responde consultas sobre alturas, tipos de equipo, fuentes de energía y compatibilidad con tu obra — y deriva al equipo comercial cuando la consulta requiere cotización formal.",
+  callout = "El asistente no reemplaza al equipo comercial. Lo complementa: filtra consultas técnicas básicas para que las solicitudes que llegan al comercial estén calificadas y listas para cotizar.",
+  ctaLabel = "Probar el asistente",
+  ctaHref = "#contacto",
+} = Astro.props as Props;
+---
+
+<section id="asistente" class="aiSection">
+  <div class="aiInner">
+    <p class="aiKicker">{kicker}</p>
+    <h2 class="aiTitle">{title}</h2>
+    <p class="aiDescription">{description}</p>
+    <div class="aiCallout">
+      <p>{callout}</p>
+    </div>
+    <a class="aiCta" href={ctaHref}>
+      {ctaLabel} <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .aiSection {
+    position: relative;
+    background-color: #ffffff;
+    background-image: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.95) 0%,
+        rgba(255, 255, 255, 0.85) 40%,
+        rgba(255, 255, 255, 0.6) 80%,
+        rgba(255, 255, 255, 0.4) 100%
+      ),
+      url("https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=2400&auto=format&fit=crop&q=80");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding-top: 120px;
+    padding-bottom: 120px;
+    padding-left: 80px;
+    padding-right: 80px;
+    box-sizing: border-box;
+  }
+
+  .aiInner {
+    max-width: 640px;
+    width: 100%;
+  }
+
+  .aiKicker {
+    color: #ffc400;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin: 0 0 20px 0;
+  }
+
+  .aiTitle {
+    color: #1a1a1a;
+    font-size: 2.4rem;
+    font-weight: 300;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0 0 28px 0;
+    max-width: 22ch;
+  }
+
+  .aiDescription {
+    color: #2f2f2f;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0 0 32px 0;
+    max-width: 56ch;
+  }
+
+  .aiCallout {
+    border-left: 3px solid #ffc400;
+    padding: 4px 0 4px 20px;
+    margin: 0 0 40px 0;
+    max-width: 56ch;
+    background: rgba(255, 196, 0, 0.06);
+    padding: 16px 20px;
+  }
+
+  .aiCallout p {
+    color: #4a4a4a;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin: 0;
+    font-style: italic;
+  }
+
+  .aiCta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 32px;
+    background: #1a1a1a;
+    color: #ffffff;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.3s ease, gap 0.3s ease;
+  }
+
+  .aiCta:hover {
+    background: #ffc400;
+    color: #1a1a1a;
+    gap: 16px;
+  }
+
+  @media (max-width: 1024px) {
+    .aiSection {
+      padding-left: 32px;
+      padding-right: 32px;
+      padding-top: 80px;
+      padding-bottom: 80px;
+      min-height: 100vh;
+    }
+
+    .aiInner {
+      max-width: 100%;
+    }
+
+    .aiTitle {
+      font-size: 2rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .aiSection {
+      padding-left: 24px;
+      padding-right: 24px;
+      padding-top: 60px;
+      padding-bottom: 60px;
+      min-height: 100vh;
+      background-image: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.95) 0%,
+          rgba(255, 255, 255, 0.85) 100%
+        ),
+        url("https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=2400&auto=format&fit=crop&q=80");
+    }
+
+    .aiTitle {
+      font-size: 1.6rem;
+    }
+
+    .aiCta {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

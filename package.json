@@ -1,5 +1,5 @@
 {
-  "name": "zapping-zenith",
+  "name": "vma-rental",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -10,8 +10,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/react": "^4.4.2",
-    "astro": "^5.17.1",
+    "@astrojs/react": "^5.0.4",
+    "astro": "^6.1.10",
     "gsap": "^3.14.2",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
