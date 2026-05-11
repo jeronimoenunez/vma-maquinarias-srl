@@ -8,7 +8,7 @@ export const videoAssets = {
   heroMain: {
     poster: undefined,
     desktop: {
-      mp4: "https://media.vmarental.com.ar/videos/hero/main-1080.mp4",
+      mp4: "/videos/featuredVideo.mp4",
     },
     duration: 14,
   },

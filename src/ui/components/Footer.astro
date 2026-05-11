@@ -1,4 +1,6 @@
 ---
+import { site, waCotizarUrl } from "@/config/site";
+
 type Props = {
   emailComercial?: string;
   whatsappLabel?: string;
@@ -8,19 +10,17 @@ type Props = {
 };
 
 const {
-  emailComercial = "comercial@vmarental.com.ar",
+  emailComercial = site.contact.emailComercial,
   whatsappLabel = "[PENDIENTE]",
-  address = "[DIRECCIÓN FÍSICA SI APLICA]",
+  address = "[DIRECCIÓN PENDIENTE]",
   logoSrc = "/brand/Isologotipo.png",
   logoAlt = "VMA Rental",
 } = Astro.props as Props;
 ---
 
 <footer class="footer">
-  {/* DIVISOR AMARILLO */}
   <div class="footerDivider" aria-hidden="true"></div>
 
-  {/* LOGO + EMAIL GIGANTE */}
   <div class="footerHero">
     <a href="#inicio" class="footerLogo" aria-label={logoAlt}>
       <img src={logoSrc} alt={logoAlt} />
@@ -31,14 +31,12 @@ const {
     </div>
   </div>
 
-  {/* FOOTER MINIMAL */}
   <div class="footerMain">
     <div class="footerCols">
       <div class="footerCol">
         <h3 class="footerColTitle">VMA RENTAL</h3>
         <p class="footerColText">
-          Alquiler y venta de maquinaria especializada para trabajo en altura,
-          obra e industria. AMBA y zonas extendidas.
+          Alquiler de equipos de elevación y trabajo en altura para obra e industria. Disponibilidad real, soporte técnico y continuidad operativa.
         </p>
       </div>
 
@@ -67,7 +65,7 @@ const {
     </div>
 
     <div class="footerLegal">
-      <p>© 2026 VMA Maquinarias SRL. Todos los derechos reservados.</p>
+      <p>© 2026 VMA Rental SRL. Todos los derechos reservados.</p>
       <p>
         Diseño y desarrollo:
         <a
@@ -90,7 +88,6 @@ const {
     box-sizing: border-box;
   }
 
-  /* DIVISOR AMARILLO */
   .footerDivider {
     height: 1px;
     background: linear-gradient(
@@ -100,11 +97,9 @@ const {
       #ffc400 80%,
       transparent 100%
     );
-    /* margin: 0 0 80px 0; */
     opacity: 0.4;
   }
 
-  /* HERO: LOGO + EMAIL */
   .footerHero {
     display: flex;
     justify-content: space-between;
@@ -114,7 +109,6 @@ const {
     margin-bottom: 80px;
   }
 
-  /* LOGO */
   .footerLogo {
     flex-shrink: 0;
     display: inline-block;
@@ -131,7 +125,6 @@ const {
     display: block;
   }
 
-  /* EMAIL GIGANTE */
   .footerBigEmail {
     flex: 1;
     text-align: right;
@@ -153,12 +146,6 @@ const {
   .footerBigEmail a:hover {
     color: #ffc400;
   }
-
-  /* FOOTER MAIN */
-  /* .footerMain {
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding-top: 40px;
-  } */
 
   .footerCols {
     display: grid;
@@ -210,7 +197,6 @@ const {
     color: #ffc400;
   }
 
-  /* LEGAL */
   .footerLegal {
     border-top: 1px solid rgba(255, 255, 255, 0.06);
     padding-top: 32px;
@@ -237,15 +223,10 @@ const {
     color: #ffffff;
   }
 
-  /* TABLET */
   @media (max-width: 1024px) {
     .footer {
       padding: 0 32px 32px 32px;
     }
-
-    /* .footerDivider {
-      margin-bottom: 60px;
-    } */
 
     .footerHero {
       margin-bottom: 80px;
@@ -258,15 +239,10 @@ const {
     }
   }
 
-  /* MOBILE */
   @media (max-width: 640px) {
     .footer {
       padding: 0 24px 24px 24px;
     }
-
-    /* .footerDivider {
-      margin-bottom: 40px;
-    } */
 
     .footerHero {
       flex-direction: column;

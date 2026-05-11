@@ -18,7 +18,6 @@ const {
   items = [],
 } = Astro.props as Props;
 
-// Normaliza: acepta tanto { q, a } como { question, answer }
 const normalizedItems = items.map((item) => ({
   question: item.question ?? item.q ?? "",
   answer: item.answer ?? item.a ?? "",
@@ -193,6 +192,7 @@ const normalizedItems = items.map((item) => ({
       padding: 60px 24px;
       min-height: auto;
     }
+
     .faqTitle {
       font-size: 1.6rem;
     }

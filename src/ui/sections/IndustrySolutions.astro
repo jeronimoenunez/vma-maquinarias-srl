@@ -20,69 +20,46 @@ type Props = {
 const fallbackCards: FeatureCard[] = [
   {
     id: "industria",
-    href: "#sectores-industria",
+    href: "#contacto",
     eyebrow: "SECTOR",
     title: "Industria y planta",
     subtitle:
-      "Plataformas para mantenimiento de techos, luminarias y estructuras de planta.",
+      "Contratos a medida. Equipos dedicados. Un solo interlocutor para toda la operación.",
     image: {
-      src: "https://images.unsplash.com/photo-1717386255773-1e3037c81788?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      src: "https://images.unsplash.com/photo-1717386255773-1e3037c81788?q=80&w=2340&auto=format&fit=crop",
       alt: "Planta industrial con maquinaria operativa",
     },
     size: "hero",
   },
   {
     id: "construccion",
-    href: "#sectores-construccion",
+    href: "#contacto",
     eyebrow: "SECTOR",
     title: "Construcción y obra",
     subtitle:
-      "Plataformas, manipuladores y equipos para fachada, montaje estructural y trabajos en altura.",
+      "Disponibilidad inmediata. Entrega coordinada. Soporte en sitio.",
     image: {
       src: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&auto=format&fit=crop&q=80",
-      alt: "Obra en construcción con grúa torre",
+      alt: "Obra en construcción con equipos de elevación",
     },
     size: "regular",
   },
-  // {
-  //   id: "mantenimiento",
-  //   href: "#sectores-mantenimiento",
-  //   eyebrow: "SECTOR",
-  //   title: "Mantenimiento y servicios",
-  //   subtitle: "Equipos compactos para intervenciones puntuales y mantenimiento preventivo.",
-  //   image: {
-  //     src: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=800&auto=format&fit=crop&q=80",
-  //     alt: "Operario con tablet inspeccionando equipo",
-  //   },
-  //   size: "regular",
-  // },
   {
     id: "alquiler",
-    href: "#alquiler",
-    title: "Alquiler",
-    subtitle: "Equipos disponibles cuando los necesitás",
+    href: "#contacto",
+    title: "Alquiler flexible",
+    subtitle: "Planes para industria, planes para obra, planes para lo que necesites resolver.",
     image: {
       src: "https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=800&auto=format&fit=crop&q=80",
-      alt: "Plataforma articulada en obra",
+      alt: "Plataforma articulada en operación",
     },
     size: "regular",
   },
-  // {
-  //   id: "soporte",
-  //   href: "#soporte",
-  //   title: "Soporte técnico 24/7",
-  //   subtitle: "Respuesta en sitio cuando la operación no puede frenar",
-  //   image: {
-  //     src: "https://images.unsplash.com/photo-1581092446327-9b52bd1570c2?w=800&auto=format&fit=crop&q=80",
-  //     alt: "Mecánico trabajando con linterna",
-  //   },
-  //   size: "regular",
-  // },
 ];
 
 const {
-  kicker = "EXPLORÁ EL UNIVERSO VMA",
-  title = "Tres sectores. Dos modalidades. Un solo estándar operativo.",
+  kicker = "DÓNDE OPERAMOS",
+  title = "Cada sector tiene su lógica. El equipo correcto depende de entenderla.",
   cards,
 } = Astro.props as Partial<Props>;
 

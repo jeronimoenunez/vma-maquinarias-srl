@@ -11,14 +11,14 @@ type Props = {
 
 const {
   kicker = "VMA RENTAL",
-  titleLine1 = "Equipos correctos.",
-  titleLine2 = "Plazos cumplidos.",
-  subtitle = "Criterio técnico antes que volumen. Respaldo operativo durante todo el ciclo del proyecto.",
+  titleLine1 = "15 años resolviendo",
+  titleLine2 = "un solo problema.",
+  subtitle = "Que tu operación no se detenga. No mandamos una máquina sin entender tu flujo de trabajo. Si no lo necesitás, no te lo proponemos.",
   ctaLabel = "Conocer VMA",
   ctaHref = "/nosotros",
   backgroundImage = {
     src: "https://nationaldispatching.com/wp-content/uploads/2023/08/LIFT-WITH-PLATFORM-WORK-IN-WAREHOUSE-HANGAR-CONSTRUCTION-FIELD..jpg",
-    alt: "Plataforma articulada en obra al atardecer",
+    alt: "Plataforma articulada en operación industrial",
   },
 } = Astro.props as Props;
 ---
@@ -55,7 +55,6 @@ const {
     background: #070707;
   }
 
-  /* BACKGROUND IMAGE */
   .aboutBackground {
     position: absolute;
     inset: 0;
@@ -69,7 +68,6 @@ const {
     display: block;
   }
 
-  /* OVERLAY */
   .aboutOverlay {
     position: absolute;
     inset: 0;
@@ -83,7 +81,6 @@ const {
     );
   }
 
-  /* CONTENT */
   .aboutContent {
     position: relative;
     z-index: 2;
@@ -133,7 +130,6 @@ const {
     font-weight: 300;
   }
 
-  /* CTA */
   .aboutCta {
     display: inline-flex;
     align-items: center;
@@ -161,14 +157,12 @@ const {
     line-height: 1;
   }
 
-  /* TABLET */
   @media (max-width: 1024px) {
     .aboutContent {
       padding: 60px 32px;
     }
   }
 
-  /* MOBILE */
   @media (max-width: 640px) {
     .aboutContent {
       padding: 60px 24px;

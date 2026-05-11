@@ -42,38 +42,37 @@ const fallbackSteps: Step[] = [
     number: "01",
     title: "Especificación",
     description:
-      "Definimos juntos altura, superficie, energía y zona. La cotización refleja exactamente el equipo que tu obra necesita.",
+      "Definimos juntos altura, superficie, energía y zona. La cotización refleja exactamente el equipo que tu operación necesita — ni más capacidad de la que pagás, ni menos de la que requerís.",
     image: FALLBACK_STEP_IMAGES[0],
   },
   {
     number: "02",
     title: "Coordinación",
     description:
-      "Confirmamos disponibilidad, programamos entrega y validamos requisitos del sitio. El equipo llega cuando dijimos que iba a llegar.",
+      "Confirmamos disponibilidad, programamos entrega y validamos requisitos del sitio. El equipo llega cuando dijimos que iba a llegar — porque coordinamos antes, no después.",
     image: FALLBACK_STEP_IMAGES[1],
   },
   {
     number: "03",
     title: "Operación y respaldo",
     description:
-      "Soporte técnico activo durante todo el alquiler. Si algo requiere intervención, respondemos en sitio. Documentación operativa registrada.",
+      "Soporte técnico activo durante todo el alquiler. Si algo requiere intervención, respondemos en sitio o reemplazamos la unidad. Continuidad operativa es la definición del sistema.",
     image: FALLBACK_STEP_IMAGES[2],
   },
 ];
 
 const props = Astro.props as Props;
 
-const moduleEyebrow = props.moduleEyebrow ?? "VMA METHOD";
+const moduleEyebrow = props.moduleEyebrow ?? "MÉTODO VMA";
 const moduleTitle = props.moduleTitle ?? "Cómo trabajamos";
-const heroEyebrow = props.heroEyebrow ?? "Proceso operativo en tres pasos";
+const heroEyebrow = props.heroEyebrow ?? "Análisis — Diseño — Implementación";
 const heroTitle =
   props.heroTitle ??
-  "Cotizar el equipo correcto requiere información. Coordinar la entrega requiere tiempo. Sostener la operación requiere respaldo.";
+  "No enviamos una máquina sin entender tu flujo de trabajo. Optimizamos tu espacio. Cuidamos tus costos.";
 const heroCtaLabel = props.heroCtaLabel ?? "Ver equipos disponibles";
 const heroCtaHref = props.heroCtaHref ?? "#equipos";
 const heroImage = props.heroImage ?? FALLBACK_HERO_IMAGE;
 
-// Steps defensivos: si vienen del padre sin imagen, completamos con fallback
 const incomingSteps = Array.isArray(props.steps) && props.steps.length > 0
   ? props.steps
   : fallbackSteps;
@@ -128,7 +127,6 @@ const steps: Step[] = incomingSteps.map((step, index) => ({
   flex-direction: column;
 }
 
-  /* MODULE HEADER */
 .moduleHeader {
   margin-bottom: clamp(72px, 8vw, 120px);
 }
@@ -150,6 +148,7 @@ const steps: Step[] = incomingSteps.map((step, index) => ({
   letter-spacing: -0.01em;
   margin: 0;
 }
+
 .heroBlock {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -165,41 +164,41 @@ const steps: Step[] = incomingSteps.map((step, index) => ({
   padding-right: 0;
 }
 
-  .heroEyebrow {
-    color: #6b6b6b;
-    font-size: 0.95rem;
-    margin: 0 0 24px 0;
-    line-height: 1.4;
-  }
+.heroEyebrow {
+  color: #6b6b6b;
+  font-size: 0.95rem;
+  margin: 0 0 24px 0;
+  line-height: 1.4;
+}
 
-  .heroTitle {
-    color: #2f2f2f;
-    font-size: clamp(1.6rem, 2.6vw, 2.4rem);
-    font-weight: 300;
-    line-height: 1.3;
-    letter-spacing: -0.01em;
-    margin: 0 0 40px 0;
-    max-width: 30ch;
-  }
+.heroTitle {
+  color: #2f2f2f;
+  font-size: clamp(1.6rem, 2.6vw, 2.4rem);
+  font-weight: 300;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  margin: 0 0 40px 0;
+  max-width: 30ch;
+}
 
-  .heroBtn {
-    display: inline-block;
-    padding: 14px 32px;
-    border: 1px solid #2f2f2f;
-    background: transparent;
-    color: #2f2f2f;
-    font-size: 0.85rem;
-    letter-spacing: 0.08em;
-    text-decoration: none;
-    transition: background 0.3s ease, color 0.3s ease;
-  }
+.heroBtn {
+  display: inline-block;
+  padding: 14px 32px;
+  border: 1px solid #2f2f2f;
+  background: transparent;
+  color: #2f2f2f;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  transition: background 0.3s ease, color 0.3s ease;
+}
 
-  .heroBtn:hover {
-    background: #2f2f2f;
-    color: #ffffff;
-  }
+.heroBtn:hover {
+  background: #2f2f2f;
+  color: #ffffff;
+}
 
- .heroImage {
+.heroImage {
   grid-column: 2 / 4;
   aspect-ratio: 16 / 9;
   min-height: clamp(360px, 34vw, 520px);
@@ -214,74 +213,71 @@ const steps: Step[] = incomingSteps.map((step, index) => ({
   display: block;
 }
 
-  /* STEPS GRID */
-  .stepsGrid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: clamp(40px, 6vw, 100px);
-    width: 100%;
-  }
+.stepsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(40px, 6vw, 100px);
+  width: 100%;
+}
 
-  .step {
-    display: flex;
-    flex-direction: column;
-  }
+.step {
+  display: flex;
+  flex-direction: column;
+}
 
-  .stepImage {
-    aspect-ratio: 16 / 10;
-    overflow: hidden;
-    margin-bottom: 24px;
-  }
+.stepImage {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
 
-  .stepImage img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.6s ease;
-  }
+.stepImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
 
-  .step:hover .stepImage img {
-    transform: scale(1.04);
-  }
+.step:hover .stepImage img {
+  transform: scale(1.04);
+}
 
-  .stepNumber {
-    color: #ffc400;
-    font-family: var(--font-display, inherit);
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    margin-bottom: 8px;
-    display: block;
-  }
+.stepNumber {
+  color: #ffc400;
+  font-family: var(--font-display, inherit);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  margin-bottom: 8px;
+  display: block;
+}
 
-  .stepTitle {
-    color: #2f2f2f;
-    font-size: clamp(1.1rem, 1.4vw, 1.3rem);
-    font-weight: 500;
-    line-height: 1.3;
-    margin: 0 0 8px 0;
-  }
+.stepTitle {
+  color: #2f2f2f;
+  font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+  font-weight: 500;
+  line-height: 1.3;
+  margin: 0 0 8px 0;
+}
 
-  .stepDescription {
-    color: #6b6b6b;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    margin: 0;
-  }
+.stepDescription {
+  color: #6b6b6b;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
 
-  /* ULTRA-WIDE */
-  @media (min-width: 1920px) {
-    .methodSection {
-      max-width: 1920px;
-      margin-left: auto;
-      margin-right: auto;
-    }
+@media (min-width: 1920px) {
+  .methodSection {
+    max-width: 1920px;
+    margin-left: auto;
+    margin-right: auto;
   }
+}
 
-  /* TABLET */
-  @media (max-width: 1024px) {
-.methodSection {
+@media (max-width: 1024px) {
+  .methodSection {
     padding: clamp(60px, 8vw, 100px) clamp(24px, 5vw, 48px);
   }
 
@@ -299,21 +295,20 @@ const steps: Step[] = incomingSteps.map((step, index) => ({
     grid-template-columns: 1fr;
     gap: 48px;
   }
+}
+
+@media (max-width: 640px) {
+  .methodSection {
+    padding: 60px 24px;
   }
 
-  /* MOBILE */
-  @media (max-width: 640px) {
-    .methodSection {
-      padding: 60px 24px;
-    }
-
-    .heroBlock,
-    .stepsGrid {
-      gap: 32px;
-    }
-
-    .heroTitle {
-      font-size: clamp(1.3rem, 5vw, 1.7rem);
-    }
+  .heroBlock,
+  .stepsGrid {
+    gap: 32px;
   }
+
+  .heroTitle {
+    font-size: clamp(1.3rem, 5vw, 1.7rem);
+  }
+}
 </style>

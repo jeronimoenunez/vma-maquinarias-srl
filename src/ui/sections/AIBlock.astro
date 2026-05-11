@@ -11,7 +11,7 @@ type Props = {
 const {
   kicker = "ATENCIÓN INTELIGENTE",
   title = "Consultá disponibilidad y especificaciones a cualquier hora.",
-  description = "Implementamos un asistente conversacional especializado en nuestro catálogo. Responde consultas sobre alturas, tipos de equipo, fuentes de energía y compatibilidad con tu obra — y deriva al equipo comercial cuando la consulta requiere cotización formal.",
+  description = "Nuestro asistente responde consultas sobre alturas, tipos de equipo, fuentes de energía y compatibilidad con tu operación — y deriva al equipo comercial cuando la consulta requiere cotización formal.",
   callout = "El asistente no reemplaza al equipo comercial. Lo complementa: filtra consultas técnicas básicas para que las solicitudes que llegan al comercial estén calificadas y listas para cotizar.",
   ctaLabel = "Probar el asistente",
   ctaHref = "#contacto",
@@ -23,9 +23,11 @@ const {
     <p class="aiKicker">{kicker}</p>
     <h2 class="aiTitle">{title}</h2>
     <p class="aiDescription">{description}</p>
+
     <div class="aiCallout">
       <p>{callout}</p>
     </div>
+
     <a class="aiCta" href={ctaHref}>
       {ctaLabel} <span aria-hidden="true">→</span>
     </a>
@@ -92,11 +94,10 @@ const {
 
   .aiCallout {
     border-left: 3px solid #ffc400;
-    padding: 4px 0 4px 20px;
+    padding: 16px 20px;
     margin: 0 0 40px 0;
     max-width: 56ch;
     background: rgba(255, 196, 0, 0.06);
-    padding: 16px 20px;
   }
 
   .aiCallout p {

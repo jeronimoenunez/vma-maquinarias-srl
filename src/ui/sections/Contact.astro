@@ -7,27 +7,24 @@ type Props = {
   whatsappHref?: string;
   emailComercial?: string;
   whatsappLabel?: string;
-  horario?: string;
   cobertura?: string;
 };
 
 const {
-  kicker = "03 / CONTACTO",
-  title = "La obra no espera.",
-  titleAccent = "Nosotros tampoco.",
+  kicker = "CONTACTO",
+  title = "Respuesta inmediata.",
+  titleAccent = "Cotización online.",
   subtitle =
-    "Completá los datos del proyecto y te respondemos con disponibilidad y cotización. Para consultas urgentes, escribinos directo por WhatsApp.",
+    "Completá tus datos y te respondemos con una cotización. Para consultas urgentes, escribinos directo por WhatsApp.",
   whatsappHref = "#",
   emailComercial = "comercial@vmarental.com.ar",
   whatsappLabel = "[PENDIENTE]",
-  horario = "[CONFIRMAR HORARIO CON VMA]",
-  cobertura = "AMBA y zonas extendidas [CONFIRMAR]",
+  cobertura = "Cobertura donde esté tu planta o tu obra",
 } = Astro.props as Props;
 ---
 
 <div class="contactSection">
   <div class="contactInner">
-    {/* BLOQUE EDITORIAL ARRIBA */}
     <header class="contactHeader">
       <p class="contactKicker">{kicker}</p>
       <h2 class="contactTitle">
@@ -38,11 +35,11 @@ const {
       <div class="contactStats">
         <div class="contactStat">
           <p class="contactStatLabel">Respuesta</p>
-          <p class="contactStatValue">menos de 24 horas</p>
+          <p class="contactStatValue">Inmediata</p>
         </div>
         <div class="contactStat">
           <p class="contactStatLabel">Cotización</p>
-          <p class="contactStatValue">sin compromiso</p>
+          <p class="contactStatValue">Online, sin compromiso</p>
         </div>
         <div class="contactStat">
           <p class="contactStatLabel">Cobertura</p>
@@ -51,10 +48,8 @@ const {
       </div>
     </header>
 
-    {/* DIVISOR */}
     <div class="contactDivider" aria-hidden="true"></div>
 
-    {/* BLOQUE FORMULARIO */}
     <div class="contactGrid">
       <aside class="contactInfo">
         <h3 class="contactInfoTitle">Cotizá tu equipo.</h3>
@@ -70,10 +65,6 @@ const {
           <div class="contactDetail">
             <dt>WhatsApp</dt>
             <dd>{whatsappLabel}</dd>
-          </div>
-          <div class="contactDetail">
-            <dt>Horario</dt>
-            <dd>{horario}</dd>
           </div>
         </dl>
       </aside>
@@ -161,7 +152,7 @@ const {
           </a>
         </div>
       </form>
-    </div> 
+    </div>
   </div>
 </div>
 
@@ -182,7 +173,6 @@ const {
     margin: 0 auto;
   }
 
-  /* HEADER EDITORIAL */
   .contactHeader {
     margin-bottom: 80px;
   }
@@ -212,7 +202,6 @@ const {
     font-weight: 300;
   }
 
-  /* STATS */
   .contactStats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -243,14 +232,12 @@ const {
     margin: 0;
   }
 
-  /* DIVIDER */
   .contactDivider {
     height: 1px;
     background: rgba(255, 255, 255, 0.08);
     margin: 80px 0;
   }
 
-  /* CONTACT GRID */
   .contactGrid {
     display: grid;
     grid-template-columns: 1fr 1.3fr;
@@ -258,7 +245,6 @@ const {
     align-items: start;
   }
 
-  /* INFO LATERAL */
   .contactInfo {
     position: sticky;
     top: 100px;
@@ -319,7 +305,6 @@ const {
     color: #ffffff;
   }
 
-  /* FORM */
   .contactForm {
     display: flex;
     flex-direction: column;
@@ -441,7 +426,6 @@ const {
     gap: 16px;
   }
 
-  /* TABLET */
   @media (max-width: 1024px) {
     .contactSection {
       padding: 80px 32px;
@@ -460,13 +444,8 @@ const {
       grid-template-columns: 1fr;
       gap: 24px;
     }
-
-    .contactBigEmail {
-      text-align: left;
-    }
   }
 
-  /* MOBILE */
   @media (max-width: 640px) {
     .contactSection {
       padding: 60px 24px;
@@ -491,15 +470,6 @@ const {
     .formBtn {
       justify-content: center;
       width: 100%;
-    }
-
-    .contactBigEmail {
-      margin-top: 80px;
-      padding-top: 40px;
-    }
-
-    .contactBigEmail a {
-      font-size: clamp(1.2rem, 7vw, 2rem);
     }
   }
 </style>
