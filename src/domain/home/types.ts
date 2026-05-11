@@ -9,13 +9,13 @@ export type HeroVideoSection = SectionBase & {
     primaryCta?: { label: string; href: string };
     secondaryCta?: { label: string; href: string };
     video: {
-      src: string; // "/videos/hero-vma.mp4" o URL CDN
-      poster?: string; // "/images/hero-poster.jpg"
+      src: string;
+      poster?: string;
     };
   };
 };
 
-/** 2) HERO (imagen) */
+/** 2) HERO (imagen / video background) */
 export type HeroSection = SectionBase & {
   type: "hero";
   props: {
@@ -38,59 +38,89 @@ export type ValuePropsSection = SectionBase & {
   };
 };
 
-/** 4) ABOUT (con campos extendidos como usabas) */
+/** 4) ABOUT */
 export type AboutSection = SectionBase & {
   type: "about";
   props: {
     kicker?: string;
-    title: string;
+    title?: string;
+    titleLine1?: string;
+    titleLine2?: string;
     subtitle?: string;
     pullQuote?: string;
+    ctaLabel?: string;
+    ctaHref?: string;
+    backgroundImage?: { src: string; alt: string };
     blocks?: Array<{ title: string; body: string }>;
   };
 };
 
-/** 5) METHOD (con principles opcional como usabas) */
+/** 5) METHOD */
 export type MethodSection = SectionBase & {
   type: "method";
   props: {
     kicker?: string;
-    title: string;
+    title?: string;
     subtitle?: string;
-    steps: Array<{ title: string; description: string }>;
+    moduleEyebrow?: string;
+    moduleTitle?: string;
+    heroEyebrow?: string;
+    heroTitle?: string;
+    heroCtaLabel?: string;
+    heroCtaHref?: string;
+    heroImage?: { src: string; alt: string };
+    steps: Array<{
+      number?: string;
+      title: string;
+      description: string;
+      image?: { src: string; alt: string };
+    }>;
   };
 };
 
-/** 6) SERVICES (con kicker, subtitle, bullets como usabas) */
+/** 6) SERVICES */
 export type ServicesSection = SectionBase & {
   type: "services";
   props: {
     kicker?: string;
-    title: string;
+    title?: string;
     subtitle?: string;
+    moduleEyebrow?: string;
+    moduleTitle?: string;
+    heroEyebrow?: string;
+    heroTitle?: string;
+    heroCtaLabel?: string;
+    heroCtaHref?: string;
+    heroImage?: { src: string; alt: string };
     cards?: Array<{
-      eyebrow: string;
+      eyebrow?: string;
       title: string;
-      body: string;
-      ctaLabel: string;
-      ctaHref: string;
+      subtitle?: string;
+      body?: string;
+      ctaLabel?: string;
+      ctaHref?: string;
+      image?: { src: string; alt: string };
     }>;
     bottomCtaLabel?: string;
     bottomCtaHref?: string;
   };
 };
 
-/** 7) EQUIPMENT */
+/** 7) EQUIPMENT SHOWCASE */
 export type EquipmentShowcaseSection = SectionBase & {
   type: "equipmentShowcase";
   props: {
     kicker?: string;
-    title: string;
+    title?: string;
     subtitle?: string;
+    moduleEyebrow?: string;
+    moduleTitle?: string;
+    ctaLabel?: string;
+    ctaHref?: string;
   };
 };
 
-/** 8) INDUSTRY SOLUTIONS (grid editorial sectores) */
+/** 8) INDUSTRY SOLUTIONS */
 export type IndustryFeatureCard = {
   id: string;
   href: string;
@@ -129,6 +159,7 @@ export type ContactSection = SectionBase & {
   props: {
     kicker?: string;
     title: string;
+    titleAccent?: string;
     subtitle?: string;
     whatsappHref?: string;
     emailComercial?: string;
