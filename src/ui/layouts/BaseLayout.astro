@@ -19,6 +19,13 @@ const {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Adobe Fonts / Acumin Pro -->
+    <link rel="stylesheet" href="https://use.typekit.net/bgl5dpu.css" />
+
+    <link rel="icon" type="image/png" href="/brand/Isotipo-FavIcon.png" />
+    <link rel="apple-touch-icon" href="/brand/Isotipo-FavIcon.png" />
+
     <title>{title}</title>
     <meta name="description" content={description} />
   </head>
@@ -30,84 +37,130 @@ const {
     </main>
     <Footer />
 
-    <script is:inline>
-  function initScrollSpy() {
-    const navLinks = Array.from(document.querySelectorAll('.nav a[href*="#"]'));
+<script is:inline>
+  (() => {
+    function initScrollSpy() {
+      const navLinks = Array.from(document.querySelectorAll('.nav a[href*="#"]'));
 
-    const getHashId = (a) => {
-      try {
-        const url = new URL(a.href, window.location.href);
-        return (url.hash || "").replace("#", "");
-      } catch {
-        const raw = a.getAttribute("href") || "";
-        const idx = raw.indexOf("#");
-        return idx >= 0 ? raw.slice(idx + 1) : "";
+      const getHashId = (a) => {
+        try {
+          const url = new URL(a.href, window.location.href);
+          return (url.hash || "").replace("#", "");
+        } catch {
+          const raw = a.getAttribute("href") || "";
+          const idx = raw.indexOf("#");
+          return idx >= 0 ? raw.slice(idx + 1) : "";
+        }
+      };
+
+      const linkById = new Map(
+        navLinks
+          .map((a) => [getHashId(a), a])
+          .filter(([id]) => id)
+      );
+
+      const sections = Array.from(linkById.keys())
+        .map((id) => document.getElementById(id))
+        .filter(Boolean);
+
+      const setActive = (id) => {
+        navLinks.forEach((a) => {
+          a.classList.remove("isActive");
+          a.removeAttribute("aria-current");
+        });
+
+        const el = linkById.get(id);
+        if (el) {
+          el.classList.add("isActive");
+          el.setAttribute("aria-current", "page");
+        }
+      };
+
+      if (!sections.length) {
+        console.warn("[scrollspy] No encontró secciones aún. Reintentando…");
+        return false;
       }
-    };
 
-    const linkById = new Map(
-      navLinks
-        .map(a => [getHashId(a), a])
-        .filter(([id]) => id)
-    );
+      setActive((location.hash || "").replace("#", "") || sections[0].id);
 
-    const sections = Array.from(linkById.keys())
-      .map(id => document.getElementById(id))
-      .filter(Boolean);
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const visible = entries
+            .filter((e) => e.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
 
-    const setActive = (id) => {
-      navLinks.forEach(a => {
-        a.classList.remove("isActive");
-        a.removeAttribute("aria-current");
+          if (visible?.target?.id) setActive(visible.target.id);
+        },
+        {
+          rootMargin: "-35% 0px -55% 0px",
+          threshold: [0.12, 0.25, 0.5],
+        }
+      );
+
+      sections.forEach((s) => observer.observe(s));
+
+      window.addEventListener("hashchange", () => {
+        setActive((location.hash || "").replace("#", ""));
       });
 
-      const el = linkById.get(id);
-      if (el) {
-        el.classList.add("isActive");
-        el.setAttribute("aria-current", "page");
-      }
-    };
-
-    if (!sections.length) {
-      console.warn("[scrollspy] No encontró secciones aún. Reintentando…");
-      return false;
+      return true;
     }
 
-    setActive((location.hash || "").replace("#", "") || sections[0].id);
+    function initRevealMotion() {
+      const items = Array.from(document.querySelectorAll("[data-reveal]"));
 
-    const observer = new IntersectionObserver((entries) => {
-      const visible = entries
-        .filter(e => e.isIntersecting)
-        .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!items.length) {
+        console.warn("[reveal] No encontró elementos con data-reveal.");
+        return false;
+      }
 
-      if (visible?.target?.id) setActive(visible.target.id);
-    }, {
-      rootMargin: "-35% 0px -55% 0px",
-      threshold: [0.12, 0.25, 0.5]
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+      if (prefersReducedMotion) {
+        items.forEach((item) => item.classList.add("is-visible"));
+        return true;
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.12,
+          rootMargin: "0px 0px -8% 0px",
+        }
+      );
+
+      items.forEach((item) => observer.observe(item));
+      return true;
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      initRevealMotion();
+
+      if (initScrollSpy()) return;
+
+      let tries = 0;
+      const timer = setInterval(() => {
+        tries++;
+        const spyReady = initScrollSpy();
+        const revealReady = initRevealMotion();
+
+        if ((spyReady && revealReady) || tries >= 10) {
+          clearInterval(timer);
+        }
+      }, 150);
     });
-
-    sections.forEach(s => observer.observe(s));
-
-    window.addEventListener("hashchange", () => {
-      setActive((location.hash || "").replace("#", ""));
-    });
-
-    return true;
-  }
-
-  // 1) Cuando el DOM está listo
-  window.addEventListener("DOMContentLoaded", () => {
-    // 2) Intento inmediato
-    if (initScrollSpy()) return;
-
-    // 3) Reintentos cortos por si aún no están (seguro en Astro)
-    let tries = 0;
-    const t = setInterval(() => {
-      tries++;
-      if (initScrollSpy() || tries >= 10) clearInterval(t);
-    }, 150);
-  });
+  })();
 </script>
+
 
   </body>
 </html>

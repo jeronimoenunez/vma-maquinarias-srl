@@ -4,29 +4,43 @@ import { waCotizarUrl } from "@/config/site";
 
 const navGroups = [
   {
+    key: "inicio",
+    label: "Inicio",
+    href: "/#inicio",
+    hasMega: false,
+  },
+  {
+  key: "nosotros",
+  label: "Nosotros",
+  href: "/nosotros",
+  hasMega: false,
+  sectionId: "nosotros",
+},
+  {
     key: "sectores",
     label: "Sectores",
     href: "/#sectores",
+    hasMega: true,
     eyebrow: "Sectores",
     title: "Soluciones por tipo de operación",
     description:
-      "Obra, industria y mantenimiento requieren decisiones distintas. La lógica es la misma: equipo correcto, disponibilidad real y respaldo técnico.",
+      "Industria, obra y alquiler flexible requieren decisiones distintas. El objetivo es siempre el mismo: equipo correcto, disponibilidad real y respaldo técnico.",
     cards: [
       {
-        title: "Obra civil",
-        subtitle: "Altura, fachada y montaje",
-        href: "/#sectores",
-        image: "/images/nav/sectores-obra.jpg",
-      },
-      {
-        title: "Industria",
-        subtitle: "Plantas, galpones y operación técnica",
+        title: "Industria y planta",
+        subtitle: "Contratos, equipos dedicados y continuidad",
         href: "/#sectores",
         image: "/images/nav/sectores-industria.jpg",
       },
       {
-        title: "Mantenimiento",
-        subtitle: "Intervenciones rápidas y seguras",
+        title: "Construcción y obra",
+        subtitle: "Entrega coordinada y soporte en sitio",
+        href: "/#sectores",
+        image: "/images/nav/sectores-obra.jpg",
+      },
+      {
+        title: "Alquiler flexible",
+        subtitle: "Planes según operación y duración",
         href: "/#sectores",
         image: "/images/nav/sectores-mantenimiento.jpg",
       },
@@ -37,75 +51,45 @@ const navGroups = [
     ],
   },
   {
-    key: "servicios",
-    label: "Servicios",
-    href: "/#servicios",
-    eyebrow: "Servicios",
-    title: "Alquiler, venta y soporte técnico",
+    key: "negocio",
+    label: "Sistema VMA",
+    href: "/#negocio",
+    hasMega: true,
+    eyebrow: "Sistema VMA",
+    title: "Unidades de negocio y método operativo",
     description:
-      "No se trata solo de entregar una máquina. Se trata de resolver una operación con criterio, plazos claros y acompañamiento real.",
+      "Dos caminos para entender VMA: qué resolvemos y cómo trabajamos antes de recomendar un equipo.",
     cards: [
       {
-        title: "Alquiler",
-        subtitle: "Disponibilidad operativa",
-        href: "/#servicios",
+        title: "Unidades de negocio",
+        subtitle: "Alquiler, venta y servicio técnico",
+        href: "/unidades",
         image: "/images/nav/servicios-alquiler.jpg",
       },
       {
-        title: "Venta",
-        subtitle: "Equipos para inversión",
-        href: "/#servicios",
-        image: "/images/nav/servicios-venta.jpg",
-      },
-      {
-        title: "Soporte técnico",
-        subtitle: "Respaldo durante el proyecto",
-        href: "/#servicios",
-        image: "/images/nav/servicios-soporte.jpg",
-      },
-    ],
-    links: [
-      { label: "Ver servicios", href: "/#servicios" },
-      { label: "Cotizar equipo", href: waCotizarUrl },
-    ],
-  },
-  {
-    key: "metodologia",
-    label: "Cómo trabajamos",
-    href: "/#metodologia",
-    eyebrow: "Método",
-    title: "De la consulta a la operación",
-    description:
-      "Primero entendemos la necesidad real. Después recomendamos el equipo, validamos disponibilidad y coordinamos la entrega.",
-    cards: [
-      {
-        title: "Diagnóstico",
-        subtitle: "Necesidad, altura, acceso y plazo",
-        href: "/#metodologia",
+        title: "Método VMA",
+        subtitle: "Análisis, asesoramiento y proyección 360°",
+        href: "/metodo",
         image: "/images/nav/metodo-diagnostico.jpg",
       },
       {
-        title: "Selección técnica",
-        subtitle: "La máquina correcta",
-        href: "/#metodologia",
-        image: "/images/nav/metodo-seleccion.jpg",
-      },
-      {
-        title: "Entrega",
-        subtitle: "Operación sin improvisación",
-        href: "/#metodologia",
-        image: "/images/nav/metodo-entrega.jpg",
+        title: "Continuidad operativa",
+        subtitle: "La máquina correcta con respaldo real",
+        href: "/#negocio",
+        image: "/images/nav/contacto-asesoramiento.jpg",
       },
     ],
     links: [
-      { label: "Ver método", href: "/#metodologia" },
-      { label: "Hablar con VMA", href: waCotizarUrl },
+      { label: "Ver sistema VMA", href: "/#negocio" },
+      { label: "Unidades de negocio", href: "/unidades" },
+      { label: "Lo que nos hace diferentes", href: "/metodo" },
     ],
   },
   {
     key: "equipos",
     label: "Equipos",
     href: "/#equipos",
+    hasMega: true,
     eyebrow: "Equipos",
     title: "Maquinaria para trabajo en altura",
     description:
@@ -136,9 +120,44 @@ const navGroups = [
     ],
   },
   {
+    key: "ecosistema",
+    label: "Ecosistema",
+    href: "/#ecosistema",
+    hasMega: true,
+    eyebrow: "Ecosistema VMA",
+    title: "Novedades y criterio técnico",
+    description:
+      "Contenido útil para decidir mejor: disponibilidad, selección de equipos, seguridad, costos y continuidad operativa.",
+    cards: [
+      {
+        title: "Novedades",
+        subtitle: "Actualizaciones del ecosistema VMA",
+        href: "/#ecosistema",
+        image: "/images/nav/servicios-soporte.jpg",
+      },
+      {
+        title: "Blog técnico",
+        subtitle: "Criterios para elegir mejor",
+        href: "/#ecosistema",
+        image: "/images/nav/metodo-seleccion.jpg",
+      },
+      {
+        title: "Guías operativas",
+        subtitle: "Información para cotizar con contexto",
+        href: "/#ecosistema",
+        image: "/images/nav/faq-disponibilidad.jpg",
+      },
+    ],
+    links: [
+      { label: "Ver ecosistema", href: "/#ecosistema" },
+      { label: "Consultar por WhatsApp", href: waCotizarUrl },
+    ],
+  },
+  {
     key: "faq",
     label: "FAQ",
     href: "/#faq",
+    hasMega: true,
     eyebrow: "Preguntas frecuentes",
     title: "Antes de cotizar, resolvé lo importante",
     description:
@@ -168,70 +187,60 @@ const navGroups = [
       { label: "Consultar por WhatsApp", href: waCotizarUrl },
     ],
   },
-  {
-    key: "contacto",
-    label: "Contacto",
-    href: "/#contacto",
-    eyebrow: "Contacto",
-    title: "Cotizá con contexto operativo",
-    description:
-      "Contanos qué necesitás resolver, dónde, cuándo y bajo qué condiciones. Respondemos con criterio, no con una respuesta automática.",
-    cards: [
-      {
-        title: "Cotizar equipo",
-        subtitle: "Consulta directa",
-        href: waCotizarUrl,
-        image: "/images/nav/contacto-cotizar.jpg",
-      },
-      {
-        title: "Disponibilidad",
-        subtitle: "Validación por fecha y zona",
-        href: waCotizarUrl,
-        image: "/images/nav/contacto-disponibilidad.jpg",
-      },
-      {
-        title: "Asesoramiento",
-        subtitle: "Elegir el equipo correcto",
-        href: waCotizarUrl,
-        image: "/images/nav/contacto-asesoramiento.jpg",
-      },
-    ],
-    links: [
-      { label: "Ir a contacto", href: "/#contacto" },
-      { label: "Abrir WhatsApp", href: waCotizarUrl },
-    ],
-  },
 ];
+
+const megaGroups = navGroups.filter((group) => group.hasMega);
+
+const currentPath = Astro.url.pathname;
+const isInternalPage = currentPath !== "/";
+
 ---
 
-<header class="topNav" data-topnav>
+<header class:list={["topNav", { "isInternalPage": isInternalPage }]} data-topnav>
   <div class="navBackdrop" data-nav-backdrop hidden></div>
 
   <div class="navBar">
     <Container class="navInner">
       <a class="brand" href="/#inicio" aria-label="VMA Rental">
-        <span class="brandLogo">VMA</span>
-        <span class="brandText">VMA Rental</span>
+        <img
+          class="brandImage"
+          src="/brand/Isologotipo.png"
+          alt="VMA Rental"
+          loading="eager"
+          decoding="async"
+        />
       </a>
 
       <nav class="tabs" aria-label="Navegación principal">
         {
-          navGroups.map((group) => (
-            <a
-              class="tab"
-              href={group.href}
-              data-tab
-              data-menu-trigger={group.key}
-            >
-              {group.label}
-            </a>
-          ))
+          navGroups.map((group) =>
+            group.hasMega ? (
+              <a
+                class="tab"
+                href={group.href}
+                data-tab
+                data-section-id={group.sectionId ?? group.key}
+                data-menu-trigger={group.key}
+              >
+                {group.label}
+              </a>
+            ) : (
+              <a
+                class="tab"
+                href={group.href}
+                data-tab
+                data-section-id={group.sectionId ?? group.key}
+              >
+                {group.label}
+              </a>
+            )
+          )
         }
       </nav>
 
       <div class="right">
-        <a class="btn btn--primary navCta" href={waCotizarUrl}>
-          Cotizar equipo
+        <a class="navCta" href="/#contacto">
+          Contacto
         </a>
       </div>
     </Container>
@@ -240,7 +249,7 @@ const navGroups = [
   <div class="megaMenu" data-mega-menu hidden>
     <Container class="megaInner">
       {
-        navGroups.map((group) => (
+        megaGroups.map((group) => (
           <section class="megaPanel" data-mega-panel={group.key} hidden>
             <div class="megaIntro">
               <p class="megaEyebrow">{group.eyebrow}</p>
@@ -249,7 +258,7 @@ const navGroups = [
             </div>
 
             <div class="megaCards">
-              {group.cards.map((card) => (
+              {group.cards?.map((card) => (
                 <a class="megaCard" href={card.href}>
                   <div
                     class="megaCardImage"
@@ -269,7 +278,7 @@ const navGroups = [
               <p class="megaAsideTitle">Acciones</p>
 
               <div class="megaAsideLinks">
-                {group.links.map((link) => (
+                {group.links?.map((link) => (
                   <a href={link.href}>{link.label}</a>
                 ))}
               </div>
@@ -299,7 +308,7 @@ const navGroups = [
     z-index: 1;
     pointer-events: auto;
     opacity: 0;
-    background: rgba(10, 12, 14, 0.18);
+    background: rgba(10, 12, 14, 0.16);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     transition: opacity 0.22s ease;
@@ -309,6 +318,14 @@ const navGroups = [
     opacity: 1;
   }
 
+  .topNav.isInternalPage .navBar {
+    background: rgba(4, 7, 9, 0.78);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+    backdrop-filter: blur(22px) saturate(1.16);
+    -webkit-backdrop-filter: blur(22px) saturate(1.16);
+  }
+
   .navBar {
     position: relative;
     z-index: 3;
@@ -316,6 +333,9 @@ const navGroups = [
     pointer-events: auto;
     background: transparent;
     border-bottom: 1px solid transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
     transition:
       background 0.24s ease,
       border-color 0.24s ease,
@@ -325,11 +345,11 @@ const navGroups = [
 
   .topNav.isScrolled .navBar,
   .topNav.isMenuOpen .navBar {
-    background: rgba(4, 7, 9, 0.94);
-    border-color: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    background: rgba(4,7,9,0.58);
+    border-color: rgba(255,255,255,0.08);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+    backdrop-filter: blur(22px) saturate(1.16);
+    -webkit-backdrop-filter: blur(7px) saturate(2);
   }
 
   .navBar :global(.container.navInner) {
@@ -338,77 +358,63 @@ const navGroups = [
     grid-template-columns: auto 1fr auto;
     align-items: center;
     gap: 24px;
-    width: min(1360px, calc(100vw - 56px));
+    width: min(1639px, calc(100vw - 56px));
     margin: 0 auto;
   }
 
   .brand {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
     min-width: 0;
+    line-height: 0;
   }
 
-  .brandLogo {
-    width: 34px;
-    height: 34px;
-    border-radius: 999px;
-    display: grid;
-    place-items: center;
-    flex: 0 0 auto;
-
-    font-weight: 900;
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    color: rgba(234, 242, 247, 0.95);
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(234, 242, 247, 0.14);
-  }
-
-  .brandText {
-    font-weight: 700;
-    font-size: 15px;
-    color: rgba(234, 242, 247, 0.92);
-    white-space: nowrap;
+  .brandImage {
+    display: block;
+    width: clamp(118px, 10vw, 156px);
+    height: auto;
+    max-height: 42px;
+    object-fit: contain;
   }
 
   .tabs {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 2px;
+    gap: 45px;
     justify-self: center;
     min-width: 0;
   }
 
   .tab {
+    font-family: var(--font-body);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     height: 36px;
-    padding: 0 14px;
-    border-radius: 999px;
+    padding: 0;
+    border-radius: 0;
     white-space: nowrap;
-
-    font-weight: 600;
-    font-size: 13px;
+    background: transparent;
+    box-shadow: none;
+    font-weight: 500;
+    font-size: 16px;
     color: rgba(234, 242, 247, 0.72);
-
     transition:
-      background 0.18s ease,
       color 0.18s ease,
-      box-shadow 0.18s ease;
+      opacity 0.18s ease;
   }
 
   .tab:hover,
   .tab.isMenuActive {
-    color: rgba(0, 0, 0, 0.98);
-    background: #ffc400;
+    color: #ffc400;
+    background: transparent;
   }
 
   .tab.isActive {
-    color: rgba(0, 0, 0, 0.98);
-    background: #ffc400;
+    color: #ffc400;
+    background: transparent;
+    font-weight: 800;
   }
 
   .right {
@@ -418,9 +424,34 @@ const navGroups = [
   }
 
   .navCta {
-    padding: 10px 16px;
-    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 0 18px;
+    border: 1px solid rgba(255, 196, 0, 0.7);
+    border-radius: 10px;
+    background: rgba(255, 196, 0, 0.08);
+    color: #ffc400;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
     white-space: nowrap;
+    text-decoration: none;
+    transition:
+      background 0.25s ease,
+      color 0.25s ease,
+      border-color 0.25s ease,
+      box-shadow 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  .navCta:hover {
+    background: #ffc400;
+    border-color: #ffc400;
+    color: #070707;
+    box-shadow: 0 16px 44px rgba(255, 196, 0, 0.18);
+    transform: translateY(-1px);
   }
 
   .megaMenu {
@@ -430,11 +461,11 @@ const navGroups = [
     right: 0;
     z-index: 2;
     pointer-events: auto;
-
-    background: rgba(246, 245, 241, 0.98);
+    background: rgba(246, 245, 241, 0.82);
     border-bottom: 1px solid rgba(16, 18, 20, 0.08);
     box-shadow: 0 28px 70px rgba(0, 0, 0, 0.18);
-
+    backdrop-filter: blur(24px) saturate(1.18);
+    -webkit-backdrop-filter: blur(24px) saturate(1.18);
     opacity: 0;
     transform: translateY(-10px);
     transition:
@@ -517,7 +548,7 @@ const navGroups = [
       var(--nav-card-image);
     background-size: cover;
     background-position: center;
-    border-radius: 2px;
+    border-radius: 12px;
     transition:
       transform 0.28s ease,
       filter 0.28s ease;
@@ -619,13 +650,44 @@ const navGroups = [
     const tabs = Array.from(root.querySelectorAll("[data-tab]"));
     const triggers = Array.from(root.querySelectorAll("[data-menu-trigger]"));
     const panels = Array.from(root.querySelectorAll("[data-mega-panel]"));
+    const megaLinks = Array.from(root.querySelectorAll(".megaMenu a"));
+    const brand = root.querySelector(".brand");
+    const navCta = root.querySelector(".navCta");
 
     let closeTimer = null;
+    let ticking = false;
 
     const getHashFromHref = (href) => {
       if (!href) return "";
       const hashIndex = href.indexOf("#");
       return hashIndex >= 0 ? href.slice(hashIndex + 1) : "";
+    };
+
+    const getTabSectionId = (tab) => {
+      return tab.dataset.sectionId || getHashFromHref(tab.getAttribute("href") || "");
+    };
+
+    const getHeaderOffset = () => {
+      const navHeight = navBar?.getBoundingClientRect().height ?? 72;
+      return navHeight + 24;
+    };
+
+    const getRouteActiveId = () => {
+      const path = window.location.pathname;
+
+      if (path === "/nosotros" || path.startsWith("/nosotros/")) {
+        return "nosotros";
+      }
+
+      if (path === "/unidades" || path.startsWith("/unidades/")) {
+        return "negocio";
+      }
+
+      if (path === "/metodo" || path.startsWith("/metodo/")) {
+        return "negocio";
+      }
+
+      return "";
     };
 
     const setScrolled = () => {
@@ -686,15 +748,103 @@ const navGroups = [
 
     const scheduleClose = () => {
       clearCloseTimer();
-      closeTimer = window.setTimeout(closeMenu, 110);
+      closeTimer = window.setTimeout(closeMenu, 140);
     };
 
     const setActive = (id) => {
       tabs.forEach((tab) => {
-        const href = tab.getAttribute("href") || "";
-        const hash = getHashFromHref(href);
-        tab.classList.toggle("isActive", hash === id);
+        const tabId = getTabSectionId(tab);
+        tab.classList.toggle("isActive", tabId === id);
       });
+
+      if (navCta) {
+        navCta.classList.toggle("isActive", id === "contacto");
+      }
+    };
+
+    const sectionIds = Array.from(
+      new Set([
+        ...tabs.map((tab) => getTabSectionId(tab)),
+        "contacto",
+      ])
+    ).filter(Boolean);
+
+    const getSections = () => {
+      return sectionIds
+        .map((id) => document.getElementById(id))
+        .filter(Boolean);
+    };
+
+    const updateActiveByScroll = () => {
+      const routeActiveId = getRouteActiveId();
+
+      /*
+        En páginas internas como /nosotros, /unidades o /metodo
+        no dependemos del scroll del home.
+      */
+      if (routeActiveId && window.location.pathname !== "/") {
+        setActive(routeActiveId);
+        ticking = false;
+        return;
+      }
+
+      const sections = getSections();
+      if (!sections.length) {
+        setActive(routeActiveId || "inicio");
+        ticking = false;
+        return;
+      }
+
+      const offset = getHeaderOffset();
+      const marker = window.scrollY + offset + window.innerHeight * 0.22;
+
+      let currentId = sections[0].id;
+
+      sections.forEach((section) => {
+        const top = section.offsetTop;
+        if (marker >= top) {
+          currentId = section.id;
+        }
+      });
+
+      const bottomReached =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 8;
+
+      if (bottomReached) {
+        const lastSection = sections[sections.length - 1];
+        if (lastSection?.id) currentId = lastSection.id;
+      }
+
+      setActive(currentId);
+      ticking = false;
+    };
+
+    const requestActiveUpdate = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(updateActiveByScroll);
+    };
+
+    const scrollToHash = (href) => {
+      const id = getHashFromHref(href);
+      if (!id) return false;
+
+      const target = document.getElementById(id);
+      if (!target) return false;
+
+      const offset = getHeaderOffset();
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+
+      window.history.pushState(null, "", `#${id}`);
+      window.scrollTo({
+        top,
+        behavior: "smooth",
+      });
+
+      setActive(id);
+      closeMenu();
+
+      return true;
     };
 
     triggers.forEach((trigger) => {
@@ -702,6 +852,46 @@ const navGroups = [
 
       trigger.addEventListener("mouseenter", () => openMenu(key));
       trigger.addEventListener("focus", () => openMenu(key));
+    });
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", (event) => {
+        const href = tab.getAttribute("href") || "";
+
+        if (href.includes("#")) {
+          const handled = scrollToHash(href);
+          if (handled) {
+            event.preventDefault();
+          }
+        } else {
+          closeMenu();
+        }
+      });
+    });
+
+    megaLinks.forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const href = link.getAttribute("href") || "";
+
+        if (href.includes("#")) {
+          const handled = scrollToHash(href);
+          if (handled) {
+            event.preventDefault();
+          }
+        } else {
+          closeMenu();
+        }
+      });
+    });
+
+    brand?.addEventListener("click", (event) => {
+      const handled = scrollToHash("/#inicio");
+      if (handled) event.preventDefault();
+    });
+
+    navCta?.addEventListener("click", (event) => {
+      const handled = scrollToHash("/#contacto");
+      if (handled) event.preventDefault();
     });
 
     navBar?.addEventListener("mouseenter", clearCloseTimer);
@@ -715,49 +905,35 @@ const navGroups = [
       if (event.key === "Escape") closeMenu();
     });
 
-    tabs.forEach((tab) => {
-      tab.addEventListener("click", () => {
-        const href = tab.getAttribute("href") || "";
-        const id = getHashFromHref(href);
-        if (id) setActive(id);
-        closeMenu();
-      });
-    });
-
-    const sectionIds = Array.from(
-      new Set([
-        "inicio",
-        ...tabs.map((tab) => getHashFromHref(tab.getAttribute("href") || "")),
-      ])
-    ).filter(Boolean);
-
-    const sections = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter(Boolean);
-
-    if (sections.length > 0) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          const visible = entries
-            .filter((entry) => entry.isIntersecting)
-            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-          if (visible?.target?.id) {
-            setActive(visible.target.id);
-          }
-        },
-        {
-          rootMargin: "-45% 0px -45% 0px",
-          threshold: [0.1, 0.25, 0.4, 0.6],
-        }
-      );
-
-      sections.forEach((section) => observer.observe(section));
-    }
-
     setScrolled();
-    setActive(window.location.hash?.replace("#", "") || "inicio");
+    updateActiveByScroll();
 
-    window.addEventListener("scroll", setScrolled, { passive: true });
+    window.addEventListener("scroll", () => {
+      setScrolled();
+      requestActiveUpdate();
+    }, { passive: true });
+
+    window.addEventListener("resize", requestActiveUpdate);
+
+    window.addEventListener("load", () => {
+      const routeActiveId = getRouteActiveId();
+
+      if (routeActiveId && window.location.pathname !== "/") {
+        setActive(routeActiveId);
+        return;
+      }
+
+      const initialHash = window.location.hash?.replace("#", "");
+      if (initialHash) {
+        const target = document.getElementById(initialHash);
+        if (target) {
+          window.setTimeout(() => {
+            scrollToHash(`#${initialHash}`);
+          }, 80);
+        }
+      } else {
+        setActive("inicio");
+      }
+    });
   }
 </script>

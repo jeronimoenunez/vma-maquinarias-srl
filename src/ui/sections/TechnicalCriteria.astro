@@ -1,0 +1,171 @@
+---
+type Criterion = {
+  number: string;
+  title: string;
+  description: string;
+};
+
+type Props = {
+  kicker?: string;
+  title?: string;
+  subtitle?: string;
+  items?: Criterion[];
+};
+
+const {
+  kicker = "CRITERIO TÉCNICO",
+  title = "El equipo correcto no se elige por catálogo.",
+  subtitle = "Antes de cotizar, analizamos las condiciones reales de trabajo para evitar sobredimensionar, demorar o comprometer la operación.",
+  items = [
+    {
+      number: "01",
+      title: "Altura y alcance",
+      description:
+        "No se trata solo de llegar alto. Evaluamos altura de trabajo, alcance horizontal y margen operativo para elegir el equipo adecuado.",
+    },
+    {
+      number: "02",
+      title: "Superficie y acceso",
+      description:
+        "Revisamos tipo de suelo, radios de giro, ingreso al sitio, pendientes y restricciones físicas de la obra o planta.",
+    },
+    {
+      number: "03",
+      title: "Energía y entorno",
+      description:
+        "Definimos si conviene eléctrico, diésel o híbrido según ventilación, ruido, autonomía, interior, exterior y exigencia del trabajo.",
+    },
+    {
+      number: "04",
+      title: "Duración y respaldo",
+      description:
+        "Planificamos disponibilidad, entrega, documentación técnica y soporte para sostener la continuidad operativa durante todo el alquiler.",
+    },
+  ],
+} = Astro.props as Props;
+---
+
+<section id="criterios" class="criteriaSection">
+  <div class="criteriaHeader" data-reveal>
+    <p class="criteriaKicker">{kicker}</p>
+    <h2>{title}</h2>
+    <p>{subtitle}</p>
+  </div>
+
+  <div class="criteriaGrid">
+    {
+      items.map((item, index) => (
+        <article
+          class="criteriaCard vma-panel-hover"
+          data-reveal
+          style={`--reveal-delay: ${index * 120}ms`}
+        >
+          <span>{item.number}</span>
+          <h3>{item.title}</h3>
+          <p>{item.description}</p>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .criteriaSection {
+    background: #070707;
+    color: #ffffff;
+    padding: clamp(88px, 10vw, 150px) clamp(40px, 6vw, 120px);
+  }
+
+  .criteriaHeader {
+    max-width: 760px;
+    margin-bottom: clamp(56px, 7vw, 96px);
+  }
+
+  .criteriaKicker {
+    color: #ffc400;
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+
+  .criteriaHeader h2 {
+    color: #ffffff;
+    font-size: clamp(2.4rem, 5vw, 5rem);
+    font-weight: 300;
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    max-width: 12ch;
+    margin-bottom: 28px;
+  }
+
+  .criteriaHeader p {
+    color: rgba(255,255,255,0.62);
+    font-size: 1rem;
+    line-height: 1.7;
+    max-width: 62ch;
+  }
+
+  .criteriaGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid rgba(255,255,255,0.12);
+    border-left: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .criteriaCard {
+    min-height: 320px;
+    padding: clamp(28px, 3vw, 44px);
+    border-right: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0));
+  }
+
+  .criteriaCard span {
+    display: block;
+    color: #ffc400;
+    font-family: var(--font-display, inherit);
+    font-size: 0.9rem;
+    letter-spacing: 0.18em;
+    margin-bottom: 64px;
+  }
+
+  .criteriaCard h3 {
+    color: #ffffff;
+    font-size: clamp(1.4rem, 2vw, 2rem);
+    font-weight: 400;
+    margin-bottom: 18px;
+  }
+
+  .criteriaCard p {
+    color: rgba(255,255,255,0.58);
+    font-size: 0.96rem;
+    line-height: 1.65;
+  }
+
+  @media (max-width: 1024px) {
+    .criteriaGrid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .criteriaSection {
+      padding: 72px 24px;
+    }
+
+    .criteriaGrid {
+      grid-template-columns: 1fr;
+    }
+
+    .criteriaCard {
+      min-height: auto;
+    }
+
+    .criteriaCard span {
+      margin-bottom: 36px;
+    }
+  }
+</style>

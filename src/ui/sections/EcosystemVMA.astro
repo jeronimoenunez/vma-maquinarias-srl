@@ -1,0 +1,738 @@
+---
+type EcosystemCard = {
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  image: { src: string; alt: string };
+  href?: string;
+};
+
+type EcosystemRow = {
+  eyebrow: string;
+  title: string;
+  interval?: number;
+  cards: EcosystemCard[];
+};
+
+type Props = {
+  kicker?: string;
+  title?: string;
+  rows?: EcosystemRow[];
+};
+
+const fallbackRows: EcosystemRow[] = [
+  {
+    eyebrow: "NOVEDADES",
+    title: "Actualizaciones del ecosistema VMA",
+    interval: 4300,
+    cards: [
+      {
+        eyebrow: "Flota",
+        title: "Nuevos equipos disponibles para operaciones industriales.",
+        subtitle:
+          "Incorporaciones, disponibilidad y soluciones para proyectos que no pueden frenar.",
+        href: "#contacto",
+        image: {
+          src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1800&auto=format&fit=crop&q=80",
+          alt: "Equipo de elevación en operación",
+        },
+      },
+      {
+        eyebrow: "Operación",
+        title: "Mayor capacidad de respuesta para obras y plantas.",
+        subtitle:
+          "Coordinación, entrega y soporte técnico para reducir tiempos muertos.",
+        href: "#contacto",
+        image: {
+          src: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1800&auto=format&fit=crop&q=80",
+          alt: "Obra en construcción",
+        },
+      },
+      {
+        eyebrow: "Soporte",
+        title: "Seguimiento técnico durante todo el alquiler.",
+        subtitle:
+          "Acompañamiento operativo para que el equipo correcto llegue al momento correcto.",
+        href: "#contacto",
+        image: {
+          src: "https://images.unsplash.com/photo-1581092446327-9b52bd1570c2?w=1800&auto=format&fit=crop&q=80",
+          alt: "Técnico realizando mantenimiento",
+        },
+      },
+      {
+        eyebrow: "Industria",
+        title: "Soluciones para plantas que necesitan continuidad.",
+        subtitle:
+          "Equipos dedicados, contratos operativos y un solo interlocutor técnico.",
+        href: "#contacto",
+        image: {
+          src: "https://images.unsplash.com/photo-1717386255773-1e3037c81788?q=80&w=1800&auto=format&fit=crop",
+          alt: "Planta industrial con maquinaria",
+        },
+      },
+      {
+        eyebrow: "Obra",
+        title: "Disponibilidad coordinada para obras exigentes.",
+        subtitle:
+          "Entrega, documentación y soporte para que la operación avance sin demoras.",
+        href: "#contacto",
+        image: {
+          src: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1800&auto=format&fit=crop&q=80",
+          alt: "Planos técnicos de obra",
+        },
+      },
+    ],
+  },
+  {
+    eyebrow: "BLOG",
+    title: "Criterio técnico para decidir mejor",
+    interval: 5700,
+    cards: [
+      {
+        eyebrow: "Guía",
+        title: "Cómo elegir entre tijera, brazo articulado o telescópico.",
+        subtitle:
+          "Altura, superficie, energía y entorno: cuatro datos que cambian la decisión.",
+        href: "#contacto",
+        image: {
+          src: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1600&auto=format&fit=crop&q=80",
+          alt: "Planos técnicos sobre mesa",
+        },
+      },
+      {
+        eyebrow: "Costos",
+        title: "Por qué sobredimensionar un equipo puede salir caro.",
+        subtitle:
+          "El equipo correcto no siempre es el más grande. Es el que mejor resuelve la operación.",
+        href: "#contacto",
+        image: {
+          src: "https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=1600&auto=format&fit=crop&q=80",
+          alt: "Herramientas y planificación técnica",
+        },
+      },
+      {
+        eyebrow: "Seguridad",
+        title: "Qué validar antes de trabajar en altura.",
+        subtitle:
+          "Superficie, entorno, capacitación y soporte: la continuidad también depende de la prevención.",
+        href: "#contacto",
+        image: {
+          src: "https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=1600&auto=format&fit=crop&q=80",
+          alt: "Equipo de trabajo en altura",
+        },
+      },
+      {
+        eyebrow: "Alquiler",
+        title: "Cuándo conviene alquilar y cuándo comprar.",
+        subtitle:
+          "La decisión depende del uso, duración del proyecto, mantenimiento y flujo operativo.",
+        href: "#contacto",
+        image: {
+          src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&auto=format&fit=crop&q=80",
+          alt: "Equipo de elevación en obra",
+        },
+      },
+      {
+        eyebrow: "Postventa",
+        title: "La diferencia entre soporte técnico y continuidad operativa.",
+        subtitle:
+          "No se trata solo de reparar. Se trata de reducir el tiempo de máquina parada.",
+        href: "#contacto",
+        image: {
+          src: "https://images.unsplash.com/photo-1581092446327-9b52bd1570c2?w=1600&auto=format&fit=crop&q=80",
+          alt: "Técnico haciendo mantenimiento",
+        },
+      },
+      {
+        eyebrow: "Planificación",
+        title: "Qué datos preparar antes de pedir una cotización.",
+        subtitle:
+          "Altura, superficie, energía, zona y fecha estimada ayudan a cotizar mejor desde el primer contacto.",
+        href: "#contacto",
+        image: {
+          src: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=1600&auto=format&fit=crop&q=80",
+          alt: "Planificación de operación",
+        },
+      },
+    ],
+  },
+];
+
+const {
+  kicker = "ECOSISTEMA VMA",
+  title = "Novedades, criterio técnico y decisiones para operar mejor.",
+  rows,
+} = Astro.props as Partial<Props>;
+
+const safeRows = Array.isArray(rows) && rows.length ? rows : fallbackRows;
+---
+
+<section id="ecosistema" class="ecosystemSection" data-vma-ecosystem>
+  <div class="ecosystemShell">
+    <div class="ecosystemRule" aria-hidden="true"></div>
+
+    <header class="ecosystemHeader">
+      <p class="ecosystemKicker">{kicker}</p>
+      <h2 class="ecosystemTitle">{title}</h2>
+    </header>
+
+    <div class="ecosystemRows">
+      {
+        safeRows.map((row, rowIndex) => (
+          <section
+            class={`ecosystemRow ecosystemRow--${rowIndex === 0 ? "primary" : "secondary"}`}
+            data-ecosystem-row
+            data-row-index={rowIndex}
+            data-interval={row.interval ?? 4800}
+          >
+            <div class="rowHeader">
+              <p>{row.eyebrow}</p>
+              <span>{row.title}</span>
+            </div>
+
+            <div class="rowViewport">
+              <div class="rowTrack" data-row-track>
+                {row.cards.map((card) => (
+                  <a class="ecosystemCard" href={card.href ?? "#contacto"}>
+                    <div class="cardImage">
+                      <img src={card.image.src} alt={card.image.alt} loading="lazy" decoding="async" />
+                    </div>
+
+                    <div class="cardOverlay" aria-hidden="true"></div>
+
+                    <div class="cardContent">
+                      {card.eyebrow && <span class="cardPill">{card.eyebrow}</span>}
+                      <h4>{card.title}</h4>
+                      {card.subtitle && <p>{card.subtitle}</p>}
+                    </div>
+
+                    <span class="cardArrow" aria-hidden="true">↘</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div class="rowDots" aria-hidden="true">
+              {row.cards.map((_, dotIndex) => (
+                <button
+                  class={`rowDot ${dotIndex === 0 ? "isActive" : ""}`}
+                  data-row-dot
+                  data-dot-index={dotIndex}
+                  type="button"
+                />
+              ))}
+            </div>
+          </section>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const bindEcosystem = () => {
+      const rows = [...document.querySelectorAll("[data-ecosystem-row]")];
+      if (!rows.length) return;
+
+      rows.forEach((row) => {
+        const track = row.querySelector("[data-row-track]");
+        const dots = [...row.querySelectorAll("[data-row-dot]")];
+        const cards = [...row.querySelectorAll(".ecosystemCard")];
+        const interval = Number(row.dataset.interval || 4800);
+
+        if (!track || cards.length <= 1) return;
+
+        let index = 0;
+        let timer = null;
+
+        const setActive = (nextIndex) => {
+          index = (nextIndex + cards.length) % cards.length;
+          track.style.setProperty("--active", String(index));
+
+          dots.forEach((dot, dotIndex) => {
+            dot.classList.toggle("isActive", dotIndex === index);
+          });
+        };
+
+        const start = () => {
+          stop();
+          timer = window.setInterval(() => {
+            setActive(index + 1);
+          }, interval);
+        };
+
+        const stop = () => {
+          if (timer) window.clearInterval(timer);
+          timer = null;
+        };
+
+        dots.forEach((dot) => {
+          dot.addEventListener("click", () => {
+            const next = Number(dot.dataset.dotIndex || 0);
+            setActive(next);
+            start();
+          });
+        });
+
+        row.addEventListener("mouseenter", stop);
+        row.addEventListener("mouseleave", start);
+
+        setActive(0);
+        start();
+      });
+    };
+
+    bindEcosystem();
+    document.addEventListener("DOMContentLoaded", bindEcosystem, { once: true });
+  })();
+</script>
+
+<style>
+  .ecosystemSection {
+    background: #f5f5f5;
+    color: #080808;
+    min-height: calc(100svh - 84px);
+    padding:
+      clamp(28px, 3vw, 48px)
+      0
+      clamp(30px, 3.2vw, 54px);
+    overflow: hidden;
+  }
+
+  .ecosystemShell {
+    width: 100%;
+  }
+
+  .ecosystemRule {
+    height: 1px;
+    margin: 0 clamp(30px, 4vw, 76px) clamp(28px, 3vw, 46px);
+    background: rgba(8, 8, 8, 0.82);
+  }
+
+  .ecosystemHeader {
+    display: grid;
+    grid-template-columns: minmax(180px, 0.34fr) minmax(0, 1fr);
+    gap: clamp(28px, 4vw, 72px);
+    align-items: start;
+    padding: 0 clamp(30px, 4vw, 76px);
+    margin-bottom: clamp(28px, 3.2vw, 48px);
+  }
+
+  .ecosystemKicker {
+    margin: 0;
+    color: #ffc400;
+    font-family: var(--font-body);
+    font-size: 0.74rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .ecosystemTitle {
+    margin: 0;
+    max-width: 100%;
+    color: #080808;
+    font-family: var(--font-body);
+    font-size: clamp(2.5rem, 4.7vw, 5.8rem);
+    font-weight: 400;
+    line-height: 0.96;
+    letter-spacing: -0.07em;
+    text-wrap: balance;
+  }
+
+  .ecosystemRows {
+    display: grid;
+    gap: clamp(18px, 2vw, 30px);
+  }
+
+  .ecosystemRow {
+    --active: 0;
+    position: relative;
+  }
+
+  .rowHeader {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 0 clamp(30px, 4vw, 76px);
+    margin-bottom: clamp(12px,.5vw,0px);
+  }
+
+  .rowHeader p,
+  .rowHeader span {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: clamp(0.95rem, 1.05vw, 1.18rem);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+  }
+
+  .rowHeader p {
+    color: rgba(8, 8, 8, 0.74);
+  }
+
+  .rowHeader span {
+    color: rgba(8, 8, 8, 0.44);
+  }
+
+  .rowViewport {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .rowTrack {
+    --active: 0;
+    display: flex;
+    gap: clamp(10px, 1vw, 16px);
+    padding: 0 clamp(30px, 4vw, 76px);
+    transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+
+  .ecosystemRow--primary .rowTrack {
+    transform: translateX(
+      calc(var(--active) * (min(76vw, 1080px) + clamp(10px, 1vw, 16px)) * -1)
+    );
+  }
+
+  .ecosystemRow--secondary .rowTrack {
+    transform: translateX(
+      calc(var(--active) * (min(34vw, 440px) + clamp(10px, 1vw, 16px)) * -1)
+    );
+  }
+
+  .ecosystemCard {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid transparent;
+    border-radius: clamp(18px, 1.6vw, 28px);
+    background: #111111;
+    color: #ffffff;
+    text-decoration: none;
+    isolation: isolate;
+    transition:
+      border-color 0.3s ease,
+      box-shadow 0.3s ease,
+      opacity 0.3s ease,
+      filter 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .ecosystemRow--primary .ecosystemCard {
+    flex: 0 0 min(76vw, 1080px);
+    height: clamp(300px,54svh,820px);
+  }
+
+  .ecosystemRow--secondary .ecosystemCard {
+    flex: 0 0 min(34vw, 440px);
+    height: clamp(190px, 25svh, 270px);
+  }
+
+  .cardImage {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .cardImage img {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.01);
+    filter: saturate(0.96) contrast(0.98);
+    transition:
+      transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.3s ease;
+  }
+
+  .cardOverlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.38) 0%,
+        rgba(0, 0, 0, 0.08) 58%,
+        rgba(0, 0, 0, 0.16) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.08) 0%,
+        rgba(0, 0, 0, 0.1) 46%,
+        rgba(0, 0, 0, 0.72) 100%
+      );
+    pointer-events: none;
+  }
+
+  .ecosystemCard:hover {
+    border-color: #ffc400;
+    box-shadow:
+      0 0 0 1px rgba(255, 196, 0, 0.5),
+      0 20px 60px rgba(255, 196, 0, 0.14);
+    transform: translateY(-2px);
+  }
+
+  .ecosystemCard:hover .cardImage img {
+    transform: scale(1.035);
+    filter: saturate(1.08) contrast(1.04);
+  }
+
+  .ecosystemRow:has(.ecosystemCard:hover) .ecosystemCard:not(:hover) {
+    opacity: 0.45;
+    filter: grayscale(1);
+  }
+
+  .ecosystemRow:has(.ecosystemCard:hover) .ecosystemCard:not(:hover) .cardImage img {
+    filter: grayscale(1) saturate(0) contrast(0.9) brightness(0.72);
+  }
+
+  .ecosystemRow:has(.ecosystemCard:hover) .ecosystemCard:not(:hover) .cardContent,
+  .ecosystemRow:has(.ecosystemCard:hover) .ecosystemCard:not(:hover) .cardArrow {
+    opacity: 0.46;
+  }
+
+  .cardContent {
+    position: absolute;
+    left: clamp(22px, 2.6vw, 46px);
+    right: clamp(22px, 2.6vw, 46px);
+    bottom: clamp(22px, 2.6vw, 46px);
+    z-index: 2;
+    max-width: 760px;
+    transition: opacity 0.3s ease;
+  }
+
+  .ecosystemRow--secondary .cardContent {
+    left: clamp(18px, 2vw, 28px);
+    right: clamp(18px, 2vw, 28px);
+    bottom: clamp(18px, 2vw, 28px);
+  }
+
+  .cardPill {
+    display: inline-flex;
+    width: fit-content;
+    min-height: 34px;
+    align-items: center;
+    padding: 0 14px;
+    margin-bottom: clamp(12px, 1.2vw, 18px);
+    border: 1px solid rgba(255, 255, 255, 0.58);
+    border-radius: 999px;
+    color: rgba(255, 255, 255, 0.92);
+    font-family: var(--font-body);
+    font-size: clamp(0.78rem, 0.86vw, 0.92rem);
+    letter-spacing: -0.01em;
+    transition:
+      color 0.3s ease,
+      border-color 0.3s ease,
+      background 0.3s ease;
+  }
+
+  .ecosystemCard:hover .cardPill {
+    color: #ffc400;
+    border-color: rgba(255, 196, 0, 0.78);
+    background: rgba(255, 196, 0, 0.08);
+  }
+
+  .cardContent h4 {
+    margin: 0;
+    color: #ffffff;
+    font-family: var(--font-body);
+    font-weight: 500;
+    line-height: 0.9;
+    letter-spacing: -0.08em;
+    text-wrap: balance;
+  }
+
+  .ecosystemRow--primary .cardContent h4 {
+    font-size: clamp(2.45rem, 4.8vw, 6.3rem);
+    max-width: 13ch;
+  }
+
+  .ecosystemRow--secondary .cardContent h4 {
+    font-size: clamp(1.45rem,1.5vw,2.7rem);
+    /* max-width: 14ch; */
+    letter-spacing: -0.065em;
+  }
+
+  .cardContent p {
+    margin: clamp(12px, 1.1vw, 18px) 0 0;
+    max-width: 54ch;
+    color: rgba(255, 255, 255, 0.82);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+      "Segoe UI", sans-serif;
+    font-size: clamp(0.92rem, 1vw, 1.08rem);
+    line-height: 1.42;
+    letter-spacing: -0.018em;
+    transition: color 0.3s ease;
+  }
+
+  .ecosystemCard:hover .cardContent p {
+    color: #ffc400;
+  }
+
+  .ecosystemRow--secondary .cardContent p {
+    display: none;
+  }
+
+  .cardArrow {
+    position: absolute;
+    right: clamp(22px, 2.4vw, 42px);
+    bottom: clamp(22px, 2.4vw, 42px);
+    z-index: 3;
+    color: rgba(255, 255, 255, 0.86);
+    font-size: clamp(1.5rem, 1.8vw, 2.2rem);
+    line-height: 1;
+    transition:
+      color 0.25s ease,
+      transform 0.25s ease,
+      opacity 0.3s ease;
+  }
+
+  .ecosystemRow--secondary .cardArrow {
+    right: clamp(16px, 1.8vw, 26px);
+    bottom: clamp(16px, 1.8vw, 26px);
+    font-size: clamp(1.2rem, 1.45vw, 1.7rem);
+  }
+
+  .ecosystemCard:hover .cardArrow {
+    color: #ffc400;
+    transform: translate(5px, 5px);
+  }
+
+  .rowDots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: clamp(12px, 1.2vw, 18px);
+  }
+
+  .rowDot {
+    width: 7px;
+    height: 7px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(8, 8, 8, 0.22);
+    cursor: pointer;
+    transition:
+      width 0.25s ease,
+      background 0.25s ease;
+  }
+
+  .rowDot.isActive {
+    width: 28px;
+    background: #080808;
+  }
+
+  @media (max-width: 900px) {
+    .ecosystemSection {
+      min-height: auto;
+    }
+
+    .ecosystemHeader {
+      grid-template-columns: 1fr;
+    }
+
+    .ecosystemTitle {
+      max-width: 12ch;
+      font-size: clamp(3rem, 12vw, 6rem);
+    }
+
+    .rowHeader {
+      align-items: start;
+      flex-direction: column;
+    }
+
+    .ecosystemRow--primary .ecosystemCard,
+    .ecosystemRow--secondary .ecosystemCard {
+      flex-basis: min(86vw, 720px);
+    }
+
+    .ecosystemRow--primary .rowTrack,
+    .ecosystemRow--secondary .rowTrack {
+      transform: translateX(
+        calc(var(--active) * (min(86vw, 720px) + clamp(10px, 1vw, 16px)) * -1)
+      );
+    }
+
+    .ecosystemRow--secondary .ecosystemCard {
+      height: 300px;
+    }
+
+    .ecosystemRow--secondary .cardContent p {
+      display: block;
+    }
+
+    .ecosystemRow:has(.ecosystemCard:hover) .ecosystemCard:not(:hover) {
+      opacity: 1;
+      filter: none;
+    }
+
+    .ecosystemRow:has(.ecosystemCard:hover) .ecosystemCard:not(:hover) .cardImage img {
+      filter: saturate(0.96) contrast(0.98);
+    }
+
+    .ecosystemRow:has(.ecosystemCard:hover) .ecosystemCard:not(:hover) .cardContent,
+    .ecosystemRow:has(.ecosystemCard:hover) .ecosystemCard:not(:hover) .cardArrow {
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .ecosystemRule,
+    .ecosystemHeader,
+    .rowHeader,
+    .rowTrack {
+      padding-left: 22px;
+      padding-right: 22px;
+    }
+
+    .ecosystemRow--primary .ecosystemCard,
+    .ecosystemRow--secondary .ecosystemCard {
+      flex-basis: calc(100vw - 44px);
+      border-radius: 24px;
+    }
+
+    .ecosystemRow--primary .ecosystemCard {
+      height: 500px;
+    }
+
+    .ecosystemRow--secondary .ecosystemCard {
+      height: 360px;
+    }
+
+    .ecosystemRow--primary .rowTrack,
+    .ecosystemRow--secondary .rowTrack {
+      transform: translateX(
+        calc(var(--active) * (calc(100vw - 44px) + clamp(10px, 1vw, 16px)) * -1)
+      );
+    }
+
+    .cardContent h4 {
+      font-size: clamp(2.1rem, 11vw, 3.7rem);
+    }
+
+    .cardContent {
+      padding-right: 34px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rowTrack,
+    .cardImage img,
+    .cardArrow,
+    .rowDot,
+    .ecosystemCard,
+    .cardPill,
+    .cardContent,
+    .cardContent p {
+      transition: none;
+    }
+  }
+</style>

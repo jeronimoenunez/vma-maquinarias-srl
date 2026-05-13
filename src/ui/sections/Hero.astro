@@ -24,41 +24,47 @@ const {
 } = Astro.props as Props;
 
 const heroVideo = videoAssets.heroMain;
-const posterSrc = image?.src ?? heroVideo.poster;
 ---
 
-<section id="inicio" class="hero">
-  <video
-    id="heroVideo"
-    class="heroVideo"
-    muted
-    autoplay
-    loop
-    playsinline
-    webkit-playsinline="true"
-    preload="auto"
-    aria-label={image?.alt ?? "Video de presentación VMA Rental"}
-  >
-    <source src={heroVideo.desktop.mp4} type="video/mp4" />
-  </video>
-  <div class="heroOverlay" aria-hidden="true"></div>
+<section id="inicio" class="hero" data-vma-hero>
+  <div class="heroSticky">
+    <div class="heroFrame">
+      <video
+        id="heroVideo"
+        class="heroVideo"
+        muted
+        autoplay
+        loop
+        playsinline
+        webkit-playsinline="true"
+        preload="auto"
+        aria-label={image?.alt ?? "Video de presentación VMA Rental"}
+      >
+        <source src={heroVideo.desktop.mp4} type="video/mp4" />
+      </video>
 
-  <div class="heroContent">
-    <Container class="heroContentInner">
-      <p class="kicker">{kicker}</p>
-      <h1 class="brandLogo">{title}</h1>
-      <p class="tagline">{subtitle}</p>
+      <div class="heroOverlay" aria-hidden="true"></div>
 
-      <div class="heroActions">
-        <a class="heroBtn" href={primaryCta.href}>{primaryCta.label}</a>
-        <a class="heroLinkSecondary" href={secondaryCta.href}>{secondaryCta.label}</a>
+      <div class="heroContent">
+        <Container class="heroContentInner">
+          <p class="kicker">{kicker}</p>
+          <h1 class="brandLogo">{title}</h1>
+          <p class="tagline">{subtitle}</p>
+
+          <div class="heroActions">
+            <a class="heroBtn" href={primaryCta.href}>{primaryCta.label}</a>
+            <a class="heroLinkSecondary" href={secondaryCta.href}>{secondaryCta.label}</a>
+          </div>
+        </Container>
       </div>
-    </Container>
+    </div>
   </div>
 </section>
 
 <script is:inline>
   (() => {
+    const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
     const playHeroVideo = async () => {
       const video = document.getElementById("heroVideo");
       if (!video) return;
@@ -86,8 +92,50 @@ const posterSrc = image?.src ?? heroVideo.poster;
       }
     };
 
+    const bindHeroScroll = () => {
+      const hero = document.querySelector("[data-vma-hero]");
+      if (!hero) return;
+
+      let ticking = false;
+
+      const update = () => {
+        const rect = hero.getBoundingClientRect();
+        const viewport = window.innerHeight || 1;
+        const travel = Math.max(hero.offsetHeight - viewport, 1);
+        const raw = clamp(Math.abs(rect.top) / travel, 0, 1);
+
+        const eased = 1 - Math.pow(1 - raw, 3);
+
+        const delayedFade = clamp((eased - 0.52) / 0.42, 0, 1);
+
+        hero.style.setProperty("--hero-inset", `${Math.round(eased * 26)}px`);
+        hero.style.setProperty("--hero-radius", `${Math.round(eased * 22)}px`);
+        hero.style.setProperty("--hero-scale", `${1 + eased * 0.028}`);
+        hero.style.setProperty("--content-opacity", `${clamp(1 - delayedFade, 0, 1)}`);
+        hero.style.setProperty("--content-y", `${Math.round(delayedFade * -28)}px`);
+
+        ticking = false;
+      };
+
+      const requestUpdate = () => {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(update);
+      };
+
+      update();
+      window.addEventListener("scroll", requestUpdate, { passive: true });
+      window.addEventListener("resize", requestUpdate);
+    };
+
     playHeroVideo();
-    document.addEventListener("DOMContentLoaded", playHeroVideo, { once: true });
+    bindHeroScroll();
+
+    document.addEventListener("DOMContentLoaded", () => {
+      playHeroVideo();
+      bindHeroScroll();
+    }, { once: true });
+
     window.addEventListener("load", playHeroVideo, { once: true });
 
     document.addEventListener("visibilitychange", () => {
@@ -105,14 +153,33 @@ const posterSrc = image?.src ?? heroVideo.poster;
 
 <style>
   .hero {
+    --hero-inset: 0px;
+    --hero-radius: 0px;
+    --hero-scale: 1;
+    --content-opacity: 1;
+    --content-y: 0px;
+
     position: relative;
-    min-height: 100vh;
-    overflow: hidden;
-    background: #000;
+    height: 132vh;
+    background: #f5f5f2;
   }
 
-  .heroVideo.isBlocked {
-    filter: brightness(0.85);
+  .heroSticky {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    overflow: hidden;
+    background: #ffffff;
+  }
+
+  .heroFrame {
+    position: absolute;
+    inset: var(--hero-inset);
+    overflow: hidden;
+    border-radius: var(--hero-radius);
+    background: #000;
+    transform: translateZ(0);
+    will-change: inset, border-radius;
   }
 
   .heroVideo {
@@ -123,110 +190,165 @@ const posterSrc = image?.src ?? heroVideo.poster;
     max-width: none;
     object-fit: cover;
     z-index: 0;
+    transform: scale(var(--hero-scale));
+    transform-origin: center;
+    transition: filter 0.4s ease;
+    will-change: transform;
   }
 
-  .heroOverlay {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    background: linear-gradient(
-      135deg,
-      rgba(0, 0, 0, 0.55) 0%,
-      rgba(0, 0, 0, 0.25) 40%,
-      transparent 70%
-    );
+  .heroVideo.isBlocked {
+    filter: brightness(0.85);
   }
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.76) 0%,
+      rgba(0, 0, 0, 0.56) 36%,
+      rgba(0, 0, 0, 0.25) 72%,
+      rgba(0, 0, 0, 0.34) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.22) 0%,
+      rgba(0, 0, 0, 0.26) 54%,
+      rgba(0, 0, 0, 0.58) 100%
+    );
+}
 
   .heroContent {
     position: absolute;
-    bottom: 80px;
-    left: 80px;
-    max-width: 650px;
+    left: clamp(28px, 4vw, 76px);
+    bottom: clamp(62px,22vh,300px);
+    max-width: min(1180px, calc(100vw - 120px));
     z-index: 2;
-    margin: 130px 0px;
+    opacity: var(--content-opacity);
+    transform: translate3d(0, var(--content-y), 0);
+    will-change: opacity, transform;
   }
 
   .heroContent :global(.container.heroContentInner) {
     width: 100%;
-    max-width: 650px;
+    max-width: none;
     margin-inline: 0;
+    padding-inline: 0;
   }
 
   .kicker {
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
     color: #ffc400;
     line-height: 1.4;
     margin: 0;
-    font-weight: 600;
+    font-weight: 700;
   }
 
   .brandLogo {
-    font-family: var(--font-display);
-    font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+    font-family: var(--font-body);
+    font-size: clamp(3.8rem,6vw,8.2rem);
     font-weight: 300;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.065em;
     color: #fff;
-    line-height: 1.1;
-    margin: 0;
-    margin-top: 16px;
+    line-height: 0.94;
+    margin: 18px 0 0;
+    /* max-width: 20.5ch; */
   }
 
   .tagline {
-    font-size: 1rem;
-    letter-spacing: 0.02em;
-    color: rgba(255, 255, 255, 0.85);
-    margin: 0;
-    margin-top: 16px;
-    line-height: 1.6;
-    max-width: 48ch;
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.35vw, 1.22rem);
+    letter-spacing: 0.01em;
+    color: rgba(255, 255, 255, 0.84);
+    margin: 26px 0 0;
+    line-height: 1.55;
+    max-width: 58ch;
   }
 
   .heroActions {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 20px;
-    margin-top: 36px;
+    gap: 22px;
+    margin-top: 38px;
   }
 
-  .heroBtn {
-    display: inline-block;
-    padding: 16px 36px;
-    border: none;
-    background: #ffc400;
-    color: #070707;
-    font-size: 0.9rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: none;
-    transition: background 0.3s ease, color 0.3s ease;
-    border-radius: var(--r-sm);
-  }
+.heroBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 54px;
+  padding: 0 34px;
+  border: 1px solid rgba(255, 196, 0, 0.76);
+  background: rgba(255, 196, 0, 0.08);
+  color: #ffc400;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  border-radius: 10px;
+  box-shadow: 0 14px 42px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition:
+    background 0.28s ease,
+    color 0.28s ease,
+    border-color 0.28s ease,
+    box-shadow 0.28s ease,
+    transform 0.28s ease;
+}
 
-  .heroBtn:hover {
-    background: #fff;
-    color: #070707;
-  }
+.heroBtn:hover {
+  background: #ffc400;
+  border-color: #ffc400;
+  color: #070707;
+  box-shadow: 0 18px 54px rgba(255, 196, 0, 0.2);
+  transform: translateY(-2px);
+}
 
   .heroLinkSecondary {
-    font-size: 0.85rem;
-    letter-spacing: 0.08em;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.7);
-    border-bottom: 1px solid var(--vma-line);
-    padding-bottom: 2px;
-    transition: color 0.25s ease, border-color 0.25s ease;
+    color: rgba(255, 255, 255, 0.68);
+    text-decoration: none;
+    transition: color 0.25s ease;
+  }
+
+  .heroLinkSecondary::after {
+    content: "";
+    width: 42px;
+    height: 1px;
+    margin-left: 14px;
+    background: rgba(255, 255, 255, 0.34);
+    transform-origin: left;
+    transition: transform 0.28s ease, background 0.28s ease;
   }
 
   .heroLinkSecondary:hover {
     color: #fff;
-    border-color: rgba(255, 255, 255, 0.55);
+  }
+
+  .heroLinkSecondary:hover::after {
+    background: #ffc400;
+    transform: scaleX(1.22);
   }
 
   @media (max-width: 768px) {
+    .hero {
+      height: 118vh;
+    }
+
     .heroContent {
       left: 24px;
       right: 24px;
@@ -234,18 +356,37 @@ const posterSrc = image?.src ?? heroVideo.poster;
       max-width: none;
     }
 
-    .heroContent :global(.container.heroContentInner) {
-      max-width: none;
+    .brandLogo {
+      font-size: clamp(2.7rem, 13vw, 4.4rem);
+      max-width: 10.5ch;
     }
 
-    .brandLogo {
-      font-size: clamp(1.8rem, 7vw, 2.6rem);
+    .tagline {
+      max-width: 34ch;
     }
 
     .heroActions {
       flex-direction: column;
       align-items: flex-start;
-      gap: 16px;
+      gap: 14px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero {
+      height: 100svh;
+    }
+
+    .heroSticky {
+      position: relative;
+    }
+
+    .heroVideo,
+    .heroContent,
+    .heroFrame {
+      transform: none;
+      transition: none;
+      will-change: auto;
     }
   }
 </style>
