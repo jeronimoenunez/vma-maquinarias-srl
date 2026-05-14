@@ -1,0 +1,414 @@
+---
+const apiUrl =
+  import.meta.env.PUBLIC_VMA_AGENT_API_URL ??
+  "https://agente.vantorastudio.com/api/vma/agent";
+---
+
+<div class="vma-agent" data-vma-agent-widget data-api-url={apiUrl}>
+  <button class="vma-agent__button" type="button" aria-label="Abrir asistente de VMA">
+    <span class="vma-agent__button-dot"></span>
+    <span>Asistente VMA</span>
+  </button>
+
+  <section class="vma-agent__panel" aria-label="Asistente comercial VMA" hidden>
+    <header class="vma-agent__header">
+      <div>
+        <p class="vma-agent__eyebrow">VMA Máquinas SRL</p>
+        <h2>Asistente operativo</h2>
+      </div>
+      <button class="vma-agent__close" type="button" aria-label="Cerrar asistente">×</button>
+    </header>
+
+    <div class="vma-agent__messages" data-messages>
+      <article class="vma-agent__message vma-agent__message--assistant">
+        <p>
+          Hola, soy el asistente de VMA. Puedo ayudarte con alquiler, venta,
+          servicio técnico o postventa. Para orientarte bien, contame qué
+          operación necesitás resolver.
+        </p>
+      </article>
+    </div>
+
+    <form class="vma-agent__form" data-form>
+      <label class="sr-only" for="vma-agent-message">Escribí tu consulta</label>
+      <textarea
+        id="vma-agent-message"
+        name="message"
+        rows="2"
+        placeholder="Ej: Necesito alquilar una plataforma para mañana en zona norte..."
+        required
+      ></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+
+    <p class="vma-agent__fallback">
+      Si preferís, dejá tu WhatsApp en el mensaje y el equipo comercial retoma la consulta.
+    </p>
+  </section>
+</div>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .vma-agent {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 80;
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  .vma-agent__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(245, 194, 24, 0.55);
+    border-radius: 999px;
+    background: #2c2d30;
+    color: #f8f5ea;
+    padding: 13px 18px;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+
+  .vma-agent__button:hover {
+    transform: translateY(-1px);
+    border-color: rgba(245, 194, 24, 0.9);
+  }
+
+  .vma-agent__button-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    background: #f5c218;
+    box-shadow: 0 0 0 6px rgba(245, 194, 24, 0.16);
+  }
+
+  .vma-agent__panel {
+    position: absolute;
+    right: 0;
+    bottom: 64px;
+    width: min(390px, calc(100vw - 32px));
+    overflow: hidden;
+    border-radius: 24px;
+    border: 1px solid rgba(245, 194, 24, 0.32);
+    background: #f8f5ea;
+    color: #232427;
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.32);
+  }
+
+  .vma-agent__header {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: flex-start;
+    background: #2c2d30;
+    color: #f8f5ea;
+    padding: 18px 18px 16px;
+  }
+
+  .vma-agent__eyebrow {
+    margin: 0 0 4px;
+    color: #f5c218;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  .vma-agent__header h2 {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.1;
+  }
+
+  .vma-agent__close {
+    border: 0;
+    background: transparent;
+    color: #f8f5ea;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .vma-agent__messages {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 330px;
+    overflow-y: auto;
+    padding: 16px;
+    background:
+      radial-gradient(circle at top right, rgba(245, 194, 24, 0.12), transparent 30%),
+      #f8f5ea;
+  }
+
+  .vma-agent__message {
+    max-width: 88%;
+    border-radius: 16px;
+    padding: 11px 13px;
+    font-size: 14px;
+    line-height: 1.42;
+  }
+
+  .vma-agent__message p {
+    margin: 0;
+  }
+
+  .vma-agent__message--assistant {
+    align-self: flex-start;
+    background: #ffffff;
+    color: #2c2d30;
+    border: 1px solid rgba(44, 45, 48, 0.08);
+  }
+
+  .vma-agent__message--user {
+    align-self: flex-end;
+    background: #2c2d30;
+    color: #f8f5ea;
+  }
+
+  .vma-agent__message--system {
+    align-self: center;
+    max-width: 100%;
+    background: rgba(245, 194, 24, 0.18);
+    color: #2c2d30;
+    font-size: 13px;
+  }
+
+  .vma-agent__form {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    border-top: 1px solid rgba(44, 45, 48, 0.1);
+    padding: 12px;
+    background: #fff;
+  }
+
+  .vma-agent__form textarea {
+    resize: none;
+    min-height: 44px;
+    max-height: 120px;
+    border: 1px solid rgba(44, 45, 48, 0.16);
+    border-radius: 14px;
+    padding: 11px 12px;
+    font: inherit;
+    color: #2c2d30;
+    outline: none;
+  }
+
+  .vma-agent__form textarea:focus {
+    border-color: #f5c218;
+    box-shadow: 0 0 0 3px rgba(245, 194, 24, 0.18);
+  }
+
+  .vma-agent__form button {
+    align-self: end;
+    border: 0;
+    border-radius: 14px;
+    background: #f5c218;
+    color: #2c2d30;
+    padding: 0 16px;
+    min-height: 44px;
+    cursor: pointer;
+    font-weight: 800;
+  }
+
+  .vma-agent__form button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  .vma-agent__fallback {
+    margin: 0;
+    padding: 0 14px 14px;
+    background: #fff;
+    color: rgba(44, 45, 48, 0.68);
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  @media (max-width: 640px) {
+    .vma-agent {
+      right: 14px;
+      bottom: 14px;
+    }
+
+    .vma-agent__button {
+      padding: 12px 15px;
+    }
+
+    .vma-agent__panel {
+      right: -2px;
+      bottom: 60px;
+      width: calc(100vw - 24px);
+      border-radius: 20px;
+    }
+
+    .vma-agent__messages {
+      max-height: 55vh;
+    }
+  }
+</style>
+
+<script>
+  const STORAGE_KEY = "vma_agent_chat_v1";
+  const SESSION_KEY = "vma_agent_session_v1";
+
+  const root = document.querySelector("[data-vma-agent-widget]");
+  const button = root?.querySelector(".vma-agent__button");
+  const panel = root?.querySelector(".vma-agent__panel");
+  const closeButton = root?.querySelector(".vma-agent__close");
+  const messagesEl = root?.querySelector("[data-messages]");
+  const form = root?.querySelector("[data-form]");
+  const textarea = form?.querySelector("textarea");
+  const submitButton = form?.querySelector("button");
+  const apiUrl = root?.getAttribute("data-api-url");
+
+  function createSessionId() {
+    if (!window.sessionStorage.getItem(SESSION_KEY)) {
+      window.sessionStorage.setItem(SESSION_KEY, `vma_web_${crypto.randomUUID()}`);
+    }
+
+    return window.sessionStorage.getItem(SESSION_KEY);
+  }
+
+  function getStoredMessages() {
+    try {
+      return JSON.parse(window.sessionStorage.getItem(STORAGE_KEY) || "[]");
+    } catch {
+      return [];
+    }
+  }
+
+  function storeMessages(messages) {
+    window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(messages.slice(-20)));
+  }
+
+  function scrollToBottom() {
+    if (!messagesEl) return;
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function appendMessage(role, content, shouldStore = true) {
+    if (!messagesEl) return;
+
+    const article = document.createElement("article");
+    article.className = `vma-agent__message vma-agent__message--${role}`;
+
+    const paragraph = document.createElement("p");
+    paragraph.textContent = content;
+
+    article.appendChild(paragraph);
+    messagesEl.appendChild(article);
+
+    if (shouldStore && (role === "user" || role === "assistant")) {
+      const stored = getStoredMessages();
+      stored.push({ role, content });
+      storeMessages(stored);
+    }
+
+    scrollToBottom();
+  }
+
+  function restoreMessages() {
+    const stored = getStoredMessages();
+    stored.forEach((message) => appendMessage(message.role, message.content, false));
+  }
+
+  function setLoading(isLoading) {
+    if (!submitButton || !textarea) return;
+    submitButton.disabled = isLoading;
+    textarea.disabled = isLoading;
+    submitButton.textContent = isLoading ? "..." : "Enviar";
+  }
+
+  async function sendMessage(message) {
+    if (!apiUrl) {
+      throw new Error("Missing VMA agent API URL");
+    }
+
+    const history = getStoredMessages().slice(-10);
+
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sessionId: createSessionId(),
+        message,
+        history,
+        page: window.location.pathname,
+        source: "vma-web",
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`VMA agent request failed: ${response.status}`);
+    }
+
+    return response.json();
+  }
+
+  button?.addEventListener("click", () => {
+    if (!panel) return;
+    panel.hidden = !panel.hidden;
+
+    if (!panel.hidden) {
+      textarea?.focus();
+      scrollToBottom();
+    }
+  });
+
+  closeButton?.addEventListener("click", () => {
+    if (!panel) return;
+    panel.hidden = true;
+  });
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const message = textarea?.value.trim();
+
+    if (!message) return;
+
+    textarea.value = "";
+    appendMessage("user", message);
+    setLoading(true);
+
+    try {
+      const result = await sendMessage(message);
+
+      if (!result?.ok || !result?.reply) {
+        throw new Error("Invalid VMA agent response");
+      }
+
+      appendMessage("assistant", result.reply);
+    } catch (error) {
+      console.error("[vma-agent-widget]", error);
+      appendMessage(
+        "system",
+        "No pude conectar con el asistente en este momento. Dejá tu WhatsApp en el mensaje o escribinos desde el formulario de contacto y el equipo lo retoma."
+      );
+    } finally {
+      setLoading(false);
+      textarea?.focus();
+    }
+  });
+
+  restoreMessages();
+</script>
