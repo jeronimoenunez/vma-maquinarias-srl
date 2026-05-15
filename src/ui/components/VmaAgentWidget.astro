@@ -144,50 +144,55 @@ const apiUrl =
     cursor: pointer;
   }
 
-  .vma-agent__messages {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    max-height: 360px;
-    overflow-y: auto;
-    padding: 16px;
-    background:
-      radial-gradient(circle at top right, rgba(245, 194, 24, 0.12), transparent 30%),
-      #f8f5ea;
-  }
+.vma-agent__messages {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 360px;
+  overflow-y: auto;
+  padding: 16px;
+  background:
+    radial-gradient(circle at top right, rgba(245, 194, 24, 0.12), transparent 30%),
+    #f8f5ea;
+}
 
-  .vma-agent__message {
-    max-width: 90%;
-    border-radius: 16px;
-    padding: 11px 13px;
-    font-size: 14px;
-    line-height: 1.42;
-  }
+.vma-agent__message {
+  max-width: 86%;
+  border-radius: 18px;
+  padding: 12px 14px;
+  font-size: 14px;
+  line-height: 1.45;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+}
 
-  .vma-agent__message p {
-    margin: 0;
-  }
+.vma-agent__message p {
+  margin: 0;
+}
 
-  .vma-agent__message--assistant {
-    align-self: flex-start;
-    background: #ffffff;
-    color: #2c2d30;
-    border: 1px solid rgba(44, 45, 48, 0.08);
-  }
+.vma-agent__message--assistant {
+  align-self: flex-start;
+  background: #ffffff;
+  color: #2c2d30;
+  border: 1px solid rgba(44, 45, 48, 0.08);
+  border-bottom-left-radius: 6px;
+}
 
-  .vma-agent__message--user {
-    align-self: flex-end;
-    background: #2c2d30;
-    color: #f8f5ea;
-  }
+.vma-agent__message--user {
+  align-self: flex-end;
+  background: #2c2d30;
+  color: #f8f5ea;
+  border: 1px solid rgba(245, 194, 24, 0.24);
+  border-bottom-right-radius: 6px;
+}
 
-  .vma-agent__message--system {
-    align-self: center;
-    max-width: 100%;
-    background: rgba(245, 194, 24, 0.18);
-    color: #2c2d30;
-    font-size: 13px;
-  }
+.vma-agent__message--system {
+  align-self: center;
+  max-width: 96%;
+  background: rgba(245, 194, 24, 0.18);
+  color: #2c2d30;
+  font-size: 13px;
+  box-shadow: none;
+}
 
   .vma-agent__form {
     display: grid;
@@ -268,14 +273,21 @@ const apiUrl =
   const STORAGE_KEY = "vma_agent_chat_v1";
   const SESSION_KEY = "vma_agent_session_v1";
 
-  const root = document.querySelector("[data-vma-agent-widget]");
-  const button = root?.querySelector(".vma-agent__button");
-  const panel = root?.querySelector(".vma-agent__panel");
-  const closeButton = root?.querySelector(".vma-agent__close");
-  const messagesEl = root?.querySelector("[data-messages]");
-  const form = root?.querySelector("[data-form]");
-  const textarea = form?.querySelector("textarea");
-  const submitButton = form?.querySelector("button");
+  type StoredMessage = {
+    role: "user" | "assistant";
+    content: string;
+  };
+
+  type MessageRole = "user" | "assistant" | "system";
+
+  const root = document.querySelector<HTMLElement>("[data-vma-agent-widget]");
+  const button = root?.querySelector<HTMLButtonElement>(".vma-agent__button");
+  const panel = root?.querySelector<HTMLElement>(".vma-agent__panel");
+  const closeButton = root?.querySelector<HTMLButtonElement>(".vma-agent__close");
+  const messagesEl = root?.querySelector<HTMLElement>("[data-messages]");
+  const form = root?.querySelector<HTMLFormElement>("[data-form]");
+  const textarea = form?.querySelector<HTMLTextAreaElement>("textarea");
+  const submitButton = form?.querySelector<HTMLButtonElement>("button");
   const apiUrl = root?.getAttribute("data-api-url");
 
   function createSessionId() {
@@ -286,15 +298,27 @@ const apiUrl =
     return window.sessionStorage.getItem(SESSION_KEY);
   }
 
-  function getStoredMessages() {
+  function getStoredMessages(): StoredMessage[] {
     try {
-      return JSON.parse(window.sessionStorage.getItem(STORAGE_KEY) || "[]");
+      const raw = window.sessionStorage.getItem(STORAGE_KEY) || "[]";
+      const parsed = JSON.parse(raw);
+
+      if (!Array.isArray(parsed)) return [];
+
+      return parsed.filter((message): message is StoredMessage => {
+        return (
+          typeof message === "object" &&
+          message !== null &&
+          (message.role === "user" || message.role === "assistant") &&
+          typeof message.content === "string"
+        );
+      });
     } catch {
       return [];
     }
   }
 
-  function storeMessages(messages) {
+  function storeMessages(messages: StoredMessage[]) {
     window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(messages.slice(-20)));
   }
 
@@ -303,40 +327,41 @@ const apiUrl =
     messagesEl.scrollTop = messagesEl.scrollHeight;
   }
 
-  function appendMessage(role, content, shouldStore = true) {
-    if (!messagesEl) return;
+function appendMessage(role: MessageRole, content: string, shouldStore = true) {
+  if (!messagesEl) return;
 
-    const article = document.createElement("article");
-    article.className = `vma-agent__message vma-agent__message--${role}`;
+  const article = document.createElement("article");
+  article.className = `vma-agent__message vma-agent__message--${role}`;
 
-    const paragraph = document.createElement("p");
-    paragraph.textContent = content;
+  const paragraph = document.createElement("p");
+  paragraph.textContent = content;
 
-    article.appendChild(paragraph);
-    messagesEl.appendChild(article);
+  article.appendChild(paragraph);
+  messagesEl.appendChild(article);
 
-    if (shouldStore && (role === "user" || role === "assistant")) {
-      const stored = getStoredMessages();
-      stored.push({ role, content });
-      storeMessages(stored);
-    }
-
-    scrollToBottom();
+  if (shouldStore && (role === "user" || role === "assistant")) {
+    const stored = getStoredMessages();
+    stored.push({ role, content });
+    storeMessages(stored);
   }
+
+  scrollToBottom();
+}
 
   function restoreMessages() {
     const stored = getStoredMessages();
     stored.forEach((message) => appendMessage(message.role, message.content, false));
   }
 
-  function setLoading(isLoading) {
+  function setLoading(isLoading: boolean) {
     if (!submitButton || !textarea) return;
+
     submitButton.disabled = isLoading;
     textarea.disabled = isLoading;
     submitButton.textContent = isLoading ? "..." : "Enviar";
   }
 
-  async function sendMessage(message) {
+  async function sendMessage(message: string) {
     if (!apiUrl) {
       throw new Error("Missing VMA agent API URL");
     }
@@ -366,6 +391,7 @@ const apiUrl =
 
   button?.addEventListener("click", () => {
     if (!panel) return;
+
     panel.hidden = !panel.hidden;
 
     if (!panel.hidden) {
@@ -382,9 +408,9 @@ const apiUrl =
   form?.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const message = textarea?.value.trim();
+        const message = textarea?.value.trim();
 
-    if (!message) return;
+    if (!message || !textarea) return;
 
     textarea.value = "";
     appendMessage("user", message);
