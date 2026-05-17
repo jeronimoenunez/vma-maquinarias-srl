@@ -22,9 +22,7 @@ const apiUrl =
     <div class="vma-agent__messages" data-messages>
       <article class="vma-agent__message vma-agent__message--assistant">
         <p>
-          Hola, soy el asistente de VMA.
-
-          Puedo ayudarte a orientar una consulta de alquiler, compra o soporte técnico. Para recomendar bien, necesito entender la operación: zona, altura, plazo y tipo de tarea.
+          Hola, soy el asistente de VMA. Puedo ayudarte a orientar una consulta de alquiler, compra o soporte técnico. Para recomendar bien, necesito entender la operación: zona, altura, plazo y tipo de tarea.
         </p>
       </article>
     </div>
@@ -42,7 +40,7 @@ const apiUrl =
     </form>
 
     <p class="vma-agent__fallback">
-      Dejanos tu WhatsApp, y el equipo comercial se contactara en breve.
+      Dejanos tu WhatsApp y el equipo comercial retoma la consulta con contexto.
     </p>
   </section>
 </div>
@@ -361,12 +359,40 @@ function appendMessage(role: MessageRole, content: string, shouldStore = true) {
     submitButton.textContent = isLoading ? "..." : "Enviar";
   }
 
+  function inferContextFromPage() {
+    const path = window.location.pathname.toLowerCase();
+    const text = document.title.toLowerCase();
+
+    if (path.includes("unidades") || text.includes("unidades")) {
+      return {
+        intentHint: "alquiler",
+        equipmentHint: "equipo de elevación",
+        ctaClicked: "asistente flotante desde unidades",
+      };
+    }
+
+    if (path.includes("metodo") || text.includes("método") || text.includes("metodo")) {
+      return {
+        intentHint: "consulta_tecnica",
+        equipmentHint: "selección técnica de equipo",
+        ctaClicked: "asistente flotante desde método",
+      };
+    }
+
+    return {
+      intentHint: "alquiler",
+      equipmentHint: "equipo de elevación",
+      ctaClicked: "asistente flotante",
+    };
+  }
+
   async function sendMessage(message: string) {
     if (!apiUrl) {
       throw new Error("Missing VMA agent API URL");
     }
 
     const history = getStoredMessages().slice(-10);
+    const pagePath = window.location.pathname;
 
     const response = await fetch(apiUrl, {
       method: "POST",
@@ -377,8 +403,10 @@ function appendMessage(role: MessageRole, content: string, shouldStore = true) {
         sessionId: createSessionId(),
         message,
         history,
-        page: window.location.pathname,
+        page: pagePath,
+        pagePath,
         source: "vma-web",
+        context: inferContextFromPage(),
       }),
     });
 

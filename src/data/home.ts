@@ -241,7 +241,7 @@ export const homeSections: HomeSection[] = [
         "Completá tus datos y te respondemos con una cotización. Cobertura donde se encuentre tu planta o tu obra.",
       whatsappHref: waCotizarUrl,
       emailComercial: "comercial@vmarental.com.ar",
-      whatsappLabel: "[PENDIENTE]",
+      whatsappLabel: "1128421008",
       cobertura: "Cobertura donde esté tu planta o tu obra",
     },
   },
