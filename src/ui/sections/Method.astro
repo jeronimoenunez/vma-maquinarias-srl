@@ -87,7 +87,7 @@ const steps: Step[] = incomingSteps.map((step, index) => ({
 
 <section id="metodologia" class="methodSection">
   <div class="heroBlock">
-    <div class="heroText">
+    <div class="heroText" data-reveal>
       <header class="moduleHeader">
         <p class="moduleEyebrow">{moduleEyebrow}</p>
         <h2 class="moduleTitle">{moduleTitle}</h2>
@@ -97,7 +97,7 @@ const steps: Step[] = incomingSteps.map((step, index) => ({
       <h3 class="heroTitle">{heroTitle}</h3>
       <a class="heroBtn" href={heroCtaHref}>{heroCtaLabel}</a>
     </div>
-    <div class="heroImage">
+    <div class="heroImage" data-reveal style="--reveal-delay: 120ms">
       <img src={heroImage.src} alt={heroImage.alt} loading="lazy" />
     </div>
   </div>
@@ -105,7 +105,7 @@ const steps: Step[] = incomingSteps.map((step, index) => ({
   <div class="stepsGrid">
     {
       steps.map((step) => (
-        <article class="step">
+        <article class="step vma-panel-hover" data-reveal style={`--reveal-delay: ${120 * (steps.indexOf(step) + 1)}ms`}>
           <div class="stepImage">
             <img src={step.image!.src} alt={step.image!.alt} loading="lazy" />
           </div>

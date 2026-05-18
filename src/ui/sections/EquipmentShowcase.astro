@@ -1,4 +1,6 @@
 ---
+import { waCotizarUrl } from "@/config/site";
+
 type Equipment = {
   id: string;
   category: "articulado" | "tijera" | "telescopico" | "otros";
@@ -117,10 +119,16 @@ const moduleTitle = props.moduleTitle ?? "Equipos disponibles";
 const categories = props.categories ?? fallbackCategories;
 const equipment = props.equipment ?? fallbackEquipment;
 const ctaLabel = props.ctaLabel ?? "Solicitar cotización";
-const ctaHref = props.ctaHref ?? "#contacto";
+
+/*
+  Si home.ts manda "#contacto", igual usamos WhatsApp para este CTA
+  porque el objetivo es enviar contexto directo al comercial.
+*/
+const baseCtaHref =
+  props.ctaHref && !props.ctaHref.startsWith("#") ? props.ctaHref : waCotizarUrl;
 ---
 
-<section id="equipos" class="equipmentSection">
+<section id="equipos" class="equipmentSection" data-equipment-section>
   <header class="moduleHeader">
     <p class="moduleEyebrow">{moduleEyebrow}</p>
     <h2 class="moduleTitle">{moduleTitle}</h2>
@@ -147,6 +155,13 @@ const ctaHref = props.ctaHref ?? "#contacto";
           class={`equipmentCard ${idx === 0 ? "is-active" : ""}`}
           data-equipment-id={eq.id}
           data-category={eq.category}
+          data-category-label={eq.categoryLabel}
+          data-equipment-name={eq.name}
+          data-equipment-description={eq.description}
+          data-height={eq.specs.height}
+          data-power={eq.specs.power}
+          data-capacity={eq.specs.capacity}
+          data-operation={eq.specs.operation}
         >
           <div class="equipmentImage">
             <img src={eq.image.src} alt={eq.image.alt} loading="lazy" />
@@ -176,7 +191,15 @@ const ctaHref = props.ctaHref ?? "#contacto";
               </div>
             </dl>
 
-            <a class="equipmentCta" href={ctaHref}>{ctaLabel}</a>
+            <a
+              class="equipmentCta"
+              href={baseCtaHref}
+              data-equipment-cta
+              data-base-href={baseCtaHref}
+            >
+              <span>{ctaLabel}</span>
+              <span aria-hidden="true">↘</span>
+            </a>
           </div>
         </article>
       ))
@@ -184,41 +207,87 @@ const ctaHref = props.ctaHref ?? "#contacto";
   </div>
 
   <div class="equipmentNote">
-    <p>
-      Disponibilidad de flota 100%. Manuales y datos técnicos disponibles.
-    </p>
+    <p>Disponibilidad de flota 100%. Manuales y datos técnicos disponibles.</p>
   </div>
 </section>
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const categoryBtns = document.querySelectorAll<HTMLButtonElement>(
-      ".categoryBtn"
-    );
-    const equipmentCards = document.querySelectorAll<HTMLElement>(
-      ".equipmentCard"
-    );
+    const section = document.querySelector<HTMLElement>("[data-equipment-section]");
+    if (!section) return;
+
+    const categoryBtns = section.querySelectorAll<HTMLButtonElement>(".categoryBtn");
+    const equipmentCards = section.querySelectorAll<HTMLElement>(".equipmentCard");
+
+    function buildQuoteUrl(card: HTMLElement, baseHref: string): string {
+      const name = card.dataset.equipmentName ?? "";
+      const category = card.dataset.categoryLabel ?? "";
+      const description = card.dataset.equipmentDescription ?? "";
+      const height = card.dataset.height ?? "";
+      const power = card.dataset.power ?? "";
+      const capacity = card.dataset.capacity ?? "";
+      const operation = card.dataset.operation ?? "";
+
+      const message = [
+        "Hola VMA Rental, quiero solicitar una cotización.",
+        "",
+        `Equipo seleccionado: ${name}`,
+        `Categoría: ${category}`,
+        `Altura máxima: ${height}`,
+        `Energía: ${power}`,
+        `Capacidad: ${capacity}`,
+        `Operación: ${operation}`,
+        "",
+        `Contexto: ${description}`,
+        "",
+        "Quedo atento para avanzar con la cotización.",
+      ].join("\n");
+
+      const encoded = encodeURIComponent(message);
+
+      if (baseHref.includes("wa.me/")) {
+        const separator = baseHref.includes("?") ? "&" : "?";
+        return `${baseHref}${separator}text=${encoded}`;
+      }
+
+      if (baseHref.includes("api.whatsapp.com/send")) {
+        const separator = baseHref.includes("?") ? "&" : "?";
+        return `${baseHref}${separator}text=${encoded}`;
+      }
+
+      return baseHref;
+    }
+
+    function updateCta(card: HTMLElement): void {
+      const cta = card.querySelector<HTMLAnchorElement>("[data-equipment-cta]");
+      if (!cta) return;
+
+      const baseHref = cta.dataset.baseHref ?? cta.href;
+      cta.href = buildQuoteUrl(card, baseHref);
+    }
 
     function activateCategory(categoryId: string): void {
       categoryBtns.forEach((btn) => {
-        if (btn.dataset.category === categoryId) {
-          btn.classList.add("is-active");
-        } else {
-          btn.classList.remove("is-active");
-        }
+        btn.classList.toggle("is-active", btn.dataset.category === categoryId);
       });
 
       let foundFirst = false;
+
       equipmentCards.forEach((card) => {
         const matches = card.dataset.category === categoryId;
-        if (matches && !foundFirst) {
-          card.classList.add("is-active");
+        const shouldActivate = matches && !foundFirst;
+
+        card.classList.toggle("is-active", shouldActivate);
+
+        if (shouldActivate) {
           foundFirst = true;
-        } else {
-          card.classList.remove("is-active");
+          updateCta(card);
         }
       });
     }
+
+    const activeCard = section.querySelector<HTMLElement>(".equipmentCard.is-active");
+    if (activeCard) updateCta(activeCard);
 
     categoryBtns.forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -237,10 +306,7 @@ const ctaHref = props.ctaHref ?? "#contacto";
 
   .equipmentSection {
     background: #070707;
-    padding-top: clamp(80px, 10vw, 140px) !important;
-    padding-bottom: clamp(80px, 10vw, 140px) !important;
-    padding-left: clamp(40px, 6vw, 120px) !important;
-    padding-right: clamp(40px, 6vw, 120px) !important;
+    padding:clamp(80px,10vw,140px) clamp(40px,3.7vw,120px);
     color: #ffffff;
     display: flex;
     flex-direction: column;
@@ -259,11 +325,13 @@ const ctaHref = props.ctaHref ?? "#contacto";
     letter-spacing: 0.15em;
     text-transform: uppercase;
     font-weight: 600;
-    margin: 0 0 12px 0;
+    margin: 0 0 12px;
+    font-family: var(--font-body);
   }
 
   .moduleTitle {
     color: #ffffff;
+    font-family: var(--font-body);
     font-size: clamp(1.4rem, 2vw, 1.8rem);
     font-weight: 400;
     line-height: 1.2;
@@ -272,10 +340,11 @@ const ctaHref = props.ctaHref ?? "#contacto";
   }
 
   .categoryNav {
+    font-family: var(--font-body);
     display: flex;
     flex-wrap: wrap;
     gap: 0;
-    margin: 0 0 64px 0;
+    margin: 0 0 64px;
     padding: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     overflow-x: auto;
@@ -284,19 +353,23 @@ const ctaHref = props.ctaHref ?? "#contacto";
   }
 
   .categoryBtn {
+    font-family: var(--font-body);
     flex-shrink: 0;
     background: transparent;
     border: none;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.48);
     font-size: 0.9rem;
     letter-spacing: 0.02em;
     padding: 16px 24px;
     margin: 0;
     cursor: pointer;
     position: relative;
-    transition: color 0.3s ease;
     font-family: inherit;
     white-space: nowrap;
+    transition:
+      color 260ms ease,
+      background 260ms ease,
+      box-shadow 260ms ease;
   }
 
   .categoryBtn::after {
@@ -313,11 +386,11 @@ const ctaHref = props.ctaHref ?? "#contacto";
   }
 
   .categoryBtn:hover {
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.88);
   }
 
   .categoryBtn.is-active {
-    color: #ffffff;
+    color: #ffc400;
   }
 
   .categoryBtn.is-active::after {
@@ -337,6 +410,14 @@ const ctaHref = props.ctaHref ?? "#contacto";
     width: 100%;
     margin: 0;
     padding: 0;
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(5px);
+    pointer-events: none;
+    transition:
+      opacity 420ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+      filter 420ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .equipmentCard.is-active {
@@ -344,6 +425,10 @@ const ctaHref = props.ctaHref ?? "#contacto";
     grid-template-columns: 60% 40%;
     gap: clamp(40px, 6vw, 100px);
     align-items: center;
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+    pointer-events: auto;
     animation: fadeIn 0.5s ease;
   }
 
@@ -364,20 +449,53 @@ const ctaHref = props.ctaHref ?? "#contacto";
     width: 100%;
     margin: 0;
     padding: 0;
+    border: 1px solid transparent;
+    border-radius: clamp(18px, 1.4vw, 28px);
+    transition:
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
   }
 
   .equipmentImage img {
     width: 100%;
     height: 100%;
+    max-width: none;
     object-fit: cover;
     display: block;
     margin: 0;
     padding: 0;
+    transform: scale(1.012);
+    transition:
+      transform 900ms cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.3s ease;
+  }
+
+  .equipmentCard.is-active .equipmentImage {
+    border-color: rgba(255, 196, 0, 0.82);
+    box-shadow:
+      0 0 0 1px rgba(255, 196, 0, 0.35),
+      0 24px 72px rgba(255, 196, 0, 0.1);
+  }
+
+  .equipmentCard.is-active .equipmentImage img {
+    transform: scale(1);
+  }
+
+  .equipmentCard.is-active:hover .equipmentImage {
+    border-color: #ffc400;
+    box-shadow:
+      0 0 0 1px rgba(255, 196, 0, 0.55),
+      0 28px 86px rgba(255, 196, 0, 0.16);
+  }
+
+  .equipmentCard.is-active:hover .equipmentImage img {
+    transform: scale(1.025);
   }
 
   .equipmentInfo {
     padding: 0;
     margin: 0;
+    font-family: var(--font-body);
   }
 
   .equipmentCategory {
@@ -386,7 +504,7 @@ const ctaHref = props.ctaHref ?? "#contacto";
     letter-spacing: 0.15em;
     text-transform: uppercase;
     font-weight: 600;
-    margin: 0 0 16px 0;
+    margin: 0 0 16px;
   }
 
   .equipmentName {
@@ -395,14 +513,14 @@ const ctaHref = props.ctaHref ?? "#contacto";
     font-weight: 300;
     line-height: 1.15;
     letter-spacing: -0.02em;
-    margin: 0 0 20px 0;
+    margin: 0 0 20px;
   }
 
   .equipmentDescription {
     color: #c9c9c9;
     font-size: 1rem;
     line-height: 1.6;
-    margin: 0 0 32px 0;
+    margin: 0 0 32px;
     max-width: 42ch;
   }
 
@@ -410,7 +528,7 @@ const ctaHref = props.ctaHref ?? "#contacto";
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
-    margin: 0 0 40px 0;
+    margin: 0 0 40px;
     padding: 24px 0;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -442,21 +560,34 @@ const ctaHref = props.ctaHref ?? "#contacto";
   }
 
   .equipmentCta {
-    display: inline-block;
-    padding: 14px 32px;
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    background: transparent;
-    color: #ffffff;
-    font-size: 0.85rem;
+    font-family: var(--font-body);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 54px;
+    padding: 0 32px;
+    border: 1px solid rgba(255, 196, 0, 0.82);
+    border-radius: 10px;
+    background: rgba(255, 196, 0, 0.08);
+    color: #ffc400;
+    font-size: 1rem;
     letter-spacing: 0.08em;
     text-decoration: none;
-    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    transition:
+      background 0.3s ease,
+      color 0.3s ease,
+      border-color 0.3s ease,
+      box-shadow 0.3s ease,
+      gap 0.3s ease;
   }
 
   .equipmentCta:hover {
-    background: #ffffff;
-    color: #1a1a1a;
-    border-color: #ffffff;
+    background: #ffc400;
+    color: #080808;
+    border-color: #ffc400;
+    box-shadow: 0 18px 48px rgba(255, 196, 0, 0.18);
+    gap: 16px;
   }
 
   .equipmentNote {
@@ -482,10 +613,9 @@ const ctaHref = props.ctaHref ?? "#contacto";
 
   @media (max-width: 1024px) {
     .equipmentSection {
-      padding-top: clamp(60px, 8vw, 100px) !important;
-      padding-bottom: clamp(60px, 8vw, 100px) !important;
-      padding-left: clamp(24px, 5vw, 48px) !important;
-      padding-right: clamp(24px, 5vw, 48px) !important;
+      padding:
+        clamp(60px, 8vw, 100px)
+        clamp(24px, 5vw, 48px);
     }
 
     .equipmentCard.is-active {
@@ -500,14 +630,10 @@ const ctaHref = props.ctaHref ?? "#contacto";
 
   @media (max-width: 640px) {
     .equipmentSection {
-      padding-top: 60px !important;
-      padding-bottom: 60px !important;
-      padding-left: 24px !important;
-      padding-right: 24px !important;
+      padding: 60px 24px;
     }
 
     .categoryNav {
-      gap: 0;
       margin-bottom: 40px;
     }
 
@@ -527,6 +653,21 @@ const ctaHref = props.ctaHref ?? "#contacto";
 
     .equipmentDescription {
       font-size: 0.95rem;
+    }
+
+    .equipmentCta {
+      width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .equipmentCard,
+    .equipmentImage,
+    .equipmentImage img,
+    .categoryBtn,
+    .equipmentCta {
+      transition: none;
+      animation: none;
     }
   }
 </style>

@@ -43,15 +43,15 @@ export type AboutSection = SectionBase & {
   type: "about";
   props: {
     kicker?: string;
-    title?: string;
+    statement?: string;
+    ctaLabel?: string;
+    ctaHref?: string;
+
+    // Compatibilidad por si alguna sección vieja todavía usa estas props
     titleLine1?: string;
     titleLine2?: string;
     subtitle?: string;
-    pullQuote?: string;
-    ctaLabel?: string;
-    ctaHref?: string;
     backgroundImage?: { src: string; alt: string };
-    blocks?: Array<{ title: string; body: string }>;
   };
 };
 
@@ -75,6 +75,22 @@ export type MethodSection = SectionBase & {
       description: string;
       image?: { src: string; alt: string };
     }>;
+  };
+};
+
+export type BusinessCardsSection = SectionBase & {
+  type: "businessCards";
+  props?: {
+    kicker?: string;
+    title?: string;
+    cards?: {
+      kicker?: string;
+      title: string;
+      subtitle: string;
+      href: string;
+      images: string[];
+      autoplay?: boolean;
+    }[];
   };
 };
 
@@ -179,14 +195,52 @@ export type FaqSection = SectionBase & {
   };
 };
 
+/** 12) TECHNICAL CRITERIA */
+export type TechnicalCriteriaSection = SectionBase & {
+  type: "technicalCriteria";
+  props: {
+    kicker?: string;
+    title?: string;
+    subtitle?: string;
+    items?: Array<{
+      number: string;
+      title: string;
+      description: string;
+    }>;
+  };
+};
+
+export type EcosystemVMASection = SectionBase & {
+  type: "ecosystemVMA";
+  props?: {
+    kicker?: string;
+    title?: string;
+    rows?: Array<{
+      eyebrow: string;
+      title: string;
+      interval?: number;
+      cards: Array<{
+        eyebrow?: string;
+        title: string;
+        subtitle?: string;
+        image: { src: string; alt: string };
+        href?: string;
+      }>;
+    }>;
+  };
+};
+
 /** UNION */
 export type HomeSection =
   | HeroSection
   | IndustrySolutionsSection
   | AboutSection
+  | BusinessCardsSection
   | MethodSection
   | ServicesSection
+  | TechnicalCriteriaSection
   | EquipmentShowcaseSection
   | AIBlockSection
   | ContactSection
-  | FaqSection;
+  | FaqSection
+  | EcosystemVMASection;

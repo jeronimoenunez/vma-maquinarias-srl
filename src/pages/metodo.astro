@@ -1,0 +1,843 @@
+---
+import BaseLayout from "@/ui/layouts/BaseLayout.astro";
+
+const lines = [
+  "No enviamos una máquina sin entender tu flujo de trabajo.",
+  "Analizamos la operación, diseñamos la respuesta",
+  "e implementamos con criterio técnico.",
+  "Si no lo necesitás, no te lo vendemos.",
+  "Buscamos rentabilidad para vos.",
+  "Y proyectamos una operación más inteligente,",
+  "sustentable y preparada para escalar.",
+];
+
+const methodUnits = [
+  {
+    label: "01",
+    tag: "Análisis",
+    title: "Análisis operativo",
+    description:
+      "No enviamos una máquina sin entender tu flujo de trabajo. Primero entendemos altura, superficie, energía, accesos y tiempos reales.",
+    image:
+      "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1400&auto=format&fit=crop&q=80",
+    href: "/#contacto",
+  },
+  {
+    label: "02",
+    tag: "Asesoramiento",
+    title: "Asesoramiento comprometido",
+    description:
+      "Si no lo necesitás, no te lo vendemos. El objetivo es cuidar tus costos y mejorar la rentabilidad de la operación.",
+    image:
+      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1400&auto=format&fit=crop&q=80",
+    href: "/#contacto",
+  },
+  {
+    label: "03",
+    tag: "Proyección",
+    title: "Proyección 360°",
+    description:
+      "Migramos hacia flotas inteligentes, procesos sustentables y una operación cada vez más trazable.",
+    image:
+      "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1400&auto=format&fit=crop&q=80",
+    href: "/#contacto",
+  },
+];
+---
+
+<BaseLayout>
+  <main class="methodPage" data-method-page>
+    <section class="methodHero">
+      <div class="methodRule" aria-hidden="true"></div>
+
+      <div class="methodHeroGrid">
+        <aside>
+          <a class="backLink" href="/#negocio">← Volver</a>
+          <p class="kicker">LO QUE NOS HACE DIFERENTES</p>
+        </aside>
+
+        <div>
+          <h1>Metodología antes que improvisación.</h1>
+        </div>
+      </div>
+    </section>
+
+    <section class="methodStatement">
+      <aside>Análisis — Diseño — Implementación</aside>
+
+      <div>
+        <h2 aria-label={lines.join(" ")}>
+          {lines.map((line) => (
+            <span class="paintLine" data-paint-line>{line}</span>
+          ))}
+        </h2>
+      </div>
+    </section>
+
+<section class="methodCards" aria-label="Método VMA">
+  <article class="featuredCard">
+    <div class="featuredImage">
+      <img
+        src={methodUnits[0].image}
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+
+    <div class="featuredBody">
+      <span class="unitPill">{methodUnits[0].tag}</span>
+      <h2>{methodUnits[0].title}</h2>
+      <p>{methodUnits[0].description}</p>
+
+      <a href={methodUnits[0].href} class="cardCta">
+        <span>Hablemos de tu operación</span>
+        <span aria-hidden="true">↘</span>
+      </a>
+    </div>
+  </article>
+
+  <div class="cardGrid">
+    {methodUnits.slice(1).map((unit) => (
+      <article class="unitCard">
+        <a href={unit.href} aria-label={unit.title}>
+          <div class="unitImage">
+            <img
+              src={unit.image}
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+
+          <div class="unitCardHeader">
+            <span class="unitPill">{unit.tag}</span>
+            <span class="unitIndex">{unit.label}</span>
+          </div>
+
+          <div class="unitCardTitle">
+            <h3>{unit.title}</h3>
+            <span aria-hidden="true">↘</span>
+          </div>
+
+          <p>{unit.description}</p>
+        </a>
+      </article>
+    ))}
+  </div>
+</section>
+
+    <section class="pageCta">
+      <a href="/#contacto">
+        <span>Hablemos de tu operación</span>
+        <span aria-hidden="true">↘</span>
+      </a>
+    </section>
+  </main>
+</BaseLayout>
+
+<script is:inline>
+  (() => {
+    const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+    const bindPaint = () => {
+      const root = document.querySelector(".methodStatement h2");
+      if (!root) return;
+
+      const lines = [...root.querySelectorAll("[data-paint-line]")];
+      if (!lines.length) return;
+
+      let ticking = false;
+
+      const update = () => {
+        const viewport = window.innerHeight || 1;
+        const rect = root.getBoundingClientRect();
+        const start = viewport * 0.82;
+        const end = viewport * 0.28;
+        const progress = clamp((start - rect.top) / (start - end), 0, 1);
+
+        lines.forEach((line, index) => {
+          const lineProgress = clamp(progress * lines.length - index, 0, 1);
+          line.style.setProperty("--paint", `${Math.round(lineProgress * 100)}%`);
+        });
+
+        ticking = false;
+      };
+
+      const requestUpdate = () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(update);
+      };
+
+      update();
+      window.addEventListener("scroll", requestUpdate, { passive: true });
+      window.addEventListener("resize", requestUpdate);
+    };
+
+    bindPaint();
+    document.addEventListener("DOMContentLoaded", bindPaint, { once: true });
+  })();
+</script>
+
+<style>
+  .methodPage {
+    min-height: 100svh;
+    background: #050505;
+    color: #ffffff;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+      "Segoe UI", sans-serif;
+  }
+
+  .methodHero {
+    padding: clamp(92px, 10vw, 150px) clamp(30px, 4vw, 76px) clamp(70px, 8vw, 120px);
+  }
+
+  .methodRule {
+    width: 100%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.78);
+    margin-bottom: clamp(54px, 6vw, 90px);
+  }
+
+  .methodHeroGrid {
+    display: grid;
+    grid-template-columns: minmax(220px, 0.36fr) minmax(0, 1fr);
+    gap: clamp(32px, 5vw, 86px);
+    align-items: start;
+  }
+
+  .backLink {
+    display: inline-block;
+    margin-bottom: 28px;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.92rem;
+    text-decoration: none;
+  }
+
+  .backLink:hover {
+    color: #ffc400;
+  }
+
+  .kicker {
+    margin: 0;
+    color: #ffc400;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    max-width: 11ch;
+    margin: 0;
+    color: #ffffff;
+    font-size: clamp(4rem, 10vw, 13rem);
+    font-weight: 700;
+    line-height: 0.86;
+    letter-spacing: -0.09em;
+  }
+
+  .methodStatement {
+    min-height: 100svh;
+    display: grid;
+    grid-template-columns: minmax(180px, 24vw) minmax(0, 1fr);
+    gap: clamp(32px, 4vw, 72px);
+    padding: clamp(80px, 9vw, 140px) clamp(30px, 4vw, 76px);
+  }
+
+  .methodStatement aside {
+    color: #ffc400;
+    font-size: clamp(1rem, 1.2vw, 1.35rem);
+  }
+
+  .methodStatement h2 {
+    margin: 0;
+    font-size: clamp(2.3rem, 4.1vw, 5.3rem);
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: -0.06em;
+  }
+
+  .paintLine {
+    --paint: 0%;
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    white-space: nowrap;
+    color: transparent;
+    background-image: linear-gradient(
+      90deg,
+      #ffffff 0%,
+      #ffffff var(--paint),
+      rgba(255, 255, 255, 0.18) var(--paint),
+      rgba(255, 255, 255, 0.18) 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+  }
+
+  .methodCards {
+  padding:
+    clamp(12px, 2vw, 28px)
+    clamp(30px, 4vw, 76px)
+    clamp(72px, 9vw, 132px);
+  isolation: isolate;
+}
+
+.featuredCard {
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  min-height: clamp(420px, 45vw, 650px);
+  overflow: hidden;
+  border-radius: clamp(24px, 2vw, 36px);
+  background: #050505;
+  color: #ffffff;
+}
+
+.featuredImage {
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.featuredImage img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  display: block;
+  filter: saturate(0.96) contrast(0.98);
+}
+
+.featuredBody {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: clamp(36px, 5vw, 72px);
+}
+
+.unitPill {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 24px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  color: inherit;
+  font-size: clamp(0.86rem, 0.95vw, 1rem);
+  font-weight: 200;
+  font-family: var(--font-body);
+  letter-spacing: -0.01em;
+}
+
+.featuredBody h2 {
+  max-width: 12ch;
+  margin: clamp(28px, 3.4vw, 48px) 0 0;
+  color: #ffffff;
+  font-size: clamp(2.8rem, 5vw, 6.2rem);
+  font-weight: 400;
+  line-height: 0.96;
+  letter-spacing: -0.07em;
+}
+
+.featuredBody p {
+  max-width: 560px;
+  margin: clamp(24px, 2.6vw, 36px) 0 0;
+  color: rgba(255, 255, 255, 0.74);
+  font-size: clamp(1.02rem, 1.2vw, 1.25rem);
+  line-height: 1.48;
+}
+
+.cardCta {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 58px;
+  margin-top: clamp(34px, 4vw, 56px);
+  padding: 0 34px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #080808;
+  text-decoration: none;
+  transition:
+    gap 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.cardCta:hover {
+  gap: 20px;
+  background: #ffc400;
+  transform: translateY(-2px);
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(24px, 3vw, 44px);
+  margin-top: clamp(34px, 4vw, 58px);
+}
+
+.unitCard a {
+  display: block;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.unitImage {
+  width: 100%;
+  aspect-ratio: 1.62 / 1;
+  overflow: hidden;
+  border-radius: clamp(22px, 1.8vw, 32px);
+  background: #111111;
+}
+
+.unitImage img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  display: block;
+  transition:
+    transform 0.4s ease,
+    filter 0.4s ease;
+}
+
+.unitCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: clamp(22px, 2.4vw, 34px);
+}
+
+.unitCardHeader .unitPill {
+  color: #ffffff;
+}
+
+.unitIndex {
+  color: #ffc400;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.unitCardTitle {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: end;
+  margin-top: clamp(18px, 2vw, 28px);
+}
+
+.unitCardTitle h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(2.3rem, 4vw, 5rem);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.065em;
+  font-family: var(--font-body);
+}
+
+.unitCardTitle span {
+  color: #ffffff;
+  font-size: clamp(2.6rem, 4vw, 4.8rem);
+  line-height: 0.8;
+  transform: translateY(-4px);
+}
+
+.unitCard p {
+  max-width: 620px;
+  margin: clamp(18px, 2vw, 28px) 0 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: clamp(1rem, 1.08vw, 1.16rem);
+  line-height: 1.5;
+  font-family: var(--font-body);
+}
+
+/* Hover focus system — idéntico a unidades */
+.featuredCard,
+.unitCard {
+  transition:
+    opacity 0.3s ease,
+    filter 0.3s ease,
+    transform 0.3s ease;
+}
+
+.featuredCard {
+  position: relative;
+  border: 1px solid transparent;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    opacity 0.3s ease,
+    filter 0.3s ease,
+    transform 0.3s ease;
+}
+
+.featuredCard::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px transparent;
+  transition: box-shadow 0.3s ease;
+}
+
+.featuredCard:hover {
+  border-color: rgba(255, 196, 0, 0.85);
+  box-shadow: 0 26px 80px rgba(255, 196, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.featuredCard:hover::after {
+  box-shadow: inset 0 0 0 1px rgba(255, 196, 0, 0.85);
+}
+
+.featuredImage img {
+  transition:
+    transform 0.45s ease,
+    filter 0.45s ease;
+}
+
+.featuredCard:hover .featuredImage img {
+  transform: scale(1.035);
+  filter: saturate(1.04) contrast(1.04);
+}
+
+.featuredCard:hover .unitPill {
+  color: #ffc400;
+  border-color: #ffc400;
+}
+
+.featuredCard:hover h2 {
+  color: #ffc400;
+}
+
+.featuredCard:hover .cardCta {
+  background: #ffc400;
+  color: #080808;
+  gap: 20px;
+}
+
+.unitCard a {
+  position: relative;
+}
+
+.unitImage {
+  border: 1px solid transparent;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    filter 0.3s ease;
+}
+
+.unitCard:hover {
+  transform: translateY(-2px);
+}
+
+.unitCard:hover .unitImage {
+  border-color: rgba(255, 196, 0, 0.85);
+  box-shadow: 0 24px 70px rgba(255, 196, 0, 0.12);
+}
+
+.unitCard:hover .unitImage img {
+  transform: scale(1.035);
+  filter: saturate(1.04) contrast(1.04);
+}
+
+.unitCard:hover .unitPill {
+  color: #ffc400;
+  border-color: #ffc400;
+}
+
+.unitCard:hover .unitIndex,
+.unitCard:hover .unitCardTitle h3,
+.unitCard:hover .unitCardTitle span {
+  color: #ffc400;
+}
+
+.unitCardTitle h3,
+.unitCardTitle span,
+.unitPill,
+.unitIndex {
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.unitCard:hover .unitCardTitle span {
+  transform: translate(4px, -8px);
+}
+
+.methodCards:has(.featuredCard:hover) .unitCard {
+  opacity: 0.38;
+  filter: grayscale(1);
+}
+
+.methodCards:has(.unitCard:hover) .featuredCard {
+  opacity: 0.38;
+  filter: grayscale(1);
+}
+
+.methodCards:has(.unitCard:hover) .unitCard:not(:hover) {
+  opacity: 0.38;
+  filter: grayscale(1);
+}
+
+.methodCards:has(.featuredCard:hover) .featuredCard,
+.methodCards:has(.unitCard:hover) .unitCard:hover {
+  opacity: 1;
+  filter: none;
+}
+
+  .pageCta {
+    display: flex;
+    justify-content: center;
+    padding: 0 clamp(30px, 4vw, 76px) clamp(90px, 10vw, 150px);
+  }
+
+  .pageCta a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    min-height: 58px;
+    padding: 0 36px;
+    border: 1px solid #ffffff;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #080808;
+    text-decoration: none;
+    transition:
+      background 0.25s ease,
+      border-color 0.25s ease,
+      gap 0.25s ease;
+  }
+
+  .pageCta a:hover {
+    background: #ffc400;
+    border-color: #ffc400;
+    gap: 18px;
+  }
+
+  /* Method cards — hover premium igual sistema unidades */
+.methodCards {
+  isolation: isolate;
+}
+
+.methodCards article {
+  position: relative;
+  overflow: hidden;
+  min-height: 420px;
+  padding: clamp(30px, 3.2vw, 50px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: clamp(24px, 2vw, 34px);
+  background:
+    radial-gradient(circle at 78% 12%, rgba(255, 196, 0, 0.08), transparent 34%),
+    rgba(255, 255, 255, 0.045);
+  transition:
+    opacity 0.3s ease,
+    filter 0.3s ease,
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+}
+
+.methodCards article::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 196, 0, 0.12),
+      rgba(255, 255, 255, 0.02) 38%,
+      rgba(255, 255, 255, 0) 72%
+    );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+/* .methodCards article::after {
+  content: "↘";
+  position: absolute;
+  right: clamp(28px, 3vw, 46px);
+  bottom: clamp(26px, 3vw, 44px);
+  z-index: 1;
+  color: rgba(255, 255, 255, 0.34);
+  font-size: clamp(2.8rem, 4.8vw, 5.8rem);
+  line-height: 0.8;
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease,
+    opacity 0.25s ease;
+} */
+
+.methodCards article > * {
+  position: relative;
+  z-index: 1;
+}
+
+.methodCards span {
+  color: #ffc400;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  transition: color 0.25s ease;
+}
+
+.methodCards h3 {
+  margin: 92px 0 18px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: clamp(1.9rem, 2.7vw, 3.35rem);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.06em;
+  transition: color 0.25s ease;
+}
+
+.methodCards p {
+  max-width: 520px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.64);
+  font-size: clamp(0.98rem, 1.05vw, 1.12rem);
+  line-height: 1.5;
+  transition: color 0.25s ease;
+}
+
+/* Card activa */
+.methodCards article:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 196, 0, 0.9);
+  background:
+    radial-gradient(circle at 78% 12%, rgba(255, 196, 0, 0.16), transparent 36%),
+    rgba(255, 255, 255, 0.07);
+  box-shadow:
+    0 28px 90px rgba(255, 196, 0, 0.12),
+    inset 0 0 0 1px rgba(255, 196, 0, 0.34);
+}
+
+.methodCards article:hover::before {
+  opacity: 1;
+}
+
+.methodCards article:hover h3,
+.methodCards article:hover span,
+.methodCards article:hover::after {
+  color: #ffc400;
+}
+
+.methodCards article:hover p {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.methodCards article:hover::after {
+  transform: translate(6px, -6px);
+}
+
+/* Cuando una card está activa, las otras bajan presencia */
+.methodCards:has(article:hover) article:not(:hover) {
+  opacity: 0.36;
+  filter: grayscale(1);
+}
+
+  @media (max-width: 980px) {
+    .methodHeroGrid,
+    .methodStatement,
+    .methodCards {
+      grid-template-columns: 1fr;
+    }
+
+    h1 {
+      font-size: clamp(3.2rem, 14vw, 7rem);
+    }
+
+    .paintLine {
+      white-space: normal;
+      width: auto;
+    }
+
+    .methodCards article {
+    min-height: 360px;
+  }
+
+  .methodCards {
+    grid-template-columns: 1fr;
+  }
+
+  .methodCards:has(.methodCard:hover) .methodCard:not(:hover) {
+    opacity: 1;
+    filter: none;
+  }
+
+  .featuredCard,
+.cardGrid {
+  grid-template-columns: 1fr;
+}
+
+.featuredImage {
+  min-height: 360px;
+}
+
+.featuredBody h2 {
+  max-width: 11ch;
+}
+}
+
+  @media (max-width: 640px) {
+    .methodHero,
+    .methodStatement,
+    .methodCards,
+    .pageCta {
+      padding-left: 22px;
+      padding-right: 22px;
+    }
+
+    .methodCards article {
+      min-height: 320px;
+    }
+
+      .methodCards article {
+    min-height: 320px;
+  }
+
+  .methodCards article::after {
+    font-size: 3.2rem;
+  }
+
+  .methodCardImage {
+    border-radius: 24px;
+  }
+
+  .methodCardTitle h3 {
+    font-size: clamp(2.1rem, 10vw, 3.8rem);
+  }
+
+  .featuredCard,
+.unitImage {
+  border-radius: 24px;
+}
+
+.featuredBody {
+  padding: 28px 24px 34px;
+}
+
+.featuredBody h2 {
+  font-size: clamp(2.4rem, 12vw, 4.4rem);
+}
+
+.unitCardTitle h3 {
+  font-size: clamp(2.1rem, 10vw, 3.8rem);
+}
+}
+</style>

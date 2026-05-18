@@ -62,7 +62,7 @@ const {
 
 <section id="servicios" class="serviceSection">
   <div class="heroBlock">
-    <div class="heroText">
+    <div class="heroText" data-reveal>
       <header class="moduleHeader">
         <p class="moduleEyebrow">{moduleEyebrow}</p>
         <h2 class="moduleTitle">{moduleTitle}</h2>
@@ -72,7 +72,7 @@ const {
       <h3 class="heroTitle">{heroTitle}</h3>
       <a class="heroBtn" href={heroCtaHref}>{heroCtaLabel}</a>
     </div>
-    <div class="heroImage">
+    <div class="heroImage" data-reveal style="--reveal-delay: 120ms">
       <img src={heroImage.src} alt={heroImage.alt} loading="lazy" />
     </div>
   </div>
@@ -80,7 +80,7 @@ const {
   <div class="cardGrid">
     {
       cards.map((card) => (
-        <article class="card">
+        <article class="card vma-panel-hover" data-reveal style={`--reveal-delay: ${120 * (cards.indexOf(card) + 1)}ms`}>
           <div class="cardImage">
             <img src={card.image.src} alt={card.image.alt} loading="lazy" />
           </div>

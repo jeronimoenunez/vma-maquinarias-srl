@@ -51,7 +51,7 @@ const heroImage = "https://nationaldispatching.com/wp-content/uploads/2023/08/LI
       </h1>
 
       <p class="aboutHeroText">
-        Operamos hace [X AÑOS — CONFIRMAR CON VMA] en el alquiler y venta de
+        Operamos hace 15 años en el alquiler y venta de
         equipos de elevación. Trabajamos con clientes de obra civil, industria
         y servicios técnicos en todo el AMBA y zonas extendidas.
       </p>
@@ -102,15 +102,6 @@ const heroImage = "https://nationaldispatching.com/wp-content/uploads/2023/08/LI
 
       const progress = clamp(-rect.top / travel, 0, 1);
       const started = progress > 0.01;
-
-      /*
-        Progress:
-        0.00 → hero limpio
-        0.10 → empieza blur fuerte
-        0.30 → hero text desaparece
-        0.45 → filosofía empieza a aparecer
-        1.00 → filosofía consolidada
-      */
 
       const blur = started ? 8 + progress * 18 : 0;
       const scale = 1.02 + progress * 0.18;
@@ -286,20 +277,7 @@ const heroImage = "https://nationaldispatching.com/wp-content/uploads/2023/08/LI
   z-index: 1;
   pointer-events: none;
   opacity: 0.52;
-  background:
-    linear-gradient(
-      90deg,
-      rgba(7, 7, 7, 0.86) 0%,
-      rgba(7, 7, 7, 0.62) 35%,
-      rgba(7, 7, 7, 0.28) 68%,
-      rgba(7, 7, 7, 0.34) 100%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(7, 7, 7, 0.22) 0%,
-      rgba(7, 7, 7, 0.1) 38%,
-      rgba(7, 7, 7, 0.86) 100%
-    );
+  background:linear-gradient(to right, rgba(7, 7, 7, 0.86) 57.98%, rgba(7, 7, 7, 0.62) 70.17%, rgba(7, 7, 7, 0.28) 85.71%, rgba(7, 7, 7, 0.34)),linear-gradient(180deg,rgba(7,7,7,0.22) 0%,rgba(7,7,7,0.1) 38%,rgba(7,7,7,0.86) 100%);
   will-change: opacity;
 }
 
@@ -319,6 +297,7 @@ const heroImage = "https://nationaldispatching.com/wp-content/uploads/2023/08/LI
   text-transform: uppercase;
   font-weight: 700;
   margin: 0 0 32px 0;
+  font-family: var(--font-body);
 }
 
 .aboutHeroTitle {
@@ -330,6 +309,7 @@ const heroImage = "https://nationaldispatching.com/wp-content/uploads/2023/08/LI
   margin: 0 0 38px 0;
   max-width: 30ch;
   text-wrap: balance;
+  font-family: var(--font-body);
 }
 
 .aboutHeroTitle span {
@@ -342,7 +322,8 @@ const heroImage = "https://nationaldispatching.com/wp-content/uploads/2023/08/LI
   font-size: clamp(1rem, 1.3vw, 1.15rem);
   line-height: 1.65;
   margin: 0;
-  max-width: 62ch;
+  max-width: 65ch;
+  font-family: var(--font-body);
 }
 
 .aboutPhilosophyContent {
@@ -364,21 +345,23 @@ const heroImage = "https://nationaldispatching.com/wp-content/uploads/2023/08/LI
 
 .aboutPhilosophyKicker {
   color: rgba(255, 196, 0, 0.96);
-  font-size: 0.78rem;
+  font-size: 1rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   font-weight: 700;
   margin: 0 0 28px 0;
+  font-family: var(--font-body);
 }
 
 .aboutPhilosophyTitle {
   color: rgba(255, 255, 255, 0.96);
-  font-size: clamp(2.8rem, 5.7vw, 5.4rem);
+  font-size: clamp(2.8rem,4vw,5.4rem);
   font-weight: 300;
   line-height: 1.06;
   letter-spacing: -0.05em;
   margin: 0;
   text-wrap: balance;
+  font-family: var(--font-body);
 }
 
   /* =========================
@@ -500,7 +483,7 @@ const heroImage = "https://nationaldispatching.com/wp-content/uploads/2023/08/LI
   .philosophyPanelNumber {
     display: inline-block;
     color: #c49a00;
-    font-size: 0.78rem;
+    font-size: 1rem;
     letter-spacing: 0.22em;
     font-weight: 700;
     margin-bottom: 30px;
@@ -513,6 +496,7 @@ const heroImage = "https://nationaldispatching.com/wp-content/uploads/2023/08/LI
     line-height: 1.04;
     letter-spacing: -0.05em;
     margin: 0 0 34px 0;
+    font-family: var(--font-body);
   }
 
   .philosophyPanelText {
@@ -521,6 +505,7 @@ const heroImage = "https://nationaldispatching.com/wp-content/uploads/2023/08/LI
     line-height: 1.72;
     margin: 0 auto;
     max-width: 64ch;
+    font-family: var(--font-body);
   }
 
   @media (max-width: 640px) {
