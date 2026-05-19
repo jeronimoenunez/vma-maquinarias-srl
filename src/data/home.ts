@@ -33,7 +33,7 @@ export const homeSections: HomeSection[] = [
     props: {
       kicker: "Nosotros",
       statement:
-        "No queremos guardar estos 15 años de experiencia. Queremos ponerlos al servicio de tu operación: asesorar antes de enviar un equipo, acompañar la implementación y dar seguimiento técnico hasta que tu planificación se cumpla.",
+        "Conocemos el trabajo en altura desde adentro. Pero no queremos contartelo; queremos demostrártelo",
       ctaLabel: "Conocer VMA",
       ctaHref: "/nosotros",
     },
@@ -68,7 +68,7 @@ export const homeSections: HomeSection[] = [
           subtitle:
             "Disponibilidad inmediata. Entrega coordinada. Soporte en sitio.",
           image: {
-            src: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1400&auto=format&fit=crop&q=80",
+            src: "./images/Firefly19.jpg",
             alt: "Obra en construcción con equipos de elevación",
           },
           size: "regular",
@@ -81,7 +81,7 @@ export const homeSections: HomeSection[] = [
           subtitle:
             "Planes para industria, planes para obra, planes para lo que necesites resolver.",
           image: {
-            src: "https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=1400&auto=format&fit=crop&q=80",
+            src: "./images/Firefly11.jpg",
             alt: "Plataforma articulada en operación",
           },
           size: "regular",
@@ -104,9 +104,9 @@ export const homeSections: HomeSection[] = [
             "Tres líneas de trabajo para resolver disponibilidad, inversión y continuidad operativa.",
           href: "/unidades",
           images: [
-            "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&auto=format&fit=crop&q=80",
-            "https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=1600&auto=format&fit=crop&q=80",
-            "https://images.unsplash.com/photo-1581092446327-9b52bd1570c2?w=1600&auto=format&fit=crop&q=80",
+            "./images/Firefly11.jpg",
+            "./images/Firefly10-1.png",
+            "./images/Firefly20-1.png",
           ],
           autoplay: true,
         },
@@ -117,7 +117,7 @@ export const homeSections: HomeSection[] = [
             "Análisis, asesoramiento comprometido y proyección 360° antes de mover un equipo.",
           href: "/metodo",
           images: [
-            "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1600&auto=format&fit=crop&q=80",
+            "./images/Metodo-VMA-Grids.png",
           ],
           autoplay: false,
         },
