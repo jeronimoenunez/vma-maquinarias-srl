@@ -63,10 +63,17 @@ const apiUrl =
     </form>
 
     <footer class="vma-agent__footer">
-      <a class="vma-agent__whatsapp" href={waCotizarUrl} target="_blank" rel="noopener noreferrer">
+      <a
+        class="vma-agent__whatsapp"
+        href={waCotizarUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-whatsapp-cta
+        hidden
+      >
         Continuar por WhatsApp
       </a>
-      <p>Powered by Vantora ✦</p>
+      <p data-footer-note>Powered by Vantora ✦</p>
     </footer>
   </section>
 </div>
@@ -218,7 +225,7 @@ const apiUrl =
   .vma-agent__messages {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 14px;
     max-height: 360px;
     overflow-y: auto;
     padding: 16px;
@@ -228,11 +235,14 @@ const apiUrl =
   }
 
   .vma-agent__message {
-    max-width: 88%;
+    position: relative;
+    max-width: 82%;
     border-radius: 18px;
     padding: 12px 14px;
     font-size: 14px;
-    line-height: 1.45;
+    line-height: 1.5;
+    word-break: break-word;
+    white-space: pre-wrap;
   }
 
   .vma-agent__message p {
@@ -241,12 +251,25 @@ const apiUrl =
 
   .vma-agent__message--assistant {
     align-self: flex-start;
-    background: #2a2b2f;
-    color: rgba(248, 245, 234, 0.9);
+    background: #292a2f;
+    color: rgba(248, 245, 234, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     border-bottom-left-radius: 6px;
   }
 
+  .vma-agent__message--assistant::before {
+    content: "VMA";
+    display: block;
+    margin-bottom: 6px;
+    color: #ffc400;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
   .vma-agent__message--compact {
+    max-width: 78%;
     background: rgba(255, 196, 0, 0.1);
     border: 1px solid rgba(255, 196, 0, 0.18);
   }
@@ -256,7 +279,18 @@ const apiUrl =
     background: #ffc400;
     color: #111111;
     border-bottom-right-radius: 6px;
-    font-weight: 600;
+    font-weight: 650;
+  }
+
+  .vma-agent__message--user::before {
+    content: "Vos";
+    display: block;
+    margin-bottom: 6px;
+    color: rgba(17, 17, 17, 0.58);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
   }
 
   .vma-agent__message--system {
@@ -266,6 +300,11 @@ const apiUrl =
     color: rgba(248, 245, 234, 0.86);
     border: 1px solid rgba(255, 196, 0, 0.2);
     font-size: 13px;
+    text-align: center;
+  }
+
+  .vma-agent__message--system::before {
+    display: none;
   }
 
   .vma-agent__form {
@@ -319,8 +358,9 @@ const apiUrl =
   .vma-agent__footer {
     display: grid;
     gap: 10px;
-    padding: 0 12px 14px;
+    padding: 10px 12px 14px;
     background: #202125;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .vma-agent__whatsapp {
@@ -334,6 +374,10 @@ const apiUrl =
     text-decoration: none;
     font-size: 13px;
     font-weight: 900;
+  }
+
+  .vma-agent__whatsapp[hidden] {
+    display: none !important;
   }
 
   .vma-agent__footer p {
@@ -385,6 +429,8 @@ const apiUrl =
   const form = root?.querySelector<HTMLFormElement>("[data-form]");
   const textarea = form?.querySelector<HTMLTextAreaElement>("textarea");
   const submitButton = form?.querySelector<HTMLButtonElement>("button");
+  const whatsappCta = root?.querySelector<HTMLAnchorElement>("[data-whatsapp-cta]");
+  const footerNote = root?.querySelector<HTMLElement>("[data-footer-note]");
   const apiUrl = root?.getAttribute("data-api-url");
 
   function track(eventName: string, params = {}) {
@@ -471,6 +517,59 @@ const apiUrl =
     submitButton.disabled = isLoading;
     textarea.disabled = isLoading;
     submitButton.textContent = isLoading ? "..." : "Enviar";
+  }
+
+  function shouldShowWhatsappFromText(text: string) {
+    const normalized = text.toLowerCase();
+
+    return [
+      "whatsapp",
+      "teléfono",
+      "telefono",
+      "llamar",
+      "comercial",
+      "vendedor",
+      "soporte",
+      "servicio técnico",
+      "servicio tecnico",
+      "urgente",
+      "hoy",
+      "mañana",
+      "manana",
+    ].some((word) => normalized.includes(word));
+  }
+
+  function shouldShowWhatsappFromLead(result: any) {
+    const lead = result?.lead;
+    const temperature = lead?.temperature;
+    const missingFields = Array.isArray(lead?.missingFields) ? lead.missingFields : [];
+
+    if (!lead) return false;
+
+    return (
+      temperature === "caliente" ||
+      temperature === "muy_caliente" ||
+      Boolean(lead.phone) ||
+      missingFields.length === 0
+    );
+  }
+
+  function showWhatsappCta(reason = "ready") {
+    if (!whatsappCta) return;
+
+    whatsappCta.hidden = false;
+
+    if (reason === "error") {
+      whatsappCta.textContent = "Hablar por WhatsApp";
+    } else if (reason === "support") {
+      whatsappCta.textContent = "Continuar con soporte";
+    } else {
+      whatsappCta.textContent = "Continuar por WhatsApp";
+    }
+
+    if (footerNote) {
+      footerNote.textContent = "El equipo comercial retoma la consulta con contexto.";
+    }
   }
 
   function inferContextFromPage() {
@@ -560,6 +659,11 @@ const apiUrl =
 
     textarea.value = "";
     appendMessage("user", message);
+
+    if (shouldShowWhatsappFromText(message)) {
+      showWhatsappCta(message.toLowerCase().includes("soporte") ? "support" : "ready");
+    }
+
     setLoading(true);
 
     track("vma_agent_message_sent", {
@@ -583,12 +687,18 @@ const apiUrl =
           lead_score: result.lead.leadScore,
         });
       }
+
+      if (shouldShowWhatsappFromLead(result)) {
+        const intent = result?.lead?.intent;
+        showWhatsappCta(intent === "servicio_tecnico" ? "support" : "ready");
+      }
     } catch (error) {
       console.error("[vma-agent-widget]", error);
       appendMessage(
         "system",
         "No pude conectar con el asistente en este momento. Podés continuar por WhatsApp y el equipo retoma la consulta."
       );
+      showWhatsappCta("error");
     } finally {
       setLoading(false);
       textarea?.focus();
