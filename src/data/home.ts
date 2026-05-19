@@ -68,7 +68,7 @@ export const homeSections: HomeSection[] = [
           subtitle:
             "Disponibilidad inmediata. Entrega coordinada. Soporte en sitio.",
           image: {
-            src: "./images/Firefly19.jpg",
+            src: "/images/Firefly19.jpg",
             alt: "Obra en construcción con equipos de elevación",
           },
           size: "regular",
@@ -81,7 +81,7 @@ export const homeSections: HomeSection[] = [
           subtitle:
             "Planes para industria, planes para obra, planes para lo que necesites resolver.",
           image: {
-            src: "./images/Firefly11.jpg",
+            src: "/images/Firefly11.jpg",
             alt: "Plataforma articulada en operación",
           },
           size: "regular",
@@ -104,9 +104,9 @@ export const homeSections: HomeSection[] = [
             "Tres líneas de trabajo para resolver disponibilidad, inversión y continuidad operativa.",
           href: "/unidades",
           images: [
-            "./images/Firefly11.jpg",
-            "./images/Firefly10-1.png",
-            "./images/Firefly20-1.png",
+            "/images/Firefly11.jpg",
+            "/images/Firefly10-1.png",
+            "/images/Firefly20-1.png",
           ],
           autoplay: true,
         },
@@ -117,7 +117,7 @@ export const homeSections: HomeSection[] = [
             "Análisis, asesoramiento comprometido y proyección 360° antes de mover un equipo.",
           href: "/metodo",
           images: [
-            "./images/Metodo-VMA-Grids.png",
+            "/images/Metodo-VMA-Grids.png",
           ],
           autoplay: false,
         },
