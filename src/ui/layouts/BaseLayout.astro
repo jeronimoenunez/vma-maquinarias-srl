@@ -3,6 +3,7 @@ import "@/ui/styles/global.css";
 import Header from "@/ui/components/Header.astro";
 import Footer from "@/ui/components/Footer.astro";
 import VmaAgentWidget from "@/ui/components/VmaAgentWidget.astro";
+import Analytics from "@/ui/components/Analytics.astro";
 
 type Props = {
   title?: string;
@@ -29,6 +30,7 @@ const {
 
     <title>{title}</title>
     <meta name="description" content={description} />
+    <Analytics />
   </head>
 
   <body>
