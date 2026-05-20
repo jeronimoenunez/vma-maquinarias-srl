@@ -44,7 +44,9 @@ h1, h2, h3, h4 {
   color: var(--vma-text);
 }
 
-p { color: var(--vma-muted); line-height: 1.65; }
+p { color: var(--vma-muted); 
+  /* line-height: 1.65;  */
+  }
 
 
 /* ── Layout ── */
