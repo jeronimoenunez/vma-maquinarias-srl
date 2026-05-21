@@ -124,38 +124,6 @@ export const homeSections: HomeSection[] = [
       ],
     },
   },
-
-  // {
-  //   id: "criterios",
-  //   type: "technicalCriteria",
-  //   props: {
-  //     kicker: "CRITERIO TÉCNICO",
-  //     title: "El equipo correcto no se elige por catálogo.",
-  //     subtitle:
-  //       "Antes de cotizar, analizamos las condiciones reales de trabajo para evitar sobredimensionar, demorar o comprometer la operación.",
-  //     items: [
-  //       {
-  //         number: "01",
-  //         title: "Altura y alcance real",
-  //         description:
-  //           "Definimos el equipo según la altura efectiva de trabajo, el tipo de acceso y el margen operativo necesario.",
-  //       },
-  //       {
-  //         number: "02",
-  //         title: "Superficie y entorno",
-  //         description:
-  //           "Evaluamos si la operación se realiza en interior, exterior, piso industrial, obra, terreno irregular o zona con restricciones.",
-  //       },
-  //       {
-  //         number: "03",
-  //         title: "Energía y continuidad",
-  //         description:
-  //           "Elegimos entre equipos eléctricos, diésel o híbridos según autonomía, ventilación, ruido y exigencia de uso.",
-  //       },
-  //     ],
-  //   },
-  // },
-
   {
     id: "equipos",
     type: "equipmentShowcase",
@@ -167,29 +135,15 @@ export const homeSections: HomeSection[] = [
     },
   },
 
-  // {
-  //   id: "asistente",
-  //   type: "aiBlock",
-  //   props: {
-  //     kicker: "ATENCIÓN INTELIGENTE",
-  //     title: "Consultá disponibilidad y especificaciones a cualquier hora.",
-  //     subtitle:
-  //       "Nuestro asistente responde consultas sobre alturas, tipos de equipo, fuentes de energía y compatibilidad con tu operación — y deriva al equipo comercial cuando la consulta requiere cotización formal.",
-  //     callout:
-  //       "El asistente no reemplaza al equipo comercial. Lo complementa: filtra consultas técnicas básicas para que las solicitudes que llegan al comercial estén calificadas y listas para cotizar.",
-  //     ctaLabel: "Probar el asistente",
-  //     ctaHref: "#contacto",
-  //   },
-  // },
 
-  {
-  id: "ecosistema",
-  type: "ecosystemVMA",
-  props: {
-    kicker: "ECOSISTEMA VMA",
-    title: "Novedades, criterio técnico y decisiones para operar mejor.",
-  },
-},
+//   {
+//   id: "ecosistema",
+//   type: "ecosystemVMA",
+//   props: {
+//     kicker: "ECOSISTEMA VMA",
+//     title: "Novedades, criterio técnico y decisiones para operar mejor.",
+//   },
+// },
 
   {
     id: "faq",

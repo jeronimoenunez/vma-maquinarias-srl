@@ -1,11 +1,30 @@
 ---
 import { waCotizarUrl } from "@/config/site";
 
-type Equipment = {
+type MainCategoryId =
+  | "tijera"
+  | "brazo-articulado"
+  | "brazo-telescopico"
+  | "unipersonal"
+  | "manipulador-carga";
+
+type SubCategoryId =
+  | "tijera-diesel-4x4"
+  | "tijera-electricas"
+  | "tijera-electricas-4x4"
+  | "brazo-articulado-diesel-4x4"
+  | "brazo-articulado-electrico"
+  | "brazo-telescopico"
+  | "unipersonal"
+  | "manipulador-carga";
+
+type EquipmentItem = {
   id: string;
-  category: "articulado" | "tijera" | "telescopico" | "otros";
-  categoryLabel: string;
-  name: string;
+  mainCategory: MainCategoryId;
+  subCategory: SubCategoryId;
+  eyebrow: string;
+  title: string;
+  subtitle?: string;
   description: string;
   specs: {
     height: string;
@@ -13,201 +32,711 @@ type Equipment = {
     capacity: string;
     operation: string;
   };
-  image: { src: string; alt: string };
-};
-
-type Category = {
-  id: "articulado" | "tijera" | "telescopico" | "otros";
-  label: string;
+  image: {
+    src: string;
+    alt: string;
+  };
+  manualHref?: string;
 };
 
 type Props = {
   moduleEyebrow?: string;
   moduleTitle?: string;
-  categories?: Category[];
-  equipment?: Equipment[];
   ctaLabel?: string;
   ctaHref?: string;
 };
-
-const fallbackCategories: Category[] = [
-  { id: "articulado", label: "Plataformas articuladas" },
-  { id: "tijera", label: "Plataformas tijera" },
-  { id: "telescopico", label: "Manipuladores telescópicos" },
-  { id: "otros", label: "Otros equipos" },
-];
-
-const fallbackEquipment: Equipment[] = [
-  {
-    id: "brazo-16m",
-    category: "articulado",
-    categoryLabel: "Plataforma articulada",
-    name: "Brazo articulado 16m",
-    description:
-      "Plataforma articulada para trabajos en altura con alcance horizontal extendido. Ideal para fachadas y montajes estructurales.",
-    specs: {
-      height: "16m",
-      power: "Diésel",
-      capacity: "230kg",
-      operation: "Doble plataforma",
-    },
-    image: {
-      src: "https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=1600&auto=format&fit=crop&q=80",
-      alt: "Brazo articulado de 16 metros en operación",
-    },
-  },
-  {
-    id: "tijera-8m",
-    category: "tijera",
-    categoryLabel: "Plataforma tijera",
-    name: "Tijera eléctrica 8m",
-    description:
-      "Plataforma tijera eléctrica para trabajos interiores. Operación silenciosa y cero emisiones, ideal para naves industriales y obra terminada.",
-    specs: {
-      height: "8m",
-      power: "Eléctrica",
-      capacity: "230kg",
-      operation: "Interior",
-    },
-    image: {
-      src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&auto=format&fit=crop&q=80",
-      alt: "Plataforma tijera eléctrica de 8 metros",
-    },
-  },
-  {
-    id: "tijera-12m",
-    category: "tijera",
-    categoryLabel: "Plataforma tijera",
-    name: "Tijera diésel 12m",
-    description:
-      "Plataforma tijera diésel para superficies irregulares y exteriores. Resistente a condiciones de obra exigentes.",
-    specs: {
-      height: "12m",
-      power: "Diésel",
-      capacity: "320kg",
-      operation: "Exterior",
-    },
-    image: {
-      src: "https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=1600&auto=format&fit=crop&q=80",
-      alt: "Plataforma tijera diésel de 12 metros",
-    },
-  },
-  {
-    id: "telescopico-20m",
-    category: "telescopico",
-    categoryLabel: "Manipulador telescópico",
-    name: "Telescópico 20m",
-    description:
-      "Manipulador telescópico de gran alcance vertical y horizontal. Para trabajos en altura con precisión de posicionamiento.",
-    specs: {
-      height: "20m",
-      power: "Diésel",
-      capacity: "200kg",
-      operation: "Mixto",
-    },
-    image: {
-      src: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=1600&auto=format&fit=crop&q=80",
-      alt: "Manipulador telescópico de 20 metros en obra",
-    },
-  },
-];
 
 const props = Astro.props as Props;
 
 const moduleEyebrow = props.moduleEyebrow ?? "FLOTA VMA";
 const moduleTitle = props.moduleTitle ?? "Equipos disponibles";
-const categories = props.categories ?? fallbackCategories;
-const equipment = props.equipment ?? fallbackEquipment;
 const ctaLabel = props.ctaLabel ?? "Solicitar cotización";
 
-/*
-  Si home.ts manda "#contacto", igual usamos WhatsApp para este CTA
-  porque el objetivo es enviar contexto directo al comercial.
-*/
 const baseCtaHref =
   props.ctaHref && !props.ctaHref.startsWith("#") ? props.ctaHref : waCotizarUrl;
+
+const mainCategories: Array<{
+  id: MainCategoryId;
+  label: string;
+  defaultSubCategory: SubCategoryId;
+  hasSubmenu: boolean;
+}> = [
+  {
+    id: "tijera",
+    label: "Tijeras",
+    defaultSubCategory: "tijera-diesel-4x4",
+    hasSubmenu: true,
+  },
+  {
+    id: "brazo-articulado",
+    label: "Brazos Articulados",
+    defaultSubCategory: "brazo-articulado-diesel-4x4",
+    hasSubmenu: true,
+  },
+  {
+    id: "brazo-telescopico",
+    label: "Brazo Telescópico",
+    defaultSubCategory: "brazo-telescopico",
+    hasSubmenu: false,
+  },
+  {
+    id: "unipersonal",
+    label: "Plataforma Unipersonal",
+    defaultSubCategory: "unipersonal",
+    hasSubmenu: false,
+  },
+  {
+    id: "manipulador-carga",
+    label: "Manipulador Telescópico de Carga",
+    defaultSubCategory: "manipulador-carga",
+    hasSubmenu: false,
+  },
+];
+
+const subCategories: Record<
+  MainCategoryId,
+  Array<{ id: SubCategoryId; label: string }>
+> = {
+  tijera: [
+    { id: "tijera-diesel-4x4", label: "Diesel 4x4" },
+    { id: "tijera-electricas", label: "Eléctricas" },
+    { id: "tijera-electricas-4x4", label: "Eléctricas 4x4" },
+  ],
+  "brazo-articulado": [
+    { id: "brazo-articulado-diesel-4x4", label: "Diesel 4x4" },
+    { id: "brazo-articulado-electrico", label: "Eléctrico" },
+  ],
+  "brazo-telescopico": [{ id: "brazo-telescopico", label: "" }],
+  unipersonal: [{ id: "unipersonal", label: "" }],
+  "manipulador-carga": [{ id: "manipulador-carga", label: "" }],
+};
+
+const equipment: EquipmentItem[] = [
+  //Tijera diésel 4x4
+  {
+    id: "tijera-diesel-4x4",
+    mainCategory: "tijera",
+    subCategory: "tijera-diesel-4x4",
+    eyebrow: "Diesel 4x4",
+    title: "Plataforma Tijera",
+    subtitle: "Compact 12DX",
+    description:
+      "Plataforma tijera para trabajos en altura con alcance extendido. Ideal para operación exterior, superficies exigentes y tareas de montaje estructural.",
+    specs: { height: "16m", power: "Diésel", capacity: "230kg", operation: "Doble plataforma" },
+    image: {
+      src: "/images/Firefly7.jpg",
+      alt: "Plataforma tijera diésel 4x4",
+    },
+    manualHref: "/manuales/vma/TijeraDiesel4x4-Compact12DX.pdf",
+  },
+//Tijera electrica compact y optimum
+  {
+    id: "compact-10-12-electrica",
+    mainCategory: "tijera",
+    subCategory: "tijera-electricas",
+    eyebrow: "Tijera eléctrica",
+    title: "Compact 10-12",
+    subtitle: "Eléctrica",
+    description:
+      "Equipo eléctrico compacto para trabajos interiores, mantenimiento industrial, depósitos, naves logísticas y superficies terminadas.",
+    specs: { height: "10-12m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
+    image: {
+      src: "/images/compact-10-12.png",
+      alt: "Plataforma tijera eléctrica Compact 10-12",
+    },
+    manualHref: "/manuales/vma/TijeraElectricaCompact10-12.pdf",
+  },
+  {
+    id: "compact-14-electrica",
+    mainCategory: "tijera",
+    subCategory: "tijera-electricas",
+    eyebrow: "Tijera eléctrica",
+    title: "Compact 14",
+    subtitle: "Eléctrica",
+    description:
+      "Plataforma tijera eléctrica de mayor alcance para tareas de instalación, mantenimiento y operación en espacios interiores controlados.",
+    specs: { height: "14m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
+    image: {
+      src: "/images/compact-14.png",
+      alt: "Plataforma tijera eléctrica Compact 14",
+    },
+    manualHref: "/manuales/vma/compact-14-electrica.pdf",
+  },
+  {
+    id: "compact-8-10-n",
+    mainCategory: "tijera",
+    subCategory: "tijera-electricas",
+    eyebrow: "Eléctrica",
+    title: "Tijera Electrica",
+    subtitle: "Compact 8 y 10 N",
+    description:
+      "Modelo compacto para circulación en espacios reducidos. Recomendado para instalaciones interiores, mantenimiento y tareas livianas en altura.",
+    specs: { height: "8-10m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
+    image: {
+      src: "/images/Firefly21.jpg",
+      alt: "Plataforma tijera eléctrica Compact 8 y 10 N",
+    },
+    manualHref: "/manuales/vma/TijeraElectricaCompact8-10N.pdf",
+  },
+  {
+    id: "optimum-8-ac",
+    mainCategory: "tijera",
+    subCategory: "tijera-electricas",
+    eyebrow: "Tijera eléctrica",
+    title: "Optimum 8 AC",
+    subtitle: "Eléctrica",
+    description:
+      "Plataforma eléctrica eficiente para trabajos interiores de baja altura, con operación precisa y formato compacto.",
+    specs: { height: "8m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
+    image: {
+      src: "/images/optimum-8-ac.png",
+      alt: "Plataforma tijera eléctrica Optimum 8 AC",
+    },
+    manualHref: "/manuales/vma/optimum-8-ac.pdf",
+  },
+  {
+    id: "optimum-8-electrica",
+    mainCategory: "tijera",
+    subCategory: "tijera-electricas",
+    eyebrow: "Tijera eléctrica",
+    title: "Optimum 8 MV",
+    subtitle: "Eléctrica",
+    description:
+      "Plataforma eléctrica eficiente para trabajos interiores de baja altura, con operación precisa y formato compacto.",
+    specs: { height: "8m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
+    image: {
+      src: "/images/optimum-8-mv.png",
+      alt: "Equipo eléctrico Optimum 8 MV",
+    },
+    manualHref: "/manuales/vma/optimum-8-mv.pdf",
+  },
+//Tijera eléctrica 4x4 HS 15 y 18
+  {
+    id: "hs15e-pro",
+    mainCategory: "tijera",
+    subCategory: "tijera-electricas-4x4",
+    eyebrow: "Tijera eléctrica 4x4",
+    title: "HS15E PRO",
+    subtitle: "4x4",
+    description:
+      "Plataforma tijera eléctrica 4x4 para trabajos de altura con mayor autonomía, tracción y estabilidad en entornos exigentes.",
+    specs: { height: "15-18m", power: "Eléctrica", capacity: "230kg", operation: "Exterior" },
+    image: {
+      src: "/images/hs15--e-pro.png",
+      alt: "Plataforma tijera eléctrica 4x4 HS15E PRO",
+    },
+    manualHref: "/manuales/vma/hs15-18-e-pro.pdf",
+  },
+  {
+    id: "hs15-18-e-pro",
+    mainCategory: "tijera",
+    subCategory: "tijera-electricas-4x4",
+    eyebrow: "Tijera eléctrica 4x4",
+    title: "HS18 E PRO",
+    subtitle: "4x4",
+    description:
+      "Modelo eléctrico 4x4 para operación exterior, pensado para tareas que requieren mayor capacidad, alcance y estabilidad.",
+    specs: { height: "15-18m", power: "Eléctrica", capacity: "230kg", operation: "Exterior" },
+    image: {
+      src: "/images/hs15-18-e-pro.png",
+      alt: "Plataforma tijera eléctrica 4x4 HS15 18 E PRO",
+    },
+    manualHref: "/manuales/vma/hs15-18-e-pro.pdf",
+  },
+//Brazo articulado diésel 4x4 y eléctrico
+  {
+    id: "brazo-articulado-diesel-16m",
+    mainCategory: "brazo-articulado",
+    subCategory: "brazo-articulado-diesel-4x4",
+    eyebrow: "Brazo articulado",
+    title: "HA 26 RTJ PRO",
+    subtitle: "Diesel 4x4",
+    description:
+      "Brazo articulado diésel 4x4 para trabajos en altura con alcance horizontal extendido y operación exterior en superficies exigentes.",
+    specs: { height: "16m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
+    image: {
+      src: "/images/HA-26-RTJ-Pro.jpg",
+      alt: "Brazo articulado diésel 4x4 de 16 metros",
+    },
+    manualHref: "/manuales/vma/brazo-articulado-diesel-16m.pdf",
+  },
+  {
+    id: "brazo-articulado-diesel-20m",
+    mainCategory: "brazo-articulado",
+    subCategory: "brazo-articulado-diesel-4x4",
+    eyebrow: "Brazo articulado",
+    title: "HA 20 RTJ Pro",
+    subtitle: "Diesel 4x4",
+    description:
+      "Brazo articulado diésel 4x4 para trabajos exteriores con mayor altura y alcance en zonas de acceso complejo.",
+    specs: { height: "20m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
+    image: {
+      src: "/images/ha-20-rtj-pro.png",
+      alt: "Brazo articulado diésel 4x4 de 20 metros",
+    },
+    manualHref: "/manuales/vma/brazo-articulado-diesel-ha-20-rtj-pro.pdf",
+  },
+  {
+  id: "brazo-articulado-diesel-ha-16-rtj-pro",
+  mainCategory: "brazo-articulado",
+  subCategory: "brazo-articulado-diesel-4x4",
+  eyebrow: "Brazo articulado",
+  title: "HA 16 RTJ PRO",
+  subtitle: "Diesel 4x4",
+  description:
+    "Brazo articulado diésel 4x4 compacto y versátil para trabajos exteriores en altura, con excelente maniobrabilidad y alcance en terrenos exigentes.",
+  specs: { height: "16m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
+  image: {
+    src: "/images/ha-16-rtj-pro.png",
+    alt: "Brazo articulado diésel 4x4 HA 16 RTJ PRO",
+  },
+  manualHref: "/manuales/vma/brazo-articulado-diesel-ha-16-rtj-pro.pdf",
+},
+{
+  id: "brazo-articulado-diesel-ha-41-rtj-pro",
+  mainCategory: "brazo-articulado",
+  subCategory: "brazo-articulado-diesel-4x4",
+  eyebrow: "Brazo articulado",
+  title: "HA 41 RTJ PRO",
+  subtitle: "Diesel 4x4",
+  description:
+    "Brazo articulado diésel 4x4 de gran alcance para operaciones exteriores que requieren altura, estabilidad y capacidad de trabajo en zonas complejas.",
+  specs: { height: "41m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
+  image: {
+    src: "/images/ha-41-rtj-pro.png",
+    alt: "Brazo articulado diésel 4x4 HA 41 RTJ PRO",
+  },
+  manualHref: "/manuales/vma/brazo-articulado-diesel-ha-41-rtj-pro.pdf",
+},
+{
+  id: "brazo-articulado-diesel-ha-32-rtj-pro",
+  mainCategory: "brazo-articulado",
+  subCategory: "brazo-articulado-diesel-4x4",
+  eyebrow: "Brazo articulado",
+  title: "HA 32 RTJ PRO",
+  subtitle: "Diesel 4x4",
+  description:
+    "Brazo articulado diésel 4x4 para trabajos de gran altura, ideal para montaje, mantenimiento industrial y operación exterior de alto rendimiento.",
+  specs: { height: "32m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
+  image: {
+    src: "/images/ha-32-rtj-pro.png",
+    alt: "Brazo articulado diésel 4x4 HA 32 RTJ PRO",
+  },
+  manualHref: "/manuales/vma/brazo-articulado-diesel-ha-32-rtj-pro.pdf",
+},
+{
+  id: "brazo-articulado-diesel-ha-20-px",
+  mainCategory: "brazo-articulado",
+  subCategory: "brazo-articulado-diesel-4x4",
+  eyebrow: "Brazo articulado",
+  title: "HA 20 PX",
+  subtitle: "Diesel 4x4",
+  description:
+    "Brazo articulado diésel 4x4 para trabajos exteriores con alcance horizontal, buena capacidad de posicionamiento y operación sobre superficies exigentes.",
+  specs: { height: "20m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
+  image: {
+    src: "/images/ha-20-px.jpg",
+    alt: "Brazo articulado diésel 4x4 HA 20 PX",
+  },
+  manualHref: "/manuales/vma/brazo-articulado-diesel-ha-20-px.pdf",
+},
+{
+  id: "brazo-articulado-diesel-ha-16-18-spx",
+  mainCategory: "brazo-articulado",
+  subCategory: "brazo-articulado-diesel-4x4",
+  eyebrow: "Brazo articulado",
+  title: "HA 16-18 SPX",
+  subtitle: "Diesel 4x4",
+  description:
+    "Brazo articulado diésel 4x4 para operación exterior, pensado para trabajos que requieren versatilidad, alcance y estabilidad en obra.",
+  specs: { height: "16-18m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
+  image: {
+    src: "/images/ha-16-18-spx.png",
+    alt: "Brazo articulado diésel 4x4 HA 16-18 SPX",
+  },
+  manualHref: "/manuales/vma/brazo-articulado-diesel-ha-16-18-spx.pdf",
+},
+{
+  id: "brazo-articulado-electrico-sigma-16",
+  mainCategory: "brazo-articulado",
+  subCategory: "brazo-articulado-electrico",
+  eyebrow: "Brazo articulado eléctrico",
+  title: "Sigma 16",
+  subtitle: "Eléctrico",
+  description:
+    "Brazo articulado eléctrico para trabajos interiores o entornos controlados donde se requiere operación silenciosa, maniobrabilidad y precisión en altura.",
+  specs: { height: "16m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
+  image: {
+    src: "/images/sigma-16-electrico.jpg",
+    alt: "Brazo articulado eléctrico Sigma 16",
+  },
+  manualHref: "/manuales/vma/brazo-articulado-electrico-sigma-16.pdf",
+},
+{
+  id: "brazo-articulado-electrico-ha-15-ip",
+  mainCategory: "brazo-articulado",
+  subCategory: "brazo-articulado-electrico",
+  eyebrow: "Brazo articulado eléctrico",
+  title: "HA 15 IP",
+  subtitle: "Eléctrico",
+  description:
+    "Brazo articulado eléctrico para trabajos interiores o espacios donde se requiere baja emisión, operación silenciosa y precisión de posicionamiento.",
+  specs: { height: "15m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
+  image: {
+    src: "/videos/imgBackground1.jpg",
+    alt: "Brazo articulado eléctrico HA 15 IP",
+  },
+  manualHref: "/manuales/vma/brazo-articulado-ha-15-ip.pdf",
+},
+{
+  id: "brazo-articulado-electrico-ha-12-ip",
+  mainCategory: "brazo-articulado",
+  subCategory: "brazo-articulado-electrico",
+  eyebrow: "Brazo articulado eléctrico",
+  title: "HA 12 IP",
+  subtitle: "Eléctrico",
+  description:
+    "Brazo articulado eléctrico compacto para mantenimiento, instalaciones y trabajos de altura en interiores con circulación controlada.",
+  specs: { height: "12m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
+  image: {
+    src: "/images/ha-12-ip.jpg",
+    alt: "Brazo articulado eléctrico HA 12 IP",
+  },
+  manualHref: "/manuales/vma/ha-12-ip.pdf",
+},
+{
+  id: "brazo-articulado-electrico-h12-h15-h18-sxl",
+  mainCategory: "brazo-articulado",
+  subCategory: "brazo-articulado-electrico",
+  eyebrow: "Brazo articulado eléctrico",
+  title: "H12 / H15 / H18 SXL",
+  subtitle: "Eléctrico",
+  description:
+    "Serie de brazos articulados eléctricos para trabajos interiores de mayor alcance, con operación silenciosa y plataforma amplia para tareas técnicas.",
+  specs: { height: "12-18m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
+  image: {
+    src: "/images/h-12-sxl.png",
+    alt: "Brazo articulado eléctrico H12 H15 H18 SXL",
+  },
+  manualHref: "/manuales/vma/brazo-articulado-electrico-h12-h15-h18-sxl.pdf",
+},
+//Brazo telescópico
+  {
+    id: "brazo-telescopico-20m",
+    mainCategory: "brazo-telescopico",
+    subCategory: "brazo-telescopico",
+    eyebrow: "Brazo Telescopico",
+    title: "HT 43 RTJ Pro",
+    subtitle: "Diesel 4x4",
+    description:
+      "Brazo telescópico para trabajos con alcance horizontal extendido y operación precisa en altura.",
+    specs: { height: "20m", power: "Diésel", capacity: "230kg", operation: "Exterior" },
+    image: {
+      src: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=1600&auto=format&fit=crop&q=80",
+      alt: "Brazo telescópico de 20 metros",
+    },
+    manualHref: "/manuales/vma/manual-ht-43-rtj-pro.pdf",
+  },
+  {
+    id: "brazo-telescopico-26m",
+    mainCategory: "brazo-telescopico",
+    subCategory: "brazo-telescopico",
+    eyebrow: "Brazo telescópico",
+    title: "HT 21 RT",
+    subtitle: "Diesel 4x4",
+    description:
+      "Equipo telescópico para obras que requieren altura, alcance horizontal y estabilidad en exteriores.",
+    specs: { height: "26m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
+    image: {
+      src: "/images/",
+      alt: "Brazo telescópico de 26 metros",
+    },
+    manualHref: "/manuales/vma/brazo-telescopico-26m.pdf",
+  },
+//Plataforma unipersonal
+  {
+    id: "unipersonal-star-10",
+    mainCategory: "unipersonal",
+    subCategory: "unipersonal",
+    eyebrow: "Plataforma unipersonal",
+    title: "Star 10",
+    subtitle: "Unipersonal",
+    description:
+      "Plataforma unipersonal para trabajos interiores de precisión, mantenimiento técnico y operación en espacios reducidos.",
+    specs: { height: "10m", power: "Eléctrica", capacity: "200kg", operation: "Interior" },
+    image: {
+      src: "/images/Star10Electrica.png",
+      alt: "Plataforma unipersonal Star 10",
+    },
+    manualHref: "/manuales/vma/star-10.pdf",
+  },
+  {
+    id: "unipersonal-electrica",
+    mainCategory: "unipersonal",
+    subCategory: "unipersonal",
+    eyebrow: "Plataforma unipersonal",
+    title: "Star 6",
+    subtitle: "Eléctrica",
+    description:
+      "Equipo compacto y ligero para trabajos en altura en espacios reducidos. Ideal para mantenimiento, instalaciones y operación interior.",
+    specs: { height: "12m", power: "Eléctrica", capacity: "150kg", operation: "Interior" },
+    image: {
+      src: "/images/Star-6.png",
+      alt: "Plataforma unipersonal eléctrica",
+    },
+    manualHref: "/manuales/vma/unipersonal-electrica-star-6.pdf",
+  },
+//Manipuladores Telescopicos de carga
+  {
+    id: "manipulador-carga-01",
+    mainCategory: "manipulador-carga",
+    subCategory: "manipulador-carga",
+    eyebrow: "Manipulador telescópico",
+    title: "Manipulador de carga",
+    subtitle: "HTL 4017",
+    description:
+      "Manipulador telescópico de carga para movimiento, elevación y posicionamiento de materiales en obra o entornos industriales.",
+    specs: { height: "7m", power: "Diésel", capacity: "2500kg", operation: "Exterior" },
+    image: {
+      src: "/images/htl-4017.jpg",
+      alt: "Manipulador telescópico de carga Haulotte HTL4017",
+    },
+    manualHref: "/manuales/vma/manipulador-carga-htl-4017.pdf",
+  },
+  {
+    id: "manipulador-carga-02",
+    mainCategory: "manipulador-carga",
+    subCategory: "manipulador-carga",
+    eyebrow: "Manipulador telescópico",
+    title: "Manipulador de carga",
+    subtitle: "HTL 4014",
+    description:
+      "Equipo de carga telescópico para tareas que requieren alcance, estabilidad y capacidad operativa en terreno.",
+    specs: { height: "10m", power: "Diésel", capacity: "3000kg", operation: "Exterior" },
+    image: {
+      src: "/images/htl-4014.jpg",
+      alt: "Manipulador telescópico de carga Haulotte htl 4014",
+    },
+    manualHref: "/manuales/vma/manipulador-carga-htl-4014.pdf",
+  },
+  {
+    id: "manipulador-carga-03",
+    mainCategory: "manipulador-carga",
+    subCategory: "manipulador-carga",
+    eyebrow: "Manipulador telescópico",
+    title: "Manipulador de carga",
+    subtitle: "HTL 4010",
+    description:
+      "Manipulador para operación pesada, movimiento de materiales y asistencia en tareas de montaje y construcción.",
+    specs: { height: "12m", power: "Diésel", capacity: "3500kg", operation: "Exterior" },
+    image: {
+      src: "/images/htl-4010.png",
+      alt: "Manipulador telescópico de carga Haulotte HTL 4010",
+    },
+    manualHref: "/manuales/vma/manipulador-carga-htl-4010.pdf",
+  },
+  {
+    id: "manipulador-carga-04",
+    mainCategory: "manipulador-carga",
+    subCategory: "manipulador-carga",
+    eyebrow: "Manipulador telescópico",
+    title: "Manipulador de carga",
+    subtitle: "HTL 3210",
+    description:
+      "Equipo telescópico de carga para trabajos de alto rendimiento, logística interna y soporte operativo en obra.",
+    specs: { height: "14m", power: "Diésel", capacity: "4000kg", operation: "Exterior" },
+    image: {
+      src: "/images/hhtl-3210.jpg",
+      alt: "Manipulador telescópico de carga Haulotte HTL 3210",
+    },
+    manualHref: "/manuales/vma/manipulador-carga-htl-3210.pdf",
+  },
+];
+
+const defaultItem =
+  equipment.find((item) => item.id === "tijera-diesel-4x4") ?? equipment[0];
+
+function buildQuoteHref(item: EquipmentItem): string {
+  const message = [
+    "Hola VMA Rental, quiero solicitar una cotización.",
+    "",
+    `Equipo seleccionado: ${item.title}${item.subtitle ? ` ${item.subtitle}` : ""}`,
+    `Categoría: ${item.eyebrow}`,
+    `Altura máxima: ${item.specs.height}`,
+    `Energía: ${item.specs.power}`,
+    `Capacidad: ${item.specs.capacity}`,
+    `Operación: ${item.specs.operation}`,
+    "",
+    "Quedo atento para avanzar con la cotización.",
+  ].join("\n");
+
+  const encoded = encodeURIComponent(message);
+
+  if (baseCtaHref.includes("wa.me/") || baseCtaHref.includes("api.whatsapp.com/send")) {
+    const separator = baseCtaHref.includes("?") ? "&" : "?";
+    return `${baseCtaHref}${separator}text=${encoded}`;
+  }
+
+  return baseCtaHref;
+}
 ---
 
 <section id="equipos" class="equipmentSection" data-equipment-section>
-  <header class="moduleHeader">
-    <p class="moduleEyebrow">{moduleEyebrow}</p>
-    <h2 class="moduleTitle">{moduleTitle}</h2>
-  </header>
+  <div class="equipmentShell">
+    <header class="moduleHeader">
+      <p class="moduleEyebrow">{moduleEyebrow}</p>
+      <h2 class="moduleTitle">{moduleTitle}</h2>
+    </header>
 
-  <nav class="categoryNav" aria-label="Categorías de equipos">
-    {
-      categories.map((cat, idx) => (
-        <button
-          class={`categoryBtn ${idx === 0 ? "is-active" : ""}`}
-          data-category={cat.id}
-          type="button"
-        >
-          {cat.label}
-        </button>
-      ))
-    }
-  </nav>
-
-  <div class="equipmentStage">
-    {
-      equipment.map((eq, idx) => (
-        <article
-          class={`equipmentCard ${idx === 0 ? "is-active" : ""}`}
-          data-equipment-id={eq.id}
-          data-category={eq.category}
-          data-category-label={eq.categoryLabel}
-          data-equipment-name={eq.name}
-          data-equipment-description={eq.description}
-          data-height={eq.specs.height}
-          data-power={eq.specs.power}
-          data-capacity={eq.specs.capacity}
-          data-operation={eq.specs.operation}
-        >
-          <div class="equipmentImage">
-            <img src={eq.image.src} alt={eq.image.alt} loading="lazy" />
-          </div>
-
-          <div class="equipmentInfo">
-            <p class="equipmentCategory">{eq.categoryLabel}</p>
-            <h3 class="equipmentName">{eq.name}</h3>
-            <p class="equipmentDescription">{eq.description}</p>
-
-            <dl class="equipmentSpecs">
-              <div class="spec">
-                <dt>Altura máxima</dt>
-                <dd>{eq.specs.height}</dd>
-              </div>
-              <div class="spec">
-                <dt>Energía</dt>
-                <dd>{eq.specs.power}</dd>
-              </div>
-              <div class="spec">
-                <dt>Capacidad</dt>
-                <dd>{eq.specs.capacity}</dd>
-              </div>
-              <div class="spec">
-                <dt>Operación</dt>
-                <dd>{eq.specs.operation}</dd>
-              </div>
-            </dl>
-
-            <a
-              class="equipmentCta"
-              href={baseCtaHref}
-              data-equipment-cta
-              data-base-href={baseCtaHref}
+    <nav class="unifiedCategoryNav" aria-label="Categorías de equipos">
+      {
+        mainCategories.map((cat, index) => (
+          <>
+            <button
+              class={`mainCategoryBtn ${index === 0 ? "is-active" : ""}`}
+              type="button"
+              data-main-category={cat.id}
+              data-default-sub={cat.defaultSubCategory}
+              data-has-submenu={String(cat.hasSubmenu)}
             >
+              {cat.label}
+            </button>
+
+            {
+              cat.hasSubmenu && (
+                <span
+                  class={`inlineSubNav ${index === 0 ? "is-active" : ""}`}
+                  data-sub-group={cat.id}
+                >
+                  {subCategories[cat.id].map((sub, subIndex) => (
+                    <button
+                      class={`subCategoryBtn ${
+                        index === 0 && subIndex === 0 ? "is-active is-visible" : ""
+                      }`}
+                      type="button"
+                      data-parent-category={cat.id}
+                      data-sub-category={sub.id}
+                    >
+                      {sub.label}
+                    </button>
+                  ))}
+                </span>
+              )
+            }
+          </>
+        ))
+      }
+    </nav>
+
+    <div class="equipmentContent">
+      <div class="equipmentCarousel" data-equipment-carousel hidden>
+        <button class="carouselArrow carouselArrow--prev" type="button" data-carousel-prev>
+          ‹
+        </button>
+
+        <div class="equipmentGrid" data-equipment-grid>
+          {
+            equipment.map((item) => (
+              <button
+                class="machineCard"
+                type="button"
+                data-machine-card
+                data-id={item.id}
+                data-main-category={item.mainCategory}
+                data-sub-category={item.subCategory}
+                data-eyebrow={item.eyebrow}
+                data-title={item.title}
+                data-subtitle={item.subtitle ?? ""}
+                data-description={item.description}
+                data-height={item.specs.height}
+                data-power={item.specs.power}
+                data-capacity={item.specs.capacity}
+                data-operation={item.specs.operation}
+                data-image-src={item.image.src}
+                data-image-alt={item.image.alt}
+                data-manual-href={item.manualHref ?? ""}
+                data-quote-href={buildQuoteHref(item)}
+              >
+                <span class="machineImage">
+                  <img src={item.image.src} alt={item.image.alt} loading="lazy" />
+                </span>
+
+                <span class="machineMeta">
+                  <span class="machineEyebrow">{item.eyebrow}</span>
+                  <span class="machineName">
+                    {item.title}
+                    {item.subtitle ? <small>{item.subtitle}</small> : null}
+                  </span>
+                </span>
+              </button>
+            ))
+          }
+        </div>
+
+        <button class="carouselArrow carouselArrow--next" type="button" data-carousel-next>
+          ›
+        </button>
+      </div>
+
+      <article class="equipmentDetail" data-detail-panel data-active-equipment={defaultItem.id}>
+        <button class="detailClose" type="button" data-close-detail aria-label="Cerrar detalle">
+          ×
+        </button>
+
+        <button class="detailArrow detailArrow--prev" type="button" data-detail-prev hidden>
+          ‹
+        </button>
+
+        <button class="detailArrow detailArrow--next" type="button" data-detail-next hidden>
+          ›
+        </button>
+
+        <div class="detailImage">
+          <img data-detail-image src={defaultItem.image.src} alt={defaultItem.image.alt} loading="lazy" />
+        </div>
+
+        <div class="detailInfo">
+          <p class="detailEyebrow" data-detail-eyebrow>{defaultItem.eyebrow}</p>
+
+          <h3 class="detailTitle">
+            <span data-detail-title>{defaultItem.title}</span>
+            <span data-detail-subtitle>{defaultItem.subtitle}</span>
+          </h3>
+
+          <p class="detailDescription" data-detail-description>{defaultItem.description}</p>
+
+          <dl class="detailSpecs">
+            <div class="spec">
+              <dt>Altura máxima</dt>
+              <dd data-detail-height>{defaultItem.specs.height}</dd>
+            </div>
+            <div class="spec">
+              <dt>Energía</dt>
+              <dd data-detail-power>{defaultItem.specs.power}</dd>
+            </div>
+            <div class="spec">
+              <dt>Capacidad</dt>
+              <dd data-detail-capacity>{defaultItem.specs.capacity}</dd>
+            </div>
+            <div class="spec">
+              <dt>Operación</dt>
+              <dd data-detail-operation>{defaultItem.specs.operation}</dd>
+            </div>
+          </dl>
+
+          <div class="detailActions">
+            <a class="primaryAction" href={buildQuoteHref(defaultItem)} data-detail-quote>
               <span>{ctaLabel}</span>
               <span aria-hidden="true">↘</span>
             </a>
-          </div>
-        </article>
-      ))
-    }
-  </div>
 
-  <div class="equipmentNote">
-    <p>Disponibilidad de flota 100%. Manuales y datos técnicos disponibles.</p>
+            <a class="secondaryAction" href={defaultItem.manualHref ?? "#"} download data-detail-manual>
+              Descargar Manual
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -216,85 +745,268 @@ const baseCtaHref =
     const section = document.querySelector<HTMLElement>("[data-equipment-section]");
     if (!section) return;
 
-    const categoryBtns = section.querySelectorAll<HTMLButtonElement>(".categoryBtn");
-    const equipmentCards = section.querySelectorAll<HTMLElement>(".equipmentCard");
+    const mainBtns = [...section.querySelectorAll<HTMLButtonElement>("[data-main-category]")];
+    const subGroups = [...section.querySelectorAll<HTMLElement>("[data-sub-group]")];
+    const subBtns = [...section.querySelectorAll<HTMLButtonElement>("[data-sub-category]")];
+    const cards = [...section.querySelectorAll<HTMLButtonElement>("[data-machine-card]")];
 
-    function buildQuoteUrl(card: HTMLElement, baseHref: string): string {
-      const name = card.dataset.equipmentName ?? "";
-      const category = card.dataset.categoryLabel ?? "";
-      const description = card.dataset.equipmentDescription ?? "";
-      const height = card.dataset.height ?? "";
-      const power = card.dataset.power ?? "";
-      const capacity = card.dataset.capacity ?? "";
-      const operation = card.dataset.operation ?? "";
+    const detail = section.querySelector<HTMLElement>("[data-detail-panel]");
+    const carousel = section.querySelector<HTMLElement>("[data-equipment-carousel]");
+    const grid = section.querySelector<HTMLElement>("[data-equipment-grid]");
 
-      const message = [
-        "Hola VMA Rental, quiero solicitar una cotización.",
-        "",
-        `Equipo seleccionado: ${name}`,
-        `Categoría: ${category}`,
-        `Altura máxima: ${height}`,
-        `Energía: ${power}`,
-        `Capacidad: ${capacity}`,
-        `Operación: ${operation}`,
-        "",
-        `Contexto: ${description}`,
-        "",
-        "Quedo atento para avanzar con la cotización.",
-      ].join("\n");
+    const prevBtn = section.querySelector<HTMLButtonElement>("[data-carousel-prev]");
+    const nextBtn = section.querySelector<HTMLButtonElement>("[data-carousel-next]");
+    const detailPrevBtn = section.querySelector<HTMLButtonElement>("[data-detail-prev]");
+    const detailNextBtn = section.querySelector<HTMLButtonElement>("[data-detail-next]");
+    const closeBtn = section.querySelector<HTMLButtonElement>("[data-close-detail]");
 
-      const encoded = encodeURIComponent(message);
+    const detailImage = section.querySelector<HTMLImageElement>("[data-detail-image]");
+    const detailEyebrow = section.querySelector<HTMLElement>("[data-detail-eyebrow]");
+    const detailTitle = section.querySelector<HTMLElement>("[data-detail-title]");
+    const detailSubtitle = section.querySelector<HTMLElement>("[data-detail-subtitle]");
+    const detailDescription = section.querySelector<HTMLElement>("[data-detail-description]");
+    const detailHeight = section.querySelector<HTMLElement>("[data-detail-height]");
+    const detailPower = section.querySelector<HTMLElement>("[data-detail-power]");
+    const detailCapacity = section.querySelector<HTMLElement>("[data-detail-capacity]");
+    const detailOperation = section.querySelector<HTMLElement>("[data-detail-operation]");
+    const detailQuote = section.querySelector<HTMLAnchorElement>("[data-detail-quote]");
+    const detailManual = section.querySelector<HTMLAnchorElement>("[data-detail-manual]");
 
-      if (baseHref.includes("wa.me/")) {
-        const separator = baseHref.includes("?") ? "&" : "?";
-        return `${baseHref}${separator}text=${encoded}`;
-      }
+    let activeMainCategory = "tijera";
+    let activeSubCategory = "tijera-diesel-4x4";
+    let activeItemId: string | null = null;
 
-      if (baseHref.includes("api.whatsapp.com/send")) {
-        const separator = baseHref.includes("?") ? "&" : "?";
-        return `${baseHref}${separator}text=${encoded}`;
-      }
+    const activeSubByMain: Record<string, string> = {
+      tijera: "tijera-diesel-4x4",
+      "brazo-articulado": "brazo-articulado-diesel-4x4",
+      "brazo-telescopico": "brazo-telescopico",
+      unipersonal: "unipersonal",
+      "manipulador-carga": "manipulador-carga",
+    };
 
-      return baseHref;
+    function getCardsBySubCategory(subCategory: string): HTMLButtonElement[] {
+      return cards.filter((card) => card.dataset.subCategory === subCategory);
     }
 
-    function updateCta(card: HTMLElement): void {
-      const cta = card.querySelector<HTMLAnchorElement>("[data-equipment-cta]");
-      if (!cta) return;
-
-      const baseHref = cta.dataset.baseHref ?? cta.href;
-      cta.href = buildQuoteUrl(card, baseHref);
+    function getVisibleCards(): HTMLButtonElement[] {
+      return cards.filter((card) => card.classList.contains("is-visible"));
     }
 
-    function activateCategory(categoryId: string): void {
-      categoryBtns.forEach((btn) => {
-        btn.classList.toggle("is-active", btn.dataset.category === categoryId);
+    function getSelectedCard(): HTMLButtonElement | undefined {
+      return cards.find((card) => card.dataset.id === activeItemId);
+    }
+
+    function syncNavigation(): void {
+      mainBtns.forEach((btn) => {
+        btn.classList.toggle("is-active", btn.dataset.mainCategory === activeMainCategory);
       });
 
-      let foundFirst = false;
+      subGroups.forEach((group) => {
+        group.classList.toggle("is-active", group.dataset.subGroup === activeMainCategory);
+      });
 
-      equipmentCards.forEach((card) => {
-        const matches = card.dataset.category === categoryId;
-        const shouldActivate = matches && !foundFirst;
+      subBtns.forEach((btn) => {
+        const belongsToActiveMain = btn.dataset.parentCategory === activeMainCategory;
 
-        card.classList.toggle("is-active", shouldActivate);
-
-        if (shouldActivate) {
-          foundFirst = true;
-          updateCta(card);
-        }
+        btn.classList.toggle("is-visible", belongsToActiveMain);
+        btn.classList.toggle(
+          "is-active",
+          belongsToActiveMain && btn.dataset.subCategory === activeSubCategory
+        );
       });
     }
 
-    const activeCard = section.querySelector<HTMLElement>(".equipmentCard.is-active");
-    if (activeCard) updateCta(activeCard);
+    function syncCards(): HTMLButtonElement[] {
+      const visibleCards = getCardsBySubCategory(activeSubCategory);
+      const hasCards = visibleCards.length > 0;
 
-    categoryBtns.forEach((btn) => {
+      cards.forEach((card) => {
+        const isVisible = card.dataset.subCategory === activeSubCategory;
+        const isSelected = activeItemId !== null && card.dataset.id === activeItemId;
+
+        card.classList.toggle("is-visible", isVisible);
+        card.classList.toggle("is-selected", isVisible && isSelected);
+      });
+
+      carousel?.toggleAttribute("hidden", !hasCards);
+      carousel?.classList.toggle("is-active", hasCards);
+      grid?.classList.toggle("is-active", hasCards);
+      grid?.classList.toggle("has-selection", activeItemId !== null);
+
+      return visibleCards;
+    }
+
+    function syncDetailArrows(): void {
+      const visibleCards = getVisibleCards();
+      const canNavigate = visibleCards.length > 1;
+
+      prevBtn?.toggleAttribute("hidden", !canNavigate);
+      nextBtn?.toggleAttribute("hidden", !canNavigate);
+
+      const detailIsOpen = activeItemId !== null;
+      detailPrevBtn?.toggleAttribute("hidden", !detailIsOpen || !canNavigate);
+      detailNextBtn?.toggleAttribute("hidden", !detailIsOpen || !canNavigate);
+    }
+
+    function fillDetail(card: HTMLButtonElement): void {
+      if (!detail) return;
+
+      if (detailImage) {
+        detailImage.src = card.dataset.imageSrc ?? "";
+        detailImage.alt = card.dataset.imageAlt ?? "";
+      }
+
+      if (detailEyebrow) detailEyebrow.textContent = card.dataset.eyebrow ?? "";
+      if (detailTitle) detailTitle.textContent = card.dataset.title ?? "";
+      if (detailSubtitle) detailSubtitle.textContent = card.dataset.subtitle ?? "";
+      if (detailDescription) detailDescription.textContent = card.dataset.description ?? "";
+      if (detailHeight) detailHeight.textContent = card.dataset.height ?? "";
+      if (detailPower) detailPower.textContent = card.dataset.power ?? "";
+      if (detailCapacity) detailCapacity.textContent = card.dataset.capacity ?? "";
+      if (detailOperation) detailOperation.textContent = card.dataset.operation ?? "";
+
+      if (detailQuote) {
+        detailQuote.href = card.dataset.quoteHref ?? "#";
+      }
+
+      if (detailManual) {
+        const manualHref = card.dataset.manualHref ?? "";
+        detailManual.href = manualHref || "#";
+        detailManual.toggleAttribute("aria-disabled", !manualHref);
+      }
+
+      detail.dataset.activeEquipment = card.dataset.id ?? "";
+      detail.classList.add("is-active");
+    }
+
+    function openDetail(card: HTMLButtonElement, options?: { scrollCard?: boolean }): void {
+      const nextMain = card.dataset.mainCategory;
+      const nextSub = card.dataset.subCategory;
+      const nextId = card.dataset.id;
+
+      if (!nextMain || !nextSub || !nextId) return;
+
+      activeMainCategory = nextMain;
+      activeSubCategory = nextSub;
+      activeSubByMain[nextMain] = nextSub;
+      activeItemId = nextId;
+
+      syncNavigation();
+      syncCards();
+      fillDetail(card);
+      syncDetailArrows();
+
+      if (options?.scrollCard) {
+        card.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+      }
+    }
+
+    function closeDetail(): void {
+      activeItemId = null;
+
+      detail?.classList.remove("is-active");
+
+      cards.forEach((card) => {
+        card.classList.remove("is-selected");
+      });
+
+      grid?.classList.remove("has-selection");
+
+      syncNavigation();
+      syncCards();
+      syncDetailArrows();
+    }
+
+function openSubCategory(mainCategory: string, subCategory: string): void {
+  activeMainCategory = mainCategory;
+  activeSubCategory = subCategory;
+  activeSubByMain[mainCategory] = subCategory;
+
+  // Importante:
+  // al cambiar categoría/subcategoría NO abrimos detalle por defecto.
+  activeItemId = null;
+  detail?.classList.remove("is-active");
+
+  syncNavigation();
+  syncCards();
+  syncDetailArrows();
+}
+
+    function openMainCategory(mainCategory: string): void {
+      const btn = mainBtns.find((item) => item.dataset.mainCategory === mainCategory);
+      const defaultSub = btn?.dataset.defaultSub ?? "";
+      const subCategory = activeSubByMain[mainCategory] ?? defaultSub;
+
+      if (!subCategory) return;
+
+      openSubCategory(mainCategory, subCategory);
+    }
+
+    function selectRelativeCard(direction: "prev" | "next"): void {
+      const visibleCards = getVisibleCards();
+      if (!visibleCards.length) return;
+
+      const selectedCard = getSelectedCard();
+      const currentIndex = selectedCard ? visibleCards.indexOf(selectedCard) : -1;
+
+      const nextIndex =
+        direction === "next"
+          ? (currentIndex + 1) % visibleCards.length
+          : (currentIndex - 1 + visibleCards.length) % visibleCards.length;
+
+      const nextCard = visibleCards[nextIndex];
+      if (!nextCard) return;
+
+      openDetail(nextCard, { scrollCard: true });
+    }
+
+    function scrollCarousel(direction: "prev" | "next"): void {
+      if (!grid) return;
+
+      const firstVisibleCard = getVisibleCards()[0];
+      const cardWidth = firstVisibleCard?.offsetWidth ?? 240;
+      const gap = 18;
+      const amount = (cardWidth + gap) * 2;
+
+      grid.scrollBy({
+        left: direction === "next" ? amount : -amount,
+        behavior: "smooth",
+      });
+    }
+
+    mainBtns.forEach((btn) => {
       btn.addEventListener("click", () => {
-        const cat = btn.dataset.category;
-        if (cat) activateCategory(cat);
+        const mainCategory = btn.dataset.mainCategory;
+        if (!mainCategory) return;
+
+        openMainCategory(mainCategory);
       });
     });
+
+    subBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const mainCategory = btn.dataset.parentCategory;
+        const subCategory = btn.dataset.subCategory;
+
+        if (!mainCategory || !subCategory) return;
+
+        openSubCategory(mainCategory, subCategory);
+      });
+    });
+
+    cards.forEach((card) => {
+      card.addEventListener("click", () => {
+        openDetail(card);
+      });
+    });
+
+prevBtn?.addEventListener("click", () => scrollCarousel("prev"));
+nextBtn?.addEventListener("click", () => scrollCarousel("next"));
+    detailPrevBtn?.addEventListener("click", () => selectRelativeCard("prev"));
+    detailNextBtn?.addEventListener("click", () => selectRelativeCard("next"));
+    closeBtn?.addEventListener("click", () => closeDetail());
+
+    openSubCategory("tijera", "tijera-diesel-4x4");
   });
 </script>
 
@@ -305,369 +1017,711 @@ const baseCtaHref =
   }
 
   .equipmentSection {
-    background: #070707;
-    padding:clamp(80px,10vw,140px) clamp(40px,3.7vw,120px);
-    color: #ffffff;
-    display: flex;
-    flex-direction: column;
     width: 100%;
     overflow: hidden;
+    background: #050505;
+    color: #ffffff;
+    font-family: var(--font-body);
+  }
+
+  .equipmentShell {
+    width: min(100%, 1680px);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: clamp(72px, 8vw, 132px) clamp(24px, 5vw, 76px);
   }
 
   .moduleHeader {
-    margin-bottom: 48px;
-    padding: 0;
+    display: grid;
+    gap: 10px;
+    margin-bottom: 12px;
+    text-align: center;
   }
 
   .moduleEyebrow {
+    margin: 0;
     color: #ffc400;
     font-size: 0.78rem;
-    letter-spacing: 0.15em;
+    font-weight: 700;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    font-weight: 600;
-    margin: 0 0 12px;
-    font-family: var(--font-body);
   }
 
   .moduleTitle {
-    color: #ffffff;
-    font-family: var(--font-body);
-    font-size: clamp(1.4rem, 2vw, 1.8rem);
+    margin: 0;
+    color: rgba(255, 255, 255, 0.86);
+    font-size: clamp(1.55rem, 2.2vw, 2.15rem);
     font-weight: 400;
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-    margin: 0;
+    letter-spacing: -0.035em;
+    line-height: 1.1;
   }
 
-  .categoryNav {
-    font-family: var(--font-body);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0;
-    margin: 0 0 64px;
-    padding: 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    list-style: none;
-  }
-
-  .categoryBtn {
-    font-family: var(--font-body);
-    flex-shrink: 0;
-    background: transparent;
-    border: none;
-    color: rgba(255, 255, 255, 0.48);
-    font-size: 0.9rem;
-    letter-spacing: 0.02em;
-    padding: 16px 24px;
-    margin: 0;
-    cursor: pointer;
+  .unifiedCategoryNav {
     position: relative;
+    left: 50%;
+    width: max-content;
+    max-width: min(100vw,1200px);
+    min-height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 22px 0 clamp(28px, 4vw, 50px);
+    padding: 6px;
+    overflow-x: auto;
+    border: 1px solid #2f2f2f;
+    border-radius: 999px;
+    background: #f5f5f5;
+    transform: translateX(-50%);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mainCategoryBtn,
+  .subCategoryBtn {
+    flex: 0 0 auto;
+    min-height: 44px;
+    padding: 0 24px;
+    border: 0;
+    border-radius: 999px;
     font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 800;
+    cursor: pointer;
     white-space: nowrap;
     transition:
-      color 260ms ease,
-      background 260ms ease,
-      box-shadow 260ms ease;
+      background 220ms ease,
+      color 220ms ease,
+      opacity 220ms ease,
+      transform 220ms ease;
   }
 
-  .categoryBtn::after {
-    content: "";
-    position: absolute;
-    bottom: -1px;
-    left: 24px;
-    right: 24px;
-    height: 1px;
+  .mainCategoryBtn {
+    background: transparent;
+    color: rgba(8, 8, 8, 0.56);
+  }
+
+  .mainCategoryBtn:hover {
+    color: #080808;
+  }
+
+  .mainCategoryBtn.is-active {
     background: #ffc400;
-    transform: scaleX(0);
-    transform-origin: center;
-    transition: transform 0.3s ease;
+    color: #080808;
   }
 
-  .categoryBtn:hover {
-    color: rgba(255, 255, 255, 0.88);
-  }
-
-  .categoryBtn.is-active {
-    color: #ffc400;
-  }
-
-  .categoryBtn.is-active::after {
-    transform: scaleX(1);
-  }
-
-  .equipmentStage {
-    position: relative;
-    width: 100%;
-    min-height: 400px;
-    margin: 0;
-    padding: 0;
-  }
-
-  .equipmentCard {
+  .inlineSubNav {
+    flex: 0 0 auto;
     display: none;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    opacity: 0;
-    transform: translateY(14px);
-    filter: blur(5px);
-    pointer-events: none;
-    transition:
-      opacity 420ms cubic-bezier(0.22, 1, 0.36, 1),
-      transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
-      filter 420ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .equipmentCard.is-active {
-    display: grid;
-    grid-template-columns: 60% 40%;
-    gap: clamp(40px, 6vw, 100px);
     align-items: center;
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
-    pointer-events: auto;
-    animation: fadeIn 0.5s ease;
+    gap: 0;
+    margin: 0 8px 0 2px;
+    padding: 4px;
+    border: 1px solid #2f2f2f;
+    border-radius: 999px;
+    background: #ffc400;
   }
 
-  @keyframes fadeIn {
+  .inlineSubNav.is-active {
+    display: inline-flex;
+  }
+
+  .subCategoryBtn {
+    display: none;
+    min-height: 36px;
+    padding: 0 20px;
+    background: transparent;
+    color: rgba(8, 8, 8, 0.72);
+    font-size: 0.74rem;
+  }
+
+  .subCategoryBtn.is-visible {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .subCategoryBtn.is-active {
+    background: #2f2f2f;
+    color: #ffffff;
+  }
+
+  .equipmentContent {
+    position: relative;
+    flex: 1;
+    display: grid;
+    align-content: start;
+    gap: clamp(28px, 3vw, 44px);
+    min-height: calc(100vh - 250px);
+  }
+
+.equipmentCarousel {
+  position: relative;
+  width: min(100%, calc(100vw - 112px));
+  max-width: 1380px;
+  margin: 0 auto;
+  overflow: visible;
+  padding: 0 58px;
+}
+
+  .equipmentCarousel[hidden] {
+    display: none !important;
+  }
+
+  .equipmentCarousel.is-active {
+    display: block;
+  }
+
+.equipmentGrid {
+  display: none;
+  width: 100%;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(240px, 240px);
+  grid-template-columns: none;
+  gap: 18px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 10px 0 16px;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.equipmentGrid.is-active {
+  display: grid;
+}
+
+.equipmentGrid::-webkit-scrollbar {
+  display: none;
+}
+
+  .carouselArrow,
+  .detailArrow {
+    position: absolute;
+    z-index: 8;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255, 196, 0, 0.42);
+    border-radius: 999px;
+    background: rgba(8, 8, 8, 0.82);
+    color: #ffc400;
+    font-family: inherit;
+    font-size: 1.85rem;
+    line-height: 1;
+    cursor: pointer;
+    backdrop-filter: blur(14px);
+    transition:
+      background 220ms ease,
+      border-color 220ms ease,
+      color 220ms ease,
+      transform 220ms ease,
+      box-shadow 220ms ease;
+  }
+
+  .carouselArrow,
+  .detailArrow {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .carouselArrow:hover,
+  .detailArrow:hover {
+    background: #ffc400;
+    border-color: #ffc400;
+    color: #080808;
+    transform: translateY(-50%) scale(1.04);
+    box-shadow: 0 16px 42px rgba(255, 196, 0, 0.18);
+  }
+
+.carouselArrow {
+  z-index: 50;
+}
+
+.carouselArrow--prev {
+  left: 6px;
+}
+
+.carouselArrow--next {
+  right: 6px;
+}
+
+  .detailArrow--prev {
+    left: 18px;
+  }
+
+  .detailArrow--next {
+    right: 18px;
+  }
+
+  .detailArrow[hidden] {
+    display: none !important;
+  }
+
+  .machineCard {
+    display: none;
+    min-height: clamp(220px, 19vw, 280px);
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid transparent;
+    border-radius: 0;
+    background: #d9d9d9;
+    color: #080808;
+    text-align: left;
+    cursor: pointer;
+    scroll-snap-align: center;
+    transition:
+      opacity 260ms ease,
+      filter 260ms ease,
+      border-color 220ms ease,
+      transform 220ms ease,
+      box-shadow 220ms ease,
+      background 220ms ease;
+  }
+
+  .machineCard.is-visible {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .machineCard:hover,
+  .machineCard.is-selected {
+    border-color: rgba(255, 196, 0, 0.95);
+    transform: translateY(-3px);
+    box-shadow: 0 22px 54px rgba(0, 0, 0, 0.36);
+  }
+
+  .equipmentGrid.has-selection .machineCard.is-visible:not(.is-selected) {
+    opacity: 0.42;
+    filter: grayscale(1);
+    transform: scale(0.985);
+  }
+
+  .equipmentGrid.has-selection .machineCard.is-visible:not(.is-selected):hover {
+    opacity: 0.72;
+    filter: grayscale(0.55);
+  }
+
+  .machineCard.is-selected {
+    border-color: #ffc400;
+    background: #eeeeee;
+    box-shadow:
+      0 0 0 1px rgba(255, 196, 0, 0.7),
+      0 24px 64px rgba(255, 196, 0, 0.14);
+  }
+
+  .machineImage {
+    display: block;
+    height: clamp(135px,23vw,238px);
+    overflow: hidden;
+    background: #d9d9d9;
+  }
+
+.machineImage img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  opacity: 1;
+  filter: saturate(0.92) contrast(1.02);
+}
+
+  .machineMeta {
+    display: grid;
+    gap: 8px;
+    margin-top: auto;
+    padding: 18px 20px;
+  }
+
+  .machineEyebrow {
+    color: rgba(8, 8, 8, 0.62);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .machineName {
+    display: grid;
+    gap: 2px;
+    color: #1c1c1c;
+    font-size: 1.05rem;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+  }
+
+  .machineName small {
+    color: #1c1c1c;
+    font-size: 1em;
+    font-weight: inherit;
+  }
+
+  .equipmentDetail {
+    position: relative;
+    display: none;
+    grid-template-columns: minmax(0, 1.12fr) minmax(340px, 0.88fr);
+    min-height: clamp(340px, 30vw, 430px);
+    overflow: hidden;
+    border: 2px solid rgba(255, 196, 0, 0.92);
+    border-radius: 18px;
+    background:
+      radial-gradient(circle at 80% 50%, rgba(255, 196, 0, 0.08), transparent 34%),
+      rgba(5, 5, 5, 0.96);
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.46);
+  }
+
+  .equipmentDetail.is-active {
+    display: grid;
+    animation: detailIn 360ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @keyframes detailIn {
     from {
       opacity: 0;
-      transform: translateY(8px);
+      transform: translateY(10px);
+      filter: blur(4px);
     }
     to {
       opacity: 1;
       transform: translateY(0);
+      filter: blur(0);
     }
   }
 
-  .equipmentImage {
-    aspect-ratio: 16 / 11;
+  .detailClose {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    z-index: 10;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.78);
+    font-family: inherit;
+    font-size: 1.65rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 180ms ease, transform 180ms ease;
+  }
+
+  .detailClose:hover {
+    color: #ffc400;
+    transform: rotate(90deg);
+  }
+
+  .detailImage {
+    min-height: 100%;
     overflow: hidden;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    border: 1px solid transparent;
-    border-radius: clamp(18px, 1.4vw, 28px);
-    transition:
-      border-color 0.3s ease,
-      box-shadow 0.3s ease;
+    background: rgba(255, 255, 255, 0.08);
   }
 
-  .equipmentImage img {
-    width: 100%;
-    height: 100%;
-    max-width: none;
-    object-fit: cover;
-    display: block;
-    margin: 0;
-    padding: 0;
-    transform: scale(1.012);
-    transition:
-      transform 900ms cubic-bezier(0.22, 1, 0.36, 1),
-      filter 0.3s ease;
-  }
+.detailImage img {
+  width: 100%;
+  height: 100%;
+  min-height: 340px;
+  max-height: 552px;
+  display: block;
+  object-fit: cover;
+  filter: saturate(0.94) contrast(1.02);
+}
 
-  .equipmentCard.is-active .equipmentImage {
-    border-color: rgba(255, 196, 0, 0.82);
-    box-shadow:
-      0 0 0 1px rgba(255, 196, 0, 0.35),
-      0 24px 72px rgba(255, 196, 0, 0.1);
-  }
+.detailInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(28px, 3.6vw, 52px);
+}
 
-  .equipmentCard.is-active .equipmentImage img {
-    transform: scale(1);
-  }
-
-  .equipmentCard.is-active:hover .equipmentImage {
-    border-color: #ffc400;
-    box-shadow:
-      0 0 0 1px rgba(255, 196, 0, 0.55),
-      0 28px 86px rgba(255, 196, 0, 0.16);
-  }
-
-  .equipmentCard.is-active:hover .equipmentImage img {
-    transform: scale(1.025);
-  }
-
-  .equipmentInfo {
-    padding: 0;
-    margin: 0;
-    font-family: var(--font-body);
-  }
-
-  .equipmentCategory {
+  .detailEyebrow {
+    margin: 0 0 16px;
     color: #ffc400;
     font-size: 0.78rem;
-    letter-spacing: 0.15em;
+    font-weight: 800;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    font-weight: 600;
-    margin: 0 0 16px;
   }
 
-  .equipmentName {
-    color: #ffffff;
-    font-size: clamp(1.8rem, 3.2vw, 2.6rem);
-    font-weight: 300;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    margin: 0 0 20px;
-  }
-
-  .equipmentDescription {
-    color: #c9c9c9;
-    font-size: 1rem;
-    line-height: 1.6;
-    margin: 0 0 32px;
-    max-width: 42ch;
-  }
-
-  .equipmentSpecs {
+  .detailTitle {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin: 0 0 40px;
-    padding: 24px 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    list-style: none;
+    gap: 2px;
+    margin: 0 0 20px;
+    color: #ffc400;
+    font-size: clamp(1.8rem, 3vw, 3rem);
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    line-height: 0.96;
+    text-transform: uppercase;
   }
+
+.detailDescription {
+  max-width: 48ch;
+  margin: 0 0 30px;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: clamp(0.9rem, 0.95vw, 1rem);
+  line-height: 1.5;
+}
+
+.detailSpecs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px clamp(24px, 3vw, 56px);
+  margin: 0 0 30px;
+  padding: 0;
+}
 
   .spec {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+    display: grid;
+    gap: 8px;
     margin: 0;
-    padding: 0;
   }
 
   .spec dt {
-    color: #6b6b6b;
-    font-size: 0.72rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    font-weight: 600;
     margin: 0;
+    color: rgba(255, 255, 255, 0.38);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
   }
 
   .spec dd {
-    color: #ffffff;
-    font-size: 1.1rem;
-    font-weight: 400;
     margin: 0;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 700;
   }
 
-  .equipmentCta {
-    font-family: var(--font-body);
+  .detailActions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .primaryAction,
+  .secondaryAction {
+    min-height: 48px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
-    min-height: 54px;
-    padding: 0 32px;
-    border: 1px solid rgba(255, 196, 0, 0.82);
-    border-radius: 10px;
-    background: rgba(255, 196, 0, 0.08);
-    color: #ffc400;
-    font-size: 1rem;
-    letter-spacing: 0.08em;
+    padding: 0 28px;
+    border-radius: 7px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 800;
     text-decoration: none;
     transition:
-      background 0.3s ease,
-      color 0.3s ease,
-      border-color 0.3s ease,
-      box-shadow 0.3s ease,
-      gap 0.3s ease;
+      background 220ms ease,
+      border-color 220ms ease,
+      color 220ms ease,
+      transform 220ms ease;
+    width: 400px;
   }
 
-  .equipmentCta:hover {
+  .primaryAction {
+    border: 1px solid #ffc400;
     background: #ffc400;
     color: #080808;
+  }
+
+  .secondaryAction {
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    background: transparent;
+    color: rgba(255, 255, 255, 0.84);
+  }
+
+  .primaryAction:hover,
+  .secondaryAction:hover {
+    transform: translateY(-1px);
+  }
+
+  .secondaryAction:hover {
     border-color: #ffc400;
-    box-shadow: 0 18px 48px rgba(255, 196, 0, 0.18);
-    gap: 16px;
+    color: #ffc400;
   }
 
-  .equipmentNote {
-    margin-top: 80px;
-    padding-top: 32px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  .secondaryAction[aria-disabled="true"] {
+    opacity: 0.45;
+    pointer-events: none;
   }
 
-  .equipmentNote p {
-    color: #6b6b6b;
-    font-size: 0.85rem;
-    line-height: 1.6;
-    margin: 0;
-  }
-
-  @media (min-width: 1920px) {
-    .equipmentSection {
-      max-width: 1920px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    .equipmentSection {
-      padding:
-        clamp(60px, 8vw, 100px)
-        clamp(24px, 5vw, 48px);
+  @media (max-width: 1180px) {
+    .equipmentGrid {
+      grid-auto-columns: minmax(230px, 230px);
+      grid-template-columns: none;
     }
 
-    .equipmentCard.is-active {
+    .equipmentDetail {
       grid-template-columns: 1fr;
-      gap: 40px;
     }
 
-    .equipmentName {
-      font-size: clamp(1.6rem, 4vw, 2rem);
+    .detailImage img {
+      min-height: 340px;
+      max-height: 420px;
     }
   }
 
-  @media (max-width: 640px) {
-    .equipmentSection {
-      padding: 60px 24px;
+  @media (max-width: 760px) {
+    .equipmentShell {
+      min-height: auto;
+      padding: 68px 18px;
     }
 
-    .categoryNav {
-      margin-bottom: 40px;
+    .moduleHeader {
+      margin-bottom: 18px;
     }
 
-    .categoryBtn {
-      padding: 12px 16px;
-      font-size: 0.82rem;
+    .unifiedCategoryNav {
+      left: auto;
+      width: 100%;
+      max-width: 100%;
+      min-height: auto;
+      border-radius: 24px;
+      transform: none;
+      justify-content: flex-start;
     }
 
-    .equipmentSpecs {
+    .mainCategoryBtn,
+    .subCategoryBtn {
+      min-height: 40px;
+      padding: 0 16px;
+      font-size: 0.72rem;
+    }
+
+    .inlineSubNav {
+      padding: 4px;
+      margin-right: 6px;
+    }
+
+    .equipmentGrid {
+      grid-auto-columns: minmax(250px, 250px);
+      grid-template-columns: none;
+      gap: 14px;
+      padding: 0 44px 62px;
+    }
+
+    .machineCard {
+      min-height: 300px;
+    }
+
+    .machineImage {
+      height: 200px;
+    }
+
+    .carouselArrow {
+      top: auto;
+      bottom: 14px;
+      width: 40px;
+      height: 40px;
+      font-size: 1.7rem;
+      transform: none;
+    }
+
+    .carouselArrow:hover {
+      transform: scale(1.04);
+    }
+
+    .carouselArrow--prev {
+      left: 12px;
+    }
+
+    .carouselArrow--next {
+      right: 12px;
+    }
+
+    .equipmentDetail {
+      min-height: auto;
+      border-radius: 16px;
+    }
+
+    .detailClose {
+      top: 12px;
+      right: 12px;
+      color: #ffffff;
+      background: rgba(0, 0, 0, 0.28);
+      border-radius: 999px;
+    }
+
+    .detailArrow {
+      top: 130px;
+      width: 40px;
+      height: 40px;
+      font-size: 1.7rem;
+    }
+
+    .detailArrow--prev {
+      left: 12px;
+    }
+
+    .detailArrow--next {
+      right: 12px;
+    }
+
+    .detailImage img {
+      min-height: 260px;
+      max-height: 320px;
+    }
+
+    .detailInfo {
+      padding: 28px 20px 22px;
+    }
+
+    .detailTitle {
+      font-size: clamp(1.55rem, 10vw, 2.3rem);
+    }
+
+    .detailDescription {
+      margin-bottom: 30px;
+    }
+
+    .detailSpecs {
       grid-template-columns: 1fr;
-      gap: 16px;
+      gap: 18px;
+      margin-bottom: 30px;
     }
 
-    .equipmentName {
-      font-size: 1.5rem;
+    .detailActions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
     }
 
-    .equipmentDescription {
-      font-size: 0.95rem;
-    }
-
-    .equipmentCta {
+    .primaryAction,
+    .secondaryAction {
       width: 100%;
     }
   }
 
+  @media (max-width: 420px) {
+    .equipmentShell {
+      padding-left: 14px;
+      padding-right: 14px;
+    }
+
+    .mainCategoryBtn,
+    .subCategoryBtn {
+      padding: 0 14px;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .equipmentCard,
-    .equipmentImage,
-    .equipmentImage img,
-    .categoryBtn,
-    .equipmentCta {
-      transition: none;
+    .equipmentDetail,
+    .machineCard,
+    .primaryAction,
+    .secondaryAction,
+    .mainCategoryBtn,
+    .subCategoryBtn,
+    .detailClose,
+    .carouselArrow,
+    .detailArrow {
       animation: none;
+      transition: none;
     }
   }
 </style>
