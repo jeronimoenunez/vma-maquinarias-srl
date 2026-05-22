@@ -6,6 +6,7 @@ type CardData = {
   href: string;
   images: string[];
   autoplay?: boolean;
+  variant?: "image" | "logo";
 };
 
 type Props = {
@@ -20,24 +21,24 @@ const fallbackCards: CardData[] = [
     title: "Alquiler, venta de equipos y servicio técnico.",
     subtitle:
       "Tres líneas de trabajo para resolver disponibilidad, inversión y continuidad operativa.",
-    href: "/unidades",
+    href: "#contacto",
     images: [
-      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=1600&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1581092446327-9b52bd1570c2?w=1600&auto=format&fit=crop&q=80",
+      "/images/IMG_20250703_094445389_HDR.jpg",
+      "/images/vma-version-b/banner-hs18e.png",
+      "/images/Star-6.png",
     ],
     autoplay: true,
+    variant: "image",
   },
   {
     kicker: "MÉTODO VMA",
     title: "Lo que nos hace diferentes.",
     subtitle:
       "Análisis, asesoramiento comprometido y proyección 360° antes de mover un equipo.",
-    href: "/metodo",
-    images: [
-      "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1600&auto=format&fit=crop&q=80",
-    ],
+    href: "#contacto",
+    images: [],
     autoplay: false,
+    variant: "logo",
   },
 ];
 
@@ -52,12 +53,10 @@ const safeCards = Array.isArray(cards) && cards.length ? cards : fallbackCards;
 
 <section id="negocio" class="businessSection" data-business-cards>
   <div class="businessShell">
-    <div class="businessRule" aria-hidden="true"></div>
-
-    <header class="businessHeader">
+    <!-- <header class="businessHeader">
       <p class="businessKicker">{kicker}</p>
       <h2 class="businessTitle">{title}</h2>
-    </header>
+    </header> -->
 
     <div class="businessGrid">
       {
@@ -69,18 +68,26 @@ const safeCards = Array.isArray(cards) && cards.length ? cards : fallbackCards;
             aria-label={`Ver ${card.title}`}
           >
             <div class="businessImageFrame">
-              <div class="businessImageStack">
-                {card.images.map((src, imageIndex) => (
-                  <img
-                    class={`businessImage ${imageIndex === 0 ? "isActive" : ""}`}
-                    src={src}
-                    alt=""
-                    loading={imageIndex === 0 ? "eager" : "lazy"}
-                    decoding="async"
-                    data-business-slide
-                  />
-                ))}
-              </div>
+              {
+                card.variant === "logo" ? (
+                  <div class="businessLogoFrame" aria-hidden="true">
+                    <span class="businessLogoMark">M</span>
+                  </div>
+                ) : (
+                  <div class="businessImageStack">
+                    {card.images.map((src, imageIndex) => (
+                      <img
+                        class={`businessImage ${imageIndex === 0 ? "isActive" : ""}`}
+                        src={src}
+                        alt=""
+                        loading={imageIndex === 0 ? "eager" : "lazy"}
+                        decoding="async"
+                        data-business-slide
+                      />
+                    ))}
+                  </div>
+                )
+              }
 
               <div class="businessOverlay" aria-hidden="true"></div>
             </div>
@@ -103,10 +110,13 @@ const safeCards = Array.isArray(cards) && cards.length ? cards : fallbackCards;
 
 <script is:inline>
   (() => {
-    const bindBusinessCards = () => {
+    const initBusinessCards = () => {
       const cards = document.querySelectorAll(".businessCard--carousel");
 
       cards.forEach((card) => {
+        if (card.dataset.carouselReady === "true") return;
+        card.dataset.carouselReady = "true";
+
         const slides = [...card.querySelectorAll("[data-business-slide]")];
         if (slides.length <= 1) return;
 
@@ -120,93 +130,95 @@ const safeCards = Array.isArray(cards) && cards.length ? cards : fallbackCards;
       });
     };
 
-    bindBusinessCards();
-    document.addEventListener("DOMContentLoaded", bindBusinessCards, { once: true });
+    initBusinessCards();
+    document.addEventListener("DOMContentLoaded", initBusinessCards, { once: true });
   })();
 </script>
 
 <style>
   .businessSection {
-    background: #050505;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    background: #030303;
     color: #ffffff;
-    padding:
-      clamp(58px, 6vw, 92px)
-      clamp(30px, 4vw, 76px)
-      clamp(76px, 8vw, 120px);
+    overflow: hidden;
+    border-radius: clamp(24px, 3vw, 44px) clamp(24px, 3vw, 44px) 0 0;
+    margin-top: clamp(-22px, -2vw, -8px);
   }
 
   .businessShell {
-    width: 100%;
-  }
-
-  .businessRule {
-    width: 100%;
-    height: 1px;
-    background: rgba(255, 255, 255, 0.76);
-    margin-bottom: clamp(38px, 4vw, 64px);
+    /* width: min(100%, 1440px); */
+    margin: 0 auto;
+    padding:
+      clamp(58px, 6vw, 92px)
+      clamp(28px, 4.8vw, 86px)
+      clamp(54px, 5.6vw, 86px);
   }
 
   .businessHeader {
     display: grid;
-    grid-template-columns: minmax(220px, 0.36fr) minmax(0, 1fr);
-    gap: clamp(32px, 5vw, 86px);
+    grid-template-columns: minmax(150px, 0.35fr) minmax(0, 1fr);
+    gap: clamp(26px, 5vw, 82px);
     align-items: start;
-    margin-bottom: clamp(38px, 4.8vw, 74px);
+    margin-bottom: clamp(34px, 4.4vw, 66px);
   }
 
   .businessKicker {
     margin: 0;
     color: #ffc400;
     font-family: var(--font-body);
-    font-size: clamp(1.02rem, 1.16vw, 1.36rem);
-    font-weight: 400;
-    text-transform: none;
+    font-size: clamp(0.76rem, 0.8vw, 0.94rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
   }
 
   .businessTitle {
     margin: 0;
-    max-width: 100%;
+    max-width: 13ch;
     color: #ffffff;
     font-family: var(--font-body);
-    font-size: clamp(2.6rem, 4.65vw, 6.15rem);
+    font-size: clamp(3.1rem, 5.25vw, 6.2rem);
     font-weight: 400;
-    line-height: 0.98;
-    letter-spacing: -0.068em;
+    line-height: 0.96;
+    letter-spacing: -0.074em;
     text-wrap: balance;
   }
 
   .businessGrid {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: clamp(24px, 3vw, 44px);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(24px, 3vw, 42px);
+    align-items: start;
   }
 
   .businessCard {
     position: relative;
     display: grid;
-    grid-template-rows: auto auto 1fr;
-    min-height: clamp(570px, 68svh, 760px);
+    grid-template-rows: auto auto auto;
+    min-width: 0;
     color: #ffffff;
     text-decoration: none;
-    opacity: 1;
-    filter: none;
     transition:
-      opacity 0.35s ease,
-      filter 0.35s ease,
-      transform 0.35s ease;
+      opacity 240ms ease,
+      filter 240ms ease,
+      transform 240ms ease;
   }
 
   .businessImageFrame {
     position: relative;
-    aspect-ratio: 16 / 9.6;
+    width: 100%;
+    aspect-ratio: 16 / 9.15;
     overflow: hidden;
-    border: 1px solid transparent;
-    border-radius: clamp(18px, 1.6vw, 28px);
-    background: #121212;
+    border-radius: clamp(18px, 1.7vw, 28px);
+    background: #d9d9d9;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     transition:
-      border-color 0.35s ease,
-      box-shadow 0.35s ease,
-      transform 0.35s ease;
+      border-color 240ms ease,
+      box-shadow 240ms ease,
+      transform 240ms ease;
   }
 
   .businessImageStack {
@@ -221,18 +233,39 @@ const safeCards = Array.isArray(cards) && cards.length ? cards : fallbackCards;
     height: 100%;
     max-width: none;
     object-fit: cover;
+    object-position: center;
     opacity: 0;
-    transform: scale(1.035);
-    filter: saturate(0.92) contrast(0.98);
+    transform: scale(1.025);
+    filter: saturate(0.92) contrast(1.02);
     transition:
-      opacity 0.9s ease,
-      transform 7s ease,
-      filter 0.35s ease;
+      opacity 800ms ease,
+      transform 6200ms ease,
+      filter 240ms ease;
   }
 
   .businessImage.isActive {
     opacity: 1;
     transform: scale(1);
+  }
+
+  .businessLogoFrame {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(circle at 50% 4%, rgba(255, 255, 255, 0.96), rgba(228, 228, 228, 0.94) 48%, rgba(196, 196, 196, 0.94) 100%);
+  }
+
+  .businessLogoMark {
+    color: #000000;
+    font-family: var(--font-body);
+    font-size: clamp(8rem, 16vw, 17rem);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.14em;
+    transform: scaleX(1.16);
   }
 
   .businessOverlay {
@@ -242,103 +275,98 @@ const safeCards = Array.isArray(cards) && cards.length ? cards : fallbackCards;
     background:
       linear-gradient(
         180deg,
-        rgba(0, 0, 0, 0.04) 0%,
-        rgba(0, 0, 0, 0.04) 46%,
-        rgba(0, 0, 0, 0.26) 100%
+        rgba(0, 0, 0, 0.03) 0%,
+        rgba(0, 0, 0, 0.04) 48%,
+        rgba(0, 0, 0, 0.22) 100%
       );
     pointer-events: none;
-    transition: background 0.35s ease;
   }
 
   .businessMeta {
+    width: fit-content;
+    min-height: 38px;
     display: inline-flex;
     align-items: center;
-    width: fit-content;
-    min-height: 44px;
-    padding: 0 18px;
-    margin-top: clamp(20px, 2vw, 28px);
-    border: 1px solid rgba(255, 255, 255, 0.55);
-    border-radius: 10px;
-    color: rgba(255, 255, 255, 0.88);
+    justify-content: center;
+    margin-top: clamp(16px, 1.7vw, 22px);
+    padding: 0 16px;
+    border: 1px solid rgba(255, 255, 255, 0.42);
+    border-radius: 9px;
+    background: rgba(5, 5, 5, 0.48);
+    color: rgba(255, 255, 255, 0.78);
     font-family: var(--font-body);
-    font-size: clamp(0.86rem, 0.95vw, 1rem);
-    font-weight: 400;
+    font-size: clamp(0.68rem, 0.72vw, 0.82rem);
+    font-weight: 600;
     line-height: 1;
-    letter-spacing: -0.01em;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     transition:
-      color 0.3s ease,
-      border-color 0.3s ease,
-      background 0.3s ease;
+      color 220ms ease,
+      border-color 220ms ease,
+      background 220ms ease;
   }
 
   .businessText {
     position: relative;
-    padding-top: clamp(22px, 2.2vw, 34px);
-    padding-right: clamp(30px, 4vw, 80px);
+    min-height: clamp(150px, 12vw, 210px);
+    padding-top: clamp(20px, 2vw, 30px);
+    padding-right: clamp(32px, 4vw, 72px);
     font-family: var(--font-body);
   }
 
   .businessText h3 {
     margin: 0;
+    max-width: 15ch;
     color: #ffffff;
     font-family: var(--font-body);
-    font-size: clamp(2.35rem, 3.6vw, 5rem);
+    font-size: clamp(2.2rem, 3.35vw, 4.5rem);
     font-weight: 400;
-    line-height: 1.02;
-    letter-spacing: -0.066em;
+    line-height: 0.99;
+    letter-spacing: -0.07em;
     text-wrap: balance;
-    transition: color 0.3s ease;
+    transition: color 220ms ease;
   }
 
   .businessText p {
-    max-width: 60ch;
-    margin: clamp(14px, 1.4vw, 22px) 0 0;
-    color: rgba(255, 255, 255, 0.72);
+    max-width: 54ch;
+    margin: clamp(12px, 1.2vw, 18px) 0 0;
+    color: rgba(255, 255, 255, 0.66);
     font-family: var(--font-body);
-    font-size: clamp(0.96rem, 1vw, 1.08rem);
+    font-size: clamp(0.8rem, 0.84vw, 0.95rem);
     font-weight: 400;
-    line-height: 1.45;
+    line-height: 1.42;
     letter-spacing: -0.018em;
-    transition: color 0.3s ease;
+    transition: color 220ms ease;
   }
 
   .businessArrow {
     position: absolute;
-    top: clamp(28px, 2.4vw, 42px);
+    top: clamp(24px, 2.3vw, 38px);
     right: 0;
-    color: rgba(255, 255, 255, 0.68);
-    font-size: clamp(1.6rem, 2vw, 2.35rem);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: clamp(1.45rem, 1.8vw, 2.1rem);
     line-height: 1;
     transition:
-      color 0.25s ease,
-      transform 0.25s ease;
+      color 220ms ease,
+      transform 220ms ease;
   }
 
-  /* Hover activo */
   .businessCard:hover {
-    transform: translateY(-4px);
+    transform: translateY(-3px);
   }
 
   .businessCard:hover .businessImageFrame {
-    border-color: #ffc400;
+    border-color: rgba(255, 196, 0, 0.88);
     box-shadow:
-      0 0 0 1px rgba(255, 196, 0, 0.45),
-      0 26px 78px rgba(255, 196, 0, 0.12);
+      0 0 0 1px rgba(255, 196, 0, 0.28),
+      0 24px 70px rgba(255, 196, 0, 0.09);
   }
 
   .businessCard:hover .businessImage.isActive {
     transform: scale(1.035);
-    filter: saturate(1.05) contrast(1.02);
-  }
-
-  .businessCard:hover .businessOverlay {
-    background:
-      linear-gradient(
-        180deg,
-        rgba(0, 0, 0, 0.02) 0%,
-        rgba(0, 0, 0, 0.03) 46%,
-        rgba(0, 0, 0, 0.18) 100%
-      );
+    filter: saturate(1.04) contrast(1.04);
   }
 
   .businessCard:hover .businessMeta {
@@ -347,106 +375,147 @@ const safeCards = Array.isArray(cards) && cards.length ? cards : fallbackCards;
     background: rgba(255, 196, 0, 0.08);
   }
 
-  .businessCard:hover .businessText p {
+  .businessCard:hover .businessText p,
+  .businessCard:hover .businessArrow {
     color: #ffc400;
   }
 
   .businessCard:hover .businessArrow {
-    color: #ffc400;
-    transform: translate(5px, 5px);
+    transform: translate(4px, 4px);
   }
 
-  /* Card no enfocada cuando otra está en hover */
-  .businessGrid:has(.businessCard:hover) .businessCard:not(:hover) {
-    opacity: 0.52;
-    filter: grayscale(1);
-  }
-
-  .businessGrid:has(.businessCard:hover) .businessCard:not(:hover) .businessImage {
-    filter: grayscale(1) saturate(0) contrast(0.92) brightness(0.72);
-  }
-
-  .businessGrid:has(.businessCard:hover) .businessCard:not(:hover) .businessMeta {
-    color: rgba(255, 255, 255, 0.34);
-    border-color: rgba(255, 255, 255, 0.22);
-    background: transparent;
-  }
-
-  .businessGrid:has(.businessCard:hover) .businessCard:not(:hover) .businessText h3 {
-    color: rgba(255, 255, 255, 0.42);
-  }
-
-  .businessGrid:has(.businessCard:hover) .businessCard:not(:hover) .businessText p {
-    color: rgba(255, 255, 255, 0.28);
-  }
-
-  .businessGrid:has(.businessCard:hover) .businessCard:not(:hover) .businessArrow {
-    color: rgba(255, 255, 255, 0.24);
-  }
-
-  @media (max-width: 980px) {
-    .businessHeader,
-    .businessGrid {
-      grid-template-columns: 1fr;
-    }
-
-    .businessTitle {
-      max-width: 14ch;
-    }
-
-    .businessCard {
-      min-height: auto;
-    }
-
-    .businessImageFrame {
-      aspect-ratio: 16 / 10;
-    }
-
+  @supports selector(:has(*)) {
     .businessGrid:has(.businessCard:hover) .businessCard:not(:hover) {
-      opacity: 1;
-      filter: none;
+      opacity: 0.52;
+      filter: grayscale(1);
     }
 
     .businessGrid:has(.businessCard:hover) .businessCard:not(:hover) .businessImage {
-      filter: saturate(0.92) contrast(0.98);
-    }
-
-    .businessGrid:has(.businessCard:hover) .businessCard:not(:hover) .businessMeta {
-      color: rgba(255, 255, 255, 0.88);
-      border-color: rgba(255, 255, 255, 0.55);
+      filter: grayscale(1) saturate(0) contrast(0.9) brightness(0.76);
     }
 
     .businessGrid:has(.businessCard:hover) .businessCard:not(:hover) .businessText h3 {
-      color: #ffffff;
+      color: rgba(255, 255, 255, 0.42);
     }
 
-    .businessGrid:has(.businessCard:hover) .businessCard:not(:hover) .businessText p {
-      color: rgba(255, 255, 255, 0.72);
+    .businessGrid:has(.businessCard:hover) .businessCard:not(:hover) .businessText p,
+    .businessGrid:has(.businessCard:hover) .businessCard:not(:hover) .businessArrow {
+      color: rgba(255, 255, 255, 0.28);
     }
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: 1080px) {
+    .businessShell {
+      padding:
+        clamp(50px, 7vw, 74px)
+        24px
+        clamp(50px, 7vw, 74px);
+    }
+
+    .businessHeader {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-bottom: 30px;
+    }
+
+    .businessTitle {
+      max-width: 13ch;
+      font-size: clamp(2.6rem, 8vw, 5rem);
+    }
+
+    .businessGrid {
+      gap: 22px;
+    }
+  }
+
+  @media (max-width: 760px) {
     .businessSection {
-      padding: 56px 22px 76px;
+      border-radius: 26px 26px 0 0;
+      margin-top: -10px;
+    }
+
+    .businessShell {
+      padding: 42px 14px 50px;
+    }
+
+    .businessHeader {
+      text-align: left;
+      margin-bottom: 24px;
+    }
+
+    .businessKicker {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+    }
+
+    .businessTitle {
+      max-width: 12.5ch;
+      font-size: clamp(2.05rem, 9.6vw, 3rem);
+      line-height: 1;
+      letter-spacing: -0.06em;
+    }
+
+    .businessGrid {
+      grid-template-columns: 1fr;
+      gap: 28px;
     }
 
     .businessImageFrame {
-      aspect-ratio: 4 / 3;
-      border-radius: 24px;
+      aspect-ratio: 16 / 10.8;
+      border-radius: 22px;
+    }
+
+    .businessLogoMark {
+      font-size: clamp(7rem, 35vw, 10rem);
+    }
+
+    .businessMeta {
+      min-height: 34px;
+      margin-top: 14px;
+      padding: 0 13px;
+      font-size: 0.62rem;
     }
 
     .businessText {
-      padding-right: 0;
+      min-height: auto;
+      padding-top: 16px;
+      padding-right: 30px;
     }
 
     .businessText h3 {
-      font-size: clamp(2rem, 10vw, 3.45rem);
+      max-width: 13ch;
+      font-size: clamp(1.75rem, 8.6vw, 2.55rem);
+      line-height: 1;
+    }
+
+    .businessText p {
+      max-width: 33ch;
+      font-size: 0.78rem;
     }
 
     .businessArrow {
-      position: static;
-      display: block;
-      margin-bottom: 14px;
+      top: 18px;
+      font-size: 1.4rem;
+    }
+
+    @supports selector(:has(*)) {
+      .businessGrid:has(.businessCard:hover) .businessCard:not(:hover) {
+        opacity: 1;
+        filter: none;
+      }
+
+      .businessGrid:has(.businessCard:hover) .businessCard:not(:hover) .businessImage {
+        filter: saturate(0.92) contrast(1.02);
+      }
+
+      .businessGrid:has(.businessCard:hover) .businessCard:not(:hover) .businessText h3 {
+        color: #ffffff;
+      }
+
+      .businessGrid:has(.businessCard:hover) .businessCard:not(:hover) .businessText p,
+      .businessGrid:has(.businessCard:hover) .businessCard:not(:hover) .businessArrow {
+        color: rgba(255, 255, 255, 0.66);
+      }
     }
   }
 

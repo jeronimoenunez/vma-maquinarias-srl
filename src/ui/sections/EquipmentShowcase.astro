@@ -61,46 +61,18 @@ const mainCategories: Array<{
   defaultSubCategory: SubCategoryId;
   hasSubmenu: boolean;
 }> = [
-  {
-    id: "tijera",
-    label: "Tijeras",
-    defaultSubCategory: "tijera-diesel-4x4",
-    hasSubmenu: true,
-  },
-  {
-    id: "brazo-articulado",
-    label: "Brazos Articulados",
-    defaultSubCategory: "brazo-articulado-diesel-4x4",
-    hasSubmenu: true,
-  },
-  {
-    id: "brazo-telescopico",
-    label: "Brazo Telescópico",
-    defaultSubCategory: "brazo-telescopico",
-    hasSubmenu: false,
-  },
-  {
-    id: "unipersonal",
-    label: "Plataforma Unipersonal",
-    defaultSubCategory: "unipersonal",
-    hasSubmenu: false,
-  },
-  {
-    id: "manipulador-carga",
-    label: "Manipulador Telescópico de Carga",
-    defaultSubCategory: "manipulador-carga",
-    hasSubmenu: false,
-  },
+  { id: "tijera", label: "Tijeras", defaultSubCategory: "tijera-diesel-4x4", hasSubmenu: true },
+  { id: "brazo-articulado", label: "Brazos Articulados", defaultSubCategory: "brazo-articulado-diesel-4x4", hasSubmenu: true },
+  { id: "brazo-telescopico", label: "Brazos Telescópicos", defaultSubCategory: "brazo-telescopico", hasSubmenu: false },
+  { id: "unipersonal", label: "Plataforma universal", defaultSubCategory: "unipersonal", hasSubmenu: false },
+  { id: "manipulador-carga", label: "Manipulador", defaultSubCategory: "manipulador-carga", hasSubmenu: false },
 ];
 
-const subCategories: Record<
-  MainCategoryId,
-  Array<{ id: SubCategoryId; label: string }>
-> = {
+const subCategories: Record<MainCategoryId, Array<{ id: SubCategoryId; label: string }>> = {
   tijera: [
     { id: "tijera-diesel-4x4", label: "Diesel 4x4" },
-    { id: "tijera-electricas", label: "Eléctricas" },
-    { id: "tijera-electricas-4x4", label: "Eléctricas 4x4" },
+    { id: "tijera-electricas", label: "Eléctrico" },
+    { id: "tijera-electricas-4x4", label: "Eléctrico 4x4" },
   ],
   "brazo-articulado": [
     { id: "brazo-articulado-diesel-4x4", label: "Diesel 4x4" },
@@ -112,7 +84,6 @@ const subCategories: Record<
 };
 
 const equipment: EquipmentItem[] = [
-  //Tijera diésel 4x4
   {
     id: "tijera-diesel-4x4",
     mainCategory: "tijera",
@@ -120,16 +91,11 @@ const equipment: EquipmentItem[] = [
     eyebrow: "Diesel 4x4",
     title: "Plataforma Tijera",
     subtitle: "Compact 12DX",
-    description:
-      "Plataforma tijera para trabajos en altura con alcance extendido. Ideal para operación exterior, superficies exigentes y tareas de montaje estructural.",
+    description: "Plataforma tijera para trabajos en altura con alcance extendido. Ideal para operación exterior, superficies exigentes y tareas de montaje estructural.",
     specs: { height: "16m", power: "Diésel", capacity: "230kg", operation: "Doble plataforma" },
-    image: {
-      src: "/images/Firefly7.jpg",
-      alt: "Plataforma tijera diésel 4x4",
-    },
+    image: { src: "/images/Firefly7.jpg", alt: "Plataforma tijera diésel 4x4" },
     manualHref: "/manuales/vma/TijeraDiesel4x4-Compact12DX.pdf",
   },
-//Tijera electrica compact y optimum
   {
     id: "compact-10-12-electrica",
     mainCategory: "tijera",
@@ -137,13 +103,9 @@ const equipment: EquipmentItem[] = [
     eyebrow: "Tijera eléctrica",
     title: "Compact 10-12",
     subtitle: "Eléctrica",
-    description:
-      "Equipo eléctrico compacto para trabajos interiores, mantenimiento industrial, depósitos, naves logísticas y superficies terminadas.",
+    description: "Equipo eléctrico compacto para trabajos interiores, mantenimiento industrial, depósitos, naves logísticas y superficies terminadas.",
     specs: { height: "10-12m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
-    image: {
-      src: "/images/compact-10-12.png",
-      alt: "Plataforma tijera eléctrica Compact 10-12",
-    },
+    image: { src: "/images/compact-10-12.png", alt: "Plataforma tijera eléctrica Compact 10-12" },
     manualHref: "/manuales/vma/TijeraElectricaCompact10-12.pdf",
   },
   {
@@ -153,13 +115,9 @@ const equipment: EquipmentItem[] = [
     eyebrow: "Tijera eléctrica",
     title: "Compact 14",
     subtitle: "Eléctrica",
-    description:
-      "Plataforma tijera eléctrica de mayor alcance para tareas de instalación, mantenimiento y operación en espacios interiores controlados.",
+    description: "Plataforma tijera eléctrica de mayor alcance para tareas de instalación, mantenimiento y operación en espacios interiores controlados.",
     specs: { height: "14m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
-    image: {
-      src: "/images/compact-14.png",
-      alt: "Plataforma tijera eléctrica Compact 14",
-    },
+    image: { src: "/images/compact-14.png", alt: "Plataforma tijera eléctrica Compact 14" },
     manualHref: "/manuales/vma/compact-14-electrica.pdf",
   },
   {
@@ -169,13 +127,9 @@ const equipment: EquipmentItem[] = [
     eyebrow: "Eléctrica",
     title: "Tijera Electrica",
     subtitle: "Compact 8 y 10 N",
-    description:
-      "Modelo compacto para circulación en espacios reducidos. Recomendado para instalaciones interiores, mantenimiento y tareas livianas en altura.",
+    description: "Modelo compacto para circulación en espacios reducidos. Recomendado para instalaciones interiores, mantenimiento y tareas livianas en altura.",
     specs: { height: "8-10m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
-    image: {
-      src: "/images/Firefly21.jpg",
-      alt: "Plataforma tijera eléctrica Compact 8 y 10 N",
-    },
+    image: { src: "/images/Firefly21.jpg", alt: "Plataforma tijera eléctrica Compact 8 y 10 N" },
     manualHref: "/manuales/vma/TijeraElectricaCompact8-10N.pdf",
   },
   {
@@ -185,13 +139,9 @@ const equipment: EquipmentItem[] = [
     eyebrow: "Tijera eléctrica",
     title: "Optimum 8 AC",
     subtitle: "Eléctrica",
-    description:
-      "Plataforma eléctrica eficiente para trabajos interiores de baja altura, con operación precisa y formato compacto.",
+    description: "Plataforma eléctrica eficiente para trabajos interiores de baja altura, con operación precisa y formato compacto.",
     specs: { height: "8m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
-    image: {
-      src: "/images/optimum-8-ac.png",
-      alt: "Plataforma tijera eléctrica Optimum 8 AC",
-    },
+    image: { src: "/images/optimum-8-ac.png", alt: "Plataforma tijera eléctrica Optimum 8 AC" },
     manualHref: "/manuales/vma/optimum-8-ac.pdf",
   },
   {
@@ -201,16 +151,11 @@ const equipment: EquipmentItem[] = [
     eyebrow: "Tijera eléctrica",
     title: "Optimum 8 MV",
     subtitle: "Eléctrica",
-    description:
-      "Plataforma eléctrica eficiente para trabajos interiores de baja altura, con operación precisa y formato compacto.",
+    description: "Plataforma eléctrica eficiente para trabajos interiores de baja altura, con operación precisa y formato compacto.",
     specs: { height: "8m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
-    image: {
-      src: "/images/optimum-8-mv.png",
-      alt: "Equipo eléctrico Optimum 8 MV",
-    },
+    image: { src: "/images/optimum-8-mv.png", alt: "Equipo eléctrico Optimum 8 MV" },
     manualHref: "/manuales/vma/optimum-8-mv.pdf",
   },
-//Tijera eléctrica 4x4 HS 15 y 18
   {
     id: "hs15e-pro",
     mainCategory: "tijera",
@@ -218,13 +163,9 @@ const equipment: EquipmentItem[] = [
     eyebrow: "Tijera eléctrica 4x4",
     title: "HS15E PRO",
     subtitle: "4x4",
-    description:
-      "Plataforma tijera eléctrica 4x4 para trabajos de altura con mayor autonomía, tracción y estabilidad en entornos exigentes.",
+    description: "Plataforma tijera eléctrica 4x4 para trabajos de altura con mayor autonomía, tracción y estabilidad en entornos exigentes.",
     specs: { height: "15-18m", power: "Eléctrica", capacity: "230kg", operation: "Exterior" },
-    image: {
-      src: "/images/hs15--e-pro.png",
-      alt: "Plataforma tijera eléctrica 4x4 HS15E PRO",
-    },
+    image: { src: "/images/hs15--e-pro.png", alt: "Plataforma tijera eléctrica 4x4 HS15E PRO" },
     manualHref: "/manuales/vma/hs15-18-e-pro.pdf",
   },
   {
@@ -234,16 +175,11 @@ const equipment: EquipmentItem[] = [
     eyebrow: "Tijera eléctrica 4x4",
     title: "HS18 E PRO",
     subtitle: "4x4",
-    description:
-      "Modelo eléctrico 4x4 para operación exterior, pensado para tareas que requieren mayor capacidad, alcance y estabilidad.",
+    description: "Modelo eléctrico 4x4 para operación exterior, pensado para tareas que requieren mayor capacidad, alcance y estabilidad.",
     specs: { height: "15-18m", power: "Eléctrica", capacity: "230kg", operation: "Exterior" },
-    image: {
-      src: "/images/hs15-18-e-pro.png",
-      alt: "Plataforma tijera eléctrica 4x4 HS15 18 E PRO",
-    },
+    image: { src: "/images/hs15-18-e-pro.png", alt: "Plataforma tijera eléctrica 4x4 HS15 18 E PRO" },
     manualHref: "/manuales/vma/hs15-18-e-pro.pdf",
   },
-//Brazo articulado diésel 4x4 y eléctrico
   {
     id: "brazo-articulado-diesel-16m",
     mainCategory: "brazo-articulado",
@@ -251,13 +187,9 @@ const equipment: EquipmentItem[] = [
     eyebrow: "Brazo articulado",
     title: "HA 26 RTJ PRO",
     subtitle: "Diesel 4x4",
-    description:
-      "Brazo articulado diésel 4x4 para trabajos en altura con alcance horizontal extendido y operación exterior en superficies exigentes.",
+    description: "Brazo articulado diésel 4x4 para trabajos en altura con alcance horizontal extendido y operación exterior en superficies exigentes.",
     specs: { height: "16m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
-    image: {
-      src: "/images/HA-26-RTJ-Pro.jpg",
-      alt: "Brazo articulado diésel 4x4 de 16 metros",
-    },
+    image: { src: "/images/HA-26-RTJ-Pro.jpg", alt: "Brazo articulado diésel 4x4 de 16 metros" },
     manualHref: "/manuales/vma/brazo-articulado-diesel-16m.pdf",
   },
   {
@@ -267,160 +199,119 @@ const equipment: EquipmentItem[] = [
     eyebrow: "Brazo articulado",
     title: "HA 20 RTJ Pro",
     subtitle: "Diesel 4x4",
-    description:
-      "Brazo articulado diésel 4x4 para trabajos exteriores con mayor altura y alcance en zonas de acceso complejo.",
+    description: "Brazo articulado diésel 4x4 para trabajos exteriores con mayor altura y alcance en zonas de acceso complejo.",
     specs: { height: "20m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
-    image: {
-      src: "/images/ha-20-rtj-pro.png",
-      alt: "Brazo articulado diésel 4x4 de 20 metros",
-    },
+    image: { src: "/images/ha-20-rtj-pro.png", alt: "Brazo articulado diésel 4x4 de 20 metros" },
     manualHref: "/manuales/vma/brazo-articulado-diesel-ha-20-rtj-pro.pdf",
   },
   {
-  id: "brazo-articulado-diesel-ha-16-rtj-pro",
-  mainCategory: "brazo-articulado",
-  subCategory: "brazo-articulado-diesel-4x4",
-  eyebrow: "Brazo articulado",
-  title: "HA 16 RTJ PRO",
-  subtitle: "Diesel 4x4",
-  description:
-    "Brazo articulado diésel 4x4 compacto y versátil para trabajos exteriores en altura, con excelente maniobrabilidad y alcance en terrenos exigentes.",
-  specs: { height: "16m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
-  image: {
-    src: "/images/ha-16-rtj-pro.png",
-    alt: "Brazo articulado diésel 4x4 HA 16 RTJ PRO",
+    id: "brazo-articulado-diesel-ha-16-rtj-pro",
+    mainCategory: "brazo-articulado",
+    subCategory: "brazo-articulado-diesel-4x4",
+    eyebrow: "Brazo articulado",
+    title: "HA 16 RTJ PRO",
+    subtitle: "Diesel 4x4",
+    description: "Brazo articulado diésel 4x4 compacto y versátil para trabajos exteriores en altura.",
+    specs: { height: "16m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
+    image: { src: "/images/ha-16-rtj-pro.png", alt: "Brazo articulado diésel 4x4 HA 16 RTJ PRO" },
+    manualHref: "/manuales/vma/brazo-articulado-diesel-ha-16-rtj-pro.pdf",
   },
-  manualHref: "/manuales/vma/brazo-articulado-diesel-ha-16-rtj-pro.pdf",
-},
-{
-  id: "brazo-articulado-diesel-ha-41-rtj-pro",
-  mainCategory: "brazo-articulado",
-  subCategory: "brazo-articulado-diesel-4x4",
-  eyebrow: "Brazo articulado",
-  title: "HA 41 RTJ PRO",
-  subtitle: "Diesel 4x4",
-  description:
-    "Brazo articulado diésel 4x4 de gran alcance para operaciones exteriores que requieren altura, estabilidad y capacidad de trabajo en zonas complejas.",
-  specs: { height: "41m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
-  image: {
-    src: "/images/ha-41-rtj-pro.png",
-    alt: "Brazo articulado diésel 4x4 HA 41 RTJ PRO",
+  {
+    id: "brazo-articulado-diesel-ha-41-rtj-pro",
+    mainCategory: "brazo-articulado",
+    subCategory: "brazo-articulado-diesel-4x4",
+    eyebrow: "Brazo articulado",
+    title: "HA 41 RTJ PRO",
+    subtitle: "Diesel 4x4",
+    description: "Brazo articulado diésel 4x4 de gran alcance para operaciones exteriores que requieren altura y estabilidad.",
+    specs: { height: "41m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
+    image: { src: "/images/ha-41-rtj-pro.png", alt: "Brazo articulado diésel 4x4 HA 41 RTJ PRO" },
+    manualHref: "/manuales/vma/brazo-articulado-diesel-ha-41-rtj-pro.pdf",
   },
-  manualHref: "/manuales/vma/brazo-articulado-diesel-ha-41-rtj-pro.pdf",
-},
-{
-  id: "brazo-articulado-diesel-ha-32-rtj-pro",
-  mainCategory: "brazo-articulado",
-  subCategory: "brazo-articulado-diesel-4x4",
-  eyebrow: "Brazo articulado",
-  title: "HA 32 RTJ PRO",
-  subtitle: "Diesel 4x4",
-  description:
-    "Brazo articulado diésel 4x4 para trabajos de gran altura, ideal para montaje, mantenimiento industrial y operación exterior de alto rendimiento.",
-  specs: { height: "32m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
-  image: {
-    src: "/images/ha-32-rtj-pro.png",
-    alt: "Brazo articulado diésel 4x4 HA 32 RTJ PRO",
+  {
+    id: "brazo-articulado-diesel-ha-32-rtj-pro",
+    mainCategory: "brazo-articulado",
+    subCategory: "brazo-articulado-diesel-4x4",
+    eyebrow: "Brazo articulado",
+    title: "HA 32 RTJ PRO",
+    subtitle: "Diesel 4x4",
+    description: "Brazo articulado diésel 4x4 para trabajos de gran altura, ideal para montaje y mantenimiento industrial.",
+    specs: { height: "32m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
+    image: { src: "/images/ha-32-rtj-pro.png", alt: "Brazo articulado diésel 4x4 HA 32 RTJ PRO" },
+    manualHref: "/manuales/vma/brazo-articulado-diesel-ha-32-rtj-pro.pdf",
   },
-  manualHref: "/manuales/vma/brazo-articulado-diesel-ha-32-rtj-pro.pdf",
-},
-{
-  id: "brazo-articulado-diesel-ha-20-px",
-  mainCategory: "brazo-articulado",
-  subCategory: "brazo-articulado-diesel-4x4",
-  eyebrow: "Brazo articulado",
-  title: "HA 20 PX",
-  subtitle: "Diesel 4x4",
-  description:
-    "Brazo articulado diésel 4x4 para trabajos exteriores con alcance horizontal, buena capacidad de posicionamiento y operación sobre superficies exigentes.",
-  specs: { height: "20m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
-  image: {
-    src: "/images/ha-20-px.jpg",
-    alt: "Brazo articulado diésel 4x4 HA 20 PX",
+  {
+    id: "brazo-articulado-diesel-ha-20-px",
+    mainCategory: "brazo-articulado",
+    subCategory: "brazo-articulado-diesel-4x4",
+    eyebrow: "Brazo articulado",
+    title: "HA 20 PX",
+    subtitle: "Diesel 4x4",
+    description: "Brazo articulado diésel 4x4 para trabajos exteriores con alcance horizontal y buena capacidad de posicionamiento.",
+    specs: { height: "20m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
+    image: { src: "/images/ha-20-px.jpg", alt: "Brazo articulado diésel 4x4 HA 20 PX" },
+    manualHref: "/manuales/vma/brazo-articulado-diesel-ha-20-px.pdf",
   },
-  manualHref: "/manuales/vma/brazo-articulado-diesel-ha-20-px.pdf",
-},
-{
-  id: "brazo-articulado-diesel-ha-16-18-spx",
-  mainCategory: "brazo-articulado",
-  subCategory: "brazo-articulado-diesel-4x4",
-  eyebrow: "Brazo articulado",
-  title: "HA 16-18 SPX",
-  subtitle: "Diesel 4x4",
-  description:
-    "Brazo articulado diésel 4x4 para operación exterior, pensado para trabajos que requieren versatilidad, alcance y estabilidad en obra.",
-  specs: { height: "16-18m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
-  image: {
-    src: "/images/ha-16-18-spx.png",
-    alt: "Brazo articulado diésel 4x4 HA 16-18 SPX",
+  {
+    id: "brazo-articulado-diesel-ha-16-18-spx",
+    mainCategory: "brazo-articulado",
+    subCategory: "brazo-articulado-diesel-4x4",
+    eyebrow: "Brazo articulado",
+    title: "HA 16-18 SPX",
+    subtitle: "Diesel 4x4",
+    description: "Brazo articulado diésel 4x4 para operación exterior, pensado para trabajos que requieren versatilidad y alcance.",
+    specs: { height: "16-18m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
+    image: { src: "/images/ha-16-18-spx.png", alt: "Brazo articulado diésel 4x4 HA 16-18 SPX" },
+    manualHref: "/manuales/vma/brazo-articulado-diesel-ha-16-18-spx.pdf",
   },
-  manualHref: "/manuales/vma/brazo-articulado-diesel-ha-16-18-spx.pdf",
-},
-{
-  id: "brazo-articulado-electrico-sigma-16",
-  mainCategory: "brazo-articulado",
-  subCategory: "brazo-articulado-electrico",
-  eyebrow: "Brazo articulado eléctrico",
-  title: "Sigma 16",
-  subtitle: "Eléctrico",
-  description:
-    "Brazo articulado eléctrico para trabajos interiores o entornos controlados donde se requiere operación silenciosa, maniobrabilidad y precisión en altura.",
-  specs: { height: "16m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
-  image: {
-    src: "/images/sigma-16-electrico.jpg",
-    alt: "Brazo articulado eléctrico Sigma 16",
+  {
+    id: "brazo-articulado-electrico-sigma-16",
+    mainCategory: "brazo-articulado",
+    subCategory: "brazo-articulado-electrico",
+    eyebrow: "Brazo articulado eléctrico",
+    title: "Sigma 16",
+    subtitle: "Eléctrico",
+    description: "Brazo articulado eléctrico para trabajos interiores o entornos controlados.",
+    specs: { height: "16m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
+    image: { src: "/images/sigma-16-electrico.jpg", alt: "Brazo articulado eléctrico Sigma 16" },
+    manualHref: "/manuales/vma/brazo-articulado-electrico-sigma-16.pdf",
   },
-  manualHref: "/manuales/vma/brazo-articulado-electrico-sigma-16.pdf",
-},
-{
-  id: "brazo-articulado-electrico-ha-15-ip",
-  mainCategory: "brazo-articulado",
-  subCategory: "brazo-articulado-electrico",
-  eyebrow: "Brazo articulado eléctrico",
-  title: "HA 15 IP",
-  subtitle: "Eléctrico",
-  description:
-    "Brazo articulado eléctrico para trabajos interiores o espacios donde se requiere baja emisión, operación silenciosa y precisión de posicionamiento.",
-  specs: { height: "15m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
-  image: {
-    src: "/videos/imgBackground1.jpg",
-    alt: "Brazo articulado eléctrico HA 15 IP",
+  {
+    id: "brazo-articulado-electrico-ha-15-ip",
+    mainCategory: "brazo-articulado",
+    subCategory: "brazo-articulado-electrico",
+    eyebrow: "Brazo articulado eléctrico",
+    title: "HA 15 IP",
+    subtitle: "Eléctrico",
+    description: "Brazo articulado eléctrico para trabajos interiores con baja emisión y operación silenciosa.",
+    specs: { height: "15m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
+    image: { src: "/videos/imgBackground1.jpg", alt: "Brazo articulado eléctrico HA 15 IP" },
+    manualHref: "/manuales/vma/brazo-articulado-ha-15-ip.pdf",
   },
-  manualHref: "/manuales/vma/brazo-articulado-ha-15-ip.pdf",
-},
-{
-  id: "brazo-articulado-electrico-ha-12-ip",
-  mainCategory: "brazo-articulado",
-  subCategory: "brazo-articulado-electrico",
-  eyebrow: "Brazo articulado eléctrico",
-  title: "HA 12 IP",
-  subtitle: "Eléctrico",
-  description:
-    "Brazo articulado eléctrico compacto para mantenimiento, instalaciones y trabajos de altura en interiores con circulación controlada.",
-  specs: { height: "12m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
-  image: {
-    src: "/images/ha-12-ip.jpg",
-    alt: "Brazo articulado eléctrico HA 12 IP",
+  {
+    id: "brazo-articulado-electrico-ha-12-ip",
+    mainCategory: "brazo-articulado",
+    subCategory: "brazo-articulado-electrico",
+    eyebrow: "Brazo articulado eléctrico",
+    title: "HA 12 IP",
+    subtitle: "Eléctrico",
+    description: "Brazo articulado eléctrico compacto para mantenimiento e instalaciones en interiores.",
+    specs: { height: "12m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
+    image: { src: "/images/ha-12-ip.jpg", alt: "Brazo articulado eléctrico HA 12 IP" },
+    manualHref: "/manuales/vma/ha-12-ip.pdf",
   },
-  manualHref: "/manuales/vma/ha-12-ip.pdf",
-},
-{
-  id: "brazo-articulado-electrico-h12-h15-h18-sxl",
-  mainCategory: "brazo-articulado",
-  subCategory: "brazo-articulado-electrico",
-  eyebrow: "Brazo articulado eléctrico",
-  title: "H12 / H15 / H18 SXL",
-  subtitle: "Eléctrico",
-  description:
-    "Serie de brazos articulados eléctricos para trabajos interiores de mayor alcance, con operación silenciosa y plataforma amplia para tareas técnicas.",
-  specs: { height: "12-18m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
-  image: {
-    src: "/images/h-12-sxl.png",
-    alt: "Brazo articulado eléctrico H12 H15 H18 SXL",
+  {
+    id: "brazo-articulado-electrico-h12-h15-h18-sxl",
+    mainCategory: "brazo-articulado",
+    subCategory: "brazo-articulado-electrico",
+    eyebrow: "Brazo articulado eléctrico",
+    title: "H12 / H15 / H18 SXL",
+    subtitle: "Eléctrico",
+    description: "Serie de brazos articulados eléctricos para trabajos interiores de mayor alcance.",
+    specs: { height: "12-18m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
+    image: { src: "/images/h-12-sxl.png", alt: "Brazo articulado eléctrico H12 H15 H18 SXL" },
+    manualHref: "/manuales/vma/brazo-articulado-electrico-h12-h15-h18-sxl.pdf",
   },
-  manualHref: "/manuales/vma/brazo-articulado-electrico-h12-h15-h18-sxl.pdf",
-},
-//Brazo telescópico
   {
     id: "brazo-telescopico-20m",
     mainCategory: "brazo-telescopico",
@@ -428,13 +319,9 @@ const equipment: EquipmentItem[] = [
     eyebrow: "Brazo Telescopico",
     title: "HT 43 RTJ Pro",
     subtitle: "Diesel 4x4",
-    description:
-      "Brazo telescópico para trabajos con alcance horizontal extendido y operación precisa en altura.",
+    description: "Brazo telescópico para trabajos con alcance horizontal extendido y operación precisa en altura.",
     specs: { height: "20m", power: "Diésel", capacity: "230kg", operation: "Exterior" },
-    image: {
-      src: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=1600&auto=format&fit=crop&q=80",
-      alt: "Brazo telescópico de 20 metros",
-    },
+    image: { src: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=1600&auto=format&fit=crop&q=80", alt: "Brazo telescópico de 20 metros" },
     manualHref: "/manuales/vma/manual-ht-43-rtj-pro.pdf",
   },
   {
@@ -444,16 +331,11 @@ const equipment: EquipmentItem[] = [
     eyebrow: "Brazo telescópico",
     title: "HT 21 RT",
     subtitle: "Diesel 4x4",
-    description:
-      "Equipo telescópico para obras que requieren altura, alcance horizontal y estabilidad en exteriores.",
+    description: "Equipo telescópico para obras que requieren altura, alcance horizontal y estabilidad en exteriores.",
     specs: { height: "26m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
-    image: {
-      src: "/images/",
-      alt: "Brazo telescópico de 26 metros",
-    },
+    image: { src: "/images/", alt: "Brazo telescópico de 26 metros" },
     manualHref: "/manuales/vma/brazo-telescopico-26m.pdf",
   },
-//Plataforma unipersonal
   {
     id: "unipersonal-star-10",
     mainCategory: "unipersonal",
@@ -461,13 +343,9 @@ const equipment: EquipmentItem[] = [
     eyebrow: "Plataforma unipersonal",
     title: "Star 10",
     subtitle: "Unipersonal",
-    description:
-      "Plataforma unipersonal para trabajos interiores de precisión, mantenimiento técnico y operación en espacios reducidos.",
+    description: "Plataforma unipersonal para trabajos interiores de precisión.",
     specs: { height: "10m", power: "Eléctrica", capacity: "200kg", operation: "Interior" },
-    image: {
-      src: "/images/Star10Electrica.png",
-      alt: "Plataforma unipersonal Star 10",
-    },
+    image: { src: "/images/Star10Electrica.png", alt: "Plataforma unipersonal Star 10" },
     manualHref: "/manuales/vma/star-10.pdf",
   },
   {
@@ -477,16 +355,11 @@ const equipment: EquipmentItem[] = [
     eyebrow: "Plataforma unipersonal",
     title: "Star 6",
     subtitle: "Eléctrica",
-    description:
-      "Equipo compacto y ligero para trabajos en altura en espacios reducidos. Ideal para mantenimiento, instalaciones y operación interior.",
+    description: "Equipo compacto y ligero para trabajos en altura en espacios reducidos.",
     specs: { height: "12m", power: "Eléctrica", capacity: "150kg", operation: "Interior" },
-    image: {
-      src: "/images/Star-6.png",
-      alt: "Plataforma unipersonal eléctrica",
-    },
+    image: { src: "/images/Star-6.png", alt: "Plataforma unipersonal eléctrica" },
     manualHref: "/manuales/vma/unipersonal-electrica-star-6.pdf",
   },
-//Manipuladores Telescopicos de carga
   {
     id: "manipulador-carga-01",
     mainCategory: "manipulador-carga",
@@ -494,13 +367,9 @@ const equipment: EquipmentItem[] = [
     eyebrow: "Manipulador telescópico",
     title: "Manipulador de carga",
     subtitle: "HTL 4017",
-    description:
-      "Manipulador telescópico de carga para movimiento, elevación y posicionamiento de materiales en obra o entornos industriales.",
+    description: "Manipulador telescópico de carga para movimiento y elevación de materiales.",
     specs: { height: "7m", power: "Diésel", capacity: "2500kg", operation: "Exterior" },
-    image: {
-      src: "/images/htl-4017.jpg",
-      alt: "Manipulador telescópico de carga Haulotte HTL4017",
-    },
+    image: { src: "/images/htl-4017.jpg", alt: "Manipulador telescópico de carga Haulotte HTL4017" },
     manualHref: "/manuales/vma/manipulador-carga-htl-4017.pdf",
   },
   {
@@ -510,13 +379,9 @@ const equipment: EquipmentItem[] = [
     eyebrow: "Manipulador telescópico",
     title: "Manipulador de carga",
     subtitle: "HTL 4014",
-    description:
-      "Equipo de carga telescópico para tareas que requieren alcance, estabilidad y capacidad operativa en terreno.",
+    description: "Equipo de carga telescópico para tareas que requieren alcance y estabilidad.",
     specs: { height: "10m", power: "Diésel", capacity: "3000kg", operation: "Exterior" },
-    image: {
-      src: "/images/htl-4014.jpg",
-      alt: "Manipulador telescópico de carga Haulotte htl 4014",
-    },
+    image: { src: "/images/htl-4014.jpg", alt: "Manipulador telescópico de carga Haulotte htl 4014" },
     manualHref: "/manuales/vma/manipulador-carga-htl-4014.pdf",
   },
   {
@@ -526,13 +391,9 @@ const equipment: EquipmentItem[] = [
     eyebrow: "Manipulador telescópico",
     title: "Manipulador de carga",
     subtitle: "HTL 4010",
-    description:
-      "Manipulador para operación pesada, movimiento de materiales y asistencia en tareas de montaje y construcción.",
+    description: "Manipulador para operación pesada y movimiento de materiales.",
     specs: { height: "12m", power: "Diésel", capacity: "3500kg", operation: "Exterior" },
-    image: {
-      src: "/images/htl-4010.png",
-      alt: "Manipulador telescópico de carga Haulotte HTL 4010",
-    },
+    image: { src: "/images/htl-4010.png", alt: "Manipulador telescópico de carga Haulotte HTL 4010" },
     manualHref: "/manuales/vma/manipulador-carga-htl-4010.pdf",
   },
   {
@@ -542,19 +403,14 @@ const equipment: EquipmentItem[] = [
     eyebrow: "Manipulador telescópico",
     title: "Manipulador de carga",
     subtitle: "HTL 3210",
-    description:
-      "Equipo telescópico de carga para trabajos de alto rendimiento, logística interna y soporte operativo en obra.",
+    description: "Equipo telescópico de carga para trabajos de alto rendimiento.",
     specs: { height: "14m", power: "Diésel", capacity: "4000kg", operation: "Exterior" },
-    image: {
-      src: "/images/hhtl-3210.jpg",
-      alt: "Manipulador telescópico de carga Haulotte HTL 3210",
-    },
+    image: { src: "/images/hhtl-3210.jpg", alt: "Manipulador telescópico de carga Haulotte HTL 3210" },
     manualHref: "/manuales/vma/manipulador-carga-htl-3210.pdf",
   },
 ];
 
-const defaultItem =
-  equipment.find((item) => item.id === "tijera-diesel-4x4") ?? equipment[0];
+const defaultItem = equipment.find((item) => item.id === "tijera-diesel-4x4") ?? equipment[0];
 
 function buildQuoteHref(item: EquipmentItem): string {
   const message = [
@@ -569,170 +425,119 @@ function buildQuoteHref(item: EquipmentItem): string {
     "",
     "Quedo atento para avanzar con la cotización.",
   ].join("\n");
-
   const encoded = encodeURIComponent(message);
-
   if (baseCtaHref.includes("wa.me/") || baseCtaHref.includes("api.whatsapp.com/send")) {
     const separator = baseCtaHref.includes("?") ? "&" : "?";
     return `${baseCtaHref}${separator}text=${encoded}`;
   }
-
   return baseCtaHref;
 }
 ---
 
-<section id="equipos" class="equipmentSection" data-equipment-section>
-  <div class="equipmentShell">
-    <header class="moduleHeader">
-      <p class="moduleEyebrow">{moduleEyebrow}</p>
-      <h2 class="moduleTitle">{moduleTitle}</h2>
+<section id="equipos" class="eqSection" data-equipment-section>
+  <div class="eqShell">
+    <header class="eqHeader">
+      <p class="eqEyebrow">{moduleEyebrow}</p>
+      <h2 class="eqTitle">{moduleTitle}</h2>
     </header>
 
-    <nav class="unifiedCategoryNav" aria-label="Categorías de equipos">
-      {
-        mainCategories.map((cat, index) => (
-          <>
-            <button
-              class={`mainCategoryBtn ${index === 0 ? "is-active" : ""}`}
-              type="button"
-              data-main-category={cat.id}
-              data-default-sub={cat.defaultSubCategory}
-              data-has-submenu={String(cat.hasSubmenu)}
-            >
-              {cat.label}
-            </button>
-
-            {
-              cat.hasSubmenu && (
-                <span
-                  class={`inlineSubNav ${index === 0 ? "is-active" : ""}`}
-                  data-sub-group={cat.id}
-                >
-                  {subCategories[cat.id].map((sub, subIndex) => (
-                    <button
-                      class={`subCategoryBtn ${
-                        index === 0 && subIndex === 0 ? "is-active is-visible" : ""
-                      }`}
-                      type="button"
-                      data-parent-category={cat.id}
-                      data-sub-category={sub.id}
-                    >
-                      {sub.label}
-                    </button>
-                  ))}
-                </span>
-              )
-            }
-          </>
-        ))
-      }
+    <nav class="catNav" aria-label="Categorías de equipos">
+      {mainCategories.map((cat, index) => (
+        <button
+          class={`catBtn ${index === 0 ? "is-active" : ""}`}
+          type="button"
+          data-main-category={cat.id}
+          data-default-sub={cat.defaultSubCategory}
+          data-has-submenu={String(cat.hasSubmenu)}
+        >
+          {cat.label}
+        </button>
+      ))}
     </nav>
 
-    <div class="equipmentContent">
-      <div class="equipmentCarousel" data-equipment-carousel hidden>
-        <button class="carouselArrow carouselArrow--prev" type="button" data-carousel-prev>
-          ‹
-        </button>
-
-        <div class="equipmentGrid" data-equipment-grid>
-          {
-            equipment.map((item) => (
-              <button
-                class="machineCard"
-                type="button"
-                data-machine-card
-                data-id={item.id}
-                data-main-category={item.mainCategory}
-                data-sub-category={item.subCategory}
-                data-eyebrow={item.eyebrow}
-                data-title={item.title}
-                data-subtitle={item.subtitle ?? ""}
-                data-description={item.description}
-                data-height={item.specs.height}
-                data-power={item.specs.power}
-                data-capacity={item.specs.capacity}
-                data-operation={item.specs.operation}
-                data-image-src={item.image.src}
-                data-image-alt={item.image.alt}
-                data-manual-href={item.manualHref ?? ""}
-                data-quote-href={buildQuoteHref(item)}
-              >
-                <span class="machineImage">
-                  <img src={item.image.src} alt={item.image.alt} loading="lazy" />
-                </span>
-
-                <span class="machineMeta">
-                  <span class="machineEyebrow">{item.eyebrow}</span>
-                  <span class="machineName">
-                    {item.title}
-                    {item.subtitle ? <small>{item.subtitle}</small> : null}
-                  </span>
-                </span>
-              </button>
-            ))
-          }
+    <div class="subNavWrap" aria-label="Filtros de energía">
+      {mainCategories.filter((cat) => cat.hasSubmenu).map((cat, index) => (
+        <div class={`subNav ${index === 0 ? "is-active" : ""}`} data-sub-group={cat.id}>
+          {subCategories[cat.id].map((sub, subIndex) => (
+            <button
+              class={`subBtn ${index === 0 && subIndex === 0 ? "is-active is-visible" : ""}`}
+              type="button"
+              data-parent-category={cat.id}
+              data-sub-category={sub.id}
+            >
+              {sub.label}
+            </button>
+          ))}
         </div>
+      ))}
+    </div>
 
-        <button class="carouselArrow carouselArrow--next" type="button" data-carousel-next>
-          ›
-        </button>
+    <div class="eqContent">
+      <div class="eqCarousel" data-equipment-carousel hidden>
+        <button class="arrowBtn arrowBtn--prev" type="button" data-carousel-prev>‹</button>
+        <div class="eqGrid" data-equipment-grid>
+          {equipment.map((item) => (
+            <button
+              class="card"
+              type="button"
+              data-machine-card
+              data-id={item.id}
+              data-main-category={item.mainCategory}
+              data-sub-category={item.subCategory}
+              data-eyebrow={item.eyebrow}
+              data-title={item.title}
+              data-subtitle={item.subtitle ?? ""}
+              data-description={item.description}
+              data-height={item.specs.height}
+              data-power={item.specs.power}
+              data-capacity={item.specs.capacity}
+              data-operation={item.specs.operation}
+              data-image-src={item.image.src}
+              data-image-alt={item.image.alt}
+              data-manual-href={item.manualHref ?? ""}
+              data-quote-href={buildQuoteHref(item)}
+            >
+              <span class="cardImg">
+                <img src={item.image.src} alt={item.image.alt} loading="lazy" />
+              </span>
+              <span class="cardMeta">
+                <span class="cardEyebrow">{item.eyebrow}</span>
+                <span class="cardName">
+                  {item.title}
+                  {item.subtitle ? <small>{item.subtitle}</small> : null}
+                </span>
+              </span>
+            </button>
+          ))}
+        </div>
+        <button class="arrowBtn arrowBtn--next" type="button" data-carousel-next>›</button>
       </div>
 
-      <article class="equipmentDetail" data-detail-panel data-active-equipment={defaultItem.id}>
-        <button class="detailClose" type="button" data-close-detail aria-label="Cerrar detalle">
-          ×
-        </button>
-
-        <button class="detailArrow detailArrow--prev" type="button" data-detail-prev hidden>
-          ‹
-        </button>
-
-        <button class="detailArrow detailArrow--next" type="button" data-detail-next hidden>
-          ›
-        </button>
-
-        <div class="detailImage">
+      <article class="eqDetail" data-detail-panel data-active-equipment={defaultItem.id}>
+        <button class="detailX" type="button" data-close-detail aria-label="Cerrar detalle">×</button>
+        <button class="dtArrow dtArrow--prev" type="button" data-detail-prev hidden>‹</button>
+        <button class="dtArrow dtArrow--next" type="button" data-detail-next hidden>›</button>
+        <div class="dtImg">
           <img data-detail-image src={defaultItem.image.src} alt={defaultItem.image.alt} loading="lazy" />
         </div>
-
-        <div class="detailInfo">
-          <p class="detailEyebrow" data-detail-eyebrow>{defaultItem.eyebrow}</p>
-
-          <h3 class="detailTitle">
+        <div class="dtInfo">
+          <p class="dtEyebrow" data-detail-eyebrow>{defaultItem.eyebrow}</p>
+          <h3 class="dtTitle">
             <span data-detail-title>{defaultItem.title}</span>
             <span data-detail-subtitle>{defaultItem.subtitle}</span>
           </h3>
-
-          <p class="detailDescription" data-detail-description>{defaultItem.description}</p>
-
-          <dl class="detailSpecs">
-            <div class="spec">
-              <dt>Altura máxima</dt>
-              <dd data-detail-height>{defaultItem.specs.height}</dd>
-            </div>
-            <div class="spec">
-              <dt>Energía</dt>
-              <dd data-detail-power>{defaultItem.specs.power}</dd>
-            </div>
-            <div class="spec">
-              <dt>Capacidad</dt>
-              <dd data-detail-capacity>{defaultItem.specs.capacity}</dd>
-            </div>
-            <div class="spec">
-              <dt>Operación</dt>
-              <dd data-detail-operation>{defaultItem.specs.operation}</dd>
-            </div>
+          <p class="dtDesc" data-detail-description>{defaultItem.description}</p>
+          <dl class="dtSpecs">
+            <div class="spec"><dt>Altura máxima</dt><dd data-detail-height>{defaultItem.specs.height}</dd></div>
+            <div class="spec"><dt>Energía</dt><dd data-detail-power>{defaultItem.specs.power}</dd></div>
+            <div class="spec"><dt>Capacidad</dt><dd data-detail-capacity>{defaultItem.specs.capacity}</dd></div>
+            <div class="spec"><dt>Operación</dt><dd data-detail-operation>{defaultItem.specs.operation}</dd></div>
           </dl>
-
-          <div class="detailActions">
-            <a class="primaryAction" href={buildQuoteHref(defaultItem)} data-detail-quote>
-              <span>{ctaLabel}</span>
-              <span aria-hidden="true">↘</span>
+          <div class="dtActions">
+            <a class="actPrimary" href={buildQuoteHref(defaultItem)} data-detail-quote>
+              <span>{ctaLabel}</span><span aria-hidden="true">↘</span>
             </a>
-
-            <a class="secondaryAction" href={defaultItem.manualHref ?? "#"} download data-detail-manual>
-              Descargar Manual
-            </a>
+            <a class="actSecondary" href={defaultItem.manualHref ?? "#"} download data-detail-manual>Descargar Manual</a>
           </div>
         </div>
       </article>
@@ -744,22 +549,18 @@ function buildQuoteHref(item: EquipmentItem): string {
   document.addEventListener("DOMContentLoaded", () => {
     const section = document.querySelector<HTMLElement>("[data-equipment-section]");
     if (!section) return;
-
     const mainBtns = [...section.querySelectorAll<HTMLButtonElement>("[data-main-category]")];
     const subGroups = [...section.querySelectorAll<HTMLElement>("[data-sub-group]")];
     const subBtns = [...section.querySelectorAll<HTMLButtonElement>("[data-sub-category]")];
     const cards = [...section.querySelectorAll<HTMLButtonElement>("[data-machine-card]")];
-
     const detail = section.querySelector<HTMLElement>("[data-detail-panel]");
     const carousel = section.querySelector<HTMLElement>("[data-equipment-carousel]");
     const grid = section.querySelector<HTMLElement>("[data-equipment-grid]");
-
     const prevBtn = section.querySelector<HTMLButtonElement>("[data-carousel-prev]");
     const nextBtn = section.querySelector<HTMLButtonElement>("[data-carousel-next]");
     const detailPrevBtn = section.querySelector<HTMLButtonElement>("[data-detail-prev]");
     const detailNextBtn = section.querySelector<HTMLButtonElement>("[data-detail-next]");
     const closeBtn = section.querySelector<HTMLButtonElement>("[data-close-detail]");
-
     const detailImage = section.querySelector<HTMLImageElement>("[data-detail-image]");
     const detailEyebrow = section.querySelector<HTMLElement>("[data-detail-eyebrow]");
     const detailTitle = section.querySelector<HTMLElement>("[data-detail-title]");
@@ -771,91 +572,52 @@ function buildQuoteHref(item: EquipmentItem): string {
     const detailOperation = section.querySelector<HTMLElement>("[data-detail-operation]");
     const detailQuote = section.querySelector<HTMLAnchorElement>("[data-detail-quote]");
     const detailManual = section.querySelector<HTMLAnchorElement>("[data-detail-manual]");
-
     let activeMainCategory = "tijera";
     let activeSubCategory = "tijera-diesel-4x4";
     let activeItemId: string | null = null;
-
     const activeSubByMain: Record<string, string> = {
-      tijera: "tijera-diesel-4x4",
-      "brazo-articulado": "brazo-articulado-diesel-4x4",
-      "brazo-telescopico": "brazo-telescopico",
-      unipersonal: "unipersonal",
-      "manipulador-carga": "manipulador-carga",
+      tijera: "tijera-diesel-4x4", "brazo-articulado": "brazo-articulado-diesel-4x4",
+      "brazo-telescopico": "brazo-telescopico", unipersonal: "unipersonal", "manipulador-carga": "manipulador-carga",
     };
-
-    function getCardsBySubCategory(subCategory: string): HTMLButtonElement[] {
-      return cards.filter((card) => card.dataset.subCategory === subCategory);
-    }
-
-    function getVisibleCards(): HTMLButtonElement[] {
-      return cards.filter((card) => card.classList.contains("is-visible"));
-    }
-
-    function getSelectedCard(): HTMLButtonElement | undefined {
-      return cards.find((card) => card.dataset.id === activeItemId);
-    }
-
-    function syncNavigation(): void {
-      mainBtns.forEach((btn) => {
-        btn.classList.toggle("is-active", btn.dataset.mainCategory === activeMainCategory);
-      });
-
-      subGroups.forEach((group) => {
-        group.classList.toggle("is-active", group.dataset.subGroup === activeMainCategory);
-      });
-
-      subBtns.forEach((btn) => {
-        const belongsToActiveMain = btn.dataset.parentCategory === activeMainCategory;
-
-        btn.classList.toggle("is-visible", belongsToActiveMain);
-        btn.classList.toggle(
-          "is-active",
-          belongsToActiveMain && btn.dataset.subCategory === activeSubCategory
-        );
+    function getCardsBySubCategory(subCategory: string) { return cards.filter((c) => c.dataset.subCategory === subCategory); }
+    function getVisibleCards() { return cards.filter((c) => c.classList.contains("is-visible")); }
+    function getSelectedCard() { return cards.find((c) => c.dataset.id === activeItemId); }
+    function syncNavigation() {
+      mainBtns.forEach((b) => b.classList.toggle("is-active", b.dataset.mainCategory === activeMainCategory));
+      subGroups.forEach((g) => g.classList.toggle("is-active", g.dataset.subGroup === activeMainCategory));
+      subBtns.forEach((b) => {
+        const belongs = b.dataset.parentCategory === activeMainCategory;
+        b.classList.toggle("is-visible", belongs);
+        b.classList.toggle("is-active", belongs && b.dataset.subCategory === activeSubCategory);
       });
     }
-
-    function syncCards(): HTMLButtonElement[] {
-      const visibleCards = getCardsBySubCategory(activeSubCategory);
-      const hasCards = visibleCards.length > 0;
-
-      cards.forEach((card) => {
-        const isVisible = card.dataset.subCategory === activeSubCategory;
-        const isSelected = activeItemId !== null && card.dataset.id === activeItemId;
-
-        card.classList.toggle("is-visible", isVisible);
-        card.classList.toggle("is-selected", isVisible && isSelected);
+    function syncCards() {
+      const vis = getCardsBySubCategory(activeSubCategory);
+      const has = vis.length > 0;
+      cards.forEach((c) => {
+        const isVis = c.dataset.subCategory === activeSubCategory;
+        const isSel = activeItemId !== null && c.dataset.id === activeItemId;
+        c.classList.toggle("is-visible", isVis);
+        c.classList.toggle("is-selected", isVis && isSel);
       });
-
-      carousel?.toggleAttribute("hidden", !hasCards);
-      carousel?.classList.toggle("is-active", hasCards);
-      grid?.classList.toggle("is-active", hasCards);
+      carousel?.toggleAttribute("hidden", !has);
+      carousel?.classList.toggle("is-active", has);
+      grid?.classList.toggle("is-active", has);
       grid?.classList.toggle("has-selection", activeItemId !== null);
-
-      return visibleCards;
+      return vis;
     }
-
-    function syncDetailArrows(): void {
-      const visibleCards = getVisibleCards();
-      const canNavigate = visibleCards.length > 1;
-
-      prevBtn?.toggleAttribute("hidden", !canNavigate);
-      nextBtn?.toggleAttribute("hidden", !canNavigate);
-
-      const detailIsOpen = activeItemId !== null;
-      detailPrevBtn?.toggleAttribute("hidden", !detailIsOpen || !canNavigate);
-      detailNextBtn?.toggleAttribute("hidden", !detailIsOpen || !canNavigate);
+    function syncDetailArrows() {
+      const vis = getVisibleCards();
+      const can = vis.length > 1;
+      prevBtn?.toggleAttribute("hidden", !can);
+      nextBtn?.toggleAttribute("hidden", !can);
+      const open = activeItemId !== null;
+      detailPrevBtn?.toggleAttribute("hidden", !open || !can);
+      detailNextBtn?.toggleAttribute("hidden", !open || !can);
     }
-
-    function fillDetail(card: HTMLButtonElement): void {
+    function fillDetail(card: HTMLButtonElement) {
       if (!detail) return;
-
-      if (detailImage) {
-        detailImage.src = card.dataset.imageSrc ?? "";
-        detailImage.alt = card.dataset.imageAlt ?? "";
-      }
-
+      if (detailImage) { detailImage.src = card.dataset.imageSrc ?? ""; detailImage.alt = card.dataset.imageAlt ?? ""; }
       if (detailEyebrow) detailEyebrow.textContent = card.dataset.eyebrow ?? "";
       if (detailTitle) detailTitle.textContent = card.dataset.title ?? "";
       if (detailSubtitle) detailSubtitle.textContent = card.dataset.subtitle ?? "";
@@ -864,864 +626,3147 @@ function buildQuoteHref(item: EquipmentItem): string {
       if (detailPower) detailPower.textContent = card.dataset.power ?? "";
       if (detailCapacity) detailCapacity.textContent = card.dataset.capacity ?? "";
       if (detailOperation) detailOperation.textContent = card.dataset.operation ?? "";
-
-      if (detailQuote) {
-        detailQuote.href = card.dataset.quoteHref ?? "#";
-      }
-
-      if (detailManual) {
-        const manualHref = card.dataset.manualHref ?? "";
-        detailManual.href = manualHref || "#";
-        detailManual.toggleAttribute("aria-disabled", !manualHref);
-      }
-
+      if (detailQuote) detailQuote.href = card.dataset.quoteHref ?? "#";
+      if (detailManual) { const m = card.dataset.manualHref ?? ""; detailManual.href = m || "#"; detailManual.toggleAttribute("aria-disabled", !m); }
       detail.dataset.activeEquipment = card.dataset.id ?? "";
       detail.classList.add("is-active");
     }
-
-    function openDetail(card: HTMLButtonElement, options?: { scrollCard?: boolean }): void {
-      const nextMain = card.dataset.mainCategory;
-      const nextSub = card.dataset.subCategory;
-      const nextId = card.dataset.id;
-
-      if (!nextMain || !nextSub || !nextId) return;
-
-      activeMainCategory = nextMain;
-      activeSubCategory = nextSub;
-      activeSubByMain[nextMain] = nextSub;
-      activeItemId = nextId;
-
-      syncNavigation();
-      syncCards();
-      fillDetail(card);
-      syncDetailArrows();
-
-      if (options?.scrollCard) {
-        card.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
-      }
+    function openDetail(card: HTMLButtonElement, opts?: { scrollCard?: boolean }) {
+      const nm = card.dataset.mainCategory, ns = card.dataset.subCategory, ni = card.dataset.id;
+      if (!nm || !ns || !ni) return;
+      activeMainCategory = nm; activeSubCategory = ns; activeSubByMain[nm] = ns; activeItemId = ni;
+      syncNavigation(); syncCards(); fillDetail(card); syncDetailArrows();
+      if (opts?.scrollCard) card.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
     }
-
-    function closeDetail(): void {
-      activeItemId = null;
-
-      detail?.classList.remove("is-active");
-
-      cards.forEach((card) => {
-        card.classList.remove("is-selected");
-      });
-
+    function closeDetail() {
+      activeItemId = null; detail?.classList.remove("is-active");
+      cards.forEach((c) => c.classList.remove("is-selected"));
       grid?.classList.remove("has-selection");
-
-      syncNavigation();
-      syncCards();
-      syncDetailArrows();
+      syncNavigation(); syncCards(); syncDetailArrows();
     }
-
-function openSubCategory(mainCategory: string, subCategory: string): void {
-  activeMainCategory = mainCategory;
-  activeSubCategory = subCategory;
-  activeSubByMain[mainCategory] = subCategory;
-
-  // Importante:
-  // al cambiar categoría/subcategoría NO abrimos detalle por defecto.
-  activeItemId = null;
-  detail?.classList.remove("is-active");
-
-  syncNavigation();
-  syncCards();
-  syncDetailArrows();
-}
-
-    function openMainCategory(mainCategory: string): void {
-      const btn = mainBtns.find((item) => item.dataset.mainCategory === mainCategory);
-      const defaultSub = btn?.dataset.defaultSub ?? "";
-      const subCategory = activeSubByMain[mainCategory] ?? defaultSub;
-
-      if (!subCategory) return;
-
-      openSubCategory(mainCategory, subCategory);
+    function openSubCategory(main: string, sub: string) {
+      activeMainCategory = main; activeSubCategory = sub; activeSubByMain[main] = sub;
+      activeItemId = null; detail?.classList.remove("is-active");
+      syncNavigation(); syncCards(); syncDetailArrows();
     }
-
-    function selectRelativeCard(direction: "prev" | "next"): void {
-      const visibleCards = getVisibleCards();
-      if (!visibleCards.length) return;
-
-      const selectedCard = getSelectedCard();
-      const currentIndex = selectedCard ? visibleCards.indexOf(selectedCard) : -1;
-
-      const nextIndex =
-        direction === "next"
-          ? (currentIndex + 1) % visibleCards.length
-          : (currentIndex - 1 + visibleCards.length) % visibleCards.length;
-
-      const nextCard = visibleCards[nextIndex];
-      if (!nextCard) return;
-
-      openDetail(nextCard, { scrollCard: true });
+    function openMainCategory(main: string) {
+      const btn = mainBtns.find((b) => b.dataset.mainCategory === main);
+      const def = btn?.dataset.defaultSub ?? "";
+      const sub = activeSubByMain[main] ?? def;
+      if (!sub) return;
+      openSubCategory(main, sub);
     }
-
-    function scrollCarousel(direction: "prev" | "next"): void {
+    function selectRelativeCard(dir: "prev" | "next") {
+      const vis = getVisibleCards(); if (!vis.length) return;
+      const sel = getSelectedCard(); const ci = sel ? vis.indexOf(sel) : -1;
+      const ni = dir === "next" ? (ci + 1) % vis.length : (ci - 1 + vis.length) % vis.length;
+      const nc = vis[ni]; if (!nc) return;
+      openDetail(nc, { scrollCard: true });
+    }
+    function scrollCarousel(dir: "prev" | "next") {
       if (!grid) return;
-
-      const firstVisibleCard = getVisibleCards()[0];
-      const cardWidth = firstVisibleCard?.offsetWidth ?? 240;
-      const gap = 18;
-      const amount = (cardWidth + gap) * 2;
-
-      grid.scrollBy({
-        left: direction === "next" ? amount : -amount,
-        behavior: "smooth",
-      });
+      const fc = getVisibleCards()[0]; const cw = fc?.offsetWidth ?? 240;
+      const amt = (cw + 18) * 2;
+      grid.scrollBy({ left: dir === "next" ? amt : -amt, behavior: "smooth" });
     }
-
-    mainBtns.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const mainCategory = btn.dataset.mainCategory;
-        if (!mainCategory) return;
-
-        openMainCategory(mainCategory);
-      });
-    });
-
-    subBtns.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const mainCategory = btn.dataset.parentCategory;
-        const subCategory = btn.dataset.subCategory;
-
-        if (!mainCategory || !subCategory) return;
-
-        openSubCategory(mainCategory, subCategory);
-      });
-    });
-
-    cards.forEach((card) => {
-      card.addEventListener("click", () => {
-        openDetail(card);
-      });
-    });
-
-prevBtn?.addEventListener("click", () => scrollCarousel("prev"));
-nextBtn?.addEventListener("click", () => scrollCarousel("next"));
+    mainBtns.forEach((b) => b.addEventListener("click", () => { const m = b.dataset.mainCategory; if (m) openMainCategory(m); }));
+    subBtns.forEach((b) => b.addEventListener("click", () => { const m = b.dataset.parentCategory, s = b.dataset.subCategory; if (m && s) openSubCategory(m, s); }));
+    cards.forEach((c) => c.addEventListener("click", () => openDetail(c)));
+    prevBtn?.addEventListener("click", () => scrollCarousel("prev"));
+    nextBtn?.addEventListener("click", () => scrollCarousel("next"));
     detailPrevBtn?.addEventListener("click", () => selectRelativeCard("prev"));
     detailNextBtn?.addEventListener("click", () => selectRelativeCard("next"));
     closeBtn?.addEventListener("click", () => closeDetail());
-
     openSubCategory("tijera", "tijera-diesel-4x4");
   });
 </script>
 
 <style>
-  .equipmentSection,
-  .equipmentSection * {
-    box-sizing: border-box;
-  }
-
-  .equipmentSection {
-    width: 100%;
-    overflow: hidden;
-    background: #050505;
-    color: #ffffff;
-    font-family: var(--font-body);
-  }
-
-  .equipmentShell {
-    width: min(100%, 1680px);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-    padding: clamp(72px, 8vw, 132px) clamp(24px, 5vw, 76px);
-  }
-
-  .moduleHeader {
-    display: grid;
-    gap: 10px;
-    margin-bottom: 12px;
-    text-align: center;
-  }
-
-  .moduleEyebrow {
-    margin: 0;
-    color: #ffc400;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-  }
-
-  .moduleTitle {
-    margin: 0;
-    color: rgba(255, 255, 255, 0.86);
-    font-size: clamp(1.55rem, 2.2vw, 2.15rem);
-    font-weight: 400;
-    letter-spacing: -0.035em;
-    line-height: 1.1;
-  }
-
-  .unifiedCategoryNav {
-    position: relative;
-    left: 50%;
-    width: max-content;
-    max-width: min(100vw,1200px);
-    min-height: 58px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-    margin: 22px 0 clamp(28px, 4vw, 50px);
-    padding: 6px;
-    overflow-x: auto;
-    border: 1px solid #2f2f2f;
-    border-radius: 999px;
-    background: #f5f5f5;
-    transform: translateX(-50%);
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .mainCategoryBtn,
-  .subCategoryBtn {
-    flex: 0 0 auto;
-    min-height: 44px;
-    padding: 0 24px;
-    border: 0;
-    border-radius: 999px;
-    font-family: inherit;
-    font-size: 0.8rem;
-    font-weight: 800;
-    cursor: pointer;
-    white-space: nowrap;
-    transition:
-      background 220ms ease,
-      color 220ms ease,
-      opacity 220ms ease,
-      transform 220ms ease;
-  }
-
-  .mainCategoryBtn {
-    background: transparent;
-    color: rgba(8, 8, 8, 0.56);
-  }
-
-  .mainCategoryBtn:hover {
-    color: #080808;
-  }
-
-  .mainCategoryBtn.is-active {
-    background: #ffc400;
-    color: #080808;
-  }
-
-  .inlineSubNav {
-    flex: 0 0 auto;
-    display: none;
-    align-items: center;
-    gap: 0;
-    margin: 0 8px 0 2px;
-    padding: 4px;
-    border: 1px solid #2f2f2f;
-    border-radius: 999px;
-    background: #ffc400;
-  }
-
-  .inlineSubNav.is-active {
-    display: inline-flex;
-  }
-
-  .subCategoryBtn {
-    display: none;
-    min-height: 36px;
-    padding: 0 20px;
-    background: transparent;
-    color: rgba(8, 8, 8, 0.72);
-    font-size: 0.74rem;
-  }
-
-  .subCategoryBtn.is-visible {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .subCategoryBtn.is-active {
-    background: #2f2f2f;
-    color: #ffffff;
-  }
-
-  .equipmentContent {
-    position: relative;
-    flex: 1;
-    display: grid;
-    align-content: start;
-    gap: clamp(28px, 3vw, 44px);
-    min-height: calc(100vh - 250px);
-  }
-
-.equipmentCarousel {
-  position: relative;
-  width: min(100%, calc(100vw - 112px));
-  max-width: 1380px;
-  margin: 0 auto;
-  overflow: visible;
-  padding: 0 58px;
-}
-
-  .equipmentCarousel[hidden] {
-    display: none !important;
-  }
-
-  .equipmentCarousel.is-active {
-    display: block;
-  }
-
-.equipmentGrid {
-  display: none;
-  width: 100%;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(240px, 240px);
-  grid-template-columns: none;
-  gap: 18px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 10px 0 16px;
-  scroll-snap-type: x proximity;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-
-.equipmentGrid.is-active {
-  display: grid;
-}
-
-.equipmentGrid::-webkit-scrollbar {
-  display: none;
-}
-
-  .carouselArrow,
-  .detailArrow {
-    position: absolute;
-    z-index: 8;
-    width: 44px;
-    height: 44px;
-    display: grid;
-    place-items: center;
-    border: 1px solid rgba(255, 196, 0, 0.42);
-    border-radius: 999px;
-    background: rgba(8, 8, 8, 0.82);
-    color: #ffc400;
-    font-family: inherit;
-    font-size: 1.85rem;
-    line-height: 1;
-    cursor: pointer;
-    backdrop-filter: blur(14px);
-    transition:
-      background 220ms ease,
-      border-color 220ms ease,
-      color 220ms ease,
-      transform 220ms ease,
-      box-shadow 220ms ease;
-  }
-
-  .carouselArrow,
-  .detailArrow {
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  .carouselArrow:hover,
-  .detailArrow:hover {
-    background: #ffc400;
-    border-color: #ffc400;
-    color: #080808;
-    transform: translateY(-50%) scale(1.04);
-    box-shadow: 0 16px 42px rgba(255, 196, 0, 0.18);
-  }
-
-.carouselArrow {
-  z-index: 50;
-}
-
-.carouselArrow--prev {
-  left: 6px;
-}
-
-.carouselArrow--next {
-  right: 6px;
-}
-
-  .detailArrow--prev {
-    left: 18px;
-  }
-
-  .detailArrow--next {
-    right: 18px;
-  }
-
-  .detailArrow[hidden] {
-    display: none !important;
-  }
-
-  .machineCard {
-    display: none;
-    min-height: clamp(220px, 19vw, 280px);
-    padding: 0;
-    overflow: hidden;
-    border: 1px solid transparent;
-    border-radius: 0;
-    background: #d9d9d9;
-    color: #080808;
-    text-align: left;
-    cursor: pointer;
-    scroll-snap-align: center;
-    transition:
-      opacity 260ms ease,
-      filter 260ms ease,
-      border-color 220ms ease,
-      transform 220ms ease,
-      box-shadow 220ms ease,
-      background 220ms ease;
-  }
-
-  .machineCard.is-visible {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .machineCard:hover,
-  .machineCard.is-selected {
-    border-color: rgba(255, 196, 0, 0.95);
-    transform: translateY(-3px);
-    box-shadow: 0 22px 54px rgba(0, 0, 0, 0.36);
-  }
-
-  .equipmentGrid.has-selection .machineCard.is-visible:not(.is-selected) {
-    opacity: 0.42;
-    filter: grayscale(1);
-    transform: scale(0.985);
-  }
-
-  .equipmentGrid.has-selection .machineCard.is-visible:not(.is-selected):hover {
-    opacity: 0.72;
-    filter: grayscale(0.55);
-  }
-
-  .machineCard.is-selected {
-    border-color: #ffc400;
-    background: #eeeeee;
-    box-shadow:
-      0 0 0 1px rgba(255, 196, 0, 0.7),
-      0 24px 64px rgba(255, 196, 0, 0.14);
-  }
-
-  .machineImage {
-    display: block;
-    height: clamp(135px,23vw,238px);
-    overflow: hidden;
-    background: #d9d9d9;
-  }
-
-.machineImage img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  opacity: 1;
-  filter: saturate(0.92) contrast(1.02);
-}
-
-  .machineMeta {
-    display: grid;
-    gap: 8px;
-    margin-top: auto;
-    padding: 18px 20px;
-  }
-
-  .machineEyebrow {
-    color: rgba(8, 8, 8, 0.62);
-    font-size: 0.68rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .machineName {
-    display: grid;
-    gap: 2px;
-    color: #1c1c1c;
-    font-size: 1.05rem;
-    font-weight: 500;
-    letter-spacing: -0.03em;
-    line-height: 1.15;
-  }
-
-  .machineName small {
-    color: #1c1c1c;
-    font-size: 1em;
-    font-weight: inherit;
-  }
-
-  .equipmentDetail {
-    position: relative;
-    display: none;
-    grid-template-columns: minmax(0, 1.12fr) minmax(340px, 0.88fr);
-    min-height: clamp(340px, 30vw, 430px);
-    overflow: hidden;
-    border: 2px solid rgba(255, 196, 0, 0.92);
-    border-radius: 18px;
-    background:
-      radial-gradient(circle at 80% 50%, rgba(255, 196, 0, 0.08), transparent 34%),
-      rgba(5, 5, 5, 0.96);
-    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.46);
-  }
-
-  .equipmentDetail.is-active {
-    display: grid;
-    animation: detailIn 360ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  @keyframes detailIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-      filter: blur(4px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-      filter: blur(0);
-    }
-  }
-
-  .detailClose {
-    position: absolute;
-    top: 18px;
-    right: 18px;
-    z-index: 10;
-    width: 34px;
-    height: 34px;
-    display: grid;
-    place-items: center;
-    border: 0;
-    background: transparent;
-    color: rgba(255, 255, 255, 0.78);
-    font-family: inherit;
-    font-size: 1.65rem;
-    line-height: 1;
-    cursor: pointer;
-    transition: color 180ms ease, transform 180ms ease;
-  }
-
-  .detailClose:hover {
-    color: #ffc400;
-    transform: rotate(90deg);
-  }
-
-  .detailImage {
-    min-height: 100%;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.08);
-  }
-
-.detailImage img {
-  width: 100%;
-  height: 100%;
-  min-height: 340px;
-  max-height: 552px;
-  display: block;
-  object-fit: cover;
-  filter: saturate(0.94) contrast(1.02);
-}
-
-.detailInfo {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: clamp(28px, 3.6vw, 52px);
-}
-
-  .detailEyebrow {
-    margin: 0 0 16px;
-    color: #ffc400;
-    font-size: 0.78rem;
-    font-weight: 800;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-  }
-
-  .detailTitle {
-    display: grid;
-    gap: 2px;
-    margin: 0 0 20px;
-    color: #ffc400;
-    font-size: clamp(1.8rem, 3vw, 3rem);
-    font-weight: 800;
-    letter-spacing: 0.02em;
-    line-height: 0.96;
-    text-transform: uppercase;
-  }
-
-.detailDescription {
-  max-width: 48ch;
-  margin: 0 0 30px;
-  color: rgba(255, 255, 255, 0.68);
-  font-size: clamp(0.9rem, 0.95vw, 1rem);
-  line-height: 1.5;
-}
-
-.detailSpecs {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px clamp(24px, 3vw, 56px);
-  margin: 0 0 30px;
-  padding: 0;
-}
-
-  .spec {
-    display: grid;
-    gap: 8px;
-    margin: 0;
-  }
-
-  .spec dt {
-    margin: 0;
-    color: rgba(255, 255, 255, 0.38);
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-  }
-
-  .spec dd {
-    margin: 0;
-    color: #ffffff;
-    font-size: 1rem;
-    font-weight: 700;
-  }
-
-  .detailActions {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-  }
-
-  .primaryAction,
-  .secondaryAction {
-    min-height: 48px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    padding: 0 28px;
-    border-radius: 7px;
-    font-family: inherit;
-    font-size: 0.9rem;
-    font-weight: 800;
-    text-decoration: none;
-    transition:
-      background 220ms ease,
-      border-color 220ms ease,
-      color 220ms ease,
-      transform 220ms ease;
-    width: 400px;
-  }
-
-  .primaryAction {
-    border: 1px solid #ffc400;
-    background: #ffc400;
-    color: #080808;
-  }
-
-  .secondaryAction {
-    border: 1px solid rgba(255, 255, 255, 0.72);
-    background: transparent;
-    color: rgba(255, 255, 255, 0.84);
-  }
-
-  .primaryAction:hover,
-  .secondaryAction:hover {
-    transform: translateY(-1px);
-  }
-
-  .secondaryAction:hover {
-    border-color: #ffc400;
-    color: #ffc400;
-  }
-
-  .secondaryAction[aria-disabled="true"] {
-    opacity: 0.45;
-    pointer-events: none;
-  }
+  .eqSection, .eqSection * { box-sizing: border-box; }
+  .eqSection { width: 100%; overflow: hidden; background: #050505; color: #fff; font-family: var(--font-body); }
+  .eqShell { width: min(100%, 1680px); min-height: 100vh; display: flex; flex-direction: column; margin: 0 auto; padding: clamp(42px, 5.5vw, 82px) clamp(24px, 5vw, 76px); }
+  .eqHeader { display: grid; gap: 10px; margin-bottom: 12px; text-align: center; }
+  .eqEyebrow { margin: 0; color: #ffc400; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+  .eqTitle { margin: 0; color: rgba(255,255,255,0.86); font-size: clamp(1.55rem, 2.2vw, 2.15rem); font-weight: 400; letter-spacing: -0.035em; line-height: 1.1; }
+
+  .catNav { position: relative; left: 50%; width: fit-content; max-width: min(100%,1200px); min-height: 58px; display: flex; align-items: center; justify-content: center; gap: 0; margin: 20px 0 clamp(28px, 4vw, 50px); padding: 6px; overflow-x: auto; border: 1px solid #2f2f2f; border-radius: 999px; background: #f5f5f5; transform: translateX(-50%); -webkit-overflow-scrolling: touch; }
+  .catBtn, .subBtn { flex: 0 0 auto; min-height: 44px; padding: 0 24px; border: 0; border-radius: 999px; font-family: inherit; font-size: 0.8rem; font-weight: 800; cursor: pointer; white-space: nowrap; transition: background 220ms ease, color 220ms ease; }
+  .catBtn { background: transparent; color: rgba(8,8,8,0.56); }
+  .catBtn:hover { color: #080808; }
+  .catBtn.is-active { background: #ffc400; color: #080808; }
+  .subNav { flex: 0 0 auto; display: none; align-items: center; gap: 0; margin: 0 8px 0 2px; padding: 4px; border: 1px solid #2f2f2f; border-radius: 999px; background: #ffc400; }
+  .subNav.is-active { display: inline-flex; }
+  .subBtn { display: none; min-height: 36px; padding: 0 20px; background: transparent; color: rgba(8,8,8,0.72); font-size: 0.74rem; }
+  .subBtn.is-visible { display: inline-flex; align-items: center; justify-content: center; }
+  .subBtn.is-active { background: #2f2f2f; color: #fff; }
+
+  .eqContent { position: relative; flex: 1; display: grid; align-content: start; gap: clamp(28px, 3vw, 44px); }
+  .eqCarousel { position: relative; width: min(100%, 1200px); max-width: 1200px; margin: 0 auto; overflow: visible; padding: 0 58px; }
+  .eqCarousel[hidden] { display: none !important; }
+  .eqCarousel.is-active { display: block; }
+  .eqGrid { display: none; width: 100%; grid-auto-flow: column; grid-auto-columns: minmax(240px, 240px); gap: 18px; overflow-x: auto; overflow-y: hidden; padding: 10px 0 16px; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .eqGrid.is-active { display: grid; }
+  .eqGrid::-webkit-scrollbar { display: none; }
+
+  .arrowBtn, .dtArrow { position: absolute; z-index: 8; width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid rgba(255,196,0,0.42); border-radius: 999px; background: rgba(8,8,8,0.82); color: #ffc400; font-family: inherit; font-size: 1.85rem; line-height: 1; cursor: pointer; backdrop-filter: blur(14px); transition: background 220ms ease, border-color 220ms ease, color 220ms ease, transform 220ms ease; top: 50%; transform: translateY(-50%); }
+  .arrowBtn:hover, .dtArrow:hover { background: #ffc400; border-color: #ffc400; color: #080808; transform: translateY(-50%) scale(1.04); }
+  .arrowBtn { z-index: 50; }
+  .arrowBtn--prev { left: 6px; }
+  .arrowBtn--next { right: 6px; }
+  .dtArrow--prev { left: 18px; }
+  .dtArrow--next { right: 18px; }
+  .dtArrow[hidden] { display: none !important; }
+
+  .card { display: none; min-height: clamp(220px, 19vw, 280px); padding: 0; overflow: hidden; border: 1px solid transparent; border-radius: 0; background: #d9d9d9; color: #080808; text-align: left; cursor: pointer; scroll-snap-align: center; transition: opacity 260ms ease, border-color 220ms ease, transform 220ms ease; }
+  .card.is-visible { display: flex; flex-direction: column; }
+  .card:hover, .card.is-selected { border-color: rgba(255,196,0,0.95); transform: translateY(-3px); }
+  .eqGrid.has-selection .card.is-visible:not(.is-selected) { opacity: 0.42; filter: grayscale(1); }
+  .eqGrid.has-selection .card.is-visible:not(.is-selected):hover { opacity: 0.72; filter: grayscale(0.55); }
+  .card.is-selected { border-color: #ffc400; background: #eee; }
+  .cardImg { display: block; height: clamp(135px,23vw,238px); overflow: hidden; background: #d9d9d9; }
+  .cardImg img { width: 100%; height: 100%; display: block; object-fit: cover; }
+  .cardMeta { display: grid; gap: 8px; margin-top: auto; padding: 18px 20px; }
+  .cardEyebrow { color: rgba(8,8,8,0.62); font-size: 0.68rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+  .cardName { display: grid; gap: 2px; color: #1c1c1c; font-size: 1.05rem; font-weight: 500; letter-spacing: -0.03em; line-height: 1.15; }
+  .cardName small { color: #1c1c1c; font-size: 1em; font-weight: inherit; }
+
+  .eqDetail { position: relative; display: none; grid-template-columns: minmax(0, 1.12fr) minmax(340px, 0.88fr); min-height: clamp(340px, 30vw, 430px); overflow: hidden; border: 2px solid rgba(255,196,0,0.92); border-radius: 18px; background: radial-gradient(circle at 80% 50%, rgba(255,196,0,0.08), transparent 34%), rgba(5,5,5,0.96); }
+  .eqDetail.is-active { display: grid; animation: dtIn 360ms cubic-bezier(0.22, 1, 0.36, 1); }
+  @keyframes dtIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .detailX { position: absolute; top: 18px; right: 18px; z-index: 10; width: 34px; height: 34px; display: grid; place-items: center; border: 0; background: transparent; color: rgba(255,255,255,0.78); font-size: 1.65rem; line-height: 1; cursor: pointer; transition: color 180ms ease, transform 180ms ease; }
+  .detailX:hover { color: #ffc400; transform: rotate(90deg); }
+  .dtImg { min-height: 100%; overflow: hidden; background: rgba(255,255,255,0.08); }
+  .dtImg img { width: 100%; height: 100%; min-height: 340px; max-height: 552px; display: block; object-fit: cover; }
+  .dtInfo { display: flex; flex-direction: column; justify-content: center; padding: clamp(28px, 3.6vw, 52px); }
+  .dtEyebrow { margin: 0 0 16px; color: #ffc400; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; }
+  .dtTitle { display: grid; gap: 2px; margin: 0 0 20px; color: #ffc400; font-size: clamp(1.8rem, 3vw, 3rem); font-weight: 800; letter-spacing: 0.02em; line-height: 0.96; text-transform: uppercase; }
+  .dtDesc { max-width: 48ch; margin: 0 0 30px; color: rgba(255,255,255,0.68); font-size: clamp(0.9rem, 0.95vw, 1rem); line-height: 1.5; }
+  .dtSpecs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px clamp(24px, 3vw, 56px); margin: 0 0 30px; padding: 0; }
+  .spec { display: grid; gap: 8px; margin: 0; }
+  .spec dt { margin: 0; color: rgba(255,255,255,0.38); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; }
+  .spec dd { margin: 0; color: #fff; font-size: 1rem; font-weight: 700; }
+  .dtActions { display: flex; align-items: center; gap: 18px; }
+  .actPrimary, .actSecondary { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 12px; padding: 0 28px; border-radius: 7px; font-family: inherit; font-size: 0.9rem; font-weight: 800; text-decoration: none; transition: background 220ms ease, border-color 220ms ease, color 220ms ease, transform 220ms ease; width: 400px; }
+  .actPrimary { border: 1px solid #ffc400; background: #ffc400; color: #080808; }
+  .actSecondary { border: 1px solid rgba(255,255,255,0.72); background: transparent; color: rgba(255,255,255,0.84); }
+  .actPrimary:hover, .actSecondary:hover { transform: translateY(-1px); }
+  .actSecondary:hover { border-color: #ffc400; color: #ffc400; }
+  .actSecondary[aria-disabled="true"] { opacity: 0.45; pointer-events: none; }
 
   @media (max-width: 1180px) {
-    .equipmentGrid {
-      grid-auto-columns: minmax(230px, 230px);
-      grid-template-columns: none;
-    }
-
-    .equipmentDetail {
-      grid-template-columns: 1fr;
-    }
-
-    .detailImage img {
-      min-height: 340px;
-      max-height: 420px;
-    }
+    .eqGrid { grid-auto-columns: minmax(230px, 230px); }
+    .eqDetail { grid-template-columns: 1fr; }
+    .dtImg img { min-height: 340px; max-height: 420px; }
   }
 
   @media (max-width: 760px) {
-    .equipmentShell {
-      min-height: auto;
-      padding: 68px 18px;
+    .eqShell { min-height: auto; padding: 68px 18px; }
+    .eqHeader { margin-bottom: 18px; }
+    .catNav { left: auto; width: 100%; max-width: 100%; min-height: auto; border-radius: 24px; transform: none; justify-content: flex-start; }
+    .catBtn, .subBtn { min-height: 40px; padding: 0 16px; font-size: 0.72rem; }
+    .subNav { padding: 4px; margin-right: 6px; }
+    .eqGrid { grid-auto-columns: minmax(250px, 250px); gap: 14px; padding: 0 44px 62px; }
+    .card { min-height: 300px; }
+    .cardImg { height: 200px; }
+    .arrowBtn { top: auto; bottom: 14px; width: 40px; height: 40px; font-size: 1.7rem; transform: none; }
+    .arrowBtn:hover { transform: scale(1.04); }
+    .arrowBtn--prev { left: 12px; }
+    .arrowBtn--next { right: 12px; }
+    .eqDetail { min-height: auto; border-radius: 16px; }
+    .detailX { top: 12px; right: 12px; color: #fff; background: rgba(0,0,0,0.28); border-radius: 999px; }
+    .dtArrow { top: 130px; width: 40px; height: 40px; font-size: 1.7rem; }
+    .dtArrow--prev { left: 12px; }
+    .dtArrow--next { right: 12px; }
+    .dtImg img { min-height: 260px; max-height: 320px; }
+    .dtInfo { padding: 28px 20px 22px; }
+    .dtTitle { font-size: clamp(1.55rem, 10vw, 2.3rem); }
+    .dtSpecs { grid-template-columns: 1fr; gap: 18px; margin-bottom: 30px; }
+    .dtActions { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .actPrimary, .actSecondary { width: 100%; }
+  }
+
+  @media (max-width: 420px) {
+    .eqShell { padding-left: 14px; padding-right: 14px; }
+    .catBtn, .subBtn { padding: 0 14px; }
+  }
+</style>
+<style is:global>
+  /* =========================================================
+     VMA VERSION B — EQUIPOS MOBILE CAROUSEL + DETAIL MODAL
+     Vista mobile tipo catálogo premium + detalle flotante cerrable
+     ========================================================= */
+
+  @media (max-width: 760px) {
+    [data-equipment-section] {
+      position: relative !important;
+      overflow: hidden !important;
+      background: #030303 !important;
+      padding-top: clamp(96px, 14vh, 128px) !important;
+      padding-bottom: 72px !important;
     }
 
-    .moduleHeader {
-      margin-bottom: 18px;
+    [data-equipment-section] * {
+      box-sizing: border-box;
     }
 
-    .unifiedCategoryNav {
-      left: auto;
-      width: 100%;
-      max-width: 100%;
-      min-height: auto;
-      border-radius: 24px;
-      transform: none;
-      justify-content: flex-start;
+    /* Texto superior */
+    [data-equipment-section] h2,
+    [data-equipment-section] [class*="title"],
+    [data-equipment-section] [class*="Title"] {
+      max-width: calc(100% - 36px) !important;
+      margin-inline: auto !important;
+      text-align: center !important;
     }
 
-    .mainCategoryBtn,
-    .subCategoryBtn {
-      min-height: 40px;
-      padding: 0 16px;
-      font-size: 0.72rem;
+    [data-equipment-section] [class*="eyebrow"],
+    [data-equipment-section] [class*="Eyebrow"] {
+      text-align: center !important;
+      color: #ffc400 !important;
+      letter-spacing: 0.14em !important;
+      font-weight: 900 !important;
     }
 
-    .inlineSubNav {
-      padding: 4px;
-      margin-right: 6px;
+    /* Menú principal de máquinas */
+    [data-equipment-section] [class*="cat"],
+    [data-equipment-section] [class*="Cat"] {
+      scrollbar-width: none;
     }
 
-    .equipmentGrid {
-      grid-auto-columns: minmax(250px, 250px);
-      grid-template-columns: none;
-      gap: 14px;
-      padding: 0 44px 62px;
+    [data-equipment-section] [class*="cat"]::-webkit-scrollbar,
+    [data-equipment-section] [class*="Cat"]::-webkit-scrollbar {
+      display: none;
     }
 
-    .machineCard {
-      min-height: 300px;
+    [data-equipment-section] .catBtn {
+      min-height: 42px !important;
+      padding: 0 18px !important;
+      border-radius: 999px !important;
+      white-space: nowrap !important;
+      font-size: 0.78rem !important;
+      font-weight: 900 !important;
+      border: 1px solid transparent !important;
+      background: transparent !important;
+      color: rgba(255, 255, 255, 0.72) !important;
+      flex: 0 0 auto !important;
     }
 
-    .machineImage {
-      height: 200px;
+    [data-equipment-section] .catBtn.is-active {
+      background: #ffc400 !important;
+      color: #070707 !important;
+      border-color: #ffc400 !important;
     }
 
-    .carouselArrow {
-      top: auto;
-      bottom: 14px;
-      width: 40px;
-      height: 40px;
-      font-size: 1.7rem;
-      transform: none;
+    /* Subcategorías tipo pills horizontales */
+    [data-equipment-section] .subNav {
+      width: calc(100% - 24px) !important;
+      max-width: calc(100% - 24px) !important;
+      margin: 14px auto 0 !important;
+      padding: 6px !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      white-space: nowrap !important;
+      border-radius: 999px !important;
+      background: #f4f4f4 !important;
+      border: 1px solid rgba(255, 255, 255, 0.18) !important;
+      scrollbar-width: none !important;
+      -webkit-overflow-scrolling: touch !important;
     }
 
-    .carouselArrow:hover {
-      transform: scale(1.04);
+    [data-equipment-section] .subNav::-webkit-scrollbar {
+      display: none !important;
     }
 
-    .carouselArrow--prev {
-      left: 12px;
+    [data-equipment-section] .subBtn {
+      flex: 0 0 auto !important;
+      min-height: 38px !important;
+      padding: 0 16px !important;
+      border-radius: 999px !important;
+      border: 0 !important;
+      background: transparent !important;
+      color: rgba(8, 8, 8, 0.62) !important;
+      font-size: 0.72rem !important;
+      font-weight: 900 !important;
+      white-space: nowrap !important;
     }
 
-    .carouselArrow--next {
-      right: 12px;
+    [data-equipment-section] .subBtn.is-active {
+      background: #2b2b2b !important;
+      color: #ffffff !important;
+      box-shadow: inset 0 0 0 2px #ffc400 !important;
     }
 
-    .equipmentDetail {
-      min-height: auto;
-      border-radius: 16px;
+    /* Carrusel mobile */
+    [data-equipment-section] .eqCarousel {
+      position: relative !important;
+      width: 100% !important;
+      margin-top: 34px !important;
+      overflow: visible !important;
     }
 
-    .detailClose {
-      top: 12px;
-      right: 12px;
-      color: #ffffff;
-      background: rgba(0, 0, 0, 0.28);
-      border-radius: 999px;
+    [data-equipment-section] .eqGrid {
+      width: 100% !important;
+      max-width: 100% !important;
+      display: grid !important;
+      grid-auto-flow: column !important;
+      grid-auto-columns: minmax(270px, 78vw) !important;
+      gap: 18px !important;
+      padding: 8px 18px 26px !important;
+      overflow-x: auto !important;
+      overflow-y: visible !important;
+      scroll-snap-type: x mandatory !important;
+      scrollbar-width: none !important;
+      -webkit-overflow-scrolling: touch !important;
     }
 
-    .detailArrow {
-      top: 130px;
-      width: 40px;
-      height: 40px;
-      font-size: 1.7rem;
+    [data-equipment-section] .eqGrid::-webkit-scrollbar {
+      display: none !important;
     }
 
-    .detailArrow--prev {
-      left: 12px;
+    [data-equipment-section] .card {
+      min-height: 420px !important;
+      border-radius: 0 !important;
+      border: 1px solid rgba(255, 196, 0, 0.72) !important;
+      background: #050505 !important;
+      color: #ffffff !important;
+      overflow: hidden !important;
+      scroll-snap-align: center !important;
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.45) !important;
     }
 
-    .detailArrow--next {
-      right: 12px;
+    [data-equipment-section] .card.is-visible {
+      display: flex !important;
+      flex-direction: column !important;
     }
 
-    .detailImage img {
-      min-height: 260px;
-      max-height: 320px;
+    [data-equipment-section] .card.is-selected {
+      opacity: 1 !important;
+      filter: none !important;
+      transform: none !important;
+      border-color: #ffc400 !important;
     }
 
-    .detailInfo {
-      padding: 28px 20px 22px;
+    [data-equipment-section] .eqGrid.has-selection .card.is-visible:not(.is-selected) {
+      opacity: 1 !important;
+      filter: none !important;
     }
 
-    .detailTitle {
-      font-size: clamp(1.55rem, 10vw, 2.3rem);
+    [data-equipment-section] .cardImg {
+      height: 245px !important;
+      background: #111 !important;
     }
 
-    .detailDescription {
-      margin-bottom: 30px;
+    [data-equipment-section] .cardImg img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      object-position: center !important;
     }
 
-    .detailSpecs {
-      grid-template-columns: 1fr;
-      gap: 18px;
-      margin-bottom: 30px;
+    [data-equipment-section] .cardMeta {
+      padding: 22px 20px 24px !important;
+      background:
+        radial-gradient(circle at 85% 10%, rgba(255, 196, 0, 0.12), transparent 38%),
+        #050505 !important;
+      color: #ffffff !important;
+      gap: 12px !important;
     }
 
-    .detailActions {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
+    [data-equipment-section] .cardEyebrow {
+      color: #ffc400 !important;
+      font-size: 0.72rem !important;
+      letter-spacing: 0.16em !important;
+      font-weight: 900 !important;
     }
 
-    .primaryAction,
-    .secondaryAction {
-      width: 100%;
+    [data-equipment-section] .cardName {
+      color: #ffc400 !important;
+      font-size: clamp(1.45rem, 7vw, 2rem) !important;
+      line-height: 0.96 !important;
+      letter-spacing: -0.055em !important;
+      font-weight: 900 !important;
+      text-transform: uppercase !important;
+    }
+
+    [data-equipment-section] .cardName small {
+      color: #ffc400 !important;
+      font-size: 1em !important;
+      font-weight: 900 !important;
+    }
+
+    /* Flechas carrusel */
+    [data-equipment-section] .arrowBtn {
+      position: absolute !important;
+      z-index: 8 !important;
+      top: auto !important;
+      bottom: -8px !important;
+      width: 42px !important;
+      height: 42px !important;
+      border-radius: 999px !important;
+      border: 1px solid rgba(255, 196, 0, 0.78) !important;
+      background: rgba(0, 0, 0, 0.42) !important;
+      color: #ffc400 !important;
+      font-size: 1.7rem !important;
+      line-height: 1 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+    }
+
+    [data-equipment-section] .arrowBtn--prev {
+      left: 24px !important;
+    }
+
+    [data-equipment-section] .arrowBtn--next {
+      right: 24px !important;
+    }
+
+    /* Detalle grande en mobile: MODAL centrado */
+    [data-equipment-section] .eqDetail {
+      display: none !important;
+    }
+
+    [data-equipment-section] .eqDetail.is-active {
+      position: fixed !important;
+      left: 50% !important;
+      top: 50% !important;
+      z-index: 100080 !important;
+      width: min(calc(100vw - 28px), 430px) !important;
+      max-height: min(82dvh, 760px) !important;
+      min-height: auto !important;
+      transform: translate(-50%, -50%) !important;
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      gap: 0 !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      border: 1px solid rgba(255, 196, 0, 0.72) !important;
+      border-radius: 22px !important;
+      background:
+        radial-gradient(circle at 88% 12%, rgba(255, 196, 0, 0.13), transparent 34%),
+        #050505 !important;
+      color: #ffffff !important;
+      box-shadow:
+        0 0 0 100vmax rgba(0, 0, 0, 0.72),
+        0 34px 100px rgba(0, 0, 0, 0.72) !important;
+      animation: vmaMobileModalIn 240ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+
+    [data-equipment-section] .eqDetail.is-active img,
+    [data-equipment-section] .eqDetail.is-active [data-detail-image] {
+      width: 100% !important;
+      height: clamp(220px, 40vh, 330px) !important;
+      display: block !important;
+      object-fit: cover !important;
+      object-position: center !important;
+      border-radius: 20px 20px 0 0 !important;
+    }
+
+    [data-equipment-section] .eqDetail.is-active [data-detail-eyebrow] {
+      color: #ffc400 !important;
+      font-size: 0.72rem !important;
+      font-weight: 900 !important;
+      letter-spacing: 0.16em !important;
+      text-transform: uppercase !important;
+    }
+
+    [data-equipment-section] .eqDetail.is-active [data-detail-title] {
+      color: #ffc400 !important;
+      font-size: clamp(1.75rem, 8vw, 2.4rem) !important;
+      line-height: 0.94 !important;
+      letter-spacing: -0.06em !important;
+      font-weight: 900 !important;
+      text-transform: uppercase !important;
+    }
+
+    [data-equipment-section] .eqDetail.is-active [data-detail-subtitle] {
+      color: rgba(255, 255, 255, 0.88) !important;
+      font-size: 1.05rem !important;
+      font-weight: 700 !important;
+    }
+
+    [data-equipment-section] .eqDetail.is-active [data-detail-description] {
+      color: rgba(255, 255, 255, 0.72) !important;
+      font-size: 0.95rem !important;
+      line-height: 1.55 !important;
+    }
+
+    [data-equipment-section] .detailX {
+      position: sticky !important;
+      top: 12px !important;
+      justify-self: end !important;
+      z-index: 5 !important;
+      width: 42px !important;
+      height: 42px !important;
+      margin: 12px 12px -54px 0 !important;
+      border: 1px solid rgba(255, 255, 255, 0.22) !important;
+      border-radius: 999px !important;
+      background: rgba(0, 0, 0, 0.58) !important;
+      color: #ffffff !important;
+      font-size: 1.55rem !important;
+      line-height: 1 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+    }
+
+    [data-equipment-section] .dtArrow {
+      display: none !important;
+    }
+
+    [data-equipment-section] .eqDetail.is-active a,
+    [data-equipment-section] .eqDetail.is-active button {
+      touch-action: manipulation;
+    }
+  }
+
+  @keyframes vmaMobileModalIn {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -46%) scale(0.96);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  html.vma-equipment-modal-open,
+  body.vma-equipment-modal-open {
+    overflow: hidden !important;
+  }
+</style>
+
+<script type="module">
+  (() => {
+    const section = document.querySelector("[data-equipment-section]");
+    if (!section) return;
+
+    const detail = section.querySelector("[data-detail-panel]");
+    const closeBtn = section.querySelector("[data-close-detail]");
+
+    const isMobile = () => window.matchMedia("(max-width: 760px)").matches;
+
+    const syncLock = () => {
+      const open = Boolean(detail?.classList.contains("is-active") && isMobile());
+      document.documentElement.classList.toggle("vma-equipment-modal-open", open);
+      document.body.classList.toggle("vma-equipment-modal-open", open);
+    };
+
+    if (detail) {
+      const observer = new MutationObserver(syncLock);
+      observer.observe(detail, { attributes: true, attributeFilter: ["class"] });
+
+      detail.addEventListener("click", (event) => {
+        if (!isMobile()) return;
+        if (event.target === detail) closeBtn?.click();
+      });
+    }
+
+    window.addEventListener("resize", syncLock);
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && detail?.classList.contains("is-active")) {
+        closeBtn?.click();
+      }
+    });
+
+    syncLock();
+  })();
+</script>
+
+<style is:global>
+  /* =========================================================
+     VMA VERSION B — EQUIPOS MOBILE FILTER + CARD REFINEMENT
+     Categorías arriba, filtro abajo, card más sutil y flechas centradas
+     ========================================================= */
+
+  @media (max-width: 760px) {
+    [data-equipment-section] {
+      padding-top: clamp(92px, 13vh, 126px) !important;
+      padding-bottom: 82px !important;
+      overflow: hidden !important;
+      background: #030303 !important;
+    }
+
+    /* Header de la sección */
+    [data-equipment-section] [class*="module"],
+    [data-equipment-section] [class*="Module"] {
+      max-width: 100% !important;
+    }
+
+    /* ===== MENÚ PRINCIPAL: solo tipos de máquina ===== */
+    [data-equipment-section] .catNav,
+    [data-equipment-section] [class*="catNav"],
+    [data-equipment-section] [class*="categories"],
+    [data-equipment-section] [class*="Categories"] {
+      width: calc(100% - 28px) !important;
+      max-width: calc(100% - 28px) !important;
+      margin: 28px auto 0 !important;
+      padding: 6px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+      gap: 4px !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      white-space: nowrap !important;
+      border-radius: 999px !important;
+      background: #f5f5f5 !important;
+      border: 1px solid rgba(255, 255, 255, 0.18) !important;
+      scrollbar-width: none !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+
+    [data-equipment-section] .catNav::-webkit-scrollbar,
+    [data-equipment-section] [class*="catNav"]::-webkit-scrollbar,
+    [data-equipment-section] [class*="categories"]::-webkit-scrollbar,
+    [data-equipment-section] [class*="Categories"]::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    [data-equipment-section] .catBtn {
+      flex: 0 0 auto !important;
+      min-height: 38px !important;
+      padding: 0 16px !important;
+      border: 0 !important;
+      border-radius: 999px !important;
+      background: transparent !important;
+      color: rgba(8, 8, 8, 0.62) !important;
+      font-size: 0.68rem !important;
+      font-weight: 800 !important;
+      letter-spacing: -0.01em !important;
+      white-space: nowrap !important;
+    }
+
+    [data-equipment-section] .catBtn.is-active {
+      background: #ffc400 !important;
+      color: #070707 !important;
+      box-shadow: none !important;
+    }
+
+    /* ===== SUBFILTRO MOBILE: Diesel / Eléctrica / Eléctrica 4x4 separado abajo ===== */
+    [data-equipment-section] .subNav {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 18px auto 0 !important;
+      padding: 0 18px !important;
+      display: none !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 10px !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      white-space: nowrap !important;
+      background: transparent !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      scrollbar-width: none !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+
+    [data-equipment-section] .subNav.is-active {
+      display: flex !important;
+    }
+
+    [data-equipment-section] .subNav::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    [data-equipment-section] .subBtn {
+      flex: 0 0 auto !important;
+      min-height: 36px !important;
+      padding: 0 18px !important;
+      border: 1px solid transparent !important;
+      border-radius: 999px !important;
+      background: transparent !important;
+      color: rgba(255, 255, 255, 0.64) !important;
+      font-size: 0.72rem !important;
+      font-weight: 700 !important;
+      letter-spacing: -0.01em !important;
+      white-space: nowrap !important;
+    }
+
+    [data-equipment-section] .subBtn.is-active {
+      background: #ffc400 !important;
+      color: #070707 !important;
+      border-color: #ffc400 !important;
+      box-shadow: none !important;
+      font-weight: 900 !important;
+    }
+
+    /* Ocultar subfiltros vacíos en categorías sin submenú */
+    [data-equipment-section] .subBtn:empty,
+    [data-equipment-section] .subNav:has(.subBtn:only-child:empty) {
+      display: none !important;
+    }
+
+    /* ===== CARRUSEL ===== */
+    [data-equipment-section] .eqCarousel {
+      position: relative !important;
+      width: 100% !important;
+      margin-top: 30px !important;
+      overflow: visible !important;
+    }
+
+    [data-equipment-section] .eqGrid {
+      width: 100% !important;
+      max-width: 100% !important;
+      display: grid !important;
+      grid-auto-flow: column !important;
+      grid-auto-columns: minmax(276px, 78vw) !important;
+      gap: 18px !important;
+      padding: 8px 20px 32px !important;
+      overflow-x: auto !important;
+      overflow-y: visible !important;
+      scroll-snap-type: x mandatory !important;
+      scrollbar-width: none !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+
+    [data-equipment-section] .eqGrid::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    /* ===== CARD MOBILE MÁS SUTIL ===== */
+    [data-equipment-section] .card {
+      min-height: 430px !important;
+      border-radius: 0 !important;
+      border: 1px solid rgba(255, 196, 0, 0.7) !important;
+      background: #d9d9d9 !important;
+      color: #101010 !important;
+      overflow: hidden !important;
+      scroll-snap-align: center !important;
+      box-shadow: none !important;
+      transform: none !important;
+    }
+
+    [data-equipment-section] .card.is-visible {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+
+    [data-equipment-section] .card:hover,
+    [data-equipment-section] .card.is-selected {
+      transform: none !important;
+      border-color: #ffc400 !important;
+    }
+
+    [data-equipment-section] .eqGrid.has-selection .card.is-visible:not(.is-selected) {
+      opacity: 1 !important;
+      filter: none !important;
+    }
+
+    [data-equipment-section] .cardImg {
+      height: 300px !important;
+      background: #d9d9d9 !important;
+      overflow: hidden !important;
+    }
+
+    [data-equipment-section] .cardImg img {
+      width: 100% !important;
+      height: 100% !important;
+      display: block !important;
+      object-fit: cover !important;
+      object-position: center !important;
+      opacity: 1 !important;
+      filter: none !important;
+    }
+
+    [data-equipment-section] .cardMeta {
+      margin-top: auto !important;
+      padding: 22px 22px 24px !important;
+      display: grid !important;
+      gap: 8px !important;
+      background: #d9d9d9 !important;
+      color: #101010 !important;
+    }
+
+    [data-equipment-section] .cardEyebrow {
+      color: rgba(8, 8, 8, 0.58) !important;
+      font-size: 0.72rem !important;
+      line-height: 1 !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.04em !important;
+      text-transform: uppercase !important;
+    }
+
+    [data-equipment-section] .cardName {
+      color: #101010 !important;
+      font-size: clamp(1.25rem, 6.2vw, 1.7rem) !important;
+      line-height: 1.02 !important;
+      letter-spacing: -0.045em !important;
+      font-weight: 500 !important;
+      text-transform: none !important;
+    }
+
+    [data-equipment-section] .cardName small {
+      color: #101010 !important;
+      font-size: 1em !important;
+      font-weight: 500 !important;
+    }
+
+    /* ===== FLECHAS CENTRADAS EN LA CARD ===== */
+    [data-equipment-section] .arrowBtn {
+      position: absolute !important;
+      top: 50% !important;
+      bottom: auto !important;
+      z-index: 12 !important;
+      width: 42px !important;
+      height: 42px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      border-radius: 999px !important;
+      border: 1px solid rgba(255, 196, 0, 0.72) !important;
+      background: rgba(3, 3, 3, 0.58) !important;
+      color: #ffc400 !important;
+      font-size: 1.45rem !important;
+      line-height: 1 !important;
+      transform: translateY(-50%) !important;
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.32) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+    }
+
+    [data-equipment-section] .arrowBtn--prev {
+      left: 14px !important;
+    }
+
+    [data-equipment-section] .arrowBtn--next {
+      right: 14px !important;
+    }
+
+    [data-equipment-section] .arrowBtn:hover {
+      background: #ffc400 !important;
+      color: #050505 !important;
+    }
+  }
+
+  @media (max-width: 390px) {
+    [data-equipment-section] .catBtn {
+      min-height: 36px !important;
+      padding: 0 14px !important;
+      font-size: 0.64rem !important;
+    }
+
+    [data-equipment-section] .subBtn {
+      min-height: 34px !important;
+      padding: 0 15px !important;
+      font-size: 0.68rem !important;
+    }
+
+    [data-equipment-section] .eqGrid {
+      grid-auto-columns: minmax(260px, 80vw) !important;
+      padding-inline: 18px !important;
+    }
+
+    [data-equipment-section] .card {
+      min-height: 410px !important;
+    }
+
+    [data-equipment-section] .cardImg {
+      height: 280px !important;
+    }
+
+    [data-equipment-section] .arrowBtn--prev {
+      left: 10px !important;
+    }
+
+    [data-equipment-section] .arrowBtn--next {
+      right: 10px !important;
+    }
+  }
+</style>
+
+<style is:global>
+  /* =========================================================
+     VMA VERSION B — EQUIPOS MOBILE FINAL CLEAN
+     Main tabs con fondo blanco + subfiltros separados sin fondo
+     ========================================================= */
+
+  @media (max-width: 760px) {
+    [data-equipment-section],
+    #equipos {
+      overflow: hidden !important;
+      background: #030303 !important;
+    }
+
+    /* Título */
+    #equipos [class*="title"],
+    [data-equipment-section] [class*="title"] {
+      max-width: 92% !important;
+      margin-inline: auto !important;
+      text-align: center !important;
+    }
+
+    /* CONTENEDOR DE TABS PRINCIPAL */
+    #equipos .catNav,
+    #equipos [class*="catNav"],
+    #equipos [class*="category"],
+    [data-equipment-section] .catNav,
+    [data-equipment-section] [class*="catNav"],
+    [data-equipment-section] [class*="category"] {
+      width: calc(100% - 28px) !important;
+      max-width: calc(100% - 28px) !important;
+      margin: 28px auto 0 !important;
+      padding: 6px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+      gap: 4px !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      white-space: nowrap !important;
+      border-radius: 999px !important;
+      background: #f5f5f5 !important;
+      border: 0 !important;
+      scrollbar-width: none !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+
+    #equipos .catNav::-webkit-scrollbar,
+    #equipos [class*="catNav"]::-webkit-scrollbar,
+    #equipos [class*="category"]::-webkit-scrollbar,
+    [data-equipment-section] .catNav::-webkit-scrollbar,
+    [data-equipment-section] [class*="catNav"]::-webkit-scrollbar,
+    [data-equipment-section] [class*="category"]::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    /* Botones principales */
+    #equipos .catBtn,
+    #equipos [class*="catBtn"],
+    #equipos [class*="category"] button,
+    [data-equipment-section] .catBtn,
+    [data-equipment-section] [class*="catBtn"],
+    [data-equipment-section] [class*="category"] button {
+      flex: 0 0 auto !important;
+      min-height: 38px !important;
+      padding: 0 16px !important;
+      border: 0 !important;
+      border-radius: 999px !important;
+      background: transparent !important;
+      color: rgba(8, 8, 8, 0.62) !important;
+      font-size: 0.68rem !important;
+      font-weight: 800 !important;
+      letter-spacing: -0.01em !important;
+      white-space: nowrap !important;
+      box-shadow: none !important;
+    }
+
+    #equipos .catBtn.is-active,
+    #equipos .catBtn.isActive,
+    #equipos [class*="catBtn"].is-active,
+    #equipos [class*="catBtn"].isActive,
+    #equipos [class*="category"] button.is-active,
+    #equipos [class*="category"] button.isActive,
+    [data-equipment-section] .catBtn.is-active,
+    [data-equipment-section] .catBtn.isActive,
+    [data-equipment-section] [class*="catBtn"].is-active,
+    [data-equipment-section] [class*="catBtn"].isActive,
+    [data-equipment-section] [class*="category"] button.is-active,
+    [data-equipment-section] [class*="category"] button.isActive {
+      background: #ffc400 !important;
+      color: #070707 !important;
+      box-shadow: none !important;
+    }
+
+    /* SUBFILTRO: separado, SIN fondo blanco */
+    #equipos .subNav,
+    #equipos [class*="subNav"],
+    #equipos [class*="subCategory"],
+    #equipos [class*="variant"],
+    [data-equipment-section] .subNav,
+    [data-equipment-section] [class*="subNav"],
+    [data-equipment-section] [class*="subCategory"],
+    [data-equipment-section] [class*="variant"] {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 18px auto 0 !important;
+      padding: 0 18px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 12px !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      white-space: nowrap !important;
+      background: transparent !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      scrollbar-width: none !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+
+    #equipos .subNav::-webkit-scrollbar,
+    #equipos [class*="subNav"]::-webkit-scrollbar,
+    #equipos [class*="subCategory"]::-webkit-scrollbar,
+    #equipos [class*="variant"]::-webkit-scrollbar,
+    [data-equipment-section] .subNav::-webkit-scrollbar,
+    [data-equipment-section] [class*="subNav"]::-webkit-scrollbar,
+    [data-equipment-section] [class*="subCategory"]::-webkit-scrollbar,
+    [data-equipment-section] [class*="variant"]::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    #equipos .subBtn,
+    #equipos [class*="subBtn"],
+    #equipos [class*="subCategory"] button,
+    #equipos [class*="variant"] button,
+    [data-equipment-section] .subBtn,
+    [data-equipment-section] [class*="subBtn"],
+    [data-equipment-section] [class*="subCategory"] button,
+    [data-equipment-section] [class*="variant"] button {
+      flex: 0 0 auto !important;
+      min-height: 38px !important;
+      padding: 0 18px !important;
+      border: 0 !important;
+      border-radius: 999px !important;
+      background: transparent !important;
+      color: rgba(255, 255, 255, 0.72) !important;
+      font-size: 0.78rem !important;
+      font-weight: 700 !important;
+      letter-spacing: -0.01em !important;
+      white-space: nowrap !important;
+      box-shadow: none !important;
+    }
+
+    #equipos .subBtn.is-active,
+    #equipos .subBtn.isActive,
+    #equipos [class*="subBtn"].is-active,
+    #equipos [class*="subBtn"].isActive,
+    #equipos [class*="subCategory"] button.is-active,
+    #equipos [class*="subCategory"] button.isActive,
+    #equipos [class*="variant"] button.is-active,
+    #equipos [class*="variant"] button.isActive,
+    [data-equipment-section] .subBtn.is-active,
+    [data-equipment-section] .subBtn.isActive,
+    [data-equipment-section] [class*="subBtn"].is-active,
+    [data-equipment-section] [class*="subBtn"].isActive,
+    [data-equipment-section] [class*="subCategory"] button.is-active,
+    [data-equipment-section] [class*="subCategory"] button.isActive,
+    [data-equipment-section] [class*="variant"] button.is-active,
+    [data-equipment-section] [class*="variant"] button.isActive {
+      background: #ffc400 !important;
+      color: #070707 !important;
+      font-weight: 900 !important;
+    }
+
+    /* Card */
+    #equipos .card,
+    [data-equipment-section] .card {
+      width: min(78vw, 310px) !important;
+      min-height: 420px !important;
+      margin-inline: auto !important;
+      border: 1px solid rgba(255, 196, 0, 0.72) !important;
+      background: #d9d9d9 !important;
+      color: #101010 !important;
+      overflow: hidden !important;
+      box-shadow: none !important;
+    }
+
+    #equipos .cardImg,
+    [data-equipment-section] .cardImg {
+      height: 260px !important;
+      background: #d9d9d9 !important;
+    }
+
+    #equipos .cardImg img,
+    [data-equipment-section] .cardImg img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      object-position: center !important;
+      opacity: 1 !important;
+      filter: none !important;
+    }
+
+    #equipos .cardMeta,
+    [data-equipment-section] .cardMeta {
+      padding: 22px 20px 24px !important;
+      background: #d9d9d9 !important;
+      color: #101010 !important;
+      display: grid !important;
+      gap: 8px !important;
+    }
+
+    #equipos .cardEyebrow,
+    [data-equipment-section] .cardEyebrow {
+      color: rgba(8, 8, 8, 0.54) !important;
+      font-size: 0.72rem !important;
+      line-height: 1 !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.04em !important;
+      text-transform: uppercase !important;
+      text-align: left !important;
+    }
+
+    #equipos .cardName,
+    [data-equipment-section] .cardName {
+      color: #101010 !important;
+      font-size: clamp(1.25rem, 6vw, 1.65rem) !important;
+      line-height: 1.02 !important;
+      letter-spacing: -0.045em !important;
+      font-weight: 500 !important;
+      text-align: left !important;
+      text-transform: none !important;
+    }
+
+    /* Flechas centradas */
+    #equipos .arrowBtn,
+    [data-equipment-section] .arrowBtn {
+      position: absolute !important;
+      top: 58% !important;
+      bottom: auto !important;
+      z-index: 14 !important;
+      width: 38px !important;
+      height: 38px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      border-radius: 999px !important;
+      border: 1px solid rgba(255, 196, 0, 0.72) !important;
+      background: rgba(3, 3, 3, 0.56) !important;
+      color: #ffc400 !important;
+      transform: translateY(-50%) !important;
+      backdrop-filter: blur(10px) !important;
+      -webkit-backdrop-filter: blur(10px) !important;
+    }
+
+    #equipos .arrowBtn--prev,
+    [data-equipment-section] .arrowBtn--prev {
+      left: 12px !important;
+    }
+
+    #equipos .arrowBtn--next,
+    [data-equipment-section] .arrowBtn--next {
+      right: 12px !important;
+    }
+  }
+</style>
+
+
+
+
+
+
+<style is:global>
+  /* =========================================================
+     VMA VERSION B — EQUIPOS MOBILE FILTERS CLEAN FINAL
+     Menú principal separado del submenú. Sin duplicados.
+     ========================================================= */
+
+  @media (max-width: 760px) {
+    #equipos .catNav,
+    [data-equipment-section] .catNav {
+      width: calc(100% - 28px) !important;
+      max-width: calc(100% - 28px) !important;
+      margin: 28px auto 0 !important;
+      padding: 6px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+      gap: 4px !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      white-space: nowrap !important;
+      border-radius: 999px !important;
+      background: #f5f5f5 !important;
+      border: 0 !important;
+      transform: none !important;
+      left: auto !important;
+      scrollbar-width: none !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+
+    #equipos .catNav::-webkit-scrollbar,
+    [data-equipment-section] .catNav::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    #equipos .catBtn,
+    [data-equipment-section] .catBtn {
+      flex: 0 0 auto !important;
+      min-height: 38px !important;
+      padding: 0 16px !important;
+      border: 0 !important;
+      border-radius: 999px !important;
+      background: transparent !important;
+      color: rgba(8, 8, 8, 0.62) !important;
+      font-size: 0.68rem !important;
+      font-weight: 800 !important;
+      letter-spacing: -0.01em !important;
+      white-space: nowrap !important;
+      box-shadow: none !important;
+    }
+
+    #equipos .catBtn.is-active,
+    [data-equipment-section] .catBtn.is-active {
+      background: #ffc400 !important;
+      color: #070707 !important;
+      box-shadow: none !important;
+    }
+
+    #equipos .subNavWrap,
+    [data-equipment-section] .subNavWrap {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 18px auto 0 !important;
+      padding: 0 18px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      background: transparent !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+
+    #equipos .subNav,
+    [data-equipment-section] .subNav {
+      width: auto !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      display: none !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 12px !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      white-space: nowrap !important;
+      background: transparent !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      scrollbar-width: none !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+
+    #equipos .subNav.is-active,
+    [data-equipment-section] .subNav.is-active {
+      display: flex !important;
+    }
+
+    #equipos .subNav::-webkit-scrollbar,
+    [data-equipment-section] .subNav::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    #equipos .subBtn,
+    [data-equipment-section] .subBtn {
+      flex: 0 0 auto !important;
+      min-height: 38px !important;
+      padding: 0 18px !important;
+      display: none !important;
+      align-items: center !important;
+      justify-content: center !important;
+      border: 0 !important;
+      border-radius: 999px !important;
+      background: transparent !important;
+      color: rgba(255, 255, 255, 0.72) !important;
+      font-size: 0.78rem !important;
+      font-weight: 700 !important;
+      letter-spacing: -0.01em !important;
+      white-space: nowrap !important;
+      box-shadow: none !important;
+    }
+
+    #equipos .subBtn.is-visible,
+    [data-equipment-section] .subBtn.is-visible {
+      display: inline-flex !important;
+    }
+
+    #equipos .subBtn.is-active,
+    [data-equipment-section] .subBtn.is-active {
+      background: #ffc400 !important;
+      color: #070707 !important;
+      font-weight: 900 !important;
+    }
+
+    #equipos .eqCarousel,
+    [data-equipment-section] .eqCarousel {
+      margin-top: 30px !important;
+    }
+  }
+</style>
+
+<style is:global>
+  /* =========================================================
+     VMA VERSION B — EQUIPOS DESKTOP + MOBILE NAV FINAL FIX
+     Desktop: submenú centrado bajo menú principal.
+     Mobile: menú principal horizontal con auto-scroll al activo.
+     ========================================================= */
+
+  /* DESKTOP/TABLET GRANDE */
+  @media (min-width: 761px) {
+    #equipos .catNav,
+    [data-equipment-section] .catNav {
+      position: relative !important;
+      left: 50% !important;
+      width: fit-content !important;
+      max-width: min(100%, 1200px) !important;
+      min-height: 58px !important;
+      margin: 20px 0 0 !important;
+      padding: 6px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 0 !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      border-radius: 999px !important;
+      background: #f5f5f5 !important;
+      border: 1px solid #2f2f2f !important;
+      transform: translateX(-50%) !important;
+      scrollbar-width: none !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+
+    #equipos .catNav::-webkit-scrollbar,
+    [data-equipment-section] .catNav::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    #equipos .catBtn,
+    [data-equipment-section] .catBtn {
+      flex: 0 0 auto !important;
+      min-height: 44px !important;
+      padding: 0 24px !important;
+      border: 0 !important;
+      border-radius: 999px !important;
+      background: transparent !important;
+      color: rgba(8, 8, 8, 0.56) !important;
+      font-family: inherit !important;
+      font-size: 0.8rem !important;
+      font-weight: 800 !important;
+      cursor: pointer !important;
+      white-space: nowrap !important;
+      box-shadow: none !important;
+    }
+
+    #equipos .catBtn:hover,
+    [data-equipment-section] .catBtn:hover {
+      color: #080808 !important;
+    }
+
+    #equipos .catBtn.is-active,
+    [data-equipment-section] .catBtn.is-active {
+      background: #ffc400 !important;
+      color: #080808 !important;
+    }
+
+    #equipos .subNavWrap,
+    [data-equipment-section] .subNavWrap {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 22px auto clamp(28px, 4vw, 50px) !important;
+      padding: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      background: transparent !important;
+      border: 0 !important;
+      box-shadow: none !important;
+    }
+
+    #equipos .subNav,
+    [data-equipment-section] .subNav {
+      width: fit-content !important;
+      max-width: min(100%, 720px) !important;
+      margin: 0 auto !important;
+      padding: 4px !important;
+      display: none !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 0 !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      border: 1px solid #2f2f2f !important;
+      border-radius: 999px !important;
+      background: #ffc400 !important;
+      scrollbar-width: none !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+
+    #equipos .subNav.is-active,
+    [data-equipment-section] .subNav.is-active {
+      display: inline-flex !important;
+    }
+
+    #equipos .subNav::-webkit-scrollbar,
+    [data-equipment-section] .subNav::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    #equipos .subBtn,
+    [data-equipment-section] .subBtn {
+      flex: 0 0 auto !important;
+      min-height: 36px !important;
+      padding: 0 20px !important;
+      display: none !important;
+      align-items: center !important;
+      justify-content: center !important;
+      border: 0 !important;
+      border-radius: 999px !important;
+      background: transparent !important;
+      color: rgba(8, 8, 8, 0.72) !important;
+      font-family: inherit !important;
+      font-size: 0.74rem !important;
+      font-weight: 800 !important;
+      cursor: pointer !important;
+      white-space: nowrap !important;
+      box-shadow: none !important;
+    }
+
+    #equipos .subBtn.is-visible,
+    [data-equipment-section] .subBtn.is-visible {
+      display: inline-flex !important;
+    }
+
+    #equipos .subBtn.is-active,
+    [data-equipment-section] .subBtn.is-active {
+      background: #2f2f2f !important;
+      color: #ffffff !important;
+    }
+  }
+
+  /* MOBILE */
+  @media (max-width: 760px) {
+    #equipos .catNav,
+    [data-equipment-section] .catNav {
+      scroll-padding-inline: 18px !important;
+    }
+
+    #equipos .catBtn,
+    [data-equipment-section] .catBtn {
+      scroll-snap-align: center !important;
+    }
+
+    #equipos .subNavWrap,
+    [data-equipment-section] .subNavWrap {
+      margin-bottom: 30px !important;
+    }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const bootEquipmentNavAutoScroll = () => {
+      const section =
+        document.querySelector("[data-equipment-section]") ||
+        document.querySelector("#equipos");
+
+      if (!section || section.dataset.vmaNavAutoScrollReady === "true") return;
+
+      section.dataset.vmaNavAutoScrollReady = "true";
+
+      const isMobile = () => window.matchMedia("(max-width: 760px)").matches;
+
+      const scrollButtonIntoView = (button) => {
+        if (!button || !isMobile()) return;
+
+        const scroller =
+          button.closest(".catNav") ||
+          button.closest(".subNav") ||
+          button.closest(".vmaMobileMainFilter") ||
+          button.closest(".vmaMobileSubfilter");
+
+        if (!scroller) return;
+
+        window.requestAnimationFrame(() => {
+          const buttonRect = button.getBoundingClientRect();
+          const scrollerRect = scroller.getBoundingClientRect();
+
+          const currentLeft = scroller.scrollLeft;
+          const buttonCenter = buttonRect.left - scrollerRect.left + buttonRect.width / 2;
+          const targetLeft = currentLeft + buttonCenter - scrollerRect.width / 2;
+
+          scroller.scrollTo({
+            left: Math.max(0, targetLeft),
+            behavior: "smooth",
+          });
+        });
+      };
+
+      const mainButtons = Array.from(
+        section.querySelectorAll("[data-main-category]")
+      );
+
+      const subButtons = Array.from(
+        section.querySelectorAll("[data-sub-category]")
+      );
+
+      mainButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          scrollButtonIntoView(button);
+        });
+      });
+
+      subButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          scrollButtonIntoView(button);
+        });
+      });
+
+      const observer = new MutationObserver(() => {
+        const activeMain = section.querySelector("[data-main-category].is-active");
+        const activeSub = section.querySelector("[data-sub-category].is-active");
+
+        if (activeMain) scrollButtonIntoView(activeMain);
+        if (activeSub) scrollButtonIntoView(activeSub);
+      });
+
+      observer.observe(section, {
+        subtree: true,
+        attributes: true,
+        attributeFilter: ["class"],
+      });
+    };
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", bootEquipmentNavAutoScroll);
+    } else {
+      bootEquipmentNavAutoScroll();
+    }
+  })();
+</script>
+
+
+<style is:global>
+  /* =========================================================
+     VMA VERSION B — MOBILE SWIPE CAROUSEL DEFINITIVO
+     Una sola regla final para que el carrusel deslice en mobile
+     ========================================================= */
+
+  @media (max-width: 760px) {
+    #equipos .eqCarousel,
+    [data-equipment-section] .eqCarousel {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-top: 30px !important;
+      padding: 0 !important;
+      overflow: visible !important;
+      touch-action: auto !important;
+    }
+
+    #equipos .eqGrid,
+    [data-equipment-section] .eqGrid,
+    #equipos .eqGrid.is-active,
+    [data-equipment-section] .eqGrid.is-active {
+      width: 100% !important;
+      max-width: 100% !important;
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      align-items: stretch !important;
+      gap: 22px !important;
+      padding: 8px 24px 38px !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      scroll-snap-type: x mandatory !important;
+      scroll-padding-inline: 24px !important;
+      -webkit-overflow-scrolling: touch !important;
+      scrollbar-width: none !important;
+      overscroll-behavior-x: contain !important;
+      touch-action: pan-x !important;
+      cursor: grab !important;
+    }
+
+    #equipos .eqGrid::-webkit-scrollbar,
+    [data-equipment-section] .eqGrid::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    #equipos .eqGrid::after,
+    [data-equipment-section] .eqGrid::after {
+      content: "" !important;
+      flex: 0 0 24px !important;
+      width: 24px !important;
+      min-width: 24px !important;
+      height: 1px !important;
+    }
+
+    #equipos .card,
+    [data-equipment-section] .card {
+      flex: 0 0 min(78vw, 310px) !important;
+      width: min(78vw, 310px) !important;
+      min-width: min(78vw, 310px) !important;
+      max-width: min(78vw, 310px) !important;
+      margin: 0 !important;
+      scroll-snap-align: center !important;
+      scroll-snap-stop: always !important;
+      touch-action: pan-x !important;
+      user-select: none !important;
+      -webkit-user-select: none !important;
+    }
+
+    #equipos .arrowBtn,
+    [data-equipment-section] .arrowBtn {
+      display: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+  }
+
+  @media (max-width: 390px) {
+    #equipos .eqGrid,
+    [data-equipment-section] .eqGrid,
+    #equipos .eqGrid.is-active,
+    [data-equipment-section] .eqGrid.is-active {
+      gap: 20px !important;
+      padding-left: 22px !important;
+      padding-right: 22px !important;
+      scroll-padding-inline: 22px !important;
+    }
+
+    #equipos .eqGrid::after,
+    [data-equipment-section] .eqGrid::after {
+      flex-basis: 22px !important;
+      width: 22px !important;
+      min-width: 22px !important;
+    }
+
+    #equipos .card,
+    [data-equipment-section] .card {
+      flex-basis: min(80vw, 300px) !important;
+      width: min(80vw, 300px) !important;
+      min-width: min(80vw, 300px) !important;
+      max-width: min(80vw, 300px) !important;
+    }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const bootSwipeGuard = () => {
+      const section = document.querySelector("[data-equipment-section]");
+      if (!section || section.dataset.vmaSwipeGuardReady === "true") return;
+
+      section.dataset.vmaSwipeGuardReady = "true";
+
+      const grid = section.querySelector("[data-equipment-grid]");
+      if (!grid) return;
+
+      let startX = 0;
+      let startY = 0;
+      let moved = false;
+
+      grid.addEventListener("pointerdown", (event) => {
+        startX = event.clientX;
+        startY = event.clientY;
+        moved = false;
+      }, { passive: true });
+
+      grid.addEventListener("pointermove", (event) => {
+        const dx = Math.abs(event.clientX - startX);
+        const dy = Math.abs(event.clientY - startY);
+
+        if (dx > 8 && dx > dy) {
+          moved = true;
+        }
+      }, { passive: true });
+
+      grid.addEventListener("click", (event) => {
+        if (!moved) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        moved = false;
+      }, true);
+    };
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", bootSwipeGuard);
+    } else {
+      bootSwipeGuard();
+    }
+  })();
+</script>
+
+<style is:global>
+  /* =========================================================
+     VMA VERSION B — MOBILE CAROUSEL FORCE DRAG
+     Fuerza desplazamiento horizontal manual del carrusel mobile
+     ========================================================= */
+
+  @media (max-width: 760px) {
+    #equipos .eqGrid,
+    [data-equipment-section] .eqGrid,
+    #equipos .eqGrid.is-active,
+    [data-equipment-section] .eqGrid.is-active {
+      display: flex !important;
+      flex-wrap: nowrap !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      gap: 22px !important;
+      padding: 8px 24px 38px !important;
+      scroll-snap-type: x mandatory !important;
+      -webkit-overflow-scrolling: touch !important;
+      scrollbar-width: none !important;
+      cursor: grab !important;
+      touch-action: pan-y !important;
+    }
+
+    #equipos .eqGrid.is-dragging,
+    [data-equipment-section] .eqGrid.is-dragging {
+      cursor: grabbing !important;
+      scroll-snap-type: none !important;
+    }
+
+    #equipos .eqGrid::-webkit-scrollbar,
+    [data-equipment-section] .eqGrid::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    #equipos .card,
+    [data-equipment-section] .card {
+      flex: 0 0 min(78vw, 310px) !important;
+      width: min(78vw, 310px) !important;
+      min-width: min(78vw, 310px) !important;
+      max-width: min(78vw, 310px) !important;
+      scroll-snap-align: center !important;
+      user-select: none !important;
+      -webkit-user-select: none !important;
+      touch-action: pan-y !important;
+    }
+
+    #equipos .card img,
+    [data-equipment-section] .card img {
+      pointer-events: none !important;
+      user-select: none !important;
+      -webkit-user-drag: none !important;
+    }
+
+    #equipos .arrowBtn,
+    [data-equipment-section] .arrowBtn {
+      display: none !important;
+      pointer-events: none !important;
+    }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const bootForcedMobileCarousel = () => {
+      const section = document.querySelector("[data-equipment-section]");
+      if (!section || section.dataset.vmaForcedCarouselReady === "true") return;
+
+      section.dataset.vmaForcedCarouselReady = "true";
+
+      const grid = section.querySelector("[data-equipment-grid]");
+      if (!grid) return;
+
+      const isMobile = () => window.matchMedia("(max-width: 760px)").matches;
+
+      let isDown = false;
+      let startX = 0;
+      let startY = 0;
+      let startScrollLeft = 0;
+      let didDrag = false;
+
+      const getClientX = (event) => {
+        if (event.touches && event.touches[0]) return event.touches[0].clientX;
+        if (event.changedTouches && event.changedTouches[0]) return event.changedTouches[0].clientX;
+        return event.clientX ?? 0;
+      };
+
+      const getClientY = (event) => {
+        if (event.touches && event.touches[0]) return event.touches[0].clientY;
+        if (event.changedTouches && event.changedTouches[0]) return event.changedTouches[0].clientY;
+        return event.clientY ?? 0;
+      };
+
+      const start = (event) => {
+        if (!isMobile()) return;
+
+        isDown = true;
+        didDrag = false;
+        startX = getClientX(event);
+        startY = getClientY(event);
+        startScrollLeft = grid.scrollLeft;
+        grid.classList.add("is-dragging");
+      };
+
+      const move = (event) => {
+        if (!isDown || !isMobile()) return;
+
+        const currentX = getClientX(event);
+        const currentY = getClientY(event);
+        const dx = currentX - startX;
+        const dy = currentY - startY;
+
+        if (Math.abs(dx) > 6 && Math.abs(dx) > Math.abs(dy)) {
+          didDrag = true;
+          event.preventDefault();
+          grid.scrollLeft = startScrollLeft - dx;
+        }
+      };
+
+      const end = () => {
+        if (!isDown) return;
+
+        isDown = false;
+        grid.classList.remove("is-dragging");
+
+        window.setTimeout(() => {
+          didDrag = false;
+        }, 80);
+      };
+
+      grid.addEventListener("touchstart", start, { passive: true });
+      grid.addEventListener("touchmove", move, { passive: false });
+      grid.addEventListener("touchend", end, { passive: true });
+      grid.addEventListener("touchcancel", end, { passive: true });
+
+      grid.addEventListener("pointerdown", start);
+      grid.addEventListener("pointermove", move);
+      grid.addEventListener("pointerup", end);
+      grid.addEventListener("pointercancel", end);
+      grid.addEventListener("pointerleave", end);
+
+      grid.addEventListener(
+        "click",
+        (event) => {
+          if (!didDrag) return;
+          event.preventDefault();
+          event.stopPropagation();
+          event.stopImmediatePropagation();
+        },
+        true
+      );
+    };
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", bootForcedMobileCarousel);
+    } else {
+      bootForcedMobileCarousel();
+    }
+  })();
+</script>
+
+<style is:global>
+  /* =========================================================
+     VMA VERSION B — EQUIPOS MOBILE SWIPE REAL FIX
+     Carrusel mobile con scroll horizontal real, sin flechas
+     ========================================================= */
+
+  @media (max-width: 760px) {
+    #equipos .eqCarousel,
+    [data-equipment-section] .eqCarousel {
+      position: relative !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 0 !important;
+      margin-top: 30px !important;
+      overflow: visible !important;
+    }
+
+    #equipos .eqGrid,
+    #equipos .eqGrid.is-active,
+    [data-equipment-section] .eqGrid,
+    [data-equipment-section] .eqGrid.is-active {
+      width: 100% !important;
+      max-width: 100% !important;
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      align-items: stretch !important;
+      justify-content: flex-start !important;
+      gap: 22px !important;
+      padding: 8px 24px 42px !important;
+      margin: 0 !important;
+      overflow-x: scroll !important;
+      overflow-y: hidden !important;
+      scroll-snap-type: x proximity !important;
+      scroll-padding-left: 24px !important;
+      scroll-padding-right: 24px !important;
+      -webkit-overflow-scrolling: touch !important;
+      scrollbar-width: none !important;
+      overscroll-behavior-x: contain !important;
+      touch-action: pan-x !important;
+      cursor: grab !important;
+    }
+
+    #equipos .eqGrid:active,
+    [data-equipment-section] .eqGrid:active {
+      cursor: grabbing !important;
+    }
+
+    #equipos .eqGrid::-webkit-scrollbar,
+    [data-equipment-section] .eqGrid::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    #equipos .eqGrid::after,
+    [data-equipment-section] .eqGrid::after {
+      content: "" !important;
+      flex: 0 0 24px !important;
+      width: 24px !important;
+      min-width: 24px !important;
+      height: 1px !important;
+    }
+
+    #equipos .card,
+    [data-equipment-section] .card {
+      flex: 0 0 min(78vw, 310px) !important;
+      width: min(78vw, 310px) !important;
+      min-width: min(78vw, 310px) !important;
+      max-width: min(78vw, 310px) !important;
+      margin: 0 !important;
+      scroll-snap-align: center !important;
+      touch-action: pan-x !important;
+      user-select: none !important;
+      -webkit-user-select: none !important;
+    }
+
+    #equipos .card img,
+    [data-equipment-section] .card img {
+      pointer-events: none !important;
+      user-select: none !important;
+      -webkit-user-drag: none !important;
+    }
+
+    #equipos .arrowBtn,
+    [data-equipment-section] .arrowBtn {
+      display: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+  }
+
+  @media (max-width: 390px) {
+    #equipos .eqGrid,
+    #equipos .eqGrid.is-active,
+    [data-equipment-section] .eqGrid,
+    [data-equipment-section] .eqGrid.is-active {
+      gap: 20px !important;
+      padding-left: 22px !important;
+      padding-right: 22px !important;
+      scroll-padding-left: 22px !important;
+      scroll-padding-right: 22px !important;
+    }
+
+    #equipos .eqGrid::after,
+    [data-equipment-section] .eqGrid::after {
+      flex-basis: 22px !important;
+      width: 22px !important;
+      min-width: 22px !important;
+    }
+
+    #equipos .card,
+    [data-equipment-section] .card {
+      flex-basis: min(80vw, 300px) !important;
+      width: min(80vw, 300px) !important;
+      min-width: min(80vw, 300px) !important;
+      max-width: min(80vw, 300px) !important;
+    }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const bootEquipmentSwipe = () => {
+      const section = document.querySelector("#equipos, [data-equipment-section]");
+      if (!section || section.dataset.vmaSwipeReady === "true") return;
+
+      const grids = Array.from(section.querySelectorAll(".eqGrid, [data-equipment-grid]"));
+      if (!grids.length) return;
+
+      grids.forEach((grid) => {
+        let isDown = false;
+        let startX = 0;
+        let startScrollLeft = 0;
+        let moved = false;
+
+        const isMobile = () => window.matchMedia("(max-width: 760px)").matches;
+
+        const getClientX = (event) => {
+          if (event.touches && event.touches.length) return event.touches[0].clientX;
+          if (event.changedTouches && event.changedTouches.length) return event.changedTouches[0].clientX;
+          return event.clientX;
+        };
+
+        const start = (event) => {
+          if (!isMobile()) return;
+          isDown = true;
+          moved = false;
+          startX = getClientX(event);
+          startScrollLeft = grid.scrollLeft;
+          grid.classList.add("is-dragging");
+        };
+
+        const move = (event) => {
+          if (!isMobile() || !isDown) return;
+
+          const currentX = getClientX(event);
+          const deltaX = currentX - startX;
+
+          if (Math.abs(deltaX) > 4) {
+            moved = true;
+            grid.scrollLeft = startScrollLeft - deltaX;
+          }
+        };
+
+        const end = () => {
+          if (!isMobile()) return;
+          isDown = false;
+          window.setTimeout(() => {
+            moved = false;
+          }, 80);
+          grid.classList.remove("is-dragging");
+        };
+
+        grid.addEventListener("touchstart", start, { passive: true });
+        grid.addEventListener("touchmove", move, { passive: true });
+        grid.addEventListener("touchend", end, { passive: true });
+        grid.addEventListener("touchcancel", end, { passive: true });
+
+        grid.addEventListener("mousedown", start);
+        window.addEventListener("mousemove", move);
+        window.addEventListener("mouseup", end);
+
+        grid.addEventListener(
+          "click",
+          (event) => {
+            if (moved) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+          },
+          true
+        );
+      });
+
+      section.dataset.vmaSwipeReady = "true";
+    };
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", bootEquipmentSwipe);
+    } else {
+      bootEquipmentSwipe();
+    }
+  })();
+</script>
+
+<style is:global>
+  /* =========================================================
+     VMA — EQUIPOS MOBILE HORIZONTAL CAROUSEL FIX DEFINITIVO
+     Solo mobile. Fuerza carrusel horizontal real.
+     ========================================================= */
+
+  @media (max-width: 760px) {
+    #equipos,
+    [data-equipment-section] {
+      overflow-x: hidden !important;
+      overflow-y: visible !important;
+    }
+
+    #equipos .eqCarousel,
+    [data-equipment-section] .eqCarousel {
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 0 !important;
+      margin: 30px 0 0 !important;
+      overflow: visible !important;
+    }
+
+    #equipos .eqGrid,
+    #equipos .eqGrid.is-active,
+    [data-equipment-section] .eqGrid,
+    [data-equipment-section] .eqGrid.is-active {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      align-items: stretch !important;
+      justify-content: flex-start !important;
+
+      width: 100% !important;
+      max-width: 100% !important;
+
+      gap: 22px !important;
+      padding: 8px 24px 42px !important;
+      margin: 0 !important;
+
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+
+      scroll-snap-type: x proximity !important;
+      scroll-padding-left: 24px !important;
+      scroll-padding-right: 24px !important;
+
+      -webkit-overflow-scrolling: touch !important;
+      scrollbar-width: none !important;
+
+      touch-action: pan-y !important;
+      overscroll-behavior-x: contain !important;
+      overscroll-behavior-y: auto !important;
+
+      cursor: grab !important;
+    }
+
+    #equipos .eqGrid.is-vma-dragging,
+    [data-equipment-section] .eqGrid.is-vma-dragging {
+      cursor: grabbing !important;
+      scroll-snap-type: none !important;
+    }
+
+    #equipos .eqGrid::-webkit-scrollbar,
+    [data-equipment-section] .eqGrid::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    #equipos .eqGrid::after,
+    [data-equipment-section] .eqGrid::after {
+      content: "" !important;
+      flex: 0 0 24px !important;
+      width: 24px !important;
+      min-width: 24px !important;
+      height: 1px !important;
+    }
+
+    #equipos .card,
+    [data-equipment-section] .card {
+      flex: 0 0 min(78vw, 310px) !important;
+      width: min(78vw, 310px) !important;
+      min-width: min(78vw, 310px) !important;
+      max-width: min(78vw, 310px) !important;
+      margin: 0 !important;
+      scroll-snap-align: center !important;
+      user-select: none !important;
+      -webkit-user-select: none !important;
+      touch-action: pan-y !important;
+    }
+
+    #equipos .card.is-visible,
+    [data-equipment-section] .card.is-visible {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+
+    #equipos .card img,
+    [data-equipment-section] .card img {
+      pointer-events: none !important;
+      user-select: none !important;
+      -webkit-user-drag: none !important;
+    }
+
+    #equipos .arrowBtn,
+    [data-equipment-section] .arrowBtn {
+      display: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+  }
+
+  @media (max-width: 390px) {
+    #equipos .eqGrid,
+    #equipos .eqGrid.is-active,
+    [data-equipment-section] .eqGrid,
+    [data-equipment-section] .eqGrid.is-active {
+      gap: 20px !important;
+      padding-left: 22px !important;
+      padding-right: 22px !important;
+      scroll-padding-left: 22px !important;
+      scroll-padding-right: 22px !important;
+    }
+
+    #equipos .card,
+    [data-equipment-section] .card {
+      flex-basis: min(80vw, 300px) !important;
+      width: min(80vw, 300px) !important;
+      min-width: min(80vw, 300px) !important;
+      max-width: min(80vw, 300px) !important;
+    }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const initVmaEquipmentDragCarousel = () => {
+      const section =
+        document.querySelector("[data-equipment-section]") ||
+        document.querySelector("#equipos");
+
+      if (!section) return;
+
+      const grids = Array.from(
+        section.querySelectorAll(".eqGrid, [data-equipment-grid]")
+      );
+
+      if (!grids.length) return;
+
+      const isMobile = () => window.matchMedia("(max-width: 760px)").matches;
+
+      grids.forEach((grid) => {
+        if (grid.dataset.vmaDragCarouselFinal === "true") return;
+        grid.dataset.vmaDragCarouselFinal = "true";
+
+        let pointerId = null;
+        let isDragging = false;
+        let startX = 0;
+        let startScrollLeft = 0;
+        let moved = false;
+
+        const prepareGrid = () => {
+          if (!isMobile()) return;
+
+          grid.style.display = "flex";
+          grid.style.flexDirection = "row";
+          grid.style.flexWrap = "nowrap";
+          grid.style.overflowX = "auto";
+          grid.style.overflowY = "hidden";
+          grid.style.webkitOverflowScrolling = "touch";
+          grid.style.touchAction = "pan-y";
+
+          const visibleCards = Array.from(grid.querySelectorAll(".card.is-visible"));
+
+          visibleCards.forEach((card) => {
+            card.style.flex = "0 0 min(78vw, 310px)";
+            card.style.width = "min(78vw, 310px)";
+            card.style.minWidth = "min(78vw, 310px)";
+            card.style.maxWidth = "min(78vw, 310px)";
+          });
+        };
+
+        const onPointerDown = (event) => {
+          if (!isMobile()) return;
+          if (event.button !== undefined && event.button !== 0) return;
+
+          prepareGrid();
+
+          pointerId = event.pointerId;
+          isDragging = true;
+          moved = false;
+          startX = event.clientX;
+          startScrollLeft = grid.scrollLeft;
+
+          grid.classList.add("is-vma-dragging");
+
+          try {
+            grid.setPointerCapture(pointerId);
+          } catch (_) {}
+        };
+
+        const onPointerMove = (event) => {
+          if (!isMobile()) return;
+          if (!isDragging) return;
+          if (pointerId !== null && event.pointerId !== pointerId) return;
+
+          const deltaX = event.clientX - startX;
+
+          if (Math.abs(deltaX) > 3) {
+            moved = true;
+            grid.scrollLeft = startScrollLeft - deltaX;
+            event.preventDefault();
+          }
+        };
+
+        const onPointerUp = (event) => {
+          if (!isMobile()) return;
+
+          if (pointerId !== null) {
+            try {
+              grid.releasePointerCapture(pointerId);
+            } catch (_) {}
+          }
+
+          pointerId = null;
+          isDragging = false;
+          grid.classList.remove("is-vma-dragging");
+
+          window.setTimeout(() => {
+            moved = false;
+          }, 120);
+        };
+
+        grid.addEventListener("pointerdown", onPointerDown, { passive: true });
+        grid.addEventListener("pointermove", onPointerMove, { passive: false });
+        grid.addEventListener("pointerup", onPointerUp, { passive: true });
+        grid.addEventListener("pointercancel", onPointerUp, { passive: true });
+        grid.addEventListener("pointerleave", onPointerUp, { passive: true });
+
+        grid.addEventListener(
+          "click",
+          (event) => {
+            if (!moved) return;
+            event.preventDefault();
+            event.stopPropagation();
+          },
+          true
+        );
+
+        prepareGrid();
+
+        const observer = new MutationObserver(() => {
+          prepareGrid();
+        });
+
+        observer.observe(grid, {
+          childList: true,
+          subtree: true,
+          attributes: true,
+          attributeFilter: ["class", "style"],
+        });
+      });
+    };
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initVmaEquipmentDragCarousel);
+    } else {
+      initVmaEquipmentDragCarousel();
+    }
+
+    window.addEventListener("resize", initVmaEquipmentDragCarousel);
+  })();
+</script>
+
+<style is:global>
+  /* =========================================================
+     VMA — HOTFIX FINAL MOBILE EQUIPMENT CAROUSEL
+     Fuerza swipe horizontal real sin tocar desktop
+     ========================================================= */
+
+  @media (max-width: 760px) {
+    #equipos .eqCarousel,
+    [data-equipment-section] .eqCarousel {
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 0 !important;
+      margin: 30px 0 0 !important;
+      overflow: visible !important;
+    }
+
+    #equipos .eqGrid,
+    #equipos .eqGrid.is-active,
+    [data-equipment-section] .eqGrid,
+    [data-equipment-section] .eqGrid.is-active {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      align-items: stretch !important;
+      justify-content: flex-start !important;
+
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+
+      gap: 18px !important;
+      padding: 8px 24px 42px !important;
+      margin: 0 !important;
+
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+
+      scroll-snap-type: x proximity !important;
+      scroll-padding-inline: 24px !important;
+
+      -webkit-overflow-scrolling: touch !important;
+      scrollbar-width: none !important;
+
+      touch-action: pan-x !important;
+      overscroll-behavior-x: contain !important;
+      overscroll-behavior-y: auto !important;
+    }
+
+    #equipos .eqGrid::-webkit-scrollbar,
+    [data-equipment-section] .eqGrid::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    #equipos .eqGrid::after,
+    [data-equipment-section] .eqGrid::after {
+      content: "" !important;
+      flex: 0 0 24px !important;
+      width: 24px !important;
+      min-width: 24px !important;
+      height: 1px !important;
+    }
+
+    #equipos .card,
+    [data-equipment-section] .card {
+      display: none !important;
+      flex: 0 0 min(78vw, 310px) !important;
+      width: min(78vw, 310px) !important;
+      min-width: min(78vw, 310px) !important;
+      max-width: min(78vw, 310px) !important;
+      margin: 0 !important;
+
+      scroll-snap-align: center !important;
+      touch-action: pan-x !important;
+
+      user-select: none !important;
+      -webkit-user-select: none !important;
+    }
+
+    #equipos .card.is-visible,
+    [data-equipment-section] .card.is-visible {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+
+    #equipos .card img,
+    [data-equipment-section] .card img {
+      pointer-events: none !important;
+      user-select: none !important;
+      -webkit-user-drag: none !important;
+    }
+
+    #equipos .eqGrid.is-vma-touch-dragging,
+    [data-equipment-section] .eqGrid.is-vma-touch-dragging {
+      scroll-snap-type: none !important;
+    }
+
+    #equipos .arrowBtn,
+    [data-equipment-section] .arrowBtn {
+      display: none !important;
+      pointer-events: none !important;
+    }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const bootVmaFinalMobileCarousel = () => {
+      const section = document.querySelector("[data-equipment-section]");
+      if (!section || section.dataset.vmaFinalMobileCarousel === "true") return;
+
+      section.dataset.vmaFinalMobileCarousel = "true";
+
+      const grid = section.querySelector("[data-equipment-grid]");
+      if (!grid) return;
+
+      const isMobile = () => window.matchMedia("(max-width: 760px)").matches;
+
+      let startX = 0;
+      let startY = 0;
+      let startScrollLeft = 0;
+      let dragging = false;
+      let moved = false;
+
+      const reset = () => {
+        dragging = false;
+        window.setTimeout(() => {
+          moved = false;
+          grid.classList.remove("is-vma-touch-dragging");
+        }, 80);
+      };
+
+      grid.addEventListener(
+        "touchstart",
+        (event) => {
+          if (!isMobile() || !event.touches.length) return;
+
+          const touch = event.touches[0];
+          startX = touch.clientX;
+          startY = touch.clientY;
+          startScrollLeft = grid.scrollLeft;
+          dragging = true;
+          moved = false;
+        },
+        { passive: true }
+      );
+
+      grid.addEventListener(
+        "touchmove",
+        (event) => {
+          if (!isMobile() || !dragging || !event.touches.length) return;
+
+          const touch = event.touches[0];
+          const dx = touch.clientX - startX;
+          const dy = touch.clientY - startY;
+
+          if (Math.abs(dx) > 6 && Math.abs(dx) > Math.abs(dy)) {
+            event.preventDefault();
+            moved = true;
+            grid.classList.add("is-vma-touch-dragging");
+            grid.scrollLeft = startScrollLeft - dx;
+          }
+        },
+        { passive: false }
+      );
+
+      grid.addEventListener("touchend", reset, { passive: true });
+      grid.addEventListener("touchcancel", reset, { passive: true });
+
+      grid.addEventListener(
+        "click",
+        (event) => {
+          if (!moved) return;
+
+          event.preventDefault();
+          event.stopPropagation();
+          event.stopImmediatePropagation();
+        },
+        true
+      );
+    };
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", bootVmaFinalMobileCarousel);
+    } else {
+      bootVmaFinalMobileCarousel();
+    }
+  })();
+</script>
+
+<style is:global>
+  /* =========================================================
+     VMA — MOBILE EQUIPMENT TRANSFORM CAROUSEL REAL FIX
+     Archivo correcto: EquipmentShowcase.astro
+     No depende de scrollLeft. Mueve las cards con translateX.
+     ========================================================= */
+
+  @media (max-width: 760px) {
+    #equipos .eqCarousel,
+    [data-equipment-section] .eqCarousel {
+      position: relative !important;
+      width: 100vw !important;
+      max-width: 100vw !important;
+      margin-left: calc(50% - 50vw) !important;
+      margin-right: calc(50% - 50vw) !important;
+      padding: 0 !important;
+      overflow: hidden !important;
+      display: block !important;
+    }
+
+    #equipos .eqGrid,
+    #equipos .eqGrid.is-active,
+    [data-equipment-section] .eqGrid,
+    [data-equipment-section] .eqGrid.is-active {
+      --vma-eq-x: 18px;
+      --vma-eq-card: min(82vw, 430px);
+      --vma-eq-gap: 18px;
+
+      width: max-content !important;
+      max-width: none !important;
+      min-width: 0 !important;
+
+      display: flex !important;
+      flex-flow: row nowrap !important;
+      align-items: stretch !important;
+      justify-content: flex-start !important;
+      gap: var(--vma-eq-gap) !important;
+
+      padding: 8px 18px 42px !important;
+      margin: 0 !important;
+
+      overflow: visible !important;
+      transform: translate3d(var(--vma-eq-x), 0, 0) !important;
+      transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+      will-change: transform !important;
+
+      touch-action: pan-y !important;
+      cursor: grab !important;
+    }
+
+    #equipos .eqGrid.is-vma-swiping,
+    [data-equipment-section] .eqGrid.is-vma-swiping {
+      transition: none !important;
+      cursor: grabbing !important;
+    }
+
+    #equipos .eqGrid::after,
+    [data-equipment-section] .eqGrid::after {
+      display: none !important;
+      content: none !important;
+    }
+
+    #equipos .card,
+    [data-equipment-section] .card {
+      display: none !important;
+      flex: 0 0 var(--vma-eq-card) !important;
+      width: var(--vma-eq-card) !important;
+      min-width: var(--vma-eq-card) !important;
+      max-width: var(--vma-eq-card) !important;
+      min-height: 420px !important;
+      margin: 0 !important;
+      opacity: 1 !important;
+      filter: none !important;
+      transform: none !important;
+      pointer-events: auto !important;
+      cursor: pointer !important;
+    }
+
+    #equipos .card.is-visible,
+    [data-equipment-section] .card.is-visible {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+
+    #equipos .card *,
+    [data-equipment-section] .card * {
+      pointer-events: none !important;
+    }
+
+    #equipos .arrowBtn,
+    [data-equipment-section] .arrowBtn {
+      display: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+
+    #equipos .vmaEqMobileDots,
+    [data-equipment-section] .vmaEqMobileDots {
+      position: relative !important;
+      z-index: 4 !important;
+      width: 100% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 7px !important;
+      margin: -20px 0 8px !important;
+      padding: 0 18px !important;
+    }
+
+    #equipos .vmaEqMobileDot,
+    [data-equipment-section] .vmaEqMobileDot {
+      width: 6px !important;
+      height: 6px !important;
+      padding: 0 !important;
+      border: 0 !important;
+      border-radius: 999px !important;
+      background: rgba(255, 255, 255, 0.3) !important;
+      cursor: pointer !important;
+      transition: width 180ms ease, background 180ms ease;
+    }
+
+    #equipos .vmaEqMobileDot.is-active,
+    [data-equipment-section] .vmaEqMobileDot.is-active {
+      width: 28px !important;
+      background: #ffc400 !important;
     }
   }
 
   @media (max-width: 420px) {
-    .equipmentShell {
-      padding-left: 14px;
-      padding-right: 14px;
-    }
-
-    .mainCategoryBtn,
-    .subCategoryBtn {
-      padding: 0 14px;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .equipmentDetail,
-    .machineCard,
-    .primaryAction,
-    .secondaryAction,
-    .mainCategoryBtn,
-    .subCategoryBtn,
-    .detailClose,
-    .carouselArrow,
-    .detailArrow {
-      animation: none;
-      transition: none;
+    #equipos .eqGrid,
+    [data-equipment-section] .eqGrid {
+      --vma-eq-card: 82vw;
+      --vma-eq-gap: 18px;
     }
   }
 </style>
+
+<style is:global>
+  /* =========================================================
+     VMA — EQUIPOS MOBILE CLEAN FINAL
+     Carrusel horizontal nativo sin JS duplicado
+     ========================================================= */
+
+  @media (max-width: 760px) {
+    #equipos,
+    [data-equipment-section] {
+      overflow: hidden !important;
+      background: #030303 !important;
+    }
+
+    #equipos .eqShell,
+    [data-equipment-section] .eqShell {
+      width: 100% !important;
+      max-width: 100% !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      overflow: hidden !important;
+    }
+
+    #equipos .eqHeader,
+    [data-equipment-section] .eqHeader {
+      padding-inline: 18px !important;
+    }
+
+    #equipos .catNav,
+    [data-equipment-section] .catNav {
+      width: calc(100% - 28px) !important;
+      max-width: calc(100% - 28px) !important;
+      margin: 28px auto 0 !important;
+      padding: 6px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+      gap: 4px !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      white-space: nowrap !important;
+      border-radius: 999px !important;
+      background: #f5f5f5 !important;
+      border: 0 !important;
+      scrollbar-width: none !important;
+      -webkit-overflow-scrolling: touch !important;
+      transform: none !important;
+      left: auto !important;
+    }
+
+    #equipos .catNav::-webkit-scrollbar,
+    [data-equipment-section] .catNav::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    #equipos .catBtn,
+    [data-equipment-section] .catBtn {
+      flex: 0 0 auto !important;
+      min-height: 38px !important;
+      padding: 0 16px !important;
+      border: 0 !important;
+      border-radius: 999px !important;
+      background: transparent !important;
+      color: rgba(8, 8, 8, 0.62) !important;
+      font-size: 0.68rem !important;
+      font-weight: 800 !important;
+      white-space: nowrap !important;
+    }
+
+    #equipos .catBtn.is-active,
+    [data-equipment-section] .catBtn.is-active {
+      background: #ffc400 !important;
+      color: #070707 !important;
+    }
+
+    #equipos .subNav,
+    [data-equipment-section] .subNav {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 18px auto 0 !important;
+      padding: 0 18px !important;
+      display: none !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 12px !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      white-space: nowrap !important;
+      background: transparent !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      scrollbar-width: none !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+
+    #equipos .subNav.is-active,
+    [data-equipment-section] .subNav.is-active {
+      display: flex !important;
+    }
+
+    #equipos .subBtn,
+    [data-equipment-section] .subBtn {
+      flex: 0 0 auto !important;
+      min-height: 38px !important;
+      padding: 0 18px !important;
+      border: 0 !important;
+      border-radius: 999px !important;
+      background: transparent !important;
+      color: rgba(255, 255, 255, 0.72) !important;
+      font-size: 0.78rem !important;
+      font-weight: 700 !important;
+      white-space: nowrap !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    #equipos .subBtn.is-active,
+    [data-equipment-section] .subBtn.is-active {
+      background: #ffc400 !important;
+      color: #070707 !important;
+      font-weight: 900 !important;
+    }
+
+    #equipos .eqContent,
+    [data-equipment-section] .eqContent {
+      width: 100% !important;
+      max-width: 100% !important;
+      overflow: hidden !important;
+    }
+
+    #equipos .eqCarousel,
+    [data-equipment-section] .eqCarousel {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-top: 34px !important;
+      padding: 0 !important;
+      overflow: hidden !important;
+    }
+
+    #equipos .eqGrid,
+    [data-equipment-section] .eqGrid {
+      width: 100% !important;
+      max-width: 100% !important;
+      display: flex !important;
+      flex-wrap: nowrap !important;
+      gap: 18px !important;
+      padding: 8px 24px 34px !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      scroll-snap-type: x mandatory !important;
+      scroll-padding-left: 24px !important;
+      scrollbar-width: none !important;
+      -webkit-overflow-scrolling: touch !important;
+      transform: none !important;
+      touch-action: pan-x !important;
+      overscroll-behavior-x: contain !important;
+    }
+
+    #equipos .eqGrid::-webkit-scrollbar,
+    [data-equipment-section] .eqGrid::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    #equipos .card,
+    [data-equipment-section] .card {
+      flex: 0 0 min(78vw, 310px) !important;
+      width: min(78vw, 310px) !important;
+      min-width: min(78vw, 310px) !important;
+      max-width: min(78vw, 310px) !important;
+      min-height: 420px !important;
+      display: none !important;
+      border: 1px solid rgba(255, 196, 0, 0.72) !important;
+      border-radius: 0 !important;
+      background: #d9d9d9 !important;
+      color: #101010 !important;
+      overflow: hidden !important;
+      scroll-snap-align: start !important;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    #equipos .card.is-visible,
+    [data-equipment-section] .card.is-visible {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+
+    #equipos .cardImg,
+    [data-equipment-section] .cardImg {
+      height: 260px !important;
+      background: #d9d9d9 !important;
+      overflow: hidden !important;
+    }
+
+    #equipos .cardImg img,
+    [data-equipment-section] .cardImg img {
+      width: 100% !important;
+      height: 100% !important;
+      display: block !important;
+      object-fit: cover !important;
+      object-position: center !important;
+    }
+
+    #equipos .cardMeta,
+    [data-equipment-section] .cardMeta {
+      margin-top: auto !important;
+      padding: 22px 20px 24px !important;
+      background: #d9d9d9 !important;
+      color: #101010 !important;
+      display: grid !important;
+      gap: 8px !important;
+    }
+
+    #equipos .cardEyebrow,
+    [data-equipment-section] .cardEyebrow {
+      color: rgba(8, 8, 8, 0.54) !important;
+      font-size: 0.72rem !important;
+      line-height: 1 !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.04em !important;
+      text-transform: uppercase !important;
+      text-align: left !important;
+    }
+
+    #equipos .cardName,
+    [data-equipment-section] .cardName {
+      color: #101010 !important;
+      font-size: clamp(1.25rem, 6vw, 1.65rem) !important;
+      line-height: 1.02 !important;
+      letter-spacing: -0.045em !important;
+      font-weight: 500 !important;
+      text-align: left !important;
+      text-transform: none !important;
+    }
+
+    #equipos .arrowBtn,
+    [data-equipment-section] .arrowBtn,
+    #equipos .vmaEqMobileDots,
+    [data-equipment-section] .vmaEqMobileDots {
+      display: none !important;
+    }
+  }
+</style>
+
+
+
+
+
+
+
+
+
+<!-- VMA_MOBILE_EQUIPMENT_FINAL_FIX_START -->
+<style is:global>
+  @media (max-width: 760px) {
+    #equipos [data-equipment-carousel] {
+      width: 100% !important;
+      max-width: 100vw !important;
+      overflow-x: auto !important;
+      overflow-y: visible !important;
+      -webkit-overflow-scrolling: touch !important;
+      overscroll-behavior-x: contain !important;
+      scroll-snap-type: x mandatory !important;
+      scroll-padding-left: 18px !important;
+      touch-action: pan-x !important;
+      pointer-events: auto !important;
+      scrollbar-width: none !important;
+      transform: none !important;
+    }
+
+    #equipos [data-equipment-carousel]::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    #equipos [data-equipment-grid] {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      align-items: stretch !important;
+      justify-content: flex-start !important;
+
+      width: max-content !important;
+      min-width: max-content !important;
+      max-width: none !important;
+
+      overflow: visible !important;
+
+      gap: 14px !important;
+      padding: 0 18px 12px 18px !important;
+      margin: 0 !important;
+
+      transform: none !important;
+      translate: none !important;
+
+      touch-action: pan-x !important;
+      pointer-events: auto !important;
+    }
+
+    #equipos [data-machine-card].is-visible {
+      flex: 0 0 310px !important;
+      width: 310px !important;
+      min-width: 310px !important;
+      max-width: 310px !important;
+
+      scroll-snap-align: start !important;
+      scroll-snap-stop: always !important;
+
+      transform: none !important;
+      translate: none !important;
+
+      pointer-events: auto !important;
+      touch-action: manipulation !important;
+      cursor: pointer !important;
+
+      -webkit-tap-highlight-color: transparent !important;
+      user-select: none !important;
+      -webkit-user-select: none !important;
+    }
+
+    #equipos [data-machine-card].is-visible img {
+      max-width: 100% !important;
+      object-fit: cover !important;
+    }
+
+    #equipos [data-detail-panel].is-active {
+      display: grid !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      z-index: 999 !important;
+    }
+
+    #equipos [data-carousel-prev],
+    #equipos [data-carousel-next],
+    #equipos [data-carousel-dot],
+    #equipos .eqCarouselArrow,
+    #equipos .eqCarouselDots {
+      display: none !important;
+      pointer-events: none !important;
+    }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const mq = window.matchMedia("(max-width: 760px)");
+
+    const getSection = () =>
+      document.querySelector("[data-equipment-section]") ||
+      document.querySelector("#equipos");
+
+    const forceMobileCarousel = () => {
+      if (!mq.matches) return;
+
+      const section = getSection();
+      if (!section) return;
+
+      const carousel = section.querySelector("[data-equipment-carousel]");
+      const grid = section.querySelector("[data-equipment-grid]");
+      const cards = [...section.querySelectorAll("[data-machine-card].is-visible")]
+        .filter((card) => {
+          const style = getComputedStyle(card);
+          return style.display !== "none" && style.visibility !== "hidden";
+        });
+
+      if (!carousel || !grid) return;
+
+      carousel.style.setProperty("width", "100%", "important");
+      carousel.style.setProperty("max-width", "100vw", "important");
+      carousel.style.setProperty("overflow-x", "auto", "important");
+      carousel.style.setProperty("overflow-y", "visible", "important");
+      carousel.style.setProperty("-webkit-overflow-scrolling", "touch", "important");
+      carousel.style.setProperty("touch-action", "pan-x", "important");
+      carousel.style.setProperty("scroll-snap-type", "x mandatory", "important");
+      carousel.style.setProperty("transform", "none", "important");
+      carousel.style.setProperty("pointer-events", "auto", "important");
+
+      grid.style.setProperty("display", "flex", "important");
+      grid.style.setProperty("flex-wrap", "nowrap", "important");
+      grid.style.setProperty("width", "max-content", "important");
+      grid.style.setProperty("min-width", "max-content", "important");
+      grid.style.setProperty("max-width", "none", "important");
+      grid.style.setProperty("overflow", "visible", "important");
+      grid.style.setProperty("transform", "none", "important");
+      grid.style.setProperty("translate", "none", "important");
+      grid.style.setProperty("touch-action", "pan-x", "important");
+      grid.style.setProperty("pointer-events", "auto", "important");
+
+      cards.forEach((card) => {
+        card.style.setProperty("flex", "0 0 310px", "important");
+        card.style.setProperty("width", "310px", "important");
+        card.style.setProperty("min-width", "310px", "important");
+        card.style.setProperty("max-width", "310px", "important");
+        card.style.setProperty("transform", "none", "important");
+        card.style.setProperty("pointer-events", "auto", "important");
+        card.style.setProperty("touch-action", "manipulation", "important");
+      });
+    };
+
+    let startX = 0;
+    let startY = 0;
+    let moved = false;
+    let syntheticClickRunning = false;
+
+    document.addEventListener("pointerdown", (event) => {
+      if (!mq.matches) return;
+
+      const card = event.target.closest?.("#equipos [data-machine-card].is-visible");
+      if (!card) return;
+
+      startX = event.clientX;
+      startY = event.clientY;
+      moved = false;
+    }, true);
+
+    document.addEventListener("pointermove", (event) => {
+      if (!mq.matches) return;
+
+      const dx = Math.abs(event.clientX - startX);
+      const dy = Math.abs(event.clientY - startY);
+
+      if (dx > 12 || dy > 12) {
+        moved = true;
+      }
+    }, true);
+
+    document.addEventListener("pointerup", (event) => {
+      if (!mq.matches) return;
+      if (moved) return;
+
+      const card = event.target.closest?.("#equipos [data-machine-card].is-visible");
+      if (!card) return;
+      if (syntheticClickRunning) return;
+
+      syntheticClickRunning = true;
+
+      /*
+        Esto dispara el listener original:
+        cards.forEach((c) => c.addEventListener("click", () => openDetail(c)))
+      */
+      card.dispatchEvent(
+        new MouseEvent("click", {
+          bubbles: true,
+          cancelable: true,
+          view: window,
+        })
+      );
+
+      setTimeout(() => {
+        const section = getSection();
+        const detail = section?.querySelector("[data-detail-panel]");
+
+        if (detail?.classList.contains("is-active")) {
+          detail.removeAttribute("hidden");
+          detail.setAttribute("aria-hidden", "false");
+        }
+
+        syntheticClickRunning = false;
+      }, 80);
+    }, true);
+
+    document.addEventListener("click", (event) => {
+      const filter = event.target.closest?.(
+        "#equipos [data-main-category], #equipos [data-sub-category]"
+      );
+
+      if (!filter) return;
+
+      setTimeout(forceMobileCarousel, 80);
+      setTimeout(forceMobileCarousel, 220);
+      setTimeout(forceMobileCarousel, 500);
+    }, true);
+
+    document.addEventListener("DOMContentLoaded", () => {
+      forceMobileCarousel();
+      setTimeout(forceMobileCarousel, 250);
+      setTimeout(forceMobileCarousel, 700);
+    });
+
+    window.addEventListener("resize", forceMobileCarousel);
+    window.addEventListener("orientationchange", () => {
+      setTimeout(forceMobileCarousel, 250);
+    });
+
+    window.VMA_MOBILE_EQUIPMENT_FINAL = {
+      forceMobileCarousel,
+    };
+  })();
+</script>
+<!-- VMA_MOBILE_EQUIPMENT_FINAL_FIX_END -->
+
+<!-- VMA_HIDE_EQUIPMENT_SCROLLBAR_FIX_START -->
+<style is:global>
+  #equipos [data-equipment-carousel],
+  #equipos [data-equipment-grid],
+  [data-equipment-section] [data-equipment-carousel],
+  [data-equipment-section] [data-equipment-grid] {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+
+  #equipos [data-equipment-carousel]::-webkit-scrollbar,
+  #equipos [data-equipment-grid]::-webkit-scrollbar,
+  [data-equipment-section] [data-equipment-carousel]::-webkit-scrollbar,
+  [data-equipment-section] [data-equipment-grid]::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+</style>
+<!-- VMA_HIDE_EQUIPMENT_SCROLLBAR_FIX_END -->

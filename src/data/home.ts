@@ -8,10 +8,6 @@ export const homeSections: HomeSection[] = [
     props: {
       kicker: "EQUIPOS DE ELEVACIÓN Y TRABAJO EN ALTURA",
       title: "No solo elevamos personas. Impulsamos tu productividad.",
-      subtitle:
-        "Soluciones disruptivas en elevación de personal: alquiler, venta y soporte técnico con ADN estratégico. Optimización del costo industrial y obras.",
-      pullQuote:
-        "La disponibilidad operativa no es una promesa comercial. Es una decisión técnica.",
       primaryCta: {
         label: "Cotizar equipo",
         href: "#contacto",
@@ -21,21 +17,21 @@ export const homeSections: HomeSection[] = [
         href: "#equipos",
       },
       image: {
-        src: "/images/hero-poster.jpg",
+        src: "/images/vma-version-b/hero-vma-b.png",
         alt: "Equipo VMA Rental en operación",
       },
     },
   },
 
   {
-    id: "nosotros",
-    type: "about",
+    id: "equipos",
+    type: "equipmentShowcase",
     props: {
-      kicker: "Nosotros",
-      statement:
-        "Conocemos el trabajo en altura desde adentro. Pero no queremos contartelo; queremos demostrártelo",
-      ctaLabel: "Conocer VMA",
-      ctaHref: "/nosotros",
+      moduleEyebrow: "FLOTA VMA",
+      moduleTitle:
+        "Explorá la flota y elegí el equipo según altura, energía y tipo de operación.",
+      ctaLabel: "Solicitar cotización",
+      ctaHref: "#contacto",
     },
   },
 
@@ -116,34 +112,12 @@ export const homeSections: HomeSection[] = [
           subtitle:
             "Análisis, asesoramiento comprometido y proyección 360° antes de mover un equipo.",
           href: "/metodo",
-          images: [
-            "/images/Metodo-VMA-Grids.png",
-          ],
+          images: ["/images/Metodo-VMA-Grids.png"],
           autoplay: false,
         },
       ],
     },
   },
-  {
-    id: "equipos",
-    type: "equipmentShowcase",
-    props: {
-      moduleEyebrow: "FLOTA VMA",
-      moduleTitle: "Equipos disponibles",
-      ctaLabel: "Solicitar cotización",
-      ctaHref: "#contacto",
-    },
-  },
-
-
-//   {
-//   id: "ecosistema",
-//   type: "ecosystemVMA",
-//   props: {
-//     kicker: "ECOSISTEMA VMA",
-//     title: "Novedades, criterio técnico y decisiones para operar mejor.",
-//   },
-// },
 
   {
     id: "faq",
@@ -160,14 +134,6 @@ export const homeSections: HomeSection[] = [
           q: "¿Qué información necesitan para cotizar?",
           a: "Altura de trabajo, tipo de superficie, fuente de energía disponible, zona de operación y fecha estimada. Con esos cinco datos podemos cotizar el equipo correcto sin reuniones intermedias.",
         },
-        // {
-        //   q: "¿Qué pasa si el equipo falla durante el alquiler?",
-        //   a: "Tenés canal directo de soporte técnico durante todo el alquiler. Respondemos en sitio o reemplazo de la unidad. Continuidad operativa.",
-        // },
-        // {
-        //   q: "¿Los equipos vienen con operario?",
-        //   a: "Alquiler sin operador. Inducción de manejo al pie de la obra o certificación para industria.",
-        // },
         {
           q: "¿Manejan venta de equipos nuevos o también usados?",
           a: "Equipos nuevos con garantía de fábrica y usados con garantía de funcionalidad VMA Rental. La venta incluye asesoramiento técnico.",
@@ -181,6 +147,18 @@ export const homeSections: HomeSection[] = [
           a: "Factura A. Condiciones de pago según duración y volumen del alquiler.",
         },
       ],
+    },
+  },
+
+  {
+    id: "nosotros",
+    type: "about",
+    props: {
+      kicker: "Nosotros",
+      statement:
+        "Conocemos el trabajo en altura. Por eso combinamos equipos, disponibilidad y asesoramiento operativo para que cada alquiler llegue con el equipo correcto.",
+      ctaLabel: "Conocé VMA",
+      ctaHref: "/nosotros",
     },
   },
 

@@ -1,405 +1,398 @@
 ---
-import Container from "@/ui/components/Container.astro";
-import { videoAssets } from "@/data/videoAssets";
-
-type Cta = { label: string; href: string };
-
 type Props = {
-  kicker?: string;
+  eyebrow?: string;
   title?: string;
-  subtitle?: string;
-  pullQuote?: string;
-  primaryCta?: Cta;
-  secondaryCta?: Cta;
-  image?: { src: string; alt?: string };
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
 };
 
 const {
-  kicker = "EQUIPOS DE ELEVACIÓN Y TRABAJO EN ALTURA",
-  title = "Tu operación no puede parar. Nosotros nos encargamos de que no pare.",
-  subtitle = "Equipos de elevación listos, donde los necesites, cuando los necesites.",
-  primaryCta = { label: "Cotizar equipo", href: "#contacto" },
+  eyebrow = "EQUIPOS DE ELEVACIÓN Y TRABAJO EN ALTURA",
+  title = "No solo elevamos personas, Impulsamos tu productividad.",
+  primaryCta = { label: "Cotizar Equipo", href: "#contacto" },
   secondaryCta = { label: "Ver equipos", href: "#equipos" },
-  image,
-} = Astro.props as Props;
-
-const heroVideo = videoAssets.heroMain;
+} = Astro.props;
 ---
 
-<section id="inicio" class="hero" data-vma-hero>
-  <div class="heroSticky">
-    <div class="heroFrame">
-      <video
-        id="heroVideo"
-        class="heroVideo"
-        muted
-        autoplay
-        loop
-        playsinline
-        webkit-playsinline="true"
-        preload="auto"
-        poster="/videos/imgBackground1.jpg"
-        aria-label={image?.alt ?? "Video de presentación VMA Rental"}
-      >
-        <source src={heroVideo.desktop.mp4} type="video/mp4" />
-      </video>
+<section id="inicio" class="heroB" data-vma-hero>
+  <div class="heroB__visual" aria-hidden="true"></div>
 
-      <div class="heroOverlay" aria-hidden="true"></div>
+  <div class="heroB__content">
+    <p class="heroB__kicker">{eyebrow}</p>
 
-      <div class="heroContent">
-        <Container class="heroContentInner">
-          <p class="kicker">{kicker}</p>
-          <h1 class="brandLogo">{title}</h1>
-          <p class="tagline">{subtitle}</p>
+    <h1 class="heroB__title">
+      {title}
+    </h1>
 
-          <div class="heroActions">
-            <a class="heroBtn" href={primaryCta.href}>{primaryCta.label}</a>
-            <a class="heroLinkSecondary" href={secondaryCta.href}>{secondaryCta.label}</a>
-          </div>
-        </Container>
-      </div>
+    <div class="heroB__actions">
+      <a class="heroB__btn heroB__btn--primary" href={primaryCta.href}>
+        {primaryCta.label}
+      </a>
+
+      <a class="heroB__btn heroB__btn--secondary" href={secondaryCta.href}>
+        {secondaryCta.label}
+      </a>
     </div>
   </div>
+
+  <div class="heroB__bottomBlend" aria-hidden="true"></div>
+
+  <a class="heroB__banner" href="#equipos" aria-label="Ver equipo destacado HS18E Pro">
+    <span class="heroB__bannerImage" aria-hidden="true"></span>
+    <span class="heroB__bannerShade" aria-hidden="true"></span>
+
+    <span class="heroB__bannerCopy">
+      <strong>Experimenta <em>nuevas alturas</em></strong>
+      <small>Descubrí la HS18E Pro</small>
+    </span>
+  </a>
 </section>
 
-<script is:inline>
-  (() => {
-    const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
-
-    const playHeroVideo = async () => {
-      const video = document.getElementById("heroVideo");
-      if (!video) return;
-
-      if (!video.paused && video.readyState >= 2) return;
-
-      video.muted = true;
-      video.defaultMuted = true;
-      video.volume = 0;
-      video.autoplay = true;
-      video.loop = true;
-      video.playsInline = true;
-
-      video.setAttribute("muted", "");
-      video.setAttribute("autoplay", "");
-      video.setAttribute("loop", "");
-      video.setAttribute("playsinline", "");
-      video.setAttribute("webkit-playsinline", "true");
-
-      try {
-        await video.play();
-        video.classList.add("isPlaying");
-        video.classList.remove("isBlocked");
-      } catch (error) {
-        console.warn("[HeroVideo] autoplay bloqueado:", error);
-        video.classList.add("isBlocked");
-      }
-    };
-
-    const bindHeroScroll = () => {
-      const hero = document.querySelector("[data-vma-hero]");
-      if (!hero) return;
-
-      let ticking = false;
-
-      const update = () => {
-        const rect = hero.getBoundingClientRect();
-        const viewport = window.innerHeight || 1;
-        const travel = Math.max(hero.offsetHeight - viewport, 1);
-        const raw = clamp(Math.abs(rect.top) / travel, 0, 1);
-
-        const eased = 1 - Math.pow(1 - raw, 3);
-
-        const delayedFade = clamp((eased - 0.52) / 0.42, 0, 1);
-
-        hero.style.setProperty("--hero-inset", `${Math.round(eased * 26)}px`);
-        hero.style.setProperty("--hero-radius", `${Math.round(eased * 22)}px`);
-        hero.style.setProperty("--hero-scale", `${1 + eased * 0.028}`);
-        hero.style.setProperty("--content-opacity", `${clamp(1 - delayedFade, 0, 1)}`);
-        hero.style.setProperty("--content-y", `${Math.round(delayedFade * -28)}px`);
-
-        ticking = false;
-      };
-
-      const requestUpdate = () => {
-        if (ticking) return;
-        ticking = true;
-        window.requestAnimationFrame(update);
-      };
-
-      update();
-      window.addEventListener("scroll", requestUpdate, { passive: true });
-      window.addEventListener("resize", requestUpdate);
-    };
-
-    playHeroVideo();
-    bindHeroScroll();
-
-    document.addEventListener("DOMContentLoaded", () => {
-      playHeroVideo();
-      bindHeroScroll();
-    }, { once: true });
-
-    window.addEventListener("load", playHeroVideo, { once: true });
-
-    document.addEventListener("visibilitychange", () => {
-      if (!document.hidden) playHeroVideo();
-    });
-
-    ["click", "touchstart", "pointerdown", "keydown"].forEach((eventName) => {
-      window.addEventListener(eventName, playHeroVideo, {
-        once: true,
-        passive: true,
-      });
-    });
-  })();
-</script>
-
 <style>
-  .hero {
-    --hero-inset: 0px;
-    --hero-radius: 0px;
-    --hero-scale: 1;
-    --content-opacity: 1;
-    --content-y: 0px;
-
+  .heroB {
     position: relative;
-    height: 132vh;
-    background: #f5f5f2;
-  }
-
-  .heroSticky {
-    position: sticky;
-    top: 0;
-    height: 100svh;
+    width: 100%;
+    min-height: clamp(690px, 99svh, 920px);
     overflow: hidden;
-    background: #ffffff;
+    isolation: isolate;
+    background: #030303;
+    color: #ffffff;
   }
 
-  .heroFrame {
-    position: absolute;
-    inset: var(--hero-inset);
-    overflow: hidden;
-    border-radius: var(--hero-radius);
-    background:
-      linear-gradient(90deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.22)),
-      url("/videos/imgBackground1.jpg") center / cover no-repeat,
-      #000;
-    transform: translateZ(0);
-    will-change: inset, border-radius;
-  }
-
-  .heroVideo {
+  .heroB__visual {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    max-width: none;
-    object-fit: cover;
     z-index: 0;
-    transform: scale(var(--hero-scale));
-    transform-origin: center;
-    transition: filter 0.4s ease;
-    will-change: transform;
+    background-image:
+      linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.08) 0%,
+        rgba(0, 0, 0, 0.14) 38%,
+        rgba(0, 0, 0, 0.86) 100%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.56) 0%,
+        rgba(0, 0, 0, 0.16) 54%,
+        rgba(0, 0, 0, 0.18) 100%
+      ),
+      url("/images/vma-version-b/hero-vma-b.png");
+    background-size: cover;
+    background-position: 56% center;
+    background-repeat: no-repeat;
   }
 
-  .heroVideo.isBlocked {
-    filter: brightness(0.85);
-  }
-
-.heroOverlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background:
-    radial-gradient(
-      circle at 24% 52%,
-      rgba(0, 0, 0, 0.56) 0%,
-      rgba(0, 0, 0, 0.42) 34%,
-      rgba(0, 0, 0, 0.12) 62%,
-      rgba(0, 0, 0, 0.18) 100%
-    ),
-    linear-gradient(
-      90deg,
-      rgba(0, 0, 0, 0.78) 0%,
-      rgba(0, 0, 0, 0.58) 34%,
-      rgba(0, 0, 0, 0.18) 68%,
-      rgba(0, 0, 0, 0.22) 100%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.12) 0%,
-      rgba(0, 0, 0, 0.16) 56%,
-      rgba(0, 0, 0, 0.44) 100%
-    );
-}
-
-  .heroContent {
-    position: absolute;
-    left: clamp(28px, 4vw, 76px);
-    bottom: clamp(62px,22vh,300px);
-    max-width: min(1180px, calc(100vw - 120px));
+  .heroB__content {
+    position: relative;
     z-index: 2;
-    opacity: var(--content-opacity);
-    transform: translate3d(0, var(--content-y), 0);
-    will-change: opacity, transform;
+    width: min(100% - 44px, 1180px);
+    margin: 0 auto;
+    padding-top: clamp(220px, 25svh, 310px);
   }
 
-  .heroContent :global(.container.heroContentInner) {
-    width: 100%;
-    max-width: none;
-    margin-inline: 0;
-    padding-inline: 0;
-  }
-
-  .kicker {
-    font-family: var(--font-body);
-    font-size: 0.9rem;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
+  .heroB__kicker {
+    margin: 0 0 12px;
     color: #ffc400;
-    line-height: 1.4;
+    font-size: clamp(0.68rem, 2vw, 1rem);
+    line-height: 1.2;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
+  }
+
+  .heroB__title {
     margin: 0;
-    font-weight: 700;
-  }
-
-  .brandLogo {
-    font-family: var(--font-body);
-    font-size: clamp(3.8rem,6vw,8.2rem);
+    max-width: 17.5ch;
+    color: #ffffff;
+    font-size: clamp(2.25rem, 5.8vw, 5.9rem);
+    line-height: 0.96;
+    letter-spacing: -0.06em;
     font-weight: 300;
-    letter-spacing: -0.065em;
-    color: #fff;
-    line-height: 0.94;
-    margin: 18px 0 0;
-    /* max-width: 20.5ch; */
+    text-shadow: 0 4px 28px rgba(0, 0, 0, 0.52);
   }
 
-  .tagline {
-    font-family: var(--font-body);
-    font-size: clamp(1rem, 1.35vw, 1.22rem);
-    letter-spacing: 0.01em;
-    color: rgba(255, 255, 255, 0.84);
-    margin: 26px 0 0;
-    line-height: 1.55;
-    max-width: 58ch;
-  }
-
-  .heroActions {
+  .heroB__actions {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    gap: 22px;
-    margin-top: 38px;
+    gap: 16px;
+    margin-top: clamp(22px, 3vw, 30px);
   }
 
-.heroBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 54px;
-  padding: 0 34px;
-  border: 1px solid rgba(255, 196, 0, 0.76);
-  background: rgba(255, 196, 0, 0.08);
-  color: #ffc400;
-  font-size: 0.9rem;
-  font-weight: 800;
-  letter-spacing: 0.03em;
-  text-decoration: none;
-  border-radius: 10px;
-  box-shadow: 0 14px 42px rgba(0, 0, 0, 0.12);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition:
-    background 0.28s ease,
-    color 0.28s ease,
-    border-color 0.28s ease,
-    box-shadow 0.28s ease,
-    transform 0.28s ease;
-}
-
-.heroBtn:hover {
-  background: #ffc400;
-  border-color: #ffc400;
-  color: #070707;
-  box-shadow: 0 18px 54px rgba(255, 196, 0, 0.2);
-  transform: translateY(-2px);
-}
-
-  .heroLinkSecondary {
-    position: relative;
+  .heroB__btn {
+    min-width: 142px;
+    min-height: 46px;
     display: inline-flex;
     align-items: center;
-    min-height: 44px;
-    font-size: 0.78rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.68);
+    justify-content: center;
+    border-radius: 9px;
+    padding: 0 18px;
     text-decoration: none;
-    transition: color 0.25s ease;
+    font-size: 0.83rem;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    transition:
+      transform 0.22s ease,
+      background 0.22s ease,
+      border-color 0.22s ease,
+      color 0.22s ease;
   }
 
-  .heroLinkSecondary::after {
-    content: "";
-    width: 42px;
-    height: 1px;
-    margin-left: 14px;
-    background: rgba(255, 255, 255, 0.34);
-    transform-origin: left;
-    transition: transform 0.28s ease, background 0.28s ease;
+  .heroB__btn--primary {
+    background: rgba(255, 196, 0, 0.12);
+    color: #ffc400;
+    border: 1px solid rgba(255, 196, 0, 0.88);
   }
 
-  .heroLinkSecondary:hover {
-    color: #fff;
+  .heroB__btn--secondary {
+    color: rgba(255, 255, 255, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.42);
+    background: rgba(0, 0, 0, 0.22);
   }
 
-  .heroLinkSecondary:hover::after {
+  .heroB__btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .heroB__btn--primary:hover {
     background: #ffc400;
-    transform: scaleX(1.22);
+    color: #050505;
   }
 
-  @media (max-width: 768px) {
-    .hero {
-      height: 118vh;
-    }
-
-    .heroContent {
-      left: 24px;
-      right: 24px;
-      bottom: 48px;
-      max-width: none;
-    }
-
-    .brandLogo {
-      font-size: clamp(2.7rem, 13vw, 4.4rem);
-      max-width: 10.5ch;
-    }
-
-    .tagline {
-      max-width: 34ch;
-    }
-
-    .heroActions {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 14px;
-    }
+  .heroB__btn--secondary:hover {
+    border-color: rgba(255, 255, 255, 0.72);
+    color: #ffffff;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .hero {
+  .heroB__bottomBlend {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    height: clamp(260px, 38vh, 390px);
+    pointer-events: none;
+    background:
+      radial-gradient(
+        ellipse at center bottom,
+        rgba(0, 0, 0, 0.96) 0%,
+        rgba(0, 0, 0, 0.72) 44%,
+        rgba(0, 0, 0, 0) 74%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0) 0%,
+        #030303 76%
+      );
+    backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.5px);
+  }
+
+  .heroB__banner {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    z-index: 3;
+    display: block;
+    width: min(calc(100% - 48px), 1200px);
+    height: clamp(78px, 10vw, 173px);
+    transform: translateX(-50%);
+    overflow: hidden;
+    border-radius: 14px;
+    color: #ffffff;
+    text-decoration: none;
+    background: #101010;
+    box-shadow:
+      0 28px 90px rgba(0, 0, 0, 0.62),
+      0 0 80px rgba(0, 0, 0, 0.42);
+  }
+
+  .heroB__banner::before {
+    content: "";
+    position: absolute;
+    inset: -28px;
+    z-index: -1;
+    background: rgba(0, 0, 0, 0.58);
+    filter: blur(34px);
+  }
+
+  .heroB__bannerImage {
+    position: absolute;
+    inset: 0;
+    background-image: url("/images/vma-version-b/banner-hs18e.png");
+    background-size: cover;
+    background-position: center;
+    opacity: 0.76;
+  }
+
+  .heroB__bannerShade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.78) 0%,
+        rgba(0, 0, 0, 0.34) 46%,
+        rgba(0, 0, 0, 0.12) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.02) 0%,
+        rgba(0, 0, 0, 0.34) 100%
+      );
+  }
+
+  .heroB__bannerCopy {
+    position: absolute;
+    left: clamp(18px, 3vw, 34px);
+    top: 50%;
+    z-index: 2;
+    transform: translateY(-50%);
+    display: grid;
+    gap: 7px;
+  }
+
+  .heroB__bannerCopy strong {
+    font-size: clamp(0.9rem, 1.4vw, 1.18rem);
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  .heroB__bannerCopy strong em {
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  .heroB__bannerCopy small {
+    width: fit-content;
+    border: 1px solid rgba(255, 196, 0, 0.5);
+    border-radius: 8px;
+    padding: 7px 12px;
+    color: #ffc400;
+    font-size: 0.74rem;
+    font-weight: 800;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  @media (max-width: 720px) {
+    .heroB {
       height: 100svh;
+      min-height: 100svh;
+      max-height: 100svh;
+      overflow: hidden;
     }
 
-    .heroSticky {
-      position: relative;
+    .heroB__visual {
+      inset: 0;
+      height: 100%;
+      background-image:
+        linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0.04) 0%,
+          rgba(0, 0, 0, 0.04) 24%,
+          rgba(0, 0, 0, 0.12) 42%,
+          rgba(0, 0, 0, 0.34) 64%,
+          rgba(0, 0, 0, 0.68) 100%
+        ),
+        linear-gradient(
+          90deg,
+          rgba(0, 0, 0, 0.16) 0%,
+          rgba(0, 0, 0, 0.02) 48%,
+          rgba(0, 0, 0, 0.12) 100%
+        ),
+        url("/images/vma-version-b/hero-vma-b.png");
+      background-size: cover;
+      background-position: 57% center;
+      background-repeat: no-repeat;
     }
 
-    .heroVideo,
-    .heroContent,
-    .heroFrame {
-      transform: none;
-      transition: none;
-      will-change: auto;
+    .heroB__content {
+      width: 100%;
+      height: 100svh;
+      min-height: 100svh;
+      margin: 0;
+      padding: 0 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      transform: translateY(36px);
+    }
+
+    .heroB__kicker {
+      margin-bottom: 8px;
+      font-size: clamp(0.62rem, 2.45vw, 0.72rem);
+      line-height: 1.05;
+      letter-spacing: 0.055em;
+      text-shadow: 0 2px 16px rgba(0, 0, 0, 0.65);
+    }
+
+    .heroB__title {
+      max-width: 94%;
+      font-size: clamp(1.58rem, 7.35vw, 2.18rem);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      font-weight: 500;
+      text-shadow: 0 3px 20px rgba(0, 0, 0, 0.7);
+    }
+
+    .heroB__actions {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .heroB__btn {
+      width: 100%;
+      min-width: 0;
+      min-height: 48px;
+      padding-inline: 10px;
+      font-size: 0.8rem;
+      border-radius: 10px;
+    }
+
+    .heroB__btn--primary {
+      background: rgba(255, 196, 0, 1);
+color: #090909;
+border-color: rgba(255,196,0,0.9);
+    }
+
+    .heroB__btn--secondary {
+      background: rgba(0, 0, 0, 0.12);
+      border-color: rgba(255, 255, 255, 0.46);
+      color: rgba(255, 255, 255, 0.86);
+    }
+
+    .heroB__bottomBlend,
+    .heroB__banner {
+      display: none;
+    }
+  }
+
+  @media (max-width: 390px) {
+    .heroB__visual {
+      background-position: 58% center;
+    }
+
+    .heroB__content {
+      padding-inline: 16px;
+      transform: translateY(34px);
+    }
+
+    .heroB__title {
+      max-width: 96%;
+      font-size: clamp(1.5rem, 7.2vw, 2rem);
+    }
+
+    .heroB__actions {
+      gap: 9px;
+    }
+
+    .heroB__btn {
+      min-height: 46px;
+      font-size: 0.76rem;
     }
   }
 </style>
