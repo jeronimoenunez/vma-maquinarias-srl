@@ -7,20 +7,25 @@ const navGroups = [
     key: "inicio",
     label: "Inicio",
     href: "/#inicio",
+    mobileHref: "/#inicio",
     hasMega: false,
+    sectionId: "inicio",
   },
   {
-  key: "nosotros",
-  label: "Nosotros",
-  href: "/nosotros",
-  hasMega: false,
-  sectionId: "nosotros",
-},
+    key: "flota",
+    label: "Flota VMA",
+    href: "/#equipos",
+    mobileHref: "/#equipos",
+    hasMega: false,
+    sectionId: "equipos",
+  },
   {
     key: "sectores",
     label: "Sectores",
     href: "/#sectores",
+    mobileHref: "/#sectores",
     hasMega: true,
+    sectionId: "sectores",
     eyebrow: "Sectores",
     title: "Soluciones por tipo de operación",
     description:
@@ -30,7 +35,8 @@ const navGroups = [
         title: "Industria y planta",
         subtitle: "Contratos, equipos dedicados y continuidad",
         href: "/#sectores",
-        image: "https://images.unsplash.com/photo-1717386255773-1e3037c81788?q=80&w=2340&auto=format&fit=crop",
+        image:
+          "https://images.unsplash.com/photo-1717386255773-1e3037c81788?q=80&w=2340&auto=format&fit=crop",
       },
       {
         title: "Construcción y obra",
@@ -54,7 +60,10 @@ const navGroups = [
     key: "negocio",
     label: "Sistema VMA",
     href: "/#negocio",
+    mobileHref: "/#negocio",
     hasMega: true,
+    sectionId: "negocio",
+    activePaths: ["/metodo"],
     eyebrow: "Sistema VMA",
     title: "Unidades de negocio y método operativo",
     description:
@@ -81,75 +90,7 @@ const navGroups = [
     ],
     links: [
       { label: "Ver sistema VMA", href: "/#negocio" },
-      { label: "Unidades de negocio", href: "/unidades" },
-      { label: "Lo que nos hace diferentes", href: "/metodo" },
-    ],
-  },
-  {
-    key: "equipos",
-    label: "Equipos",
-    href: "/#equipos",
-    hasMega: true,
-    eyebrow: "Equipos",
-    title: "Maquinaria para trabajo en altura",
-    description:
-      "Plataformas, manipuladores y equipos para obra, industria y mantenimiento con criterio técnico de selección.",
-    cards: [
-      {
-        title: "Articuladas",
-        subtitle: "Alcance, altura y versatilidad",
-        href: "/#equipos",
-        image: "/images/nav/equipos-articuladas.jpg",
-      },
-      {
-        title: "Tijera",
-        subtitle: "Superficie estable en altura",
-        href: "/#equipos",
-        image: "/images/nav/equipos-tijera.jpg",
-      },
-      {
-        title: "Manipuladores",
-        subtitle: "Carga, alcance y operación industrial",
-        href: "/#equipos",
-        image: "/images/nav/equipos-manipuladores.jpg",
-      },
-    ],
-    links: [
-      { label: "Ver equipos", href: "/#equipos" },
-      { label: "Pedir recomendación", href: waCotizarUrl },
-    ],
-  },
-  {
-    key: "ecosistema",
-    label: "Ecosistema",
-    href: "/#ecosistema",
-    hasMega: true,
-    eyebrow: "Ecosistema VMA",
-    title: "Novedades y criterio técnico",
-    description:
-      "Contenido útil para decidir mejor: disponibilidad, selección de equipos, seguridad, costos y continuidad operativa.",
-    cards: [
-      {
-        title: "Novedades",
-        subtitle: "Actualizaciones del ecosistema VMA",
-        href: "/#ecosistema",
-        image: "/images/noticias.png",
-      },
-      {
-        title: "Blog técnico",
-        subtitle: "Criterios para elegir mejor",
-        href: "/#ecosistema",
-        image: "/images/Blog.png",
-      },
-      {
-        title: "Guías operativas",
-        subtitle: "Información para cotizar con contexto",
-        href: "/#ecosistema",
-        image: "/images/co.png",
-      },
-    ],
-    links: [
-      { label: "Ver ecosistema", href: "/#ecosistema" },
+      { label: "Método VMA", href: "/metodo" },
       { label: "Consultar por WhatsApp", href: waCotizarUrl },
     ],
   },
@@ -157,47 +98,28 @@ const navGroups = [
     key: "faq",
     label: "FAQ",
     href: "/#faq",
+    mobileHref: "/#faq",
     hasMega: false,
-    eyebrow: "Preguntas frecuentes",
-    title: "Antes de cotizar, resolvé lo importante",
-    description:
-      "Disponibilidad, zonas de operación, tiempos de respuesta, condiciones y soporte durante el uso del equipo.",
-    cards: [
-      {
-        title: "Disponibilidad",
-        subtitle: "Equipos sujetos a agenda",
-        href: "/#faq",
-        image: "/images/nav/faq-disponibilidad.jpg",
-      },
-      {
-        title: "Cobertura",
-        subtitle: "AMBA y zonas extendidas",
-        href: "/#faq",
-        image: "/images/nav/faq-cobertura.jpg",
-      },
-      {
-        title: "Soporte",
-        subtitle: "Acompañamiento técnico",
-        href: "/#faq",
-        image: "/images/nav/faq-soporte.jpg",
-      },
-    ],
-    links: [
-      { label: "Ver preguntas", href: "/#faq" },
-      { label: "Consultar por WhatsApp", href: waCotizarUrl },
-    ],
+    sectionId: "faq",
+  },
+  {
+    key: "nosotros",
+    label: "Nosotros",
+    href: "/nosotros",
+    mobileHref: "/nosotros",
+    hasMega: false,
+    sectionId: "nosotros",
+    activePaths: ["/nosotros"],
   },
 ];
 
 const megaGroups = navGroups.filter((group) => group.hasMega);
-
 const currentPath = Astro.url.pathname;
 const isInternalPage = currentPath !== "/";
-
 ---
 
-<header class:list={["topNav", { "isInternalPage": isInternalPage }]} data-topnav>
-  <div class="navBackdrop" data-nav-backdrop hidden></div>
+<header class:list={["topNav", { isInternalPage }]} data-topnav>
+  <div class="desktopBackdrop" data-nav-backdrop hidden></div>
 
   <div class="navBar">
     <Container class="navInner">
@@ -211,37 +133,42 @@ const isInternalPage = currentPath !== "/";
         />
       </a>
 
-      <nav class="tabs" aria-label="Navegación principal">
+      <nav class="tabs" aria-label="Navegación principal" data-mobile-nav>
         {
-          navGroups.map((group) =>
-            group.hasMega ? (
-              <a
-                class="tab"
-                href={group.href}
-                data-tab
-                data-section-id={group.sectionId ?? group.key}
-                data-menu-trigger={group.key}
-              >
-                {group.label}
-              </a>
-            ) : (
-              <a
-                class="tab"
-                href={group.href}
-                data-tab
-                data-section-id={group.sectionId ?? group.key}
-              >
-                {group.label}
-              </a>
-            )
-          )
+          navGroups.map((group) => (
+            <a
+              class="tab"
+              href={group.href}
+              data-tab
+              data-section-id={group.sectionId ?? group.key}
+              data-menu-trigger={group.hasMega ? group.key : undefined}
+            >
+              {group.label}
+            </a>
+          ))
         }
+
+        <a class="mobileOnlyCta" href="/#contacto" data-mobile-contact>
+          Contacto
+        </a>
       </nav>
 
       <div class="right">
         <a class="navCta" href="/#contacto">
           Contacto
         </a>
+
+        <button
+          class="mobileMenuButton"
+          type="button"
+          aria-label="Abrir menú"
+          aria-expanded="false"
+          data-mobile-menu-button
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </Container>
   </div>
@@ -299,74 +226,73 @@ const isInternalPage = currentPath !== "/";
     position: fixed;
     inset: 0 0 auto 0;
     z-index: 9999;
+    width: 100%;
+    max-width: 100%;
     pointer-events: none;
   }
 
-  .navBackdrop {
+  .desktopBackdrop {
     position: fixed;
     inset: 0;
     z-index: 1;
     pointer-events: auto;
     opacity: 0;
-    background: rgba(10, 12, 14, 0.16);
+    background: rgba(10, 12, 14, 0.14);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     transition: opacity 0.22s ease;
   }
 
-  .topNav.isMenuOpen .navBackdrop {
+  .topNav.isMenuOpen .desktopBackdrop {
     opacity: 1;
-  }
-
-  .topNav.isInternalPage .navBar {
-    background: rgba(4, 7, 9, 0.78);
-    border-color: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
-    backdrop-filter: blur(22px) saturate(1.16);
-    -webkit-backdrop-filter: blur(22px) saturate(1.16);
   }
 
   .navBar {
     position: relative;
-    z-index: 3;
+    z-index: 5;
     width: 100%;
+    max-width: 100%;
     pointer-events: auto;
     background: transparent;
-    border-bottom: 1px solid transparent;
+    border: 0 !important;
+    border-bottom: 0 !important;
+    box-shadow: none;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    box-shadow: none;
     transition:
       background 0.24s ease,
-      border-color 0.24s ease,
       box-shadow 0.24s ease,
       backdrop-filter 0.24s ease;
   }
 
   .topNav.isScrolled .navBar,
-  .topNav.isMenuOpen .navBar {
-    background: rgba(4,7,9,0.58);
-    border-color: rgba(255,255,255,0.08);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.18);
-    backdrop-filter: blur(22px) saturate(1.16);
-    -webkit-backdrop-filter: blur(7px) saturate(2);
+  .topNav.isMenuOpen .navBar,
+  .topNav.isInternalPage .navBar {
+    background: rgba(4, 7, 9, 0.58);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+    backdrop-filter: blur(18px) saturate(1.16);
+    -webkit-backdrop-filter: blur(18px) saturate(1.16);
   }
 
   .navBar :global(.container.navInner) {
+    width: min(1639px, calc(100% - 56px));
+    max-width: calc(100% - 56px);
     min-height: 72px;
+    margin: 0 auto;
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
     gap: 24px;
-    width: min(1639px, calc(100vw - 56px));
-    margin: 0 auto;
   }
 
   .brand {
+    position: relative;
+    z-index: 10002;
     display: inline-flex;
     align-items: center;
     min-width: 0;
     line-height: 0;
+    text-decoration: none;
   }
 
   .brandImage {
@@ -381,8 +307,8 @@ const isInternalPage = currentPath !== "/";
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 45px;
     justify-self: center;
+    gap: 45px;
     min-width: 0;
   }
 
@@ -393,37 +319,42 @@ const isInternalPage = currentPath !== "/";
     justify-content: center;
     height: 36px;
     padding: 0;
+    border: 0;
     border-radius: 0;
     white-space: nowrap;
     background: transparent;
     box-shadow: none;
     font-weight: 500;
     font-size: 16px;
-    color: rgba(234, 242, 247, 0.72);
+    color: rgba(255, 255, 255, 1);
+    text-decoration: none;
     transition:
       color 0.18s ease,
       opacity 0.18s ease;
   }
 
   .tab:hover,
-  .tab.isMenuActive {
+  .tab.isMenuActive,
+  .tab.isActive {
     color: #ffc400;
-    background: transparent;
   }
 
   .tab.isActive {
-    color: #ffc400;
-    background: transparent;
     font-weight: 800;
   }
 
   .right {
+    position: relative;
+    z-index: 10002;
     display: inline-flex;
     align-items: center;
+    justify-content: flex-end;
+    gap: 18px;
     justify-self: end;
   }
 
-  .navCta {
+  .navCta,
+  .mobileOnlyCta {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -446,12 +377,69 @@ const isInternalPage = currentPath !== "/";
       transform 0.25s ease;
   }
 
-  .navCta:hover {
+  .navCta:hover,
+  .mobileOnlyCta:hover {
     background: #ffc400;
     border-color: #ffc400;
     color: #070707;
     box-shadow: 0 16px 44px rgba(255, 196, 0, 0.18);
     transform: translateY(-1px);
+  }
+
+  .mobileOnlyCta {
+    display: none;
+  }
+
+  .mobileMenuButton {
+    display: none;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: #ffffff;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .mobileMenuButton span {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    height: 2px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.9);
+    transition:
+      transform 0.22s ease,
+      opacity 0.18s ease,
+      top 0.22s ease;
+  }
+
+  .mobileMenuButton span:nth-child(1) {
+    top: 15px;
+  }
+
+  .mobileMenuButton span:nth-child(2) {
+    top: 23px;
+  }
+
+  .mobileMenuButton span:nth-child(3) {
+    top: 31px;
+  }
+
+  .mobileMenuButton.is-open span:nth-child(1) {
+    top: 23px;
+    transform: rotate(45deg);
+  }
+
+  .mobileMenuButton.is-open span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobileMenuButton.is-open span:nth-child(3) {
+    top: 23px;
+    transform: rotate(-45deg);
   }
 
   .megaMenu {
@@ -461,8 +449,9 @@ const isInternalPage = currentPath !== "/";
     right: 0;
     z-index: 2;
     pointer-events: auto;
-    background: rgba(246, 245, 241, 0.82);
-    border-bottom: 1px solid rgba(16, 18, 20, 0.08);
+    background: rgba(246, 245, 241, 0.88);
+    border: 0 !important;
+    border-bottom: 0 !important;
     box-shadow: 0 28px 70px rgba(0, 0, 0, 0.18);
     backdrop-filter: blur(24px) saturate(1.18);
     -webkit-backdrop-filter: blur(24px) saturate(1.18);
@@ -479,7 +468,8 @@ const isInternalPage = currentPath !== "/";
   }
 
   .megaMenu :global(.container.megaInner) {
-    width: min(1360px, calc(100vw - 56px));
+    width: min(1360px, calc(100% - 56px));
+    max-width: calc(100% - 56px);
     margin: 0 auto;
   }
 
@@ -533,6 +523,7 @@ const isInternalPage = currentPath !== "/";
   .megaCard {
     display: block;
     color: #101214;
+    text-decoration: none;
   }
 
   .megaCardImage {
@@ -600,6 +591,7 @@ const isInternalPage = currentPath !== "/";
     color: rgba(16, 18, 20, 0.68);
     font-size: 0.95rem;
     line-height: 1.35;
+    text-decoration: none;
     transition: color 0.18s ease;
   }
 
@@ -608,6 +600,10 @@ const isInternalPage = currentPath !== "/";
   }
 
   @media (max-width: 1180px) {
+    .tabs {
+      gap: 28px;
+    }
+
     .megaPanel {
       grid-template-columns: 280px minmax(0, 1fr);
     }
@@ -621,21 +617,131 @@ const isInternalPage = currentPath !== "/";
     }
   }
 
-  @media (max-width: 980px) {
-    .navBar :global(.container.navInner) {
-      grid-template-columns: auto auto;
-      justify-content: space-between;
-      width: min(100vw - 32px, 1360px);
-      min-height: 64px;
+  @media (max-width: 860px) {
+    .desktopBackdrop,
+    .megaMenu {
+      display: none !important;
     }
 
-    .tabs {
+    .topNav {
+      overflow: visible;
+    }
+
+    .navBar,
+    .topNav.isScrolled .navBar,
+    .topNav.isMenuOpen .navBar,
+    .topNav.isInternalPage .navBar {
+      background: rgba(3, 3, 3, 0.92);
+      border: 0 !important;
+      box-shadow: none;
+      backdrop-filter: blur(18px) saturate(1.1);
+      -webkit-backdrop-filter: blur(18px) saturate(1.1);
+    }
+
+    .navBar :global(.container.navInner) {
+      width: 100%;
+      max-width: 100%;
+      min-height: 76px;
+      padding: 0 16px;
+      grid-template-columns: auto auto;
+      gap: 16px;
+      justify-content: space-between;
+    }
+
+    .brandImage {
+      width: 90px;
+      max-height: 42px;
+    }
+
+    .right {
+      gap: 0;
+    }
+
+    .navCta {
       display: none;
     }
 
-    .megaMenu,
-    .navBackdrop {
-      display: none !important;
+
+    .topNav.isMobileMenuOpen .brand {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .topNav.isMobileMenuOpen .navBar,
+    .topNav.isMobileMenuOpen .tabs {
+      background: #030303 !important;
+    }
+
+    .mobileMenuButton {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10003;
+    }
+
+    .tabs {
+      position: fixed;
+      inset: 0;
+      z-index: 10001;
+      width: 100%;
+      height: 100dvh;
+      min-height: 100vh;
+      padding: 112px 24px 42px;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+      gap: 0;
+      background: #030303;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(-10px);
+      transition:
+        opacity 0.24s ease,
+        visibility 0.24s ease,
+        transform 0.24s ease;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .tabs.is-mobile-open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .tab {
+      width: 100%;
+      height: auto;
+      min-height: 62px;
+      justify-content: flex-start;
+      padding: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.88);
+      font-size: clamp(2rem, 11vw, 3.45rem);
+      font-weight: 500;
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      text-align: left;
+    }
+
+    .tab.isActive,
+    .tab:hover,
+    .tab.isMenuActive {
+      color: #ffc400;
+    }
+
+    .mobileOnlyCta {
+      display: inline-flex;
+      width: fit-content;
+      min-height: 46px;
+      margin-top: 28px;
+      padding: 0 22px;
+      border-radius: 999px;
+      font-size: 0.96rem;
     }
   }
 </style>
@@ -653,6 +759,9 @@ const isInternalPage = currentPath !== "/";
     const megaLinks = Array.from(root.querySelectorAll(".megaMenu a"));
     const brand = root.querySelector(".brand");
     const navCta = root.querySelector(".navCta");
+    const mobileContact = root.querySelector("[data-mobile-contact]");
+    const mobileButton = root.querySelector("[data-mobile-menu-button]");
+    const mobileNav = root.querySelector("[data-mobile-nav]");
 
     let closeTimer = null;
     let ticking = false;
@@ -668,27 +777,11 @@ const isInternalPage = currentPath !== "/";
     };
 
     const getHeaderOffset = () => {
-      const navHeight = navBar?.getBoundingClientRect().height ?? 72;
-      return navHeight + 24;
+      const navHeight = navBar?.getBoundingClientRect().height ?? 76;
+      return navHeight + 14;
     };
 
-    const getRouteActiveId = () => {
-      const path = window.location.pathname;
-
-      if (path === "/nosotros" || path.startsWith("/nosotros/")) {
-        return "nosotros";
-      }
-
-      if (path === "/unidades" || path.startsWith("/unidades/")) {
-        return "negocio";
-      }
-
-      if (path === "/metodo" || path.startsWith("/metodo/")) {
-        return "negocio";
-      }
-
-      return "";
-    };
+    const isMobile = () => window.matchMedia("(max-width: 860px)").matches;
 
     const setScrolled = () => {
       root.classList.toggle("isScrolled", window.scrollY > 18);
@@ -701,30 +794,7 @@ const isInternalPage = currentPath !== "/";
       }
     };
 
-    const openMenu = (key) => {
-      if (!menu || !backdrop || !key) return;
-
-      clearCloseTimer();
-
-      menu.hidden = false;
-      backdrop.hidden = false;
-      root.classList.add("isMenuOpen");
-
-      panels.forEach((panel) => {
-        const isActive = panel.getAttribute("data-mega-panel") === key;
-        panel.hidden = !isActive;
-        panel.classList.toggle("isActive", isActive);
-      });
-
-      triggers.forEach((trigger) => {
-        trigger.classList.toggle(
-          "isMenuActive",
-          trigger.getAttribute("data-menu-trigger") === key
-        );
-      });
-    };
-
-    const closeMenu = () => {
+    const closeDesktopMega = () => {
       if (!menu || !backdrop) return;
 
       root.classList.remove("isMenuOpen");
@@ -746,9 +816,61 @@ const isInternalPage = currentPath !== "/";
       }, 220);
     };
 
-    const scheduleClose = () => {
+    const openDesktopMega = (key) => {
+      if (!menu || !backdrop || !key || isMobile()) return;
+
       clearCloseTimer();
-      closeTimer = window.setTimeout(closeMenu, 140);
+
+      menu.hidden = false;
+      backdrop.hidden = false;
+      root.classList.add("isMenuOpen");
+
+      panels.forEach((panel) => {
+        const isActive = panel.getAttribute("data-mega-panel") === key;
+        panel.hidden = !isActive;
+        panel.classList.toggle("isActive", isActive);
+      });
+
+      triggers.forEach((trigger) => {
+        trigger.classList.toggle(
+          "isMenuActive",
+          trigger.getAttribute("data-menu-trigger") === key
+        );
+      });
+    };
+
+    const scheduleClose = () => {
+      if (isMobile()) return;
+      clearCloseTimer();
+      closeTimer = window.setTimeout(closeDesktopMega, 140);
+    };
+
+    const openMobileMenu = () => {
+      if (!mobileButton || !mobileNav) return;
+
+      closeDesktopMega();
+
+      mobileButton.classList.add("is-open");
+      mobileButton.setAttribute("aria-expanded", "true");
+      mobileButton.setAttribute("aria-label", "Cerrar menú");
+
+      mobileNav.classList.add("is-mobile-open");
+      root.classList.add("isMobileMenuOpen");
+      document.documentElement.classList.add("mobile-menu-open");
+      document.body.classList.add("mobile-menu-open");
+    };
+
+    const closeMobileMenu = () => {
+      if (!mobileButton || !mobileNav) return;
+
+      mobileButton.classList.remove("is-open");
+      mobileButton.setAttribute("aria-expanded", "false");
+      mobileButton.setAttribute("aria-label", "Abrir menú");
+
+      mobileNav.classList.remove("is-mobile-open");
+      root.classList.remove("isMobileMenuOpen");
+      document.documentElement.classList.remove("mobile-menu-open");
+      document.body.classList.remove("mobile-menu-open");
     };
 
     const setActive = (id) => {
@@ -757,40 +879,23 @@ const isInternalPage = currentPath !== "/";
         tab.classList.toggle("isActive", tabId === id);
       });
 
-      if (navCta) {
-        navCta.classList.toggle("isActive", id === "contacto");
-      }
+      navCta?.classList.toggle("isActive", id === "contacto");
+      mobileContact?.classList.toggle("isActive", id === "contacto");
     };
 
     const sectionIds = Array.from(
-      new Set([
-        ...tabs.map((tab) => getTabSectionId(tab)),
-        "contacto",
-      ])
+      new Set([...tabs.map((tab) => getTabSectionId(tab)), "contacto"])
     ).filter(Boolean);
 
     const getSections = () => {
-      return sectionIds
-        .map((id) => document.getElementById(id))
-        .filter(Boolean);
+      return sectionIds.map((id) => document.getElementById(id)).filter(Boolean);
     };
 
     const updateActiveByScroll = () => {
-      const routeActiveId = getRouteActiveId();
-
-      /*
-        En páginas internas como /nosotros, /unidades o /metodo
-        no dependemos del scroll del home.
-      */
-      if (routeActiveId && window.location.pathname !== "/") {
-        setActive(routeActiveId);
-        ticking = false;
-        return;
-      }
-
       const sections = getSections();
+
       if (!sections.length) {
-        setActive(routeActiveId || "inicio");
+        setActive("inicio");
         ticking = false;
         return;
       }
@@ -801,14 +906,14 @@ const isInternalPage = currentPath !== "/";
       let currentId = sections[0].id;
 
       sections.forEach((section) => {
-        const top = section.offsetTop;
-        if (marker >= top) {
+        if (marker >= section.offsetTop) {
           currentId = section.id;
         }
       });
 
       const bottomReached =
-        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 8;
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 8;
 
       if (bottomReached) {
         const lastSection = sections[sections.length - 1];
@@ -842,7 +947,8 @@ const isInternalPage = currentPath !== "/";
       });
 
       setActive(id);
-      closeMenu();
+      closeDesktopMega();
+      closeMobileMenu();
 
       return true;
     };
@@ -850,8 +956,8 @@ const isInternalPage = currentPath !== "/";
     triggers.forEach((trigger) => {
       const key = trigger.getAttribute("data-menu-trigger");
 
-      trigger.addEventListener("mouseenter", () => openMenu(key));
-      trigger.addEventListener("focus", () => openMenu(key));
+      trigger.addEventListener("mouseenter", () => openDesktopMega(key));
+      trigger.addEventListener("focus", () => openDesktopMega(key));
     });
 
     tabs.forEach((tab) => {
@@ -860,11 +966,10 @@ const isInternalPage = currentPath !== "/";
 
         if (href.includes("#")) {
           const handled = scrollToHash(href);
-          if (handled) {
-            event.preventDefault();
-          }
+          if (handled) event.preventDefault();
         } else {
-          closeMenu();
+          closeDesktopMega();
+          closeMobileMenu();
         }
       });
     });
@@ -875,13 +980,16 @@ const isInternalPage = currentPath !== "/";
 
         if (href.includes("#")) {
           const handled = scrollToHash(href);
-          if (handled) {
-            event.preventDefault();
-          }
+          if (handled) event.preventDefault();
         } else {
-          closeMenu();
+          closeDesktopMega();
         }
       });
+    });
+
+    mobileContact?.addEventListener("click", (event) => {
+      const handled = scrollToHash("/#contacto");
+      if (handled) event.preventDefault();
     });
 
     brand?.addEventListener("click", (event) => {
@@ -894,46 +1002,1127 @@ const isInternalPage = currentPath !== "/";
       if (handled) event.preventDefault();
     });
 
+    mobileButton?.addEventListener("click", () => {
+      const isOpen = mobileButton.classList.contains("is-open");
+      isOpen ? closeMobileMenu() : openMobileMenu();
+    });
+
     navBar?.addEventListener("mouseenter", clearCloseTimer);
     navBar?.addEventListener("mouseleave", scheduleClose);
     menu?.addEventListener("mouseenter", clearCloseTimer);
     menu?.addEventListener("mouseleave", scheduleClose);
     backdrop?.addEventListener("mouseenter", scheduleClose);
-    backdrop?.addEventListener("click", closeMenu);
+    backdrop?.addEventListener("click", closeDesktopMega);
 
     root.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") closeMenu();
+      if (event.key === "Escape") {
+        closeDesktopMega();
+        closeMobileMenu();
+      }
     });
 
-    setScrolled();
-    updateActiveByScroll();
+    window.addEventListener(
+      "scroll",
+      () => {
+        setScrolled();
+        requestActiveUpdate();
+      },
+      { passive: true }
+    );
 
-    window.addEventListener("scroll", () => {
-      setScrolled();
+    window.addEventListener("resize", () => {
+      if (!isMobile()) closeMobileMenu();
       requestActiveUpdate();
-    }, { passive: true });
-
-    window.addEventListener("resize", requestActiveUpdate);
+    });
 
     window.addEventListener("load", () => {
-      const routeActiveId = getRouteActiveId();
-
-      if (routeActiveId && window.location.pathname !== "/") {
-        setActive(routeActiveId);
-        return;
-      }
-
       const initialHash = window.location.hash?.replace("#", "");
+
       if (initialHash) {
         const target = document.getElementById(initialHash);
         if (target) {
           window.setTimeout(() => {
             scrollToHash(`#${initialHash}`);
           }, 80);
+          return;
         }
-      } else {
-        setActive("inicio");
       }
+
+      updateActiveByScroll();
     });
+
+    setScrolled();
+    updateActiveByScroll();
   }
 </script>
+
+<style is:global>
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  html.mobile-menu-open,
+  body.mobile-menu-open {
+    overflow: hidden !important;
+  }
+</style>
+
+<style is:global>
+  html.mobile-menu-open,
+  body.mobile-menu-open {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    height: 100%;
+    overflow: hidden !important;
+    background: #030303 !important;
+  }
+
+  html.mobile-menu-open .topNav,
+  body.mobile-menu-open .topNav {
+    background: #030303 !important;
+  }
+
+  html.mobile-menu-open .topNav .brand,
+  body.mobile-menu-open .topNav .brand {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  @media (max-width: 860px) {
+    html.mobile-menu-open .topNav,
+    body.mobile-menu-open .topNav {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100dvh !important;
+      min-height: 100dvh !important;
+      max-width: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      background: #030303 !important;
+      overflow: hidden !important;
+      z-index: 99999 !important;
+    }
+
+    html.mobile-menu-open .topNav .navBar,
+    body.mobile-menu-open .topNav .navBar {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100dvh !important;
+      min-height: 100dvh !important;
+      max-width: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      background: #030303 !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      overflow: hidden !important;
+    }
+
+    html.mobile-menu-open .topNav .tabs.is-mobile-open,
+    body.mobile-menu-open .topNav .tabs.is-mobile-open {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100dvh !important;
+      min-height: 100dvh !important;
+      max-width: none !important;
+      margin: 0 !important;
+      padding: 88px 24px 32px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: stretch !important;
+      justify-content: flex-start !important;
+      gap: 0 !important;
+      background: #030303 !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      overflow: hidden !important;
+      transform: none !important;
+      z-index: 100000 !important;
+    }
+
+    html.mobile-menu-open .topNav .tabs.is-mobile-open::before,
+    html.mobile-menu-open .topNav .tabs.is-mobile-open::after,
+    body.mobile-menu-open .topNav .tabs.is-mobile-open::before,
+    body.mobile-menu-open .topNav .tabs.is-mobile-open::after {
+      display: none !important;
+      content: none !important;
+      background: transparent !important;
+    }
+
+    html.mobile-menu-open .topNav .tabs.is-mobile-open a,
+    body.mobile-menu-open .topNav .tabs.is-mobile-open a {
+      width: 100% !important;
+      min-height: auto !important;
+      padding: 8px 0 10px !important;
+      border: 0 !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      color: rgba(255, 255, 255, 0.92) !important;
+      font-size: clamp(2rem, 10vw, 3.35rem) !important;
+      line-height: 0.95 !important;
+      font-weight: 500 !important;
+      letter-spacing: -0.075em !important;
+      text-align: left !important;
+    }
+
+    html.mobile-menu-open .topNav .tabs.is-mobile-open a.is-active,
+    body.mobile-menu-open .topNav .tabs.is-mobile-open a.is-active {
+      color: #ffc400 !important;
+      font-weight: 800 !important;
+    }
+
+    html.mobile-menu-open .topNav .tabs.is-mobile-open a[href="#contacto"],
+    html.mobile-menu-open .topNav .tabs.is-mobile-open a[href="/#contacto"],
+    body.mobile-menu-open .topNav .tabs.is-mobile-open a[href="#contacto"],
+    body.mobile-menu-open .topNav .tabs.is-mobile-open a[href="/#contacto"] {
+      width: fit-content !important;
+      min-height: 42px !important;
+      margin-top: 24px !important;
+      padding: 0 22px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      border: 1px solid rgba(255, 196, 0, 0.75) !important;
+      border-radius: 999px !important;
+      color: #ffc400 !important;
+      font-size: 0.95rem !important;
+      line-height: 1 !important;
+      font-weight: 800 !important;
+      letter-spacing: -0.02em !important;
+    }
+
+    html.mobile-menu-open .topNav .mobileMenuButton,
+    body.mobile-menu-open .topNav .mobileMenuButton {
+      position: fixed !important;
+      top: 24px !important;
+      right: 22px !important;
+      z-index: 100001 !important;
+      color: #ffffff !important;
+      background: transparent !important;
+      border: 0 !important;
+    }
+  }
+</style>
+
+<style is:global>
+  /* =========================================================
+     VMA VERSION B — HEADER MOBILE FINAL OVERRIDE
+     Corrige menú full screen, X visible y borde/overflow derecho
+     ========================================================= */
+
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden !important;
+    background: #030303;
+  }
+
+  html.mobile-menu-open,
+  body.mobile-menu-open {
+    overflow: hidden !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    background: #030303 !important;
+  }
+
+  @media (max-width: 860px) {
+    .topNav,
+    .topNav *,
+    .topNav *::before,
+    .topNav *::after {
+      box-sizing: border-box;
+    }
+
+    .topNav {
+      left: 0 !important;
+      right: 0 !important;
+      width: auto !important;
+      max-width: none !important;
+      overflow: visible !important;
+    }
+
+    .topNav .navBar {
+      left: 0 !important;
+      right: 0 !important;
+      width: auto !important;
+      max-width: none !important;
+      border: 0 !important;
+      outline: 0 !important;
+    }
+
+    .topNav .navBar .container.navInner {
+      width: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      padding: 0 16px !important;
+    }
+
+    html.mobile-menu-open .topNav,
+    body.mobile-menu-open .topNav,
+    html.mobile-menu-open .topNav .navBar,
+    body.mobile-menu-open .topNav .navBar {
+      position: fixed !important;
+      inset: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      width: auto !important;
+      max-width: none !important;
+      height: 100dvh !important;
+      min-height: 100dvh !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      background: #030303 !important;
+      border: 0 !important;
+      outline: 0 !important;
+      box-shadow: none !important;
+      overflow: hidden !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+
+    html.mobile-menu-open .topNav .navBar .container.navInner,
+    body.mobile-menu-open .topNav .navBar .container.navInner {
+      position: static !important;
+      width: 100% !important;
+      max-width: none !important;
+      height: 100dvh !important;
+      min-height: 100dvh !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      display: block !important;
+      background: #030303 !important;
+      overflow: hidden !important;
+    }
+
+    html.mobile-menu-open .topNav .tabs.is-mobile-open,
+    body.mobile-menu-open .topNav .tabs.is-mobile-open {
+      position: fixed !important;
+      inset: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      width: auto !important;
+      max-width: none !important;
+      height: 100dvh !important;
+      min-height: 100dvh !important;
+      margin: 0 !important;
+      padding: 88px 24px 36px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: stretch !important;
+      justify-content: flex-start !important;
+      gap: 0 !important;
+      background: #030303 !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      outline: 0 !important;
+      box-shadow: none !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      transform: none !important;
+      z-index: 100000 !important;
+    }
+
+    html.mobile-menu-open .topNav .tabs.is-mobile-open::before,
+    html.mobile-menu-open .topNav .tabs.is-mobile-open::after,
+    body.mobile-menu-open .topNav .tabs.is-mobile-open::before,
+    body.mobile-menu-open .topNav .tabs.is-mobile-open::after {
+      display: none !important;
+      content: none !important;
+    }
+
+    html.mobile-menu-open .topNav .tabs.is-mobile-open .tab,
+    body.mobile-menu-open .topNav .tabs.is-mobile-open .tab {
+      width: 100% !important;
+      min-height: 50px !important;
+      height: auto !important;
+      padding: 0 0 8px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+      border: 0 !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      color: rgba(255, 255, 255, 0.92) !important;
+      font-size: clamp(2rem, 10vw, 3.35rem) !important;
+      line-height: 0.95 !important;
+      font-weight: 500 !important;
+      letter-spacing: -0.075em !important;
+      text-align: left !important;
+      text-decoration: none !important;
+    }
+
+    html.mobile-menu-open .topNav .tabs.is-mobile-open .tab.isActive,
+    body.mobile-menu-open .topNav .tabs.is-mobile-open .tab.isActive {
+      color: #ffc400 !important;
+      font-weight: 800 !important;
+    }
+
+    html.mobile-menu-open .topNav .mobileOnlyCta,
+    body.mobile-menu-open .topNav .mobileOnlyCta {
+      width: fit-content !important;
+      min-height: 42px !important;
+      margin-top: 24px !important;
+      padding: 0 22px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      border: 1px solid rgba(255, 196, 0, 0.8) !important;
+      border-radius: 999px !important;
+      background: transparent !important;
+      color: #ffc400 !important;
+      font-size: 0.95rem !important;
+      line-height: 1 !important;
+      font-weight: 800 !important;
+      letter-spacing: -0.02em !important;
+      text-decoration: none !important;
+    }
+
+    html.mobile-menu-open .topNav .brand,
+    body.mobile-menu-open .topNav .brand {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+
+    html.mobile-menu-open .topNav .right,
+    body.mobile-menu-open .topNav .right {
+      position: fixed !important;
+      top: 18px !important;
+      right: 18px !important;
+      z-index: 100002 !important;
+      display: flex !important;
+      width: 48px !important;
+      height: 48px !important;
+      align-items: center !important;
+      justify-content: center !important;
+      pointer-events: auto !important;
+    }
+
+    html.mobile-menu-open .topNav .mobileMenuButton,
+    body.mobile-menu-open .topNav .mobileMenuButton {
+      position: relative !important;
+      display: flex !important;
+      width: 48px !important;
+      height: 48px !important;
+      min-width: 48px !important;
+      min-height: 48px !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      color: #ffffff !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+      z-index: 100003 !important;
+    }
+
+    html.mobile-menu-open .topNav .mobileMenuButton span,
+    body.mobile-menu-open .topNav .mobileMenuButton span {
+      position: absolute !important;
+      left: 10px !important;
+      right: 10px !important;
+      width: auto !important;
+      height: 2px !important;
+      display: block !important;
+      border-radius: 999px !important;
+      background: #ffffff !important;
+      opacity: 1 !important;
+    }
+
+    html.mobile-menu-open .topNav .mobileMenuButton span:nth-child(1),
+    body.mobile-menu-open .topNav .mobileMenuButton span:nth-child(1) {
+      top: 23px !important;
+      transform: rotate(45deg) !important;
+    }
+
+    html.mobile-menu-open .topNav .mobileMenuButton span:nth-child(2),
+    body.mobile-menu-open .topNav .mobileMenuButton span:nth-child(2) {
+      opacity: 0 !important;
+    }
+
+    html.mobile-menu-open .topNav .mobileMenuButton span:nth-child(3),
+    body.mobile-menu-open .topNav .mobileMenuButton span:nth-child(3) {
+      top: 23px !important;
+      transform: rotate(-45deg) !important;
+    }
+  }
+</style>
+
+<style is:global>
+  /* =========================================================
+     VMA VERSION B — MOBILE MENU AERLUM STYLE FINAL
+     ========================================================= */
+
+  @media (max-width: 860px) {
+    html.mobile-menu-open,
+    body.mobile-menu-open {
+      overflow: hidden !important;
+      background: #030303 !important;
+    }
+
+    html.mobile-menu-open .topNav,
+    body.mobile-menu-open .topNav,
+    html.mobile-menu-open .topNav .navBar,
+    body.mobile-menu-open .topNav .navBar {
+      position: fixed !important;
+      inset: 0 !important;
+      width: auto !important;
+      height: 100dvh !important;
+      min-height: 100dvh !important;
+      max-width: none !important;
+      background: #030303 !important;
+      border: 0 !important;
+      outline: 0 !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      overflow: hidden !important;
+      z-index: 99999 !important;
+    }
+
+    html.mobile-menu-open .topNav .navBar .container.navInner,
+    body.mobile-menu-open .topNav .navBar .container.navInner {
+      width: 100% !important;
+      height: 100dvh !important;
+      max-width: none !important;
+      min-height: 100dvh !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      display: block !important;
+      background: #030303 !important;
+    }
+
+    html.mobile-menu-open .topNav .brand,
+    body.mobile-menu-open .topNav .brand {
+      position: fixed !important;
+      top: 24px !important;
+      left: 24px !important;
+      z-index: 100003 !important;
+      display: inline-flex !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+    }
+
+    html.mobile-menu-open .topNav .brandImage,
+    body.mobile-menu-open .topNav .brandImage {
+      width: 90px;
+      max-height: 40px !important;
+    }
+
+    html.mobile-menu-open .topNav .tabs.is-mobile-open,
+    body.mobile-menu-open .topNav .tabs.is-mobile-open {
+      position: fixed !important;
+      inset: 0 !important;
+      width: auto !important;
+      height: 100dvh !important;
+      max-width: none !important;
+      min-height: 100dvh !important;
+      margin: 0 !important;
+      padding: 108px 28px 96px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: clamp(28px, 5vh, 54px) !important;
+      background: #030303 !important;
+      border: 0 !important;
+      outline: 0 !important;
+      box-shadow: none !important;
+      overflow: hidden !important;
+      transform: none !important;
+      z-index: 100000 !important;
+    }
+
+    html.mobile-menu-open .topNav .tabs.is-mobile-open .tab,
+    body.mobile-menu-open .topNav .tabs.is-mobile-open .tab,
+    html.mobile-menu-open .topNav .tabs.is-mobile-open .mobileOnlyCta,
+    body.mobile-menu-open .topNav .tabs.is-mobile-open .mobileOnlyCta {
+      width: auto !important;
+      min-height: auto !important;
+      height: auto !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      border: 0 !important;
+      border-bottom: 0 !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      color: rgba(255, 255, 255, 0.94) !important;
+      font-size: clamp(2.45rem, 12vw, 4.2rem) !important;
+      line-height: 0.86 !important;
+      font-weight: 800 !important;
+      letter-spacing: -0.075em !important;
+      text-align: center !important;
+      text-transform: none !important;
+      text-decoration: none !important;
+    }
+
+    html.mobile-menu-open .topNav .tabs.is-mobile-open .tab.isActive,
+    body.mobile-menu-open .topNav .tabs.is-mobile-open .tab.isActive {
+      color: #ffc400 !important;
+    }
+
+    html.mobile-menu-open .topNav .tabs.is-mobile-open .tab:hover,
+    body.mobile-menu-open .topNav .tabs.is-mobile-open .tab:hover,
+    html.mobile-menu-open .topNav .tabs.is-mobile-open .mobileOnlyCta:hover,
+    body.mobile-menu-open .topNav .tabs.is-mobile-open .mobileOnlyCta:hover {
+      color: #ffc400 !important;
+      background: transparent !important;
+      border: 0 !important;
+      box-shadow: none !important;
+      transform: none !important;
+    }
+
+    html.mobile-menu-open .topNav .right,
+    body.mobile-menu-open .topNav .right {
+      position: fixed !important;
+      top: 20px !important;
+      right: 22px !important;
+      z-index: 100004 !important;
+      width: 48px !important;
+      height: 48px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      pointer-events: auto !important;
+    }
+
+    html.mobile-menu-open .topNav .mobileMenuButton,
+    body.mobile-menu-open .topNav .mobileMenuButton {
+      position: relative !important;
+      display: flex !important;
+      width: 48px !important;
+      height: 48px !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+    }
+
+    html.mobile-menu-open .topNav .mobileMenuButton span,
+    body.mobile-menu-open .topNav .mobileMenuButton span {
+      position: absolute !important;
+      left: 9px !important;
+      right: 9px !important;
+      width: auto !important;
+      height: 2px !important;
+      display: block !important;
+      background: #ffffff !important;
+      border-radius: 999px !important;
+    }
+
+    html.mobile-menu-open .topNav .mobileMenuButton span:nth-child(1),
+    body.mobile-menu-open .topNav .mobileMenuButton span:nth-child(1) {
+      top: 23px !important;
+      transform: rotate(45deg) !important;
+    }
+
+    html.mobile-menu-open .topNav .mobileMenuButton span:nth-child(2),
+    body.mobile-menu-open .topNav .mobileMenuButton span:nth-child(2) {
+      opacity: 0 !important;
+    }
+
+    html.mobile-menu-open .topNav .mobileMenuButton span:nth-child(3),
+    body.mobile-menu-open .topNav .mobileMenuButton span:nth-child(3) {
+      top: 23px !important;
+      transform: rotate(-45deg) !important;
+    }
+  }
+</style>
+
+<style is:global>
+  /* =========================================================
+     VMA VERSION B — MOBILE MENU AERLUM STYLE FINAL
+     Logo y X alineados, active amarillo, resto regular,
+     Contacto como link simple, menú centrado tipo Aerlum
+     ========================================================= */
+
+  @media (max-width: 860px) {
+    html.mobile-menu-open,
+    body.mobile-menu-open {
+      overflow: hidden !important;
+      background: #030303 !important;
+    }
+
+    html.mobile-menu-open .topNav,
+    body.mobile-menu-open .topNav,
+    html.mobile-menu-open .topNav .navBar,
+    body.mobile-menu-open .topNav .navBar {
+      position: fixed !important;
+      inset: 0 !important;
+      width: auto !important;
+      height: 100dvh !important;
+      min-height: 100dvh !important;
+      max-width: none !important;
+      background: #030303 !important;
+      border: 0 !important;
+      outline: 0 !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      overflow: hidden !important;
+      z-index: 99999 !important;
+    }
+
+    html.mobile-menu-open .topNav .navBar .container.navInner,
+    body.mobile-menu-open .topNav .navBar .container.navInner {
+      width: 100% !important;
+      height: 100dvh !important;
+      max-width: none !important;
+      min-height: 100dvh !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      display: block !important;
+      background: #030303 !important;
+    }
+
+    /* LOGO */
+    html.mobile-menu-open .topNav .brand,
+    body.mobile-menu-open .topNav .brand {
+      position: fixed !important;
+      top: 24px !important;
+      left: 24px !important;
+      z-index: 100003 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+    }
+
+    html.mobile-menu-open .topNav .brandImage,
+    body.mobile-menu-open .topNav .brandImage {
+      width: 90px !important;
+      max-height: 40px !important;
+      display: block !important;
+    }
+
+    /* LISTA CENTRAL */
+    html.mobile-menu-open .topNav .tabs.is-mobile-open,
+    body.mobile-menu-open .topNav .tabs.is-mobile-open {
+      position: fixed !important;
+      inset: 0 !important;
+      width: auto !important;
+      height: 100dvh !important;
+      max-width: none !important;
+      min-height: 100dvh !important;
+      margin: 0 !important;
+      padding: 104px 28px 84px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: clamp(26px, 4.2vh, 46px) !important;
+      background: #030303 !important;
+      border: 0 !important;
+      outline: 0 !important;
+      box-shadow: none !important;
+      overflow: hidden !important;
+      transform: none !important;
+      z-index: 100000 !important;
+    }
+
+    /* LINKS */
+    html.mobile-menu-open .topNav .tabs.is-mobile-open .tab,
+    body.mobile-menu-open .topNav .tabs.is-mobile-open .tab,
+    html.mobile-menu-open .topNav .tabs.is-mobile-open .mobileOnlyCta,
+    body.mobile-menu-open .topNav .tabs.is-mobile-open .mobileOnlyCta {
+      width: auto !important;
+      min-width: 0 !important;
+      min-height: auto !important;
+      height: auto !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      border: 0 !important;
+      border-bottom: 0 !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      color: rgba(255, 255, 255, 0.94) !important;
+      font-size: clamp(2.35rem, 11vw, 4rem) !important;
+      line-height: 0.88 !important;
+      font-weight: 500 !important;
+      letter-spacing: -0.06em !important;
+      text-align: center !important;
+      text-transform: none !important;
+      text-decoration: none !important;
+      transform: none !important;
+    }
+
+    /* ACTIVE */
+    html.mobile-menu-open .topNav .tabs.is-mobile-open .tab.isActive,
+    body.mobile-menu-open .topNav .tabs.is-mobile-open .tab.isActive,
+    html.mobile-menu-open .topNav .tabs.is-mobile-open .mobileOnlyCta.isActive,
+    body.mobile-menu-open .topNav .tabs.is-mobile-open .mobileOnlyCta.isActive {
+      color: #ffc400 !important;
+      font-weight: 500 !important;
+    }
+
+    html.mobile-menu-open .topNav .tabs.is-mobile-open .tab:hover,
+    body.mobile-menu-open .topNav .tabs.is-mobile-open .tab:hover,
+    html.mobile-menu-open .topNav .tabs.is-mobile-open .mobileOnlyCta:hover,
+    body.mobile-menu-open .topNav .tabs.is-mobile-open .mobileOnlyCta:hover {
+      color: #ffc400 !important;
+      background: transparent !important;
+      border: 0 !important;
+      box-shadow: none !important;
+      transform: none !important;
+    }
+
+    /* CONTACTO como opción más, sin pill */
+    html.mobile-menu-open .topNav .mobileOnlyCta,
+    body.mobile-menu-open .topNav .mobileOnlyCta {
+      border: 0 !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      padding: 0 !important;
+      min-height: auto !important;
+      color: rgba(255, 255, 255, 0.94) !important;
+      font-size: clamp(2.35rem, 11vw, 4rem) !important;
+      font-weight: 500 !important;
+      letter-spacing: -0.06em !important;
+    }
+
+    /* CONTENEDOR DE LA X */
+    html.mobile-menu-open .topNav .right,
+    body.mobile-menu-open .topNav .right {
+      position: fixed !important;
+      top: 24px !important;   /* misma altura que el logo */
+      right: 24px !important; /* mismo margen lateral que el logo */
+      z-index: 100004 !important;
+      width: 40px !important;
+      height: 40px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      pointer-events: auto !important;
+    }
+
+    /* BOTÓN X */
+    html.mobile-menu-open .topNav .mobileMenuButton,
+    body.mobile-menu-open .topNav .mobileMenuButton {
+      position: relative !important;
+      display: flex !important;
+      width: 40px !important;
+      height: 40px !important;
+      min-width: 40px !important;
+      min-height: 40px !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    html.mobile-menu-open .topNav .mobileMenuButton span,
+    body.mobile-menu-open .topNav .mobileMenuButton span {
+      position: absolute !important;
+      left: 8px !important;
+      right: 8px !important;
+      width: auto !important;
+      height: 2px !important;
+      display: block !important;
+      background: #ffffff !important;
+      border-radius: 999px !important;
+      top: 19px !important;
+      opacity: 1 !important;
+    }
+
+    html.mobile-menu-open .topNav .mobileMenuButton span:nth-child(1),
+    body.mobile-menu-open .topNav .mobileMenuButton span:nth-child(1) {
+      transform: rotate(45deg) !important;
+    }
+
+    html.mobile-menu-open .topNav .mobileMenuButton span:nth-child(2),
+    body.mobile-menu-open .topNav .mobileMenuButton span:nth-child(2) {
+      opacity: 0 !important;
+    }
+
+    html.mobile-menu-open .topNav .mobileMenuButton span:nth-child(3),
+    body.mobile-menu-open .topNav .mobileMenuButton span:nth-child(3) {
+      transform: rotate(-45deg) !important;
+    }
+  }
+</style>
+
+
+
+
+
+
+
+
+
+<!-- VMA_HEADER_NAV_FINAL_FIX_START -->
+<style is:global>
+  @media (min-width: 761px) {
+    .topNav .mobileContactLink {
+      display: none !important;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .topNav .mobileOnlyCta {
+      display: none !important;
+    }
+
+    .topNav .mobileContactLink {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      min-width: 178px !important;
+      min-height: 48px !important;
+      padding: 0 22px !important;
+      margin-top: 8px !important;
+      border: 1px solid rgba(255, 196, 0, 0.72) !important;
+      border-radius: 999px !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      color: #ffffff !important;
+      text-decoration: none !important;
+      font-size: clamp(20px, 5.5vw, 24px) !important;
+      font-weight: 600 !important;
+      line-height: 1 !important;
+    }
+
+    .topNav .tabs .tab:not(.mobileContactLink) {
+      appearance: none !important;
+      background: transparent !important;
+      border: 0 !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      text-decoration: none !important;
+    }
+
+    /* En mobile no dejamos ningún active fijo */
+    .topNav .tabs .tab.is-active,
+    .topNav .tabs .mobileContactLink.is-active {
+      color: #ffffff !important;
+      border-color: rgba(255, 196, 0, 0.72) !important;
+    }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const mq = window.matchMedia("(max-width: 760px)");
+    let savedScrollY = 0;
+    let navigatingFromMenu = false;
+
+    const getTopNav = () => document.querySelector("[data-topnav]");
+    const getTabs = () => [...document.querySelectorAll("[data-topnav] [data-tab]")];
+
+    const getHeaderOffset = () => {
+      const nav = getTopNav();
+      return Math.ceil(nav?.getBoundingClientRect().height || 72) + 12;
+    };
+
+    const normalizeMobileLinks = () => {
+      if (!mq.matches) return;
+
+      getTabs().forEach((tab) => {
+        const mobileHref = tab.getAttribute("data-mobile-href");
+        if (mobileHref) tab.setAttribute("href", mobileHref);
+      });
+    };
+
+    const clearMobileActive = () => {
+      if (!mq.matches) return;
+      getTabs().forEach((tab) => tab.classList.remove("is-active"));
+    };
+
+    const closeMobileMenu = () => {
+      const topNav = getTopNav();
+      const button = document.querySelector("[data-mobile-menu-button]");
+      const mobileNav = document.querySelector("[data-mobile-nav]");
+
+      button?.setAttribute("aria-expanded", "false");
+
+      topNav?.classList.remove(
+        "is-open",
+        "is-active",
+        "is-menu-open",
+        "menu-open",
+        "nav-open",
+        "mobile-open"
+      );
+
+      mobileNav?.classList.remove(
+        "is-open",
+        "is-active",
+        "is-menu-open",
+        "menu-open",
+        "nav-open",
+        "mobile-open"
+      );
+
+      document.documentElement.classList.remove(
+        "is-menu-open",
+        "menu-open",
+        "nav-open",
+        "mobile-open"
+      );
+
+      document.body.classList.remove(
+        "is-menu-open",
+        "menu-open",
+        "nav-open",
+        "mobile-open",
+        "no-scroll",
+        "overflow-hidden"
+      );
+
+      clearMobileActive();
+    };
+
+    const restoreScrollIfMenuOnly = () => {
+      if (!mq.matches) return;
+      if (navigatingFromMenu) return;
+
+      const jumpedToTop = savedScrollY > 120 && window.scrollY < 40;
+
+      if (jumpedToTop) {
+        window.scrollTo({
+          top: savedScrollY,
+          behavior: "auto",
+        });
+      }
+
+      clearMobileActive();
+    };
+
+    const scrollToSection = (sectionId) => {
+      const target = document.getElementById(sectionId);
+      if (!target) return false;
+
+      const top =
+        target.getBoundingClientRect().top +
+        window.scrollY -
+        getHeaderOffset();
+
+      window.scrollTo({
+        top: Math.max(0, top),
+        behavior: "smooth",
+      });
+
+      return true;
+    };
+
+    const handleMobileMenuLink = (event) => {
+      if (!mq.matches) return;
+
+      const tab = event.target.closest?.("[data-topnav] [data-tab]");
+      if (!tab) return;
+
+      const href = tab.getAttribute("href") || "";
+      if (!href) return;
+
+      const url = new URL(href, window.location.origin);
+      const sectionId = url.hash.replace("#", "");
+
+      navigatingFromMenu = true;
+      closeMobileMenu();
+
+      setTimeout(() => {
+        navigatingFromMenu = false;
+      }, 900);
+
+      if (!sectionId) return;
+
+      const isHomeHash =
+        url.pathname === "/" &&
+        window.location.pathname === "/";
+
+      if (!isHomeHash) {
+        return;
+      }
+
+      event.preventDefault();
+
+      history.replaceState(null, "", `/#${sectionId}`);
+
+      requestAnimationFrame(() => {
+        scrollToSection(sectionId);
+      });
+    };
+
+    const bindMobileMenuButton = () => {
+      const button = document.querySelector("[data-mobile-menu-button]");
+      if (!button) return;
+
+      button.addEventListener(
+        "pointerdown",
+        () => {
+          if (!mq.matches) return;
+          savedScrollY = window.scrollY;
+        },
+        true
+      );
+
+      button.addEventListener(
+        "click",
+        () => {
+          if (!mq.matches) return;
+
+          savedScrollY = savedScrollY || window.scrollY;
+
+          setTimeout(restoreScrollIfMenuOnly, 80);
+          setTimeout(restoreScrollIfMenuOnly, 240);
+          setTimeout(clearMobileActive, 320);
+        },
+        true
+      );
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      normalizeMobileLinks();
+      clearMobileActive();
+      bindMobileMenuButton();
+      document.addEventListener("click", handleMobileMenuLink, true);
+    });
+
+    window.addEventListener("resize", () => {
+      normalizeMobileLinks();
+      clearMobileActive();
+    });
+
+    window.VMA_HEADER_MOBILE_CLEAR_ACTIVE = clearMobileActive;
+  })();
+</script>
+<!-- VMA_HEADER_NAV_FINAL_FIX_END -->

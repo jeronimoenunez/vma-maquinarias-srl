@@ -1,13 +1,13 @@
 /**
  * VMA RENTAL — Design Tokens
+ * Version B — Simplificada
  */
-
 :root {
   /* ── Paleta VMA ── */
   --vma-yellow:     #ffc400;
   --vma-yellow-2:   #E6B310;
   --vma-yellow-dim: rgba(255, 196, 0, 0.12);
-  --vma-black:      #2f2f2f;
+  --vma-black:      #030303;
   --vma-dark:       #1a1a1a;
   --vma-dark-2:     #2A2A2A;
   --vma-dark-3:     #333333;
@@ -19,9 +19,10 @@
   --vma-line-2:     rgba(240, 237, 232, 0.06);
 
   /* ── Tipografía ── */
-  --font-display: "Astera", "Barlow Condensed", "DIN Condensed", ui-sans-serif;
-  --font-body:    "Barlow", "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Astera", "acumin-pro", system-ui, sans-serif;
+  --font-body:    "acumin-pro", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-serif: "GT Sectra", "Source Serif Pro", Georgia, serif;
+
   --quote-color-light: rgba(234, 242, 247, 0.92);
   --quote-color-accent: rgba(244, 179, 51, 0.6);
 
