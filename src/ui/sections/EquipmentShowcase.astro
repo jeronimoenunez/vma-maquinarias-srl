@@ -3770,3 +3770,87 @@ function buildQuoteHref(item: EquipmentItem): string {
   }
 </style>
 <!-- VMA_HIDE_EQUIPMENT_SCROLLBAR_FIX_END -->
+
+<!-- VMA_MOBILE_EQUIPMENT_TOUCH_SCROLL_FIX_START -->
+<style is:global>
+  @media (max-width: 760px) {
+    #equipos [data-equipment-carousel],
+    [data-equipment-section] [data-equipment-carousel] {
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      touch-action: pan-x !important;
+      -webkit-overflow-scrolling: touch !important;
+      overscroll-behavior-x: contain !important;
+      overscroll-behavior-y: auto !important;
+    }
+
+    #equipos [data-equipment-grid],
+    [data-equipment-section] [data-equipment-grid] {
+      touch-action: pan-x !important;
+      pointer-events: auto !important;
+      transform: none !important;
+    }
+
+    #equipos [data-machine-card].is-visible,
+    [data-equipment-section] [data-machine-card].is-visible {
+      touch-action: pan-x !important;
+      pointer-events: auto !important;
+    }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const mq = window.matchMedia("(max-width: 760px)");
+
+    const applyTouchScrollFix = () => {
+      if (!mq.matches) return;
+
+      const section =
+        document.querySelector("[data-equipment-section]") ||
+        document.querySelector("#equipos");
+
+      const carousel = section?.querySelector("[data-equipment-carousel]");
+      const grid = section?.querySelector("[data-equipment-grid]");
+      const cards = [...(section?.querySelectorAll("[data-machine-card].is-visible") || [])];
+
+      if (!carousel || !grid) return;
+
+      carousel.style.setProperty("overflow-x", "auto", "important");
+      carousel.style.setProperty("overflow-y", "hidden", "important");
+      carousel.style.setProperty("touch-action", "pan-x", "important");
+      carousel.style.setProperty("-webkit-overflow-scrolling", "touch", "important");
+      carousel.style.setProperty("overscroll-behavior-x", "contain", "important");
+
+      grid.style.setProperty("touch-action", "pan-x", "important");
+      grid.style.setProperty("pointer-events", "auto", "important");
+      grid.style.setProperty("transform", "none", "important");
+
+      cards.forEach((card) => {
+        card.style.setProperty("touch-action", "pan-x", "important");
+        card.style.setProperty("pointer-events", "auto", "important");
+      });
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      applyTouchScrollFix();
+      setTimeout(applyTouchScrollFix, 250);
+      setTimeout(applyTouchScrollFix, 800);
+    });
+
+    document.addEventListener("click", (event) => {
+      const trigger = event.target.closest?.(
+        "#equipos [data-main-category], #equipos [data-sub-category]"
+      );
+
+      if (!trigger) return;
+
+      setTimeout(applyTouchScrollFix, 80);
+      setTimeout(applyTouchScrollFix, 250);
+    }, true);
+
+    window.addEventListener("resize", applyTouchScrollFix);
+    window.VMA_MOBILE_EQUIPMENT_TOUCH_SCROLL_FIX = applyTouchScrollFix;
+  })();
+</script>
+<!-- VMA_MOBILE_EQUIPMENT_TOUCH_SCROLL_FIX_END -->
