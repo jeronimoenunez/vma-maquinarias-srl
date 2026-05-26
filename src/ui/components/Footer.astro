@@ -19,16 +19,21 @@ const {
   logoAlt = "VMA Rental",
 } = Astro.props as Props;
 
+const currentPath = Astro.url.pathname;
+const isHomePage = currentPath === "/" || currentPath === "/index.html";
+
 const whatsappHref = waCotizarUrl || "https://wa.me/541128421008";
 ---
 
 <footer class="footer">
-  <div class="footerTopAction">
-    <a class="footerBackTop" href="#inicio" aria-label="Volver arriba">
-      <span>Volver arriba</span>
-      <span aria-hidden="true">↑</span>
-    </a>
-  </div>
+  {isHomePage && (
+    <div class="footerTopAction">
+      <a class="footerBackTop" href="#inicio" aria-label="Volver arriba">
+        <span>Volver arriba</span>
+        <span aria-hidden="true">↑</span>
+      </a>
+    </div>
+  )}
 
   <div class="footerDivider" aria-hidden="true"></div>
 

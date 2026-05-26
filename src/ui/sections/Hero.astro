@@ -7,7 +7,7 @@ type Props = {
 };
 
 const {
-  eyebrow = "EQUIPOS DE ELEVACIÓN Y TRABAJO EN ALTURA",
+  eyebrow = "Medios de elevación para trabajos en altura",
   title = "No solo elevamos personas, Impulsamos tu productividad.",
   primaryCta = { label: "Cotizar Equipo", href: "#contacto" },
   secondaryCta = { label: "Ver equipos", href: "#equipos" },
@@ -157,9 +157,9 @@ const {
         rgba(0, 0, 0, 0.16) 54%,
         rgba(0, 0, 0, 0.18) 100%
       ),
-      url("/images/vma-version-b/hero-vma-b.png");
+      url("/images/optimized/Firefly-10-2.png");
     background-size: cover;
-    background-position: 56% center;
+    background-position: 50% center;
     background-repeat: no-repeat;
   }
 
@@ -251,22 +251,11 @@ const {
     right: 0;
     bottom: 0;
     z-index: 1;
-    height: clamp(260px, 38vh, 390px);
+    height: clamp(260px,30vh,378px);
     pointer-events: none;
-    background:
-      radial-gradient(
-        ellipse at center bottom,
-        rgba(0, 0, 0, 0.96) 0%,
-        rgba(0, 0, 0, 0.72) 44%,
-        rgba(0, 0, 0, 0) 74%
-      ),
-      linear-gradient(
-        180deg,
-        rgba(0, 0, 0, 0) 0%,
-        #030303 76%
-      );
+    background: radial-gradient(ellipse at center bottom, rgba(0, 0, 0, 0.96), rgba(0, 0, 0, 0.72) 13.03%, rgba(0, 0, 0, 0) 23.95%),linear-gradient(180deg,rgba(0,0,0,0) 0%,#030303 76%);
     backdrop-filter: blur(1.5px);
-    -webkit-backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.2px);
   }
 
   .heroB__banner {
@@ -395,9 +384,9 @@ const {
           rgba(0, 0, 0, 0.02) 48%,
           rgba(0, 0, 0, 0.12) 100%
         ),
-        url("/images/vma-version-b/hero-vma-b.png");
+        url("/images/optimized/Firefly-10.png");
       background-size: cover;
-      background-position: 57% center;
+      background-position: 52% center;
       background-repeat: no-repeat;
     }
 
@@ -468,7 +457,7 @@ const {
 
   @media (max-width: 390px) {
     .heroB__visual {
-      background-position: 58% center;
+      background-position: 54% center;
     }
 
     .heroB__content {
