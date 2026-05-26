@@ -60,23 +60,24 @@ const mainCategories: Array<{
   label: string;
   defaultSubCategory: SubCategoryId;
   hasSubmenu: boolean;
+  hoverImage?: string;
 }> = [
-  { id: "tijera", label: "Tijeras", defaultSubCategory: "tijera-diesel-4x4", hasSubmenu: true },
-  { id: "brazo-articulado", label: "Brazos Articulados", defaultSubCategory: "brazo-articulado-diesel-4x4", hasSubmenu: true },
-  { id: "brazo-telescopico", label: "Brazos Telescópicos", defaultSubCategory: "brazo-telescopico", hasSubmenu: false },
-  { id: "unipersonal", label: "Plataforma universal", defaultSubCategory: "unipersonal", hasSubmenu: false },
-  { id: "manipulador-carga", label: "Manipulador", defaultSubCategory: "manipulador-carga", hasSubmenu: false },
+  { id: "tijera", label: "Tijeras", defaultSubCategory: "tijera-electricas", hasSubmenu: true, hoverImage: "/images/optimized/hover-tijeras-preview.webp" },
+  { id: "brazo-articulado", label: "Brazos Articulados", defaultSubCategory: "brazo-articulado-electrico", hasSubmenu: true, hoverImage: "/images/optimized/hover-brazos-articulados-preview.webp" },
+  { id: "brazo-telescopico", label: "Brazos Telescópicos", defaultSubCategory: "brazo-telescopico", hasSubmenu: false, hoverImage: "/images/optimized/hover-brazo-telescopico-preview.webp" },
+  { id: "unipersonal", label: "Plataforma Unipersonal", defaultSubCategory: "unipersonal", hasSubmenu: false, hoverImage: "/images/optimized/hover-plataforma-unipersonal-preview.webp" },
+  { id: "manipulador-carga", label: "Manipulador", defaultSubCategory: "manipulador-carga", hasSubmenu: false, hoverImage: "/images/optimized/hover-manipuladores-preview.webp" },
 ];
 
 const subCategories: Record<MainCategoryId, Array<{ id: SubCategoryId; label: string }>> = {
   tijera: [
+    { id: "tijera-electricas", label: "Tijeras eléctricas" },
     { id: "tijera-diesel-4x4", label: "Diesel 4x4" },
-    { id: "tijera-electricas", label: "Eléctrico" },
-    { id: "tijera-electricas-4x4", label: "Eléctrico 4x4" },
+    { id: "tijera-electricas-4x4", label: "Eléctricas 4x4" },
   ],
   "brazo-articulado": [
-    { id: "brazo-articulado-diesel-4x4", label: "Diesel 4x4" },
     { id: "brazo-articulado-electrico", label: "Eléctrico" },
+    { id: "brazo-articulado-diesel-4x4", label: "Diesel 4x4" },
   ],
   "brazo-telescopico": [{ id: "brazo-telescopico", label: "" }],
   unipersonal: [{ id: "unipersonal", label: "" }],
@@ -84,17 +85,29 @@ const subCategories: Record<MainCategoryId, Array<{ id: SubCategoryId; label: st
 };
 
 const equipment: EquipmentItem[] = [
-  {
-    id: "tijera-diesel-4x4",
+    {
+    id: "optimum-8-ac",
     mainCategory: "tijera",
-    subCategory: "tijera-diesel-4x4",
-    eyebrow: "Diesel 4x4",
-    title: "Plataforma Tijera",
-    subtitle: "Compact 12DX",
-    description: "Plataforma tijera para trabajos en altura con alcance extendido. Ideal para operación exterior, superficies exigentes y tareas de montaje estructural.",
-    specs: { height: "16m", power: "Diésel", capacity: "230kg", operation: "Doble plataforma" },
-    image: { src: "/images/Firefly7.jpg", alt: "Plataforma tijera diésel 4x4" },
-    manualHref: "/manuales/vma/TijeraDiesel4x4-Compact12DX.pdf",
+    subCategory: "tijera-electricas",
+    eyebrow: "Tijera eléctrica",
+    title: "Optimum 8 AC",
+    subtitle: "Eléctrica",
+    description: "Plataforma tijera eléctrica compacta para trabajos interiores y exteriores livianos. Ideal para mantenimiento, instalaciones y circulación en espacios reducidos, con conducción precisa, potholes automáticos y motores eléctricos de bajo mantenimiento.",
+    specs: { height: "7.77m", power: "Eléctrica", capacity: "230kg", operation: "Interior / exterior controlado" },
+    image: { src: "/images/optimum-8-ac.png", alt: "Plataforma tijera eléctrica Optimum 8 AC" },
+    manualHref: "/manuales/vma/optimum-8-ac.pdf",
+  },
+  {
+    id: "compact-8-10-n",
+    mainCategory: "tijera",
+    subCategory: "tijera-electricas",
+    eyebrow: "Tijera eléctrica",
+    title: "Compact 8 y 10 N",
+    subtitle: "Eléctrica",
+    description: "Tijera eléctrica angosta para zonas de difícil acceso. Pensada para trabajos interiores, mantenimiento y logística, con plataforma extensible, neumáticos no marcantes y buena maniobrabilidad en altura máxima.",
+    specs: { height: "8.2-10m", power: "Eléctrica", capacity: "230-350kg", operation: "Interior" },
+    image: { src: "/images/compact-8n-brimaq.jpg", alt: "Plataforma tijera eléctrica Compact 8 y 10 N" },
+    manualHref: "/manuales/vma/TijeraElectricaCompact8-10N.pdf",
   },
   {
     id: "compact-10-12-electrica",
@@ -103,8 +116,8 @@ const equipment: EquipmentItem[] = [
     eyebrow: "Tijera eléctrica",
     title: "Compact 10-12",
     subtitle: "Eléctrica",
-    description: "Equipo eléctrico compacto para trabajos interiores, mantenimiento industrial, depósitos, naves logísticas y superficies terminadas.",
-    specs: { height: "10-12m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
+    description: "Plataforma tijera eléctrica para operaciones interiores que requieren más altura y capacidad. Recomendada para depósitos, mantenimiento industrial e instalaciones, con plataforma extensible y traslado en altura máxima.",
+    specs: { height: "10.15-12m", power: "Eléctrica", capacity: "300-450kg", operation: "Interior / exterior controlado" },
     image: { src: "/images/compact-10-12.png", alt: "Plataforma tijera eléctrica Compact 10-12" },
     manualHref: "/manuales/vma/TijeraElectricaCompact10-12.pdf",
   },
@@ -115,56 +128,76 @@ const equipment: EquipmentItem[] = [
     eyebrow: "Tijera eléctrica",
     title: "Compact 14",
     subtitle: "Eléctrica",
-    description: "Plataforma tijera eléctrica de mayor alcance para tareas de instalación, mantenimiento y operación en espacios interiores controlados.",
-    specs: { height: "14m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
+    description: "Tijera eléctrica de mayor alcance para mantenimiento e instalaciones en altura. Combina 13.8 m de trabajo, capacidad de 350 kg, barandillas abatibles y ancho de 1.20 m para operar en espacios industriales.",
+    specs: { height: "13.8m", power: "Eléctrica", capacity: "350kg", operation: "Interior" },
     image: { src: "/images/compact-14.png", alt: "Plataforma tijera eléctrica Compact 14" },
     manualHref: "/manuales/vma/compact-14-electrica.pdf",
   },
   {
-    id: "compact-8-10-n",
-    mainCategory: "tijera",
-    subCategory: "tijera-electricas",
-    eyebrow: "Eléctrica",
-    title: "Tijera Electrica",
-    subtitle: "Compact 8 y 10 N",
-    description: "Modelo compacto para circulación en espacios reducidos. Recomendado para instalaciones interiores, mantenimiento y tareas livianas en altura.",
-    specs: { height: "8-10m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
-    image: { src: "/images/Firefly21.jpg", alt: "Plataforma tijera eléctrica Compact 8 y 10 N" },
-    manualHref: "/manuales/vma/TijeraElectricaCompact8-10N.pdf",
-  },
-  {
-    id: "optimum-8-ac",
+    id: "compact-16-electrica",
     mainCategory: "tijera",
     subCategory: "tijera-electricas",
     eyebrow: "Tijera eléctrica",
-    title: "Optimum 8 AC",
+    title: "Compact 16",
     subtitle: "Eléctrica",
-    description: "Plataforma eléctrica eficiente para trabajos interiores de baja altura, con operación precisa y formato compacto.",
-    specs: { height: "8m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
-    image: { src: "/images/optimum-8-ac.png", alt: "Plataforma tijera eléctrica Optimum 8 AC" },
-    manualHref: "/manuales/vma/optimum-8-ac.pdf",
+    description: "Plataforma tijera eléctrica de mayor altura para trabajos interiores y tareas de mantenimiento que requieren alcance extendido.",
+    specs: { height: "16m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
+    image: { src: "/images/placeholders/equipo-pendiente.svg", alt: "Imagen pendiente de reemplazo para Compact 16" },
   },
-  {
-    id: "optimum-8-electrica",
+    {
+    id: "tijera-diesel-4x4",
     mainCategory: "tijera",
-    subCategory: "tijera-electricas",
-    eyebrow: "Tijera eléctrica",
-    title: "Optimum 8 MV",
-    subtitle: "Eléctrica",
-    description: "Plataforma eléctrica eficiente para trabajos interiores de baja altura, con operación precisa y formato compacto.",
-    specs: { height: "8m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
-    image: { src: "/images/optimum-8-mv.png", alt: "Equipo eléctrico Optimum 8 MV" },
-    manualHref: "/manuales/vma/optimum-8-mv.pdf",
+    subCategory: "tijera-diesel-4x4",
+    eyebrow: "Diesel 4x4",
+    title: "Plataforma Tijera",
+    subtitle: "Compact 12DX",
+    description: "Tijera diésel todo terreno para obra e industria. Equipada con tracción 4x4, bloqueo diferencial, estabilizadores automáticos y buena altura libre al suelo para operar en superficies exigentes.",
+    specs: { height: "12.15m", power: "Diésel", capacity: "450kg", operation: "Exterior 4x4" },
+    image: { src: "/images/Firefly7.jpg", alt: "Plataforma tijera diésel 4x4" },
+    manualHref: "/manuales/vma/TijeraDiesel4x4-Compact12DX.pdf",
   },
   {
+    id: "tijera-diesel-h12-sx",
+    mainCategory: "tijera",
+    subCategory: "tijera-diesel-4x4",
+    eyebrow: "Tijera diésel 4x4",
+    title: "Plataforma Tijera H12 SX",
+    subtitle: "Diesel 4x4",
+    description: "Plataforma tijera diésel 4x4 para operación exterior, obras y superficies exigentes.",
+    specs: { height: "12m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
+    image: { src: "/images/HAULOTTE-H12SX.webp", alt: "Plataforma Tijera H12 SX Haulotte" },
+  },
+  {
+    id: "tijera-diesel-h15-sx",
+    mainCategory: "tijera",
+    subCategory: "tijera-diesel-4x4",
+    eyebrow: "Tijera diésel 4x4",
+    title: "Plataforma Tijera H15 SX",
+    subtitle: "Diesel 4x4",
+    description: "Plataforma tijera diésel 4x4 para trabajos exteriores que requieren mayor altura, estabilidad y autonomía.",
+    specs: { height: "15m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
+    image: { src: "/images/HAULOTTE-H15SX.webp", alt: "Plataforma Tijera H15 SX Haulotte" },
+  },
+  {
+    id: "tijera-diesel-h18-sx",
+    mainCategory: "tijera",
+    subCategory: "tijera-diesel-4x4",
+    eyebrow: "Tijera diésel 4x4",
+    title: "Plataforma Tijera H18 SX",
+    subtitle: "Diesel 4x4",
+    description: "Plataforma tijera diésel 4x4 para trabajos exteriores de mayor alcance, ideal para obra, industria y mantenimiento.",
+    specs: { height: "18m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
+    image: { src: "/images/haulotte-h18sx.jpg", alt: "Plataforma Tijera H18 SX Haulotte" },
+  },
+{
     id: "hs15e-pro",
     mainCategory: "tijera",
     subCategory: "tijera-electricas-4x4",
     eyebrow: "Tijera eléctrica 4x4",
     title: "HS15E PRO",
     subtitle: "4x4",
-    description: "Plataforma tijera eléctrica 4x4 para trabajos de altura con mayor autonomía, tracción y estabilidad en entornos exigentes.",
-    specs: { height: "15-18m", power: "Eléctrica", capacity: "230kg", operation: "Exterior" },
+    description: "Tijera eléctrica todo terreno para trabajos exteriores e interiores con operación limpia y silenciosa. Ofrece tracción 4x4, eje oscilante, doble extensión de plataforma y alta capacidad de carga.",
+    specs: { height: "15m", power: "Eléctrica", capacity: "750kg", operation: "Interior / exterior 4x4" },
     image: { src: "/images/hs15--e-pro.png", alt: "Plataforma tijera eléctrica 4x4 HS15E PRO" },
     manualHref: "/manuales/vma/hs15-18-e-pro.pdf",
   },
@@ -175,106 +208,23 @@ const equipment: EquipmentItem[] = [
     eyebrow: "Tijera eléctrica 4x4",
     title: "HS18 E PRO",
     subtitle: "4x4",
-    description: "Modelo eléctrico 4x4 para operación exterior, pensado para tareas que requieren mayor capacidad, alcance y estabilidad.",
-    specs: { height: "15-18m", power: "Eléctrica", capacity: "230kg", operation: "Exterior" },
-    image: { src: "/images/hs15-18-e-pro.png", alt: "Plataforma tijera eléctrica 4x4 HS15 18 E PRO" },
+    description: "Tijera eléctrica todo terreno de gran altura para obra, industria y mantenimiento. Combina 18 m de trabajo, 750 kg de capacidad, estabilizadores y funcionamiento eléctrico para reducir ruido y emisiones.",
+    specs: { height: "18m", power: "Eléctrica", capacity: "750kg", operation: "Exterior 4x4" },
+    image: { src: "/images/hs15-18-e-pro.png", alt: "Plataforma tijera eléctrica 4x4 HS18 E PRO" },
     manualHref: "/manuales/vma/hs15-18-e-pro.pdf",
   },
-  {
-    id: "brazo-articulado-diesel-16m",
-    mainCategory: "brazo-articulado",
-    subCategory: "brazo-articulado-diesel-4x4",
-    eyebrow: "Brazo articulado",
-    title: "HA 26 RTJ PRO",
-    subtitle: "Diesel 4x4",
-    description: "Brazo articulado diésel 4x4 para trabajos en altura con alcance horizontal extendido y operación exterior en superficies exigentes.",
-    specs: { height: "16m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
-    image: { src: "/images/HA-26-RTJ-Pro.jpg", alt: "Brazo articulado diésel 4x4 de 16 metros" },
-    manualHref: "/manuales/vma/brazo-articulado-diesel-16m.pdf",
-  },
-  {
-    id: "brazo-articulado-diesel-20m",
-    mainCategory: "brazo-articulado",
-    subCategory: "brazo-articulado-diesel-4x4",
-    eyebrow: "Brazo articulado",
-    title: "HA 20 RTJ Pro",
-    subtitle: "Diesel 4x4",
-    description: "Brazo articulado diésel 4x4 para trabajos exteriores con mayor altura y alcance en zonas de acceso complejo.",
-    specs: { height: "20m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
-    image: { src: "/images/ha-20-rtj-pro.png", alt: "Brazo articulado diésel 4x4 de 20 metros" },
-    manualHref: "/manuales/vma/brazo-articulado-diesel-ha-20-rtj-pro.pdf",
-  },
-  {
-    id: "brazo-articulado-diesel-ha-16-rtj-pro",
-    mainCategory: "brazo-articulado",
-    subCategory: "brazo-articulado-diesel-4x4",
-    eyebrow: "Brazo articulado",
-    title: "HA 16 RTJ PRO",
-    subtitle: "Diesel 4x4",
-    description: "Brazo articulado diésel 4x4 compacto y versátil para trabajos exteriores en altura.",
-    specs: { height: "16m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
-    image: { src: "/images/ha-16-rtj-pro.png", alt: "Brazo articulado diésel 4x4 HA 16 RTJ PRO" },
-    manualHref: "/manuales/vma/brazo-articulado-diesel-ha-16-rtj-pro.pdf",
-  },
-  {
-    id: "brazo-articulado-diesel-ha-41-rtj-pro",
-    mainCategory: "brazo-articulado",
-    subCategory: "brazo-articulado-diesel-4x4",
-    eyebrow: "Brazo articulado",
-    title: "HA 41 RTJ PRO",
-    subtitle: "Diesel 4x4",
-    description: "Brazo articulado diésel 4x4 de gran alcance para operaciones exteriores que requieren altura y estabilidad.",
-    specs: { height: "41m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
-    image: { src: "/images/ha-41-rtj-pro.png", alt: "Brazo articulado diésel 4x4 HA 41 RTJ PRO" },
-    manualHref: "/manuales/vma/brazo-articulado-diesel-ha-41-rtj-pro.pdf",
-  },
-  {
-    id: "brazo-articulado-diesel-ha-32-rtj-pro",
-    mainCategory: "brazo-articulado",
-    subCategory: "brazo-articulado-diesel-4x4",
-    eyebrow: "Brazo articulado",
-    title: "HA 32 RTJ PRO",
-    subtitle: "Diesel 4x4",
-    description: "Brazo articulado diésel 4x4 para trabajos de gran altura, ideal para montaje y mantenimiento industrial.",
-    specs: { height: "32m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
-    image: { src: "/images/ha-32-rtj-pro.png", alt: "Brazo articulado diésel 4x4 HA 32 RTJ PRO" },
-    manualHref: "/manuales/vma/brazo-articulado-diesel-ha-32-rtj-pro.pdf",
-  },
-  {
-    id: "brazo-articulado-diesel-ha-20-px",
-    mainCategory: "brazo-articulado",
-    subCategory: "brazo-articulado-diesel-4x4",
-    eyebrow: "Brazo articulado",
-    title: "HA 20 PX",
-    subtitle: "Diesel 4x4",
-    description: "Brazo articulado diésel 4x4 para trabajos exteriores con alcance horizontal y buena capacidad de posicionamiento.",
-    specs: { height: "20m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
-    image: { src: "/images/ha-20-px.jpg", alt: "Brazo articulado diésel 4x4 HA 20 PX" },
-    manualHref: "/manuales/vma/brazo-articulado-diesel-ha-20-px.pdf",
-  },
-  {
-    id: "brazo-articulado-diesel-ha-16-18-spx",
-    mainCategory: "brazo-articulado",
-    subCategory: "brazo-articulado-diesel-4x4",
-    eyebrow: "Brazo articulado",
-    title: "HA 16-18 SPX",
-    subtitle: "Diesel 4x4",
-    description: "Brazo articulado diésel 4x4 para operación exterior, pensado para trabajos que requieren versatilidad y alcance.",
-    specs: { height: "16-18m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
-    image: { src: "/images/ha-16-18-spx.png", alt: "Brazo articulado diésel 4x4 HA 16-18 SPX" },
-    manualHref: "/manuales/vma/brazo-articulado-diesel-ha-16-18-spx.pdf",
-  },
-  {
-    id: "brazo-articulado-electrico-sigma-16",
+
+    {
+    id: "brazo-articulado-electrico-ha-12-ip",
     mainCategory: "brazo-articulado",
     subCategory: "brazo-articulado-electrico",
     eyebrow: "Brazo articulado eléctrico",
-    title: "Sigma 16",
+    title: "HA 12 IP",
     subtitle: "Eléctrico",
-    description: "Brazo articulado eléctrico para trabajos interiores o entornos controlados.",
-    specs: { height: "16m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
-    image: { src: "/images/sigma-16-electrico.jpg", alt: "Brazo articulado eléctrico Sigma 16" },
-    manualHref: "/manuales/vma/brazo-articulado-electrico-sigma-16.pdf",
+    description: "Brazo articulado eléctrico compacto para interiores, depósitos y zonas con obstáculos. Su ancho de 1.35 m, radio de giro reducido y alcance de 6.6 m lo hacen ideal para maniobras precisas.",
+    specs: { height: "12m", power: "Eléctrica", capacity: "230kg", operation: "Interior / exterior controlado" },
+    image: { src: "/images/ha-12-ip.jpg", alt: "Brazo articulado eléctrico HA 12 IP" },
+    manualHref: "/manuales/vma/ha-12-ip.pdf",
   },
   {
     id: "brazo-articulado-electrico-ha-15-ip",
@@ -283,70 +233,118 @@ const equipment: EquipmentItem[] = [
     eyebrow: "Brazo articulado eléctrico",
     title: "HA 15 IP",
     subtitle: "Eléctrico",
-    description: "Brazo articulado eléctrico para trabajos interiores con baja emisión y operación silenciosa.",
-    specs: { height: "15m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
+    description: "Brazo articulado eléctrico para trabajos interiores y exteriores controlados. Combina 15 m de altura, 8.45 m de alcance, ancho compacto de 1.5 m y mandos proporcionales para maniobras precisas.",
+    specs: { height: "15m", power: "Eléctrica", capacity: "230kg", operation: "Interior / exterior controlado" },
     image: { src: "/videos/imgBackground1.jpg", alt: "Brazo articulado eléctrico HA 15 IP" },
     manualHref: "/manuales/vma/brazo-articulado-ha-15-ip.pdf",
   },
   {
-    id: "brazo-articulado-electrico-ha-12-ip",
+    id: "brazo-articulado-electrico-sigma-16",
     mainCategory: "brazo-articulado",
     subCategory: "brazo-articulado-electrico",
     eyebrow: "Brazo articulado eléctrico",
-    title: "HA 12 IP",
+    title: "Sigma 16",
     subtitle: "Eléctrico",
-    description: "Brazo articulado eléctrico compacto para mantenimiento e instalaciones en interiores.",
-    specs: { height: "12m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
-    image: { src: "/images/ha-12-ip.jpg", alt: "Brazo articulado eléctrico HA 12 IP" },
-    manualHref: "/manuales/vma/ha-12-ip.pdf",
+    description: "Brazo articulado eléctrico para trabajos interiores y exteriores sobre suelo firme. Destaca por su alcance de trabajo, movimientos suaves, 230 kg de capacidad y diagnóstico integrado para mantenimiento.",
+    specs: { height: "16.1m", power: "Eléctrica", capacity: "230kg", operation: "Interior / exterior firme" },
+    image: { src: "/images/haulotte-sigma-16.jpg", alt: "Brazo articulado eléctrico Sigma 16 Haulotte" },
+    manualHref: "/manuales/vma/brazo-articulado-electrico-sigma-16.pdf",
+  },
+    {
+    id: "brazo-articulado-diesel-ha-16-rtj-pro",
+    mainCategory: "brazo-articulado",
+    subCategory: "brazo-articulado-diesel-4x4",
+    eyebrow: "Brazo articulado",
+    title: "HA 16 RTJ PRO",
+    subtitle: "Diesel 4x4",
+    description: "Brazo articulado diésel 4x4 compacto para trabajo exterior. Ofrece excelente área de trabajo, alcance de 8.3 m, movimientos simultáneos y giro continuo de torreta para mayor productividad.",
+    specs: { height: "16m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
+    image: { src: "/images/ha-16-rtj-pro.png", alt: "Brazo articulado diésel 4x4 HA 16 RTJ PRO" },
+    manualHref: "/manuales/vma/brazo-articulado-diesel-ha-16-rtj-pro.pdf",
   },
   {
-    id: "brazo-articulado-electrico-h12-h15-h18-sxl",
+    id: "brazo-articulado-diesel-20m",
     mainCategory: "brazo-articulado",
-    subCategory: "brazo-articulado-electrico",
-    eyebrow: "Brazo articulado eléctrico",
+    subCategory: "brazo-articulado-diesel-4x4",
+    eyebrow: "Brazo articulado",
+    title: "HA 20 RTJ Pro",
+    subtitle: "Diesel 4x4",
+    description: "Brazo articulado diésel 4x4 para trabajos exteriores con mayor alcance. Combina 20.6 m de altura, 12.2 m de alcance, 4 ruedas motrices/directrices y subida rápida en 48 segundos.",
+    specs: { height: "20.6m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
+    image: { src: "/images/ha-20-rtj-pro.png", alt: "Brazo articulado diésel 4x4 HA 20 RTJ Pro" },
+    manualHref: "/manuales/vma/brazo-articulado-diesel-ha-20-rtj-pro.pdf",
+  },
+  {
+    id: "brazo-articulado-diesel-16m",
+    mainCategory: "brazo-articulado",
+    subCategory: "brazo-articulado-diesel-4x4",
+    eyebrow: "Brazo articulado",
+    title: "HA 26 RTJ PRO",
+    subtitle: "Diesel 4x4",
+    description: "Brazo articulado diésel 4x4 de alto rendimiento para obra e industria. Ofrece 26.4 m de altura, 17.5 m de alcance, canastilla modular y sistemas Haulotte de diagnóstico, seguridad y eficiencia.",
+    specs: { height: "26.4m", power: "Diésel", capacity: "250kg", operation: "Exterior 4x4" },
+    image: { src: "/images/HA-26-RTJ-Pro.jpg", alt: "Brazo articulado diésel 4x4 HA 26 RTJ PRO" },
+    manualHref: "/manuales/vma/brazo-articulado-diesel-ha-26-rtj-pro.pdf",
+  },
+  {
+    id: "brazo-articulado-diesel-ha-32-rtj-pro",
+    mainCategory: "brazo-articulado",
+    subCategory: "brazo-articulado-diesel-4x4",
+    eyebrow: "Brazo articulado",
+    title: "HA 32 RTJ PRO",
+    subtitle: "Diesel 4x4",
+    description: "Brazo articulado diésel todo terreno para trabajos de gran alcance. Combina 31.8 m de altura, 21.6 m de alcance, ejes extensibles, 4 movimientos simultáneos y excelente estabilidad exterior.",
+    specs: { height: "31.8m", power: "Diésel", capacity: "250kg", operation: "Exterior 4x4" },
+    image: { src: "/images/ha-32-rtj-pro.jpg", alt: "Brazo articulado diésel 4x4 HA 32 RTJ PRO" },
+    manualHref: "/manuales/vma/brazo-articulado-diesel-ha-32-rtj-pro.pdf",
+  },
+  {
+    id: "brazo-articulado-diesel-ha-41-rtj-pro",
+    mainCategory: "brazo-articulado",
+    subCategory: "brazo-articulado-diesel-4x4",
+    eyebrow: "Brazo articulado",
+    title: "HA 41 RTJ PRO",
+    subtitle: "Diesel 4x4",
+    description: "Brazo articulado diésel de gran altura para operaciones exteriores exigentes. Ofrece 41.5 m de trabajo, 20.1 m de alcance, gestión continua del alcance y capacidad todo terreno con 4 ruedas motrices/directrices.",
+    specs: { height: "41.5m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
+    image: { src: "/images/HA41-RTJ-PRO.webp", alt: "Brazo articulado diésel 4x4 HA 41 RTJ PRO" },
+    manualHref: "/manuales/vma/brazo-articulado-diesel-ha-41-rtj-pro.pdf",
+  },
+  {
+    id: "brazo-articulado-diesel-ha-43-rtj-pro",
+    mainCategory: "brazo-articulado",
+    subCategory: "brazo-articulado-diesel-4x4",
+    eyebrow: "Brazo articulado",
+    title: "HA 43 RTJ PRO",
+    subtitle: "Diesel 4x4",
+    description: "Plataforma telescópica diésel todo terreno para trabajos de máxima altura y alcance horizontal. Ofrece 42.2 m de altura, 20.2 m de alcance, doble capacidad de carga y pendular rotativo sobre dos ejes.",
+    specs: { height: "42.2m", power: "Diésel", capacity: "230-450kg", operation: "Exterior 4x4" },
+    image: { src: "/images/HT43-RTJ-PRO.jpg", alt: "Brazo articulado diésel 4x4 HA 43 RTJ PRO" },
+    manualHref: "/manuales/vma/brazo-articulado-diesel-ha-43-rtj-pro.pdf",
+  },
+{
+    id: "brazo-articulado-diesel-h12-h15-h18-sxl",
+    mainCategory: "brazo-articulado",
+    subCategory: "brazo-articulado-diesel-4x4",
+    eyebrow: "Brazo articulado diésel",
     title: "H12 / H15 / H18 SXL",
-    subtitle: "Eléctrico",
-    description: "Serie de brazos articulados eléctricos para trabajos interiores de mayor alcance.",
-    specs: { height: "12-18m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
-    image: { src: "/images/h-12-sxl.png", alt: "Brazo articulado eléctrico H12 H15 H18 SXL" },
+    subtitle: "Diesel 4x4",
+    description: "Serie diésel todo terreno para exteriores, con tracción 4 ruedas, estabilizadores hidráulicos automáticos y gran capacidad de carga. Recomendada para obra, montaje y tareas sobre terreno irregular.",
+    specs: { height: "12-18m", power: "Diésel", capacity: "500-700kg", operation: "Exterior 4x4" },
+    image: { src: "/images/h-12-sxl.png", alt: "Brazo articulado diésel H12 H15 H18 SXL" },
     manualHref: "/manuales/vma/brazo-articulado-electrico-h12-h15-h18-sxl.pdf",
   },
-  {
+    {
     id: "brazo-telescopico-20m",
     mainCategory: "brazo-telescopico",
     subCategory: "brazo-telescopico",
     eyebrow: "Brazo Telescopico",
     title: "HT 43 RTJ Pro",
     subtitle: "Diesel 4x4",
-    description: "Brazo telescópico para trabajos con alcance horizontal extendido y operación precisa en altura.",
-    specs: { height: "20m", power: "Diésel", capacity: "230kg", operation: "Exterior" },
-    image: { src: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=1600&auto=format&fit=crop&q=80", alt: "Brazo telescópico de 20 metros" },
+    description: "Plataforma telescópica diésel todo terreno para trabajos de máxima altura y alcance horizontal. Ofrece 42.2 m de altura, 20.2 m de alcance, doble capacidad de carga y pendular rotativo sobre dos ejes.",
+    specs: { height: "42.2m", power: "Diésel", capacity: "230-450kg", operation: "Exterior 4x4" },
+    image: { src: "/images/HT43-RTJ-PRO.jpg", alt: "Brazo telescópico HT 43 RTJ Pro" },
     manualHref: "/manuales/vma/manual-ht-43-rtj-pro.pdf",
-  },
-  {
-    id: "brazo-telescopico-26m",
-    mainCategory: "brazo-telescopico",
-    subCategory: "brazo-telescopico",
-    eyebrow: "Brazo telescópico",
-    title: "HT 21 RT",
-    subtitle: "Diesel 4x4",
-    description: "Equipo telescópico para obras que requieren altura, alcance horizontal y estabilidad en exteriores.",
-    specs: { height: "26m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
-    image: { src: "/images/", alt: "Brazo telescópico de 26 metros" },
-    manualHref: "/manuales/vma/brazo-telescopico-26m.pdf",
-  },
-  {
-    id: "unipersonal-star-10",
-    mainCategory: "unipersonal",
-    subCategory: "unipersonal",
-    eyebrow: "Plataforma unipersonal",
-    title: "Star 10",
-    subtitle: "Unipersonal",
-    description: "Plataforma unipersonal para trabajos interiores de precisión.",
-    specs: { height: "10m", power: "Eléctrica", capacity: "200kg", operation: "Interior" },
-    image: { src: "/images/Star10Electrica.png", alt: "Plataforma unipersonal Star 10" },
-    manualHref: "/manuales/vma/star-10.pdf",
   },
   {
     id: "unipersonal-electrica",
@@ -355,22 +353,22 @@ const equipment: EquipmentItem[] = [
     eyebrow: "Plataforma unipersonal",
     title: "Star 6",
     subtitle: "Eléctrica",
-    description: "Equipo compacto y ligero para trabajos en altura en espacios reducidos.",
-    specs: { height: "12m", power: "Eléctrica", capacity: "150kg", operation: "Interior" },
-    image: { src: "/images/Star-6.png", alt: "Plataforma unipersonal eléctrica" },
+    description: "Mástil vertical eléctrico compacto para trabajos interiores y preparación de pedidos. Su formato angosto facilita el acceso a pasillos y zonas reducidas, con conducción precisa y bandeja de trabajo funcional.",
+    specs: { height: "5.8m", power: "Eléctrica", capacity: "210kg", operation: "Interior" },
+    image: { src: "/images/Star-6.png", alt: "Plataforma unipersonal eléctrica Star 6" },
     manualHref: "/manuales/vma/unipersonal-electrica-star-6.pdf",
   },
   {
-    id: "manipulador-carga-01",
-    mainCategory: "manipulador-carga",
-    subCategory: "manipulador-carga",
-    eyebrow: "Manipulador telescópico",
-    title: "Manipulador de carga",
-    subtitle: "HTL 4017",
-    description: "Manipulador telescópico de carga para movimiento y elevación de materiales.",
-    specs: { height: "7m", power: "Diésel", capacity: "2500kg", operation: "Exterior" },
-    image: { src: "/images/htl-4017.jpg", alt: "Manipulador telescópico de carga Haulotte HTL4017" },
-    manualHref: "/manuales/vma/manipulador-carga-htl-4017.pdf",
+    id: "unipersonal-star-10",
+    mainCategory: "unipersonal",
+    subCategory: "unipersonal",
+    eyebrow: "Plataforma unipersonal",
+    title: "Star 10",
+    subtitle: "Eléctrica",
+    description: "Mástil vertical eléctrico compacto para interiores y zonas de difícil acceso. Su ancho de 1 m, alcance de 3 m y radio de giro reducido lo hacen ideal para mantenimiento, retail y espacios terminados.",
+    specs: { height: "10m", power: "Eléctrica", capacity: "200kg", operation: "Interior" },
+    image: { src: "/images/Star10Electrica.png", alt: "Plataforma unipersonal Star 10 eléctrica" },
+    manualHref: "/manuales/vma/star-10.pdf",
   },
   {
     id: "manipulador-carga-02",
@@ -379,41 +377,30 @@ const equipment: EquipmentItem[] = [
     eyebrow: "Manipulador telescópico",
     title: "Manipulador de carga",
     subtitle: "HTL 4014",
-    description: "Equipo de carga telescópico para tareas que requieren alcance y estabilidad.",
-    specs: { height: "10m", power: "Diésel", capacity: "3000kg", operation: "Exterior" },
-    image: { src: "/images/htl-4014.jpg", alt: "Manipulador telescópico de carga Haulotte htl 4014" },
+    description: "Manipulador telescópico de carga para obra e industria, con 13.6 m de elevación y 4.000 kg de capacidad. Ideal para movimiento de materiales, con transmisión hidrostática, corrector de inclinación y estabilizadores.",
+    specs: { height: "13.6m", power: "Diésel", capacity: "4000kg", operation: "Exterior / carga" },
+    image: { src: "/images/htl-4014.jpg", alt: "Manipulador telescópico de carga Haulotte HTL 4014" },
     manualHref: "/manuales/vma/manipulador-carga-htl-4014.pdf",
   },
   {
-    id: "manipulador-carga-03",
+    id: "manipulador-carga-01",
     mainCategory: "manipulador-carga",
     subCategory: "manipulador-carga",
     eyebrow: "Manipulador telescópico",
     title: "Manipulador de carga",
-    subtitle: "HTL 4010",
-    description: "Manipulador para operación pesada y movimiento de materiales.",
-    specs: { height: "12m", power: "Diésel", capacity: "3500kg", operation: "Exterior" },
-    image: { src: "/images/htl-4010.png", alt: "Manipulador telescópico de carga Haulotte HTL 4010" },
-    manualHref: "/manuales/vma/manipulador-carga-htl-4010.pdf",
-  },
-  {
-    id: "manipulador-carga-04",
-    mainCategory: "manipulador-carga",
-    subCategory: "manipulador-carga",
-    eyebrow: "Manipulador telescópico",
-    title: "Manipulador de carga",
-    subtitle: "HTL 3210",
-    description: "Equipo telescópico de carga para trabajos de alto rendimiento.",
-    specs: { height: "14m", power: "Diésel", capacity: "4000kg", operation: "Exterior" },
-    image: { src: "/images/hhtl-3210.jpg", alt: "Manipulador telescópico de carga Haulotte HTL 3210" },
-    manualHref: "/manuales/vma/manipulador-carga-htl-3210.pdf",
+    subtitle: "HTL 4017",
+    description: "Manipulador telescópico de mayor alcance para carga pesada. Permite elevar hasta 4.000 kg y trabajar a 16.7 m, con estabilizadores, corrector de inclinación y limitador de movimientos peligrosos.",
+    specs: { height: "16.7m", power: "Diésel", capacity: "4000kg", operation: "Exterior / carga" },
+    image: { src: "/images/htl-4017.jpg", alt: "Manipulador telescópico de carga Haulotte HTL 4017" },
+    manualHref: "/manuales/vma/manipulador-carga-htl-4017.pdf",
   },
 ];
 
-const defaultItem = equipment.find((item) => item.id === "tijera-diesel-4x4") ?? equipment[0];
+const defaultItem = equipment.find((item) => item.id === "optimum-8-ac") ?? equipment[0];
 
 function optimizedImageSrc(src: string, variant: "card" | "large" = "card"): string {
   if (!src.startsWith("/images/")) return src;
+  if (src.endsWith(".svg") || src.includes("/placeholders/")) return src;
 
   const normalized = src
     .replace(/^\/images\//, "")
@@ -463,11 +450,16 @@ function buildQuoteHref(item: EquipmentItem): string {
           data-main-category={cat.id}
           data-default-sub={cat.defaultSubCategory}
           data-has-submenu={String(cat.hasSubmenu)}
+          data-hover-image={cat.hoverImage ?? ""}
         >
           {cat.label}
         </button>
       ))}
     </nav>
+
+    <div class="catHoverPreview" data-category-hover-preview aria-hidden="true">
+      <img src="" alt="" loading="lazy" decoding="async" data-category-hover-image />
+    </div>
 
     <div class="subNavWrap" aria-label="Filtros de energía">
       {mainCategories.filter((cat) => cat.hasSubmenu).map((cat, index) => (
@@ -587,10 +579,14 @@ function buildQuoteHref(item: EquipmentItem): string {
     const section = document.querySelector<HTMLElement>("[data-equipment-section]");
     if (!section || section.dataset.vmaEquipmentReady === "true") return;
 
-    section.dataset.vmaEquipmentReady = "true";
-    section.dataset.vmaCleanNativeCarousel = "true";
+    const safeSection = section;
+
+    safeSection.dataset.vmaEquipmentReady = "true";
+    safeSection.dataset.vmaCleanNativeCarousel = "true";
 
     const mainBtns = [...section.querySelectorAll<HTMLButtonElement>("[data-main-category]")];
+    const categoryHoverPreview = section.querySelector<HTMLElement>("[data-category-hover-preview]");
+    const categoryHoverImage = section.querySelector<HTMLImageElement>("[data-category-hover-image]");
     const subGroups = [...section.querySelectorAll<HTMLElement>("[data-sub-group]")];
     const subBtns = [...section.querySelectorAll<HTMLButtonElement>("[data-sub-category]")];
     const cards = [...section.querySelectorAll<HTMLButtonElement>("[data-machine-card]")];
@@ -620,7 +616,7 @@ function buildQuoteHref(item: EquipmentItem): string {
     const isMobile = () => window.matchMedia("(max-width: 760px)").matches;
 
     let activeMainCategory = "tijera";
-    let activeSubCategory = "tijera-diesel-4x4";
+    let activeSubCategory = "tijera-electricas";
     let activeItemId: string | null = null;
 
     let pointerStartX = 0;
@@ -631,10 +627,11 @@ function buildQuoteHref(item: EquipmentItem): string {
     let touchStartY = 0;
     let touchStartTime = 0;
     let carouselSnapLock = false;
+    let categoryHoverSuppressed = false;
 
     const activeSubByMain: Record<string, string> = {
-      tijera: "tijera-diesel-4x4",
-      "brazo-articulado": "brazo-articulado-diesel-4x4",
+      tijera: "tijera-electricas",
+      "brazo-articulado": "brazo-articulado-electrico",
       "brazo-telescopico": "brazo-telescopico",
       unipersonal: "unipersonal",
       "manipulador-carga": "manipulador-carga",
@@ -859,8 +856,75 @@ centerButton(section?.querySelector<HTMLElement>("[data-sub-category].is-active"
       });
     }
 
+    const canShowCategoryPreview = () => window.matchMedia("(min-width: 1025px)").matches;
+
+    function showCategoryPreview(button: HTMLButtonElement, event: MouseEvent) {
+      if (categoryHoverSuppressed || !canShowCategoryPreview() || !categoryHoverPreview || !categoryHoverImage) return;
+
+      const src = button.dataset.hoverImage;
+      if (!src) return;
+
+      categoryHoverImage.src = src;
+      categoryHoverImage.alt = `${button.textContent?.trim() ?? "Equipo"} - información visual`;
+      safeSection.classList.add("is-category-previewing");
+      categoryHoverPreview.classList.add("is-visible");
+      moveCategoryPreview(event);
+    }
+
+    function moveCategoryPreview(event: MouseEvent) {
+      if (!categoryHoverPreview || !canShowCategoryPreview()) return;
+
+      const offset = 24;
+      const previewWidth = categoryHoverPreview.offsetWidth || 420;
+      const previewHeight = categoryHoverPreview.offsetHeight || 260;
+
+      let x = event.clientX + offset;
+      let y = event.clientY + offset;
+
+      if (x + previewWidth > window.innerWidth - 20) {
+        x = event.clientX - previewWidth - offset;
+      }
+
+      if (y + previewHeight > window.innerHeight - 20) {
+        y = window.innerHeight - previewHeight - 20;
+      }
+
+      categoryHoverPreview.style.left = `${Math.max(20, x)}px`;
+      categoryHoverPreview.style.top = `${Math.max(20, y)}px`;
+    }
+
+    function hideCategoryPreview() {
+      safeSection.classList.remove("is-category-previewing");
+      categoryHoverPreview?.classList.remove("is-visible");
+    }
+
     mainBtns.forEach((button) => {
+      button.addEventListener("mouseenter", (event) => showCategoryPreview(button, event));
+      button.addEventListener("mousemove", moveCategoryPreview);
+      button.addEventListener("mouseleave", () => {
+        categoryHoverSuppressed = false;
+        hideCategoryPreview();
+      });
+      button.addEventListener("focus", () => {
+        if (categoryHoverSuppressed || !canShowCategoryPreview() || !categoryHoverPreview || !categoryHoverImage) return;
+
+        const src = button.dataset.hoverImage;
+        if (!src) return;
+
+        const rect = button.getBoundingClientRect();
+        categoryHoverImage.src = src;
+        categoryHoverImage.alt = `${button.textContent?.trim() ?? "Equipo"} - información visual`;
+        categoryHoverPreview.style.left = `${Math.min(window.innerWidth - 460, Math.max(20, rect.left))}px`;
+        categoryHoverPreview.style.top = `${Math.min(window.innerHeight - 300, rect.bottom + 18)}px`;
+        safeSection.classList.add("is-category-previewing");
+        categoryHoverPreview.classList.add("is-visible");
+      });
+      button.addEventListener("blur", hideCategoryPreview);
+
       button.addEventListener("click", () => {
+        categoryHoverSuppressed = true;
+        hideCategoryPreview();
+
         const mainCategory = button.dataset.mainCategory;
         if (!mainCategory) return;
 
@@ -1025,9 +1089,13 @@ centerButton(section?.querySelector<HTMLElement>("[data-sub-category].is-active"
     window.addEventListener("resize", () => {
       syncDetailArrows();
       lockMobileModal(Boolean(detail?.classList.contains("is-active")));
+
+      if (!canShowCategoryPreview()) {
+        hideCategoryPreview();
+      }
     });
 
-    openSubCategory("tijera", "tijera-diesel-4x4");
+    openSubCategory("tijera", "tijera-electricas");
   });
 </script>
 
@@ -1430,17 +1498,19 @@ centerButton(section?.querySelector<HTMLElement>("[data-sub-category].is-active"
 
   .dtImg {
     min-height: 100%;
+    height: 100%;
     overflow: hidden;
-    background: rgba(255, 255, 255, 0.08);
+    background: #050505;
   }
 
   .dtImg img {
     width: 100%;
     height: 100%;
-    min-height: 340px;
-    max-height: 552px;
+    min-height: 100%;
+    max-height: none;
     display: block;
     object-fit: cover;
+    object-position: center;
   }
 
   .dtInfo {
@@ -1559,6 +1629,62 @@ centerButton(section?.querySelector<HTMLElement>("[data-sub-category].is-active"
     pointer-events: none;
   }
 
+  .eqSection.is-category-previewing .eqHeader,
+  .eqSection.is-category-previewing .catNav,
+  .eqSection.is-category-previewing .subNavWrap,
+  .eqSection.is-category-previewing .eqContent {
+    filter: grayscale(1) saturate(0) brightness(0.62);
+    opacity: 0.56;
+    transition:
+      filter 220ms ease,
+      opacity 220ms ease;
+  }
+
+  .eqSection.is-category-previewing .catHoverPreview {
+    filter: none;
+    opacity: 1;
+  }
+
+  .catHoverPreview {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1200;
+    width: min(430px, calc(100vw - 40px));
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px) scale(0.98);
+    transition:
+      opacity 180ms ease,
+      visibility 180ms ease,
+      transform 180ms ease;
+  }
+
+  .catHoverPreview.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+
+  .catHoverPreview img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid rgba(255, 196, 0, 0.42);
+    border-radius: 18px;
+    background: rgba(5, 5, 5, 0.96);
+    box-shadow:
+      0 24px 70px rgba(0, 0, 0, 0.62),
+      0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+
+  @media (max-width: 1024px) {
+    .catHoverPreview {
+      display: none !important;
+    }
+  }
+
   @media (max-width: 1180px) {
     .eqGrid {
       grid-auto-columns: minmax(230px, 230px);
@@ -1570,7 +1696,7 @@ centerButton(section?.querySelector<HTMLElement>("[data-sub-category].is-active"
 
     .dtImg img {
       min-height: 340px;
-      max-height: 420px;
+      max-height: none;
     }
   }
 

@@ -25,30 +25,6 @@ const {
 
 <div class="contactSection">
   <div class="contactInner">
-    <!-- <header class="contactHeader">
-      <p class="contactKicker">{kicker}</p>
-      <h2 class="contactTitle">
-        {title}<br />
-        <span class="contactTitleAccent">{titleAccent}</span>
-      </h2>
-
-      <div class="contactStats">
-        <div class="contactStat">
-          <p class="contactStatLabel">Respuesta</p>
-          <p class="contactStatValue">Inmediata</p>
-        </div>
-        <div class="contactStat">
-          <p class="contactStatLabel">Cotización</p>
-          <p class="contactStatValue">Online, sin compromiso</p>
-        </div>
-        <div class="contactStat">
-          <p class="contactStatLabel">Cobertura</p>
-          <p class="contactStatValue">{cobertura}</p>
-        </div>
-      </div>
-    </header> -->
-
-    <!-- <div class="contactDivider" aria-hidden="true"></div> -->
 
     <div class="contactGrid">
       <aside class="contactInfo">
@@ -59,12 +35,14 @@ const {
           <div class="contactDetail">
             <dt>Email comercial</dt>
             <dd>
-              <a href={`mailto:${emailComercial}`}>{emailComercial}</a>
+              <a class="contactDetailLink" href={`mailto:${emailComercial}`}>{emailComercial}</a>
             </dd>
           </div>
           <div class="contactDetail">
             <dt>WhatsApp</dt>
-            <dd>{whatsappLabel}</dd>
+            <dd>
+              <a class="contactDetailLink" href={whatsappHref} target="_blank" rel="noopener noreferrer">{whatsappLabel}</a>
+            </dd>
           </div>
         </dl>
       </aside>
@@ -301,15 +279,33 @@ const {
     margin: 0;
   }
 
-  .contactDetail dd a {
-    font-family: var(--font-body);
+  .contactDetail dd a,
+  .contactDetailLink {
+    width: fit-content;
+    max-width: 100%;
+    display: inline-flex;
+    align-items: center;
     color: #ffc400;
+    font-family: var(--font-body);
+    font-size: clamp(1.18rem, 1.55vw, 1.48rem);
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    line-height: 1.18;
     text-decoration: none;
-    transition: color 0.3s ease;
+    border-bottom: 1px solid rgba(255, 196, 0, 0.58);
+    overflow-wrap: anywhere;
+    word-break: normal;
+    transition:
+      color 0.25s ease,
+      border-color 0.25s ease,
+      transform 0.25s ease;
   }
 
-  .contactDetail dd a:hover {
+  .contactDetail dd a:hover,
+  .contactDetailLink:hover {
     color: #ffffff;
+    border-color: #ffffff;
+    transform: translateX(2px);
   }
 
   .contactForm {
@@ -479,6 +475,20 @@ const {
     .formBtn {
       justify-content: center;
       width: 100%;
+    }
+
+    .contactDetails {
+      gap: 28px;
+    }
+
+    .contactDetail {
+      gap: 7px;
+    }
+
+    .contactDetail dd a,
+    .contactDetailLink {
+      font-size: clamp(1.18rem, 5.4vw, 1.42rem);
+      line-height: 1.18;
     }
   }
 </style>

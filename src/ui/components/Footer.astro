@@ -5,17 +5,21 @@ type Props = {
   emailComercial?: string;
   whatsappLabel?: string;
   address?: string;
+  mapsHref?: string;
   logoSrc?: string;
   logoAlt?: string;
 };
 
 const {
   emailComercial = site.contact.emailComercial,
-  whatsappLabel = "[PENDIENTE]",
-  address = "[DIRECCIÓN PENDIENTE]",
+  whatsappLabel = "1128421008",
+  address = "Calle 152 número 6359 ofic 301, Greenville, Hudson, Buenos Aires",
+  mapsHref = "https://www.google.com/maps/search/?api=1&query=Calle%20152%20numero%206359%20ofic%20301%20Greenville%20Hudson%20Buenos%20Aires",
   logoSrc = "/brand/Isologotipo.png",
   logoAlt = "VMA Rental",
 } = Astro.props as Props;
+
+const whatsappHref = waCotizarUrl || "https://wa.me/541128421008";
 ---
 
 <footer class="footer">
@@ -43,23 +47,32 @@ const {
       <div class="footerCol">
         <h3 class="footerColTitle">SECCIONES</h3>
         <ul class="footerColList">
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#equipos">Flota VMA</a></li>
           <li><a href="#sectores">Sectores</a></li>
-          <li><a href="#servicios">Servicios</a></li>
-          <li><a href="#metodologia">Cómo trabajamos</a></li>
-          <li><a href="#equipos">Equipos</a></li>
+          <li><a href="#sistema-vma">Sistema VMA</a></li>
           <li><a href="#faq">FAQ</a></li>
+          <li><a href="/nosotros">Nosotros</a></li>
           <li><a href="#contacto">Contacto</a></li>
         </ul>
       </div>
 
       <div class="footerCol">
         <h3 class="footerColTitle">CONTACTO</h3>
-        <ul class="footerColList">
+        <ul class="footerColList footerContactList">
           <li>
             <a href={`mailto:${emailComercial}`}>{emailComercial}</a>
           </li>
-          <li>WhatsApp: {whatsappLabel}</li>
-          <li>{address}</li>
+          <li>
+            <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
+              WhatsApp: {whatsappLabel}
+            </a>
+          </li>
+          <li>
+            <a href={mapsHref} target="_blank" rel="noopener noreferrer">
+              Dirección VMA. {address}
+            </a>
+          </li>
         </ul>
       </div>
     </div>
@@ -194,11 +207,24 @@ const {
   .footerColList li a {
     color: #c9c9c9;
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition:
+      color 0.3s ease,
+      border-color 0.3s ease;
     font-family: var(--font-body);
   }
 
   .footerColList li a:hover {
+    color: #ffc400;
+  }
+
+  .footerContactList li a {
+    color: #c9c9c9;
+    font-weight: 500;
+    border-bottom: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .footerContactList li a:hover {
     color: #ffc400;
   }
 
