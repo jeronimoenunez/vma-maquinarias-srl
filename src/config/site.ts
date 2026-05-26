@@ -13,7 +13,7 @@ export const site = {
     whatsapp: "541128421008",
     whatsappVisible: "1128421008",
     whatsappMessage:
-      "Hola, quiero consultar por el alquiler de un equipo. Necesito orientación para elegir la opción correcta.",
+      "Hola, quiero consultar por el alquiler de un equipo. ",
     emailComercial: "comercial@vmarental.com.ar",
     emailNoreply: "noreply@vmarental.com.ar",
   },
@@ -32,7 +32,7 @@ export const site = {
 
 export const vmaWhatsappMessages = {
   general:
-    "Hola, quiero consultar por el alquiler de un equipo. Necesito orientación para elegir la opción correcta.",
+    "Hola, quiero consultar por el alquiler de un equipo. ",
   tijera:
     "Hola, necesito consultar por una plataforma tijera. Altura aproximada: __. Zona: __. Fecha: __.",
   articulada:
@@ -46,7 +46,7 @@ export const vmaWhatsappMessages = {
 } as const;
 
 export const waUrl = (msg: string = site.contact.whatsappMessage) =>
-  `https://wa.me/${site.contact.whatsapp}?text=${encodeURIComponent(msg)}`;
+  `https://wa.me/${site.contact.whatsapp}?text=Hola%2C%20vengo%20desde%20la%20web%20y%20quiero%20consultar%20por%20`;
 
 export const waCotizarUrl = waUrl(vmaWhatsappMessages.general);
 export const waTijeraUrl = waUrl(vmaWhatsappMessages.tijera);
