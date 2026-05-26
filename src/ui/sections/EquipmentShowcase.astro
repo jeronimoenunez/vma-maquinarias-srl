@@ -412,6 +412,17 @@ const equipment: EquipmentItem[] = [
 
 const defaultItem = equipment.find((item) => item.id === "tijera-diesel-4x4") ?? equipment[0];
 
+function optimizedImageSrc(src: string, variant: "card" | "large" = "card"): string {
+  if (!src.startsWith("/images/")) return src;
+
+  const normalized = src
+    .replace(/^\/images\//, "")
+    .replace(/[\\/]/g, "__")
+    .replace(/\.[^.]+$/, "");
+
+  return `/images/optimized/${normalized}-${variant}.webp`;
+}
+
 function buildQuoteHref(item: EquipmentItem): string {
   const message = [
     "Hola VMA Rental, quiero solicitar una cotización.",
@@ -496,13 +507,20 @@ function buildQuoteHref(item: EquipmentItem): string {
               data-power={item.specs.power}
               data-capacity={item.specs.capacity}
               data-operation={item.specs.operation}
-              data-image-src={item.image.src}
+              data-image-src={optimizedImageSrc(item.image.src, "large")}
               data-image-alt={item.image.alt}
               data-manual-href={item.manualHref ?? ""}
               data-quote-href={buildQuoteHref(item)}
             >
               <span class="cardImg">
-                <img src={item.image.src} alt={item.image.alt} loading="lazy" />
+                <img
+                  src={optimizedImageSrc(item.image.src, "card")}
+                  alt={item.image.alt}
+                  loading="lazy"
+                  decoding="async"
+                  width="760"
+                  height="560"
+                />
               </span>
               <span class="cardMeta">
                 <span class="cardEyebrow">{item.eyebrow}</span>
@@ -524,7 +542,15 @@ function buildQuoteHref(item: EquipmentItem): string {
         <button class="dtArrow dtArrow--next" type="button" data-detail-next hidden>›</button>
 
         <div class="dtImg">
-          <img data-detail-image src={defaultItem.image.src} alt={defaultItem.image.alt} loading="lazy" />
+          <img
+            data-detail-image
+            src={optimizedImageSrc(defaultItem.image.src, "large")}
+            alt={defaultItem.image.alt}
+            loading="lazy"
+            decoding="async"
+            width="1440"
+            height="900"
+          />
         </div>
 
         <div class="dtInfo">
@@ -600,6 +626,11 @@ function buildQuoteHref(item: EquipmentItem): string {
     let pointerStartX = 0;
     let pointerStartY = 0;
     let pointerMoved = false;
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchStartTime = 0;
+    let carouselSnapLock = false;
 
     const activeSubByMain: Record<string, string> = {
       tijera: "tijera-diesel-4x4",
@@ -877,6 +908,87 @@ centerButton(section?.querySelector<HTMLElement>("[data-sub-category].is-active"
         { passive: true }
       );
     }
+
+    if (grid) {
+    const snapToNearestVisibleCard = (direction: "prev" | "next") => {
+      if (!isMobile() || carouselSnapLock) return;
+
+      const visibleCards = getVisibleCards();
+      if (!visibleCards.length) return;
+
+      carouselSnapLock = true;
+
+      const gridRect = grid.getBoundingClientRect();
+      const gridCenter = gridRect.left + gridRect.width / 2;
+
+      let currentIndex = 0;
+      let closestDistance = Number.POSITIVE_INFINITY;
+
+      visibleCards.forEach((card, index) => {
+        const rect = card.getBoundingClientRect();
+        const cardCenter = rect.left + rect.width / 2;
+        const distance = Math.abs(cardCenter - gridCenter);
+
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          currentIndex = index;
+        }
+      });
+
+      const targetIndex =
+        direction === "next"
+          ? Math.min(currentIndex + 1, visibleCards.length - 1)
+          : Math.max(currentIndex - 1, 0);
+
+      visibleCards[targetIndex]?.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest",
+      });
+
+      window.setTimeout(() => {
+        carouselSnapLock = false;
+      }, 360);
+    };
+
+  grid.addEventListener(
+    "touchstart",
+    (event) => {
+      if (!isMobile() || !event.touches.length) return;
+
+      const touch = event.touches[0];
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+      touchStartTime = Date.now();
+    },
+    { passive: true }
+  );
+
+  grid.addEventListener(
+    "touchend",
+    (event) => {
+      if (!isMobile() || !event.changedTouches.length) return;
+
+      const touch = event.changedTouches[0];
+      const dx = touch.clientX - touchStartX;
+      const dy = touch.clientY - touchStartY;
+      const elapsed = Date.now() - touchStartTime;
+
+      const isHorizontalSwipe = Math.abs(dx) > 34 && Math.abs(dx) > Math.abs(dy) * 1.15;
+      const isReasonableGesture = elapsed < 650;
+
+      if (!isHorizontalSwipe || !isReasonableGesture) return;
+
+      pointerMoved = true;
+      snapToNearestVisibleCard(dx < 0 ? "next" : "prev");
+
+      window.setTimeout(() => {
+        pointerMoved = false;
+      }, 420);
+    },
+    { passive: true }
+  );
+}
 
     cards.forEach((card) => {
       card.addEventListener("click", () => {
@@ -1585,8 +1697,8 @@ centerButton(section?.querySelector<HTMLElement>("[data-sub-category].is-active"
       padding: 8px 18px 34px;
       overflow-x: auto;
       overflow-y: hidden;
-      scroll-snap-type: x mandatory;
-      scroll-padding-left: 18px;
+      scroll-snap-type: x mandatory !important;
+      scroll-padding-inline: 18px !important;
       scrollbar-width: none;
       overscroll-behavior-x: contain;
       -webkit-overflow-scrolling: touch;
@@ -1617,8 +1729,8 @@ centerButton(section?.querySelector<HTMLElement>("[data-sub-category].is-active"
       background: #d9d9d9;
       color: #101010;
       overflow: hidden;
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
+      scroll-snap-align: center !important;
+      scroll-snap-stop: always !important;
       touch-action: pan-x;
       user-select: none;
       -webkit-user-select: none;
