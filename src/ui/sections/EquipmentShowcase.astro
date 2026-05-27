@@ -142,7 +142,8 @@ const equipment: EquipmentItem[] = [
     subtitle: "Eléctrica",
     description: "Plataforma tijera eléctrica de mayor altura para trabajos interiores y tareas de mantenimiento que requieren alcance extendido.",
     specs: { height: "16m", power: "Eléctrica", capacity: "230kg", operation: "Interior" },
-    image: { src: "/images/placeholders/equipo-pendiente.svg", alt: "Imagen pendiente de reemplazo para Compact 16" },
+    image: { src: "https://ironmachtrade.com/wp-content/uploads/2023/06/ZS0407DCµoAµiotheAµCu.58-450x450.png", alt: "Plataforma tijera eléctrica Compact 16 Zoomlion" },
+    manualHref: "/manuales/vma/zoomlion-zs1414ac-li-compact-16.pdf",
   },
     {
     id: "tijera-diesel-4x4",
@@ -191,19 +192,6 @@ const equipment: EquipmentItem[] = [
     specs: { height: "18m", power: "Diésel", capacity: "230kg", operation: "Exterior 4x4" },
     image: { src: "/images/haulotte-h18sx.jpg", alt: "Plataforma Tijera H18 SX Haulotte" },
     manualHref: "/manuales/vma/tijera-diesel-h12-h15-h18-sx.pdf",
-  },
-
-  {
-    id: "tijera-diesel-h12-h15-h18-sxl",
-    mainCategory: "tijera",
-    subCategory: "tijera-diesel-4x4",
-    eyebrow: "Tijera diésel 4x4",
-    title: "H12 / H15 / H18 SXL",
-    subtitle: "Diesel 4x4",
-    description: "Serie de tijeras diésel todo terreno para trabajos exteriores, obra e industria. Recomendada para operaciones sobre terreno irregular, con tracción 4x4, estabilizadores hidráulicos automáticos y gran capacidad de carga.",
-    specs: { height: "12-18m", power: "Diésel", capacity: "500-700kg", operation: "Exterior 4x4" },
-    image: { src: "/images/h-12-sxl.png", alt: "Plataforma tijera diésel H12 H15 H18 SXL" },
-    manualHref: "/manuales/vma/brazo-articulado-electrico-h12-h15-h18-sxl.pdf",
   },
 {
     id: "hs15e-pro",
@@ -337,6 +325,18 @@ const equipment: EquipmentItem[] = [
     specs: { height: "42.2m", power: "Diésel", capacity: "230-450kg", operation: "Exterior 4x4" },
     image: { src: "/images/HT43-RTJ-PRO.jpg", alt: "Brazo articulado diésel 4x4 HA 43 RTJ PRO" },
     manualHref: "/manuales/vma/brazo-articulado-diesel-ha-43-rtj-pro.pdf",
+  },
+{
+    id: "brazo-articulado-diesel-h12-h15-h18-sxl",
+    mainCategory: "brazo-articulado",
+    subCategory: "brazo-articulado-diesel-4x4",
+    eyebrow: "Brazo articulado diésel",
+    title: "H12 / H15 / H18 SXL",
+    subtitle: "Diesel 4x4",
+    description: "Serie diésel todo terreno para exteriores, con tracción 4 ruedas, estabilizadores hidráulicos automáticos y gran capacidad de carga. Recomendada para obra, montaje y tareas sobre terreno irregular.",
+    specs: { height: "12-18m", power: "Diésel", capacity: "500-700kg", operation: "Exterior 4x4" },
+    image: { src: "/images/h-12-sxl.png", alt: "Brazo articulado diésel H12 H15 H18 SXL" },
+    manualHref: "/manuales/vma/brazo-articulado-electrico-h12-h15-h18-sxl.pdf",
   },
     {
     id: "brazo-telescopico-20m",
@@ -1418,6 +1418,23 @@ centerButton(section?.querySelector<HTMLElement>("[data-sub-category].is-active"
     object-fit: cover;
   }
 
+
+  .card[data-id="compact-16-electrica"] .cardImg {
+    height: clamp(170px, 23vw, 238px);
+    display: grid;
+    place-items: center;
+    background: #ffffff;
+  }
+
+  .card[data-id="compact-16-electrica"] .cardImg img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    padding: 12px 18px;
+    background: #ffffff;
+  }
+
   .cardMeta {
     display: grid;
     gap: 8px;
@@ -1515,6 +1532,21 @@ centerButton(section?.querySelector<HTMLElement>("[data-sub-category].is-active"
     display: block;
     object-fit: cover;
     object-position: center;
+  }
+
+  .eqDetail[data-active-equipment="compact-16-electrica"] .dtImg {
+    display: grid;
+    place-items: center;
+    background: #ffffff;
+  }
+
+  .eqDetail[data-active-equipment="compact-16-electrica"] .dtImg img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    padding: clamp(18px, 2.4vw, 36px);
+    background: #ffffff;
   }
 
   .dtInfo {
@@ -1899,6 +1931,18 @@ centerButton(section?.querySelector<HTMLElement>("[data-sub-category].is-active"
       -webkit-user-drag: none;
     }
 
+    .card[data-id="compact-16-electrica"] .cardImg {
+      height: 260px;
+      background: #ffffff;
+    }
+
+    .card[data-id="compact-16-electrica"] .cardImg img {
+      object-fit: contain;
+      object-position: center center;
+      padding: 16px 22px;
+      background: #ffffff;
+    }
+
     .cardMeta {
       margin-top: auto;
       padding: 22px 20px 24px;
@@ -2009,6 +2053,17 @@ centerButton(section?.querySelector<HTMLElement>("[data-sub-category].is-active"
       object-fit: cover;
       object-position: center;
       border-radius: 20px 20px 0 0;
+    }
+
+    .eqDetail[data-active-equipment="compact-16-electrica"] .dtImg {
+      background: #ffffff;
+    }
+
+    .eqDetail[data-active-equipment="compact-16-electrica"] .dtImg img {
+      object-fit: contain;
+      object-position: center center;
+      padding: 18px;
+      background: #ffffff;
     }
 
     .dtInfo {
