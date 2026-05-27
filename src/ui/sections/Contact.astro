@@ -144,7 +144,7 @@ const contactApiUrl =
           </a>
         </div>
 
-        <p class="contactFormStatus" data-vma-contact-status aria-live="polite"></p>
+        <div class="contactFormStatus" data-vma-contact-status aria-live="polite"></div>
       </form>
     </div>
   </div>
@@ -210,7 +210,9 @@ const contactApiUrl =
     status.setAttribute("data-state", "success-card");
 
     status.innerHTML = `
-      <article class="contactSuccessCard">
+      <article class="contactSuccessCard" role="dialog" aria-modal="true" aria-label="Consulta enviada">
+        <button class="contactSuccessClose" type="button" data-contact-success-close aria-label="Cerrar confirmación">×</button>
+
         <div class="contactSuccessIcon" aria-hidden="true">✓</div>
 
         <h3>Listo, ${escapeHtml(firstName)}</h3>
@@ -258,8 +260,58 @@ const contactApiUrl =
           Hablar con un asesor
           <span aria-hidden="true">→</span>
         </a>
+
+        <p class="contactSuccessTimer" data-contact-success-timer>
+          Esta confirmación se cierra en 20 segundos.
+        </p>
       </article>
     `;
+
+    let secondsLeft = 20;
+    const closeButton = status.querySelector("[data-contact-success-close]");
+    const timer = status.querySelector("[data-contact-success-timer]");
+
+    const closeModal = () => {
+      status.textContent = "";
+      status.removeAttribute("data-state");
+    };
+
+    closeButton?.addEventListener("click", closeModal);
+
+    const interval = window.setInterval(() => {
+      secondsLeft -= 1;
+
+      if (timer) {
+        timer.textContent = `Esta confirmación se cierra en ${secondsLeft} segundos.`;
+      }
+
+      if (secondsLeft <= 0) {
+        window.clearInterval(interval);
+        closeModal();
+      }
+    }, 1000);
+
+    status.addEventListener(
+      "click",
+      (event) => {
+        if (event.target === status) {
+          window.clearInterval(interval);
+          closeModal();
+        }
+      },
+      { once: true }
+    );
+
+    window.addEventListener(
+      "keydown",
+      (event) => {
+        if (event.key === "Escape") {
+          window.clearInterval(interval);
+          closeModal();
+        }
+      },
+      { once: true }
+    );
   };
 
   if (form && status) {
@@ -866,6 +918,235 @@ const contactApiUrl =
 
     .contactSuccessWhatsapp {
       width: 100%;
+    }
+  }
+
+
+  /* CONTACT SUCCESS MODAL — GLOBAL */
+  .contactFormStatus[data-state="success-card"] {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    min-height: 100svh;
+    margin: 0;
+    padding: clamp(18px, 4vw, 42px);
+    background: rgba(0, 0, 0, 0.74);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    color: #ffffff;
+  }
+
+  :global(.contactSuccessCard) {
+    width: min(720px, 100%);
+    max-height: min(760px, calc(100svh - 48px));
+    overflow: auto;
+    padding: clamp(26px, 4vw, 42px);
+    border: 1px solid rgba(255, 196, 0, 0.62);
+    border-radius: 28px;
+    background:
+      radial-gradient(circle at 86% 8%, rgba(255, 196, 0, 0.14), transparent 34%),
+      #090909;
+    color: #ffffff;
+    box-shadow: 0 32px 120px rgba(0, 0, 0, 0.62);
+  }
+
+  :global(.contactSuccessIcon) {
+    width: 58px;
+    height: 58px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 22px;
+    border-radius: 999px;
+    background: #ffc400;
+    color: #070707;
+    font-size: 1.8rem;
+    font-weight: 900;
+  }
+
+  :global(.contactSuccessCard h3) {
+    margin: 0;
+    color: #ffffff;
+    font-size: clamp(2.2rem, 4vw, 3.8rem);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.055em;
+  }
+
+  :global(.contactSuccessIntro) {
+    max-width: 58ch;
+    margin: 14px 0 28px;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  :global(.contactSuccessKicker) {
+    margin: 0 0 12px;
+    color: #ffc400;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  :global(.contactSuccessData dl) {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  :global(.contactSuccessData div) {
+    display: grid;
+    grid-template-columns: minmax(120px, 0.42fr) minmax(0, 1fr);
+    gap: 18px;
+    padding: 13px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  :global(.contactSuccessData dt) {
+    color: rgba(255, 255, 255, 0.48);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  :global(.contactSuccessData dd) {
+    margin: 0;
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+
+  :global(.contactSuccessWhatsapp) {
+    width: fit-content;
+    min-height: 54px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 28px;
+    padding: 0 30px;
+    border-radius: 999px;
+    background: #25d366;
+    color: #07140b;
+    font-family: var(--font-body);
+    font-size: 0.94rem;
+    font-weight: 900;
+    text-decoration: none;
+  }
+
+  :global(.contactSuccessWhatsapp:hover) {
+    filter: brightness(1.04);
+  }
+
+  @media (max-width: 640px) {
+    .contactFormStatus[data-state="success-card"] {
+      align-items: end;
+      padding: 14px;
+    }
+
+    :global(.contactSuccessCard) {
+      max-height: calc(100svh - 28px);
+      border-radius: 24px;
+    }
+
+    :global(.contactSuccessData div) {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+
+    :global(.contactSuccessWhatsapp) {
+      width: 100%;
+    }
+  }
+
+
+  :global(.contactSuccessClose) {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+    font-size: 1.7rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  :global(.contactSuccessClose:hover) {
+    background: rgba(255, 196, 0, 0.14);
+    border-color: rgba(255, 196, 0, 0.42);
+  }
+
+  :global(.contactSuccessTimer) {
+    margin: 18px 0 0;
+    color: rgba(255, 255, 255, 0.46);
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+
+  :global(.contactSuccessCard) {
+    position: relative;
+  }
+
+  .contactFormStatus[data-state="success-card"] {
+    z-index: 2147483000;
+  }
+
+  @media (max-width: 640px) {
+    .contactFormStatus[data-state="success-card"] {
+      place-items: center;
+      padding: 10px;
+    }
+
+    :global(.contactSuccessCard) {
+      width: min(100%, 370px);
+      max-height: calc(100svh - 20px);
+      padding: 22px;
+      border-radius: 22px;
+    }
+
+    :global(.contactSuccessIcon) {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 16px;
+      font-size: 1.45rem;
+    }
+
+    :global(.contactSuccessCard h3) {
+      font-size: clamp(1.95rem, 11vw, 2.7rem);
+    }
+
+    :global(.contactSuccessIntro) {
+      margin: 12px 0 20px;
+      font-size: 0.92rem;
+    }
+
+    :global(.contactSuccessData div) {
+      padding: 10px 0;
+    }
+
+    :global(.contactSuccessWhatsapp) {
+      min-height: 50px;
+      margin-top: 20px;
+    }
+
+    :global(.contactSuccessClose) {
+      top: 12px;
+      right: 12px;
+      width: 38px;
+      height: 38px;
+      font-size: 1.5rem;
     }
   }
 
