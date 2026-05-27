@@ -183,6 +183,7 @@ const methodUnits = [
 <style>
   .methodPage {
     min-height: 100svh;
+    overflow-x: clip;
     background: #050505;
     color: #ffffff;
     font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
@@ -241,9 +242,10 @@ const methodUnits = [
   .methodStatement {
     min-height: 100svh;
     display: grid;
-    grid-template-columns: minmax(180px, 24vw) minmax(0, 1fr);
-    gap: clamp(32px, 4vw, 72px);
+    grid-template-columns: minmax(160px, 18vw) minmax(0, 1fr);
+    gap: clamp(28px,10.4vw,209px);
     padding: clamp(80px, 9vw, 140px) clamp(30px, 4vw, 76px);
+    overflow: hidden;
   }
 
   .methodStatement aside {
@@ -252,19 +254,22 @@ const methodUnits = [
   }
 
   .methodStatement h2 {
+    width: 100%;
+    max-width: min(100%, 1080px);
     margin: 0;
-    font-size: clamp(2.3rem, 4.1vw, 5.3rem);
+    font-size: clamp(2.15rem, 3.55vw, 4.75rem);
     font-weight: 400;
     line-height: 1.08;
-    letter-spacing: -0.06em;
+    letter-spacing: -0.055em;
   }
 
   .paintLine {
     --paint: 0%;
     display: block;
-    width: fit-content;
+    width: 100%;
     max-width: 100%;
-    white-space: nowrap;
+    white-space: normal;
+    text-wrap: balance;
     color: transparent;
     background-image: linear-gradient(
       90deg,
@@ -760,9 +765,20 @@ const methodUnits = [
       font-size: clamp(3.2rem, 14vw, 7rem);
     }
 
+    .methodStatement {
+      min-height: auto;
+      row-gap: clamp(24px, 5vw, 44px);
+    }
+
+    .methodStatement h2 {
+      max-width: 100%;
+      font-size: clamp(2.15rem, 7.2vw, 4.4rem);
+      letter-spacing: -0.055em;
+    }
+
     .paintLine {
       white-space: normal;
-      width: auto;
+      width: 100%;
     }
 
     .methodCards article {
@@ -799,6 +815,16 @@ const methodUnits = [
     .pageCta {
       padding-left: 22px;
       padding-right: 22px;
+    }
+
+    .methodStatement h2 {
+      font-size: clamp(2rem, 10.8vw, 3.35rem);
+      line-height: 1.02;
+      letter-spacing: -0.06em;
+    }
+
+    .methodStatement aside {
+      font-size: 0.96rem;
     }
 
     .methodCards article {
