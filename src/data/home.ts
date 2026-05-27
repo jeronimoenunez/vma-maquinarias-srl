@@ -77,7 +77,7 @@ export const homeSections: HomeSection[] = [
           subtitle:
             "Planes para industria, planes para obra, planes para lo que necesites resolver.",
           image: {
-            src: "/images/IMG_20250703_094445389_HDR.jpg",
+            src: "/images/jovo.jpg?v=4",
             alt: "Plataforma articulada en operación",
           },
           size: "regular",
@@ -100,9 +100,9 @@ export const homeSections: HomeSection[] = [
             "Tres líneas de trabajo para resolver disponibilidad, inversión y continuidad operativa.",
           href: "/unidades",
           images: [
-            "/images/IMG_20250703_094445389_HDR.jpg",
+            "/images/jovo.jpg?v=4",
             "/images/Firefly10-1.png",
-            "/images/Firefly.jpg",
+            "/images/jovo.jpg?v=4",
           ],
           autoplay: true,
         },
