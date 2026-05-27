@@ -327,15 +327,15 @@ const equipment: EquipmentItem[] = [
     manualHref: "/manuales/vma/brazo-articulado-diesel-ha-43-rtj-pro.pdf",
   },
 {
-    id: "brazo-articulado-diesel-h12-h15-h18-sxl",
-    mainCategory: "brazo-articulado",
-    subCategory: "brazo-articulado-diesel-4x4",
-    eyebrow: "Brazo articulado diésel",
+    id: "tijera-diesel-h12-h15-h18-sxl",
+    mainCategory: "tijera",
+    subCategory: "tijera-diesel-4x4",
+    eyebrow: "Tijera diésel 4x4",
     title: "H12 / H15 / H18 SXL",
     subtitle: "Diesel 4x4",
     description: "Serie diésel todo terreno para exteriores, con tracción 4 ruedas, estabilizadores hidráulicos automáticos y gran capacidad de carga. Recomendada para obra, montaje y tareas sobre terreno irregular.",
     specs: { height: "12-18m", power: "Diésel", capacity: "500-700kg", operation: "Exterior 4x4" },
-    image: { src: "/images/h-12-sxl.png", alt: "Brazo articulado diésel H12 H15 H18 SXL" },
+    image: { src: "/images/h-12-sxl.png", alt: "Plataforma tijera diésel H12 H15 H18 SXL" },
     manualHref: "/manuales/vma/brazo-articulado-electrico-h12-h15-h18-sxl.pdf",
   },
     {
@@ -1788,7 +1788,7 @@ centerButton(section?.querySelector<HTMLElement>("[data-sub-category].is-active"
       border-radius: 999px;
       transform: none;
       scroll-padding-inline: 18px;
-      touch-action: pan-x;
+      touch-action: pan-y pinch-zoom;
     }
 
     .catBtn {
@@ -1818,7 +1818,7 @@ centerButton(section?.querySelector<HTMLElement>("[data-sub-category].is-active"
       border: 0;
       border-radius: 0;
       background: transparent;
-      touch-action: pan-x;
+      touch-action: pan-y pinch-zoom;
     }
 
     .subNav.is-active {
@@ -1877,7 +1877,7 @@ centerButton(section?.querySelector<HTMLElement>("[data-sub-category].is-active"
       scrollbar-width: none;
       overscroll-behavior-x: contain;
       -webkit-overflow-scrolling: touch;
-      touch-action: pan-x;
+      touch-action: pan-y pinch-zoom;
       transform: none;
     }
 
@@ -1906,7 +1906,7 @@ centerButton(section?.querySelector<HTMLElement>("[data-sub-category].is-active"
       overflow: hidden;
       scroll-snap-align: center !important;
       scroll-snap-stop: always !important;
-      touch-action: pan-x;
+      touch-action: pan-y pinch-zoom;
       user-select: none;
       -webkit-user-select: none;
       transform: none;
@@ -2230,6 +2230,43 @@ centerButton(section?.querySelector<HTMLElement>("[data-sub-category].is-active"
     .eqDetail[data-active-equipment="compact-16-electrica"] .dtImg img {
       max-width: 72% !important;
       max-height: 82% !important;
+    }
+  }
+
+
+  /* VMA final scroll unlock */
+  .eqSection,
+  .eqShell,
+  .eqHeader,
+  .eqContent,
+  .eqCarousel,
+  .eqCarouselInner,
+  .cardsViewport,
+  .cardsScroller,
+  .cardTrack,
+  .eqGrid,
+  .detailPanel {
+    overscroll-behavior-y: auto;
+    touch-action: pan-y;
+  }
+
+  .arrowBtn,
+  .catNav button,
+  .subNav button,
+  .card,
+  .detailArrow,
+  .detailClose {
+    touch-action: manipulation;
+  }
+
+  @media (max-width: 760px) {
+    .eqSection,
+    .eqCarousel,
+    .cardsViewport,
+    .cardsScroller,
+    .cardTrack,
+    .eqGrid {
+      overflow-y: visible;
     }
   }
 

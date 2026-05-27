@@ -43,7 +43,10 @@ const whatsappHref = waCotizarUrl || "https://wa.me/541128421008";
     </a>
 
     <div class="footerBigEmail">
-      <a href={`mailto:${emailComercial}`}>{emailComercial}</a>
+      <a class="footerBigEmailLink" href={`mailto:${emailComercial}`}>{emailComercial}</a>
+      <a class="footerBigPhoneLink" href={whatsappHref} target="_blank" rel="noopener noreferrer">
+        {whatsappLabel}
+      </a>
     </div>
   </div>
 
@@ -233,12 +236,11 @@ const whatsappHref = waCotizarUrl || "https://wa.me/541128421008";
   }
 
   .footerHero {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: minmax(180px, 280px) minmax(0, 1fr);
     align-items: center;
-    gap: 60px;
-    margin-top: 60px;
-    margin-bottom: 80px;
+    gap: clamp(32px, 6vw, 96px);
+    margin-top: 1%;
   }
 
   .footerLogo {
@@ -259,26 +261,51 @@ const whatsappHref = waCotizarUrl || "https://wa.me/541128421008";
 
   .footerBigEmail {
     font-family: var(--font-body);
-    flex: 1;
-    text-align: right;
-    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    justify-self: end;
+    width: fit-content;
+    max-width: min(920px, 72vw);
+    margin-left: auto;
+    margin-right: 0;
+    text-align: left;
+    gap: 6px;
+    transform: none;
   }
 
-  .footerBigEmail a {
+  .footerBigEmailLink,
+  .footerBigPhoneLink {
     font-family: var(--font-body);
-    color: #ffffff;
-    font-size: clamp(1.2rem, 4.5vw, 4rem);
-    font-weight: 300;
-    letter-spacing: -0.02em;
-    line-height: 1;
     text-decoration: none;
     transition: color 0.3s ease;
-    word-break: break-all;
-    display: inline-block;
+    display: block;
+    max-width: 100%;
+    white-space: normal;
   }
 
-  .footerBigEmail a:hover {
+  .footerBigEmailLink {
     color: #ffc400;
+    font-size: clamp(1.35rem, 2.75vw, 2.95rem);
+    font-weight: 300;
+    letter-spacing: -0.045em;
+    line-height: 1;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+
+  .footerBigPhoneLink {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: clamp(1.35rem, 2.75vw, 2.95rem);
+    font-weight: 300;
+    letter-spacing: -0.045em;
+    line-height: 1;
+  }
+
+  .footerBigEmailLink:hover,
+  .footerBigPhoneLink:hover {
+    color: #ffffff;
   }
 
   .footerCols {
@@ -384,9 +411,11 @@ const whatsappHref = waCotizarUrl || "https://wa.me/541128421008";
     }
 
     .footerHero {
-      margin-bottom: 80px;
-      gap: 40px;
-    }
+    display: grid;
+    grid-template-columns: minmax(180px, 280px) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(32px, 6vw, 96px);
+  }
 
     .footerCols {
       grid-template-columns: 1fr 1fr;
@@ -427,18 +456,35 @@ const whatsappHref = waCotizarUrl || "https://wa.me/541128421008";
     }
 
     .footerHero {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 40px;
-    }
+    display: grid;
+    grid-template-columns: minmax(180px, 280px) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(32px, 6vw, 96px);
+  }
 
     .footerBigEmail {
-      text-align: left;
-      width: 100%;
+    font-family: var(--font-body);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    justify-self: end;
+    width: fit-content;
+    max-width: min(920px, 72vw);
+    margin-left: auto;
+    margin-right: 0;
+    text-align: left;
+    gap: 6px;
+    transform: none;
+  }
+
+    .footerBigEmailLink {
+      font-size: clamp(1.45rem, 7.2vw, 2rem);
+      line-height: 1;
     }
 
-    .footerBigEmail a {
-      font-size: clamp(1rem, 7vw, 1.8rem);
+    .footerBigPhoneLink {
+      font-size: clamp(1.05rem, 5vw, 1.35rem);
     }
 
     .footerCols {
@@ -452,4 +498,74 @@ const whatsappHref = waCotizarUrl || "https://wa.me/541128421008";
       gap: 8px;
     }
   }
+
+  .footerHeroContact,
+  .footerContactHero,
+  .footerEmailBlock,
+  .footerMainContact {
+    justify-self: end !important;
+    align-self: start !important;
+    text-align: left !important;
+    margin-left: auto !important;
+    margin-right: clamp(8px, 2vw, 34px) !important;
+    max-width: min(58vw, 780px) !important;
+  }
+
+  .footerHeroContact a,
+  .footerContactHero a,
+  .footerEmailBlock a,
+  .footerMainContact a {
+    display: block !important;
+  }
+
+  .footerHeroContact .footerPhone,
+  .footerContactHero .footerPhone,
+  .footerEmailBlock .footerPhone,
+  .footerMainContact .footerPhone {
+    display: block !important;
+    margin-top: 4px !important;
+    text-align: left !important;
+  }
+
+  .footerMain {
+    margin-top: 4%;
+  }
+
+  @media (max-width: 760px) {
+    .footerHeroContact,
+    .footerContactHero,
+    .footerEmailBlock,
+    .footerMainContact {
+      justify-self: start !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      max-width: 100% !important;
+    }
+  }
+
+
+  @media (max-width: 760px) {
+    .footerHero {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    .footerBigEmail {
+      justify-self: start;
+      margin-left: 0;
+      margin-right: 0;
+      max-width: 100%;
+    }
+
+    .footerBigEmail a {
+      white-space: normal;
+      font-size: clamp(2rem, 11vw, 3.2rem);
+      line-height: 1;
+    }
+
+    .footerBigPhone {
+      font-size: clamp(1.6rem, 8vw, 2.5rem);
+    }
+  }
+
 </style>
