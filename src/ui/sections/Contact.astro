@@ -21,6 +21,10 @@ const {
   whatsappLabel = "[PENDIENTE]",
   cobertura = "Cobertura donde esté tu planta o tu obra",
 } = Astro.props as Props;
+
+const contactApiUrl =
+  import.meta.env.PUBLIC_VMA_CONTACT_API_URL ||
+  "https://agente.vantorastudio.com/api/vma/contact";
 ---
 
 <div class="contactSection">
@@ -47,7 +51,17 @@ const {
         </dl>
       </aside>
 
-      <form class="contactForm" action={whatsappHref} method="GET">
+      <form class="contactForm" data-vma-contact-form data-whatsapp-href={whatsappHref}>
+        <div class="vmaHoneypot" aria-hidden="true">
+          <input
+            id="website"
+            name="website"
+            type="text"
+            tabindex="-1"
+            autocomplete="off"
+            aria-label="Website"
+          />
+        </div>
         <div class="formRow formRow--2">
           <label class="formField">
             <span class="formLabel">Nombre *</span>
@@ -129,10 +143,202 @@ const {
             <span aria-hidden="true">→</span>
           </a>
         </div>
+
+        <p class="contactFormStatus" data-vma-contact-status aria-live="polite"></p>
       </form>
     </div>
   </div>
 </div>
+
+
+<script define:vars={{ contactApiUrl }}>
+  const form = document.querySelector("[data-vma-contact-form]");
+  const status = document.querySelector("[data-vma-contact-status]");
+
+  const escapeHtml = (value) =>
+    String(value || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+  const normalizeFirstName = (value) => {
+    const clean = String(value || "").trim();
+    if (!clean) return "ahí";
+    return clean.split(/\s+/)[0];
+  };
+
+  const labelTipoConsulta = (value) => {
+    const map = {
+      alquiler: "Alquiler de equipos",
+      venta: "Venta de equipos",
+      soporte: "Soporte técnico",
+    };
+
+    return map[value] || value || "Consulta comercial";
+  };
+
+  const buildAdvisorHref = (baseHref, payload) => {
+    const lines = [
+      "Hola VMA Rental, acabo de completar el formulario web.",
+      "",
+      `Nombre: ${payload.nombre} ${payload.apellido}`,
+      payload.empresa ? `Empresa: ${payload.empresa}` : "",
+      `Email: ${payload.email}`,
+      `Teléfono: ${payload.telefono}`,
+      `Tipo de consulta: ${labelTipoConsulta(payload.tipoConsulta)}`,
+      payload.mensaje ? `Mensaje: ${payload.mensaje}` : "",
+      "",
+      "Quedo atento para avanzar con un asesor.",
+    ].filter(Boolean);
+
+    const encoded = encodeURIComponent(lines.join("\n"));
+    const href = baseHref || "https://wa.me/541128421008";
+
+    if (href.includes("wa.me/") || href.includes("api.whatsapp.com/send")) {
+      return `${href}${href.includes("?") ? "&" : "?"}text=${encoded}`;
+    }
+
+    return `https://wa.me/541128421008?text=${encoded}`;
+  };
+
+  const renderSuccess = (payload, whatsappHref) => {
+    const firstName = normalizeFirstName(payload.nombre);
+    const advisorHref = buildAdvisorHref(whatsappHref, payload);
+
+    status.setAttribute("data-state", "success-card");
+
+    status.innerHTML = `
+      <article class="contactSuccessCard">
+        <div class="contactSuccessIcon" aria-hidden="true">✓</div>
+
+        <h3>Listo, ${escapeHtml(firstName)}</h3>
+
+        <p class="contactSuccessIntro">
+          Recibimos tu consulta y el equipo comercial te va a responder.
+        </p>
+
+        <div class="contactSuccessData">
+          <p class="contactSuccessKicker">Datos procesados</p>
+
+          <dl>
+            <div>
+              <dt>Nombre</dt>
+              <dd>${escapeHtml(`${payload.nombre} ${payload.apellido}`.trim())}</dd>
+            </div>
+
+            <div>
+              <dt>Empresa</dt>
+              <dd>${escapeHtml(payload.empresa || "No informada")}</dd>
+            </div>
+
+            <div>
+              <dt>Email</dt>
+              <dd>${escapeHtml(payload.email)}</dd>
+            </div>
+
+            <div>
+              <dt>Teléfono</dt>
+              <dd>${escapeHtml(payload.telefono)}</dd>
+            </div>
+
+            <div>
+              <dt>Consulta</dt>
+              <dd>${escapeHtml(labelTipoConsulta(payload.tipoConsulta))}</dd>
+            </div>
+
+            <div>
+              <dt>Mensaje</dt>
+              <dd>${escapeHtml(payload.mensaje || "Sin mensaje adicional")}</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="contactSuccessNotice">
+          <strong>Importante:</strong> esta consulta no confirma disponibilidad ni precio final.
+          El equipo comercial valida equipo, zona, plazo y condiciones operativas antes de cotizar.
+        </div>
+
+        <a class="contactSuccessWhatsapp" href="${advisorHref}" target="_blank" rel="noopener noreferrer">
+          Hablar con un asesor
+          <span aria-hidden="true">→</span>
+        </a>
+      </article>
+    `;
+  };
+
+  if (form && status) {
+    form.setAttribute("data-vma-contact-endpoint", contactApiUrl);
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const endpoint = form.getAttribute("data-vma-contact-endpoint");
+      const whatsappHref = form.getAttribute("data-whatsapp-href") || "";
+      const submitButton = form.querySelector('button[type="submit"], input[type="submit"]');
+
+      const setStatus = (message, state) => {
+        status.textContent = message;
+        status.setAttribute("data-state", state);
+      };
+
+      const formData = new FormData(form);
+
+      const payload = {
+        nombre: String(formData.get("nombre") || "").trim(),
+        apellido: String(formData.get("apellido") || "").trim(),
+        empresa: String(formData.get("empresa") || "").trim(),
+        email: String(formData.get("email") || "").trim(),
+        telefono: String(formData.get("telefono") || "").trim(),
+        tipoConsulta: String(formData.get("tipoConsulta") || "").trim(),
+        mensaje: String(formData.get("mensaje") || "").trim(),
+        origen: window.location.href,
+        source: "vma-web-contact-form",
+        website: String(formData.get("website") || "").trim(),
+      };
+
+      if (!payload.nombre || !payload.apellido || !payload.email || !payload.telefono) {
+        setStatus("Completá nombre, apellido, email y teléfono para enviar la consulta.", "error");
+        return;
+      }
+
+      try {
+        setStatus("Estamos enviando tu consulta...", "loading");
+
+        if (submitButton) {
+          submitButton.setAttribute("disabled", "true");
+          submitButton.setAttribute("aria-busy", "true");
+        }
+
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await response.json().catch(() => null);
+
+        if (!response.ok || !data?.ok) {
+          throw new Error(data?.error || "contact_send_failed");
+        }
+
+        renderSuccess(payload, whatsappHref);
+        form.reset();
+      } catch (error) {
+        console.error("VMA contact form error", error);
+        setStatus("No pudimos enviar la consulta. Probá por WhatsApp o intentá nuevamente.", "error");
+      } finally {
+        if (submitButton) {
+          submitButton.removeAttribute("disabled");
+          submitButton.removeAttribute("aria-busy");
+        }
+      }
+    });
+  }
+</script>
 
 <style>
   .contactSection {
@@ -491,4 +697,182 @@ const {
       line-height: 1.18;
     }
   }
+
+  .vmaHoneypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .contactFormStatus {
+    min-height: 1.35em;
+    margin-top: 0.85rem;
+    font-size: 0.92rem;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .contactFormStatus[data-state="loading"] {
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .contactFormStatus[data-state="success"] {
+    color: #ffc400;
+  }
+
+  .contactFormStatus[data-state="error"] {
+    color: #ff6b6b;
+  }
+
+
+  .contactFormStatus[data-state="success-card"] {
+    color: inherit;
+  }
+
+  .contactSuccessCard {
+    margin-top: 28px;
+    padding: clamp(24px, 3vw, 34px);
+    border: 1px solid rgba(255, 196, 0, 0.5);
+    border-radius: 22px;
+    background:
+      radial-gradient(circle at 88% 12%, rgba(255, 196, 0, 0.12), transparent 34%),
+      rgba(255, 255, 255, 0.045);
+    color: #ffffff;
+    box-shadow: 0 22px 80px rgba(0, 0, 0, 0.28);
+  }
+
+  .contactSuccessIcon {
+    width: 54px;
+    height: 54px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 20px;
+    border-radius: 999px;
+    background: #ffc400;
+    color: #070707;
+    font-size: 1.7rem;
+    font-weight: 900;
+  }
+
+  .contactSuccessCard h3 {
+    margin: 0;
+    color: #ffffff;
+    font-size: clamp(2rem, 3.2vw, 3.2rem);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.055em;
+  }
+
+  .contactSuccessIntro {
+    max-width: 56ch;
+    margin: 14px 0 26px;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .contactSuccessData {
+    margin-top: 24px;
+  }
+
+  .contactSuccessKicker {
+    margin: 0 0 12px;
+    color: #ffc400;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .contactSuccessData dl {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .contactSuccessData div {
+    display: grid;
+    grid-template-columns: minmax(120px, 0.45fr) minmax(0, 1fr);
+    gap: 18px;
+    padding: 13px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .contactSuccessData dt {
+    color: rgba(255, 255, 255, 0.48);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .contactSuccessData dd {
+    margin: 0;
+    color: #ffffff;
+    font-size: 0.94rem;
+    font-weight: 700;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+
+  .contactSuccessNotice {
+    margin-top: 22px;
+    padding: 16px 18px;
+    border-left: 4px solid #ffc400;
+    border-radius: 12px;
+    background: rgba(255, 196, 0, 0.1);
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .contactSuccessNotice strong {
+    color: #ffc400;
+  }
+
+  .contactSuccessWhatsapp {
+    width: fit-content;
+    min-height: 52px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
+    padding: 0 28px;
+    border-radius: 999px;
+    background: #25d366;
+    color: #07140b;
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    font-weight: 900;
+    text-decoration: none;
+    transition:
+      transform 0.22s ease,
+      gap 0.22s ease,
+      filter 0.22s ease;
+  }
+
+  .contactSuccessWhatsapp:hover {
+    gap: 16px;
+    transform: translateY(-2px);
+    filter: brightness(1.04);
+  }
+
+  @media (max-width: 640px) {
+    .contactSuccessData div {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+
+    .contactSuccessWhatsapp {
+      width: 100%;
+    }
+  }
+
 </style>
