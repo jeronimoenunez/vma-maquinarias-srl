@@ -7,7 +7,7 @@ type Props = {
 };
 
 const {
-  eyebrow = "EQUIPOS DE ELEVACIÓN Y TRABAJO EN ALTURA",
+  eyebrow = "Medios de elevación para trabajos en altura",
   title = "No solo elevamos personas, Impulsamos tu productividad.",
   primaryCta = { label: "Cotizar Equipo", href: "#contacto" },
   secondaryCta = { label: "Ver equipos", href: "#equipos" },
@@ -37,16 +37,97 @@ const {
 
   <div class="heroB__bottomBlend" aria-hidden="true"></div>
 
-  <a class="heroB__banner" href="#equipos" aria-label="Ver equipo destacado HS18E Pro">
+  <a class="heroB__banner" href="#equipo-brazo-articulado-diesel-ha-16-rtj-pro" data-vma-open-machine="brazo-articulado-diesel-ha-16-rtj-pro" aria-label="Ver equipo destacado HA16 RTJ Pro">
     <span class="heroB__bannerImage" aria-hidden="true"></span>
     <span class="heroB__bannerShade" aria-hidden="true"></span>
 
     <span class="heroB__bannerCopy">
       <strong>Experimenta <em>nuevas alturas</em></strong>
-      <small>Descubrí la HS18E Pro</small>
+      <small>Descubrí la HA16 RTJ Pro</small>
     </span>
   </a>
 </section>
+
+<script>
+  (() => {
+    const TARGET_ID = "brazo-articulado-diesel-ha-16-rtj-pro";
+    const TARGET_HASH = "#equipo-brazo-articulado-diesel-ha-16-rtj-pro";
+
+    const getSection = (): HTMLElement | null =>
+      document.querySelector<HTMLElement>("[data-equipment-section]") ||
+      document.querySelector<HTMLElement>("#equipos");
+
+    const openTargetMachine = () => {
+      const section = getSection();
+      if (!section) return;
+
+      try {
+        history.replaceState(null, "", TARGET_HASH);
+      } catch (_) {}
+
+      section.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+
+      window.setTimeout(() => {
+        const rawCard = section.querySelector<HTMLElement>(
+          `[data-machine-card][data-id="${TARGET_ID}"]`
+        );
+
+        if (!rawCard) return;
+
+        const subCategory = rawCard.dataset.subCategory;
+        const subButton = subCategory
+          ? section.querySelector<HTMLElement>(`[data-sub-category="${subCategory}"]`)
+          : null;
+
+        const mainCategory = subButton?.dataset.parentCategory;
+        const mainButton = mainCategory
+          ? section.querySelector<HTMLElement>(`[data-main-category="${mainCategory}"]`)
+          : null;
+
+        mainButton?.click();
+
+        window.setTimeout(() => {
+          subButton?.click();
+
+          window.setTimeout(() => {
+            const targetCard = section.querySelector<HTMLElement>(
+              `[data-machine-card][data-id="${TARGET_ID}"]`
+            );
+
+            if (!targetCard) return;
+
+            targetCard.scrollIntoView({
+              behavior: "smooth",
+              block: "nearest",
+              inline: "center",
+            });
+
+            targetCard.click();
+          }, 220);
+        }, 120);
+      }, 480);
+    };
+
+    document.addEventListener("click", (event) => {
+      const target = event.target instanceof Element ? event.target : null;
+      const trigger = target?.closest(`[data-vma-open-machine="${TARGET_ID}"]`);
+
+      if (!trigger) return;
+
+      event.preventDefault();
+      openTargetMachine();
+    });
+
+    window.addEventListener("DOMContentLoaded", () => {
+      if (window.location.hash === TARGET_HASH) {
+        window.setTimeout(openTargetMachine, 650);
+      }
+    });
+  })();
+</script>
 
 <style>
   .heroB {
@@ -76,9 +157,9 @@ const {
         rgba(0, 0, 0, 0.16) 54%,
         rgba(0, 0, 0, 0.18) 100%
       ),
-      url("/images/vma-version-b/hero-vma-b.png");
+      url("/images/optimized/Firefly-10-2.png");
     background-size: cover;
-    background-position: 56% center;
+    background-position: 50% center;
     background-repeat: no-repeat;
   }
 
@@ -170,22 +251,11 @@ const {
     right: 0;
     bottom: 0;
     z-index: 1;
-    height: clamp(260px, 38vh, 390px);
+    height: clamp(260px,30vh,378px);
     pointer-events: none;
-    background:
-      radial-gradient(
-        ellipse at center bottom,
-        rgba(0, 0, 0, 0.96) 0%,
-        rgba(0, 0, 0, 0.72) 44%,
-        rgba(0, 0, 0, 0) 74%
-      ),
-      linear-gradient(
-        180deg,
-        rgba(0, 0, 0, 0) 0%,
-        #030303 76%
-      );
+    background: radial-gradient(ellipse at center bottom, rgba(0, 0, 0, 0.96), rgba(0, 0, 0, 0.72) 13.03%, rgba(0, 0, 0, 0) 23.95%),linear-gradient(180deg,rgba(0,0,0,0) 0%,#030303 76%);
     backdrop-filter: blur(1.5px);
-    -webkit-backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.2px);
   }
 
   .heroB__banner {
@@ -195,11 +265,11 @@ const {
     z-index: 3;
     display: block;
     width: min(calc(100% - 48px), 1200px);
-    height: clamp(78px, 10vw, 173px);
+    height: clamp(104px, 12vw, 200px);
     transform: translateX(-50%);
     overflow: hidden;
     border-radius: 14px;
-    color: #ffffff;
+    color: #fff;
     text-decoration: none;
     background: #101010;
     box-shadow:
@@ -219,10 +289,11 @@ const {
   .heroB__bannerImage {
     position: absolute;
     inset: 0;
-    background-image: url("/images/vma-version-b/banner-hs18e.png");
+    background-image: url("/images/optimized/ha-16-rtj-pro-card-Banner-1-large.webp");
     background-size: cover;
-    background-position: center;
-    opacity: 0.76;
+    background-position: center 42%;
+    background-repeat: no-repeat;
+    opacity: 0.86;
   }
 
   .heroB__bannerShade {
@@ -231,9 +302,10 @@ const {
     background:
       linear-gradient(
         90deg,
-        rgba(0, 0, 0, 0.78) 0%,
-        rgba(0, 0, 0, 0.34) 46%,
-        rgba(0, 0, 0, 0.12) 100%
+        rgba(0, 0, 0, 0.84) 0%,
+        rgba(0, 0, 0, 0.52) 34%,
+        rgba(0, 0, 0, 0.16) 68%,
+        rgba(0, 0, 0, 0.06) 100%
       ),
       linear-gradient(
         180deg,
@@ -274,6 +346,18 @@ const {
     background: rgba(0, 0, 0, 0.2);
   }
 
+  @media (max-width: 980px) and (min-width: 721px) {
+    .heroB__banner {
+      width: min(calc(100% - 36px), 960px);
+      height: 116px;
+    }
+
+    .heroB__bannerImage {
+      background-size: cover;
+      background-position: center 42%;
+    }
+  }
+
   @media (max-width: 720px) {
     .heroB {
       height: 100svh;
@@ -300,9 +384,9 @@ const {
           rgba(0, 0, 0, 0.02) 48%,
           rgba(0, 0, 0, 0.12) 100%
         ),
-        url("/images/vma-version-b/hero-vma-b.png");
+        url("/images/optimized/Firefly-10.png");
       background-size: cover;
-      background-position: 57% center;
+      background-position: 52% center;
       background-repeat: no-repeat;
     }
 
@@ -355,8 +439,8 @@ const {
 
     .heroB__btn--primary {
       background: rgba(255, 196, 0, 1);
-color: #090909;
-border-color: rgba(255,196,0,0.9);
+      color: #090909;
+      border-color: rgba(255, 196, 0, 0.9);
     }
 
     .heroB__btn--secondary {
@@ -373,7 +457,7 @@ border-color: rgba(255,196,0,0.9);
 
   @media (max-width: 390px) {
     .heroB__visual {
-      background-position: 58% center;
+      background-position: 54% center;
     }
 
     .heroB__content {

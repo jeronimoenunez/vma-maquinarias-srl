@@ -1,0 +1,27 @@
+/* VMA Version B — limpieza visual global */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+  background: #030303;
+}
+
+#faq,
+#nosotros,
+#contacto {
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+  outline: 0 !important;
+}
+
+#faq::before,
+#faq::after,
+#nosotros::before,
+#nosotros::after,
+#contacto::before,
+#contacto::after {
+  display: none !important;
+  content: none !important;
+  border: 0 !important;
+  outline: 0 !important;
+}

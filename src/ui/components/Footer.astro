@@ -5,20 +5,36 @@ type Props = {
   emailComercial?: string;
   whatsappLabel?: string;
   address?: string;
+  mapsHref?: string;
   logoSrc?: string;
   logoAlt?: string;
 };
 
 const {
   emailComercial = site.contact.emailComercial,
-  whatsappLabel = "[PENDIENTE]",
-  address = "[DIRECCIÓN PENDIENTE]",
+  whatsappLabel = "1128421008",
+  address = "Calle 152 número 6359 ofic 301, Greenville, Hudson, Buenos Aires",
+  mapsHref = "https://www.google.com/maps/search/?api=1&query=Calle%20152%20numero%206359%20ofic%20301%20Greenville%20Hudson%20Buenos%20Aires",
   logoSrc = "/brand/Isologotipo.png",
   logoAlt = "VMA Rental",
 } = Astro.props as Props;
+
+const currentPath = Astro.url.pathname;
+const isHomePage = currentPath === "/" || currentPath === "/index.html";
+
+const whatsappHref = waCotizarUrl || "https://wa.me/541128421008";
 ---
 
 <footer class="footer">
+  {isHomePage && (
+    <div class="footerTopAction">
+      <a class="footerBackTop" href="#inicio" aria-label="Volver arriba">
+        <span>Volver arriba</span>
+        <span aria-hidden="true">↑</span>
+      </a>
+    </div>
+  )}
+
   <div class="footerDivider" aria-hidden="true"></div>
 
   <div class="footerHero">
@@ -27,7 +43,10 @@ const {
     </a>
 
     <div class="footerBigEmail">
-      <a href={`mailto:${emailComercial}`}>{emailComercial}</a>
+      <a class="footerBigEmailLink" href={`mailto:${emailComercial}`}>{emailComercial}</a>
+      <a class="footerBigPhoneLink" href={whatsappHref} target="_blank" rel="noopener noreferrer">
+        {whatsappLabel}
+      </a>
     </div>
   </div>
 
@@ -43,24 +62,34 @@ const {
       <div class="footerCol">
         <h3 class="footerColTitle">SECCIONES</h3>
         <ul class="footerColList">
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#equipos">Flota VMA</a></li>
           <li><a href="#sectores">Sectores</a></li>
-          <li><a href="#servicios">Servicios</a></li>
-          <li><a href="#metodologia">Cómo trabajamos</a></li>
-          <li><a href="#equipos">Equipos</a></li>
+          <li><a href="#sistema-vma">Sistema VMA</a></li>
           <li><a href="#faq">FAQ</a></li>
+          <li><a href="/nosotros">Nosotros</a></li>
           <li><a href="#contacto">Contacto</a></li>
         </ul>
       </div>
 
       <div class="footerCol">
         <h3 class="footerColTitle">CONTACTO</h3>
-        <ul class="footerColList">
+        <ul class="footerColList footerContactList">
           <li>
             <a href={`mailto:${emailComercial}`}>{emailComercial}</a>
           </li>
-          <li>WhatsApp: {whatsappLabel}</li>
-          <li>{address}</li>
+          <li>
+            <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
+              WhatsApp: {whatsappLabel}
+            </a>
+          </li>
+          <li>
+            <a href={mapsHref} target="_blank" rel="noopener noreferrer">
+              {address}
+            </a>
+          </li>
         </ul>
+
       </div>
     </div>
 
@@ -78,14 +107,120 @@ const {
       </p>
     </div>
   </div>
+  <a
+    class="floatingWhatsapp"
+    href={whatsappHref}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={`Cotizar por WhatsApp al ${whatsappLabel}`}
+  >
+    <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+      <path d="M16.04 4C9.42 4 4.04 9.34 4.04 15.9c0 2.1.56 4.15 1.62 5.95L4 28l6.31-1.63a12.1 12.1 0 0 0 5.73 1.45C22.66 27.82 28 22.48 28 15.92 28 9.34 22.66 4 16.04 4Zm0 21.8c-1.82 0-3.6-.48-5.16-1.4l-.37-.22-3.74.97 1-3.62-.24-.38a9.83 9.83 0 0 1-1.5-5.23c0-5.45 4.49-9.88 10.01-9.88 5.5 0 9.98 4.43 9.98 9.88 0 5.44-4.48 9.87-9.98 9.87Zm5.48-7.4c-.3-.15-1.78-.87-2.05-.97-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.27-.46-2.42-1.47-.9-.8-1.5-1.78-1.67-2.08-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.5h-.57c-.2 0-.52.07-.8.37-.27.3-1.05 1.02-1.05 2.48 0 1.46 1.08 2.88 1.23 3.08.15.2 2.13 3.22 5.16 4.52.72.31 1.28.5 1.72.64.72.23 1.38.2 1.9.12.58-.09 1.78-.72 2.03-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35Z" />
+    </svg>
+  </a>
 </footer>
 
 <style>
   .footer {
+    position: relative;
     background: #070707;
     width: 100%;
     padding: 0 80px 40px 80px;
     box-sizing: border-box;
+  }
+
+  .footerTopAction {
+    position: relative;
+    z-index: 4;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto 18px;
+    padding: 0 24px;
+    transform: none;
+    pointer-events: none;
+  }
+
+  .footerBackTop {
+    min-height: 46px;
+    min-width: 156px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 22px;
+    border: 1px solid #ffffff;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #080808;
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    font-weight: 800;
+    line-height: 1;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    box-shadow:
+      0 16px 42px rgba(0, 0, 0, 0.42),
+      0 0 0 1px rgba(255, 255, 255, 0.08);
+    pointer-events: auto;
+    transition:
+      color 0.25s ease,
+      border-color 0.25s ease,
+      background 0.25s ease,
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+  .footerBackTop:hover {
+    color: #080808;
+    border-color: #ffc400;
+    background: #ffc400;
+    transform: translateY(-2px);
+    box-shadow:
+      0 18px 48px rgba(0, 0, 0, 0.48),
+      0 0 0 4px rgba(255, 196, 0, 0.08);
+  }
+
+
+  .floatingWhatsapp {
+    position: fixed !important;
+    right: clamp(18px, 2.2vw, 32px) !important;
+    bottom: calc(clamp(18px, 2.2vw, 32px) + env(safe-area-inset-bottom)) !important;
+    z-index: 9999 !important;
+    width: clamp(52px, 4.8vw, 62px) !important;
+    height: clamp(52px, 4.8vw, 62px) !important;
+    display: grid !important;
+    place-items: center !important;
+    overflow: hidden !important;
+    border: 1px solid rgba(255, 196, 0, 0.52);
+    border-radius: 999px;
+    background: #ffc400;
+    color: #080808;
+    text-decoration: none;
+    box-shadow:
+      0 20px 54px rgba(0, 0, 0, 0.42),
+      0 0 0 8px rgba(255, 196, 0, 0.08);
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease,
+      background 0.25s ease;
+  }
+
+  .floatingWhatsapp svg {
+    width: 28px !important;
+    height: 28px !important;
+    max-width: 28px !important;
+    max-height: 28px !important;
+    display: block;
+    fill: currentColor;
+  }
+
+  .floatingWhatsapp:hover {
+    background: #ffffff;
+    transform: translateY(-3px) scale(1.03);
+    box-shadow:
+      0 24px 64px rgba(0, 0, 0, 0.5),
+      0 0 0 10px rgba(255, 196, 0, 0.11);
   }
 
   .footerDivider {
@@ -101,12 +236,11 @@ const {
   }
 
   .footerHero {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: minmax(180px, 280px) minmax(0, 1fr);
     align-items: center;
-    gap: 60px;
-    margin-top: 60px;
-    margin-bottom: 80px;
+    gap: clamp(32px, 6vw, 96px);
+    margin-top: 1%;
   }
 
   .footerLogo {
@@ -127,26 +261,51 @@ const {
 
   .footerBigEmail {
     font-family: var(--font-body);
-    flex: 1;
-    text-align: right;
-    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    justify-self: end;
+    width: fit-content;
+    max-width: min(920px, 72vw);
+    margin-left: auto;
+    margin-right: 0;
+    text-align: left;
+    gap: 6px;
+    transform: none;
   }
 
-  .footerBigEmail a {
+  .footerBigEmailLink,
+  .footerBigPhoneLink {
     font-family: var(--font-body);
-    color: #ffffff;
-    font-size: clamp(1.2rem, 4.5vw, 4rem);
-    font-weight: 300;
-    letter-spacing: -0.02em;
-    line-height: 1;
     text-decoration: none;
     transition: color 0.3s ease;
-    word-break: break-all;
-    display: inline-block;
+    display: block;
+    max-width: 100%;
+    white-space: normal;
   }
 
-  .footerBigEmail a:hover {
+  .footerBigEmailLink {
     color: #ffc400;
+    font-size: clamp(1.35rem, 2.75vw, 2.95rem);
+    font-weight: 300;
+    letter-spacing: -0.045em;
+    line-height: 1;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+
+  .footerBigPhoneLink {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: clamp(1.35rem, 2.75vw, 2.95rem);
+    font-weight: 300;
+    letter-spacing: -0.045em;
+    line-height: 1;
+  }
+
+  .footerBigEmailLink:hover,
+  .footerBigPhoneLink:hover {
+    color: #ffffff;
   }
 
   .footerCols {
@@ -194,13 +353,28 @@ const {
   .footerColList li a {
     color: #c9c9c9;
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition:
+      color 0.3s ease,
+      border-color 0.3s ease;
     font-family: var(--font-body);
   }
 
   .footerColList li a:hover {
     color: #ffc400;
   }
+
+  .footerContactList li a {
+    color: #c9c9c9;
+    font-weight: 500;
+    border-bottom: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .footerContactList li a:hover {
+    color: #ffc400;
+  }
+
+
 
   .footerLegal {
     border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -237,9 +411,11 @@ const {
     }
 
     .footerHero {
-      margin-bottom: 80px;
-      gap: 40px;
-    }
+    display: grid;
+    grid-template-columns: minmax(180px, 280px) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(32px, 6vw, 96px);
+  }
 
     .footerCols {
       grid-template-columns: 1fr 1fr;
@@ -248,23 +424,67 @@ const {
   }
 
   @media (max-width: 640px) {
+    .footerTopAction {
+      justify-content: center;
+      margin: 0 auto 16px;
+      padding: 0 18px;
+      transform: none;
+    }
+
+    .footerBackTop {
+      min-height: 44px;
+      min-width: 148px;
+      padding: 0 18px;
+      border-radius: 11px;
+      font-size: 0.76rem;
+    }
+
+    .floatingWhatsapp {
+      right: 18px !important;
+      bottom: calc(18px + env(safe-area-inset-bottom)) !important;
+      width: 54px !important;
+      height: 54px !important;
+    }
+
+    .floatingWhatsapp svg {
+      width: 25px !important;
+      height: 25px !important;
+    }
+
     .footer {
       padding: 0 24px 24px 24px;
     }
 
     .footerHero {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 40px;
-    }
+    display: grid;
+    grid-template-columns: minmax(180px, 280px) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(32px, 6vw, 96px);
+  }
 
     .footerBigEmail {
-      text-align: left;
-      width: 100%;
+    font-family: var(--font-body);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    justify-self: end;
+    width: fit-content;
+    max-width: min(920px, 72vw);
+    margin-left: auto;
+    margin-right: 0;
+    text-align: left;
+    gap: 6px;
+    transform: none;
+  }
+
+    .footerBigEmailLink {
+      font-size: clamp(1.45rem, 7.2vw, 2rem);
+      line-height: 1;
     }
 
-    .footerBigEmail a {
-      font-size: clamp(1rem, 7vw, 1.8rem);
+    .footerBigPhoneLink {
+      font-size: clamp(1.05rem, 5vw, 1.35rem);
     }
 
     .footerCols {
@@ -278,4 +498,74 @@ const {
       gap: 8px;
     }
   }
+
+  .footerHeroContact,
+  .footerContactHero,
+  .footerEmailBlock,
+  .footerMainContact {
+    justify-self: end !important;
+    align-self: start !important;
+    text-align: left !important;
+    margin-left: auto !important;
+    margin-right: clamp(8px, 2vw, 34px) !important;
+    max-width: min(58vw, 780px) !important;
+  }
+
+  .footerHeroContact a,
+  .footerContactHero a,
+  .footerEmailBlock a,
+  .footerMainContact a {
+    display: block !important;
+  }
+
+  .footerHeroContact .footerPhone,
+  .footerContactHero .footerPhone,
+  .footerEmailBlock .footerPhone,
+  .footerMainContact .footerPhone {
+    display: block !important;
+    margin-top: 4px !important;
+    text-align: left !important;
+  }
+
+  .footerMain {
+    margin-top: 4%;
+  }
+
+  @media (max-width: 760px) {
+    .footerHeroContact,
+    .footerContactHero,
+    .footerEmailBlock,
+    .footerMainContact {
+      justify-self: start !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      max-width: 100% !important;
+    }
+  }
+
+
+  @media (max-width: 760px) {
+    .footerHero {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    .footerBigEmail {
+      justify-self: start;
+      margin-left: 0;
+      margin-right: 0;
+      max-width: 100%;
+    }
+
+    .footerBigEmail a {
+      white-space: normal;
+      font-size: clamp(2rem, 11vw, 3.2rem);
+      line-height: 1;
+    }
+
+    .footerBigPhone {
+      font-size: clamp(1.6rem, 8vw, 2.5rem);
+    }
+  }
+
 </style>
